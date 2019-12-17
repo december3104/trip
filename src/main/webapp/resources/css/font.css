@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+@font-face { 
+	font-family: 'GodoM';
+	font-style: normal;
+	font-weight: 100; 
+	src: local('Godo'), 
+		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/godo/Godo/GodoM.woff2') format('woff2'), 
+		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/godo/Godo/GodoM.woff') format('woff'); 
+} 
+@font-face { 
+	font-family: 'GodoB'; 
+	font-style: normal;
+	font-weight: 700; 
+	src: local('Godo'), 
+		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/godo/Godo/GodoB.woff2') format('woff2'), 
+		url('//cdn.jsdelivr.net/korean-webfonts/1/corps/godo/Godo/GodoB.woff') format('woff'); 
+} 
+* { font-family: 'GodoM', sans-serif; }
+
+.godom { font-family: 'GodoM', sans-serif;}
+
+.godob { font-family: 'GodoB', sans-serif}

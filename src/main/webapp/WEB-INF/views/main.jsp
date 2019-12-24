@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여길잡아</title>
+<title>여길잡아</title>   
 <!-- 헤더푸터 -->
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <!-- jquery -->

@@ -100,7 +100,7 @@ $(function(){
 <div class="header">
 <p style="font-weight: bold; text-align: center"><font color="#95d6f3">여길잡아</font> 로그인하기</p>
  </div>
-<div class="content">
+<div class="content"> 
 <div class="ui left icon input">
 <input type="text" placeholder="아이디를 입력하세요.">
 <i class="user icon"></i>

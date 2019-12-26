@@ -34,7 +34,7 @@ $(function(){
 <style type="text/css">
 #userDiv {
 	padding : 0;
-	width: 90px;
+	width: 100px;
 }
 #userDiv:hover{
 	background: #fff;
@@ -45,39 +45,28 @@ $(function(){
 	right: auto;
 }
 
+footer {
+	position:absolute;
+	bottom: 0;
+	width:100%;
+	height:50px;
+	text-shadow:1px 1px 2px white;
+	font-size:10pt;
+	text-align:center;
+	padding-top:15px;
+}
 
 </style>
 </head>
 <body>
-	<div class="ui top fixed borderless massive menu" style="width: 80%; margin: 0 10% 0 10%">
+<header>
+<div class="ui top fixed borderless massive menu" style="width: 80%; margin: 0 10% 0 10%">
+<div class="ui container">
 		<!-- 사이트 로고 -->
 		<div class="item">
 			<img src="resources/images/logo.png">
 		</div>
-		<!-- 메뉴 -->
-		<a class="ui simple dropdown item godom"> 가이드북
-			<div class="menu">
-				<div class="item">계획하기</div>
-	footer {
-		position:absolute;
-		bottom: 0;
-		width:100%;
-		height:50px;
-		text-shadow:1px 1px 2px white;
-		font-size:10pt;
-		text-align:center;
-		padding-top:15px;
-	}
-</style>
-</head>
-<body>
-<header>
-<div class="ui top fixed borderless massive menu" style="border: 1px solid white;">
-<div class="ui container">
-	<!-- 사이트 로고 -->
-	<div class="item">
-		<img src="resources/images/logo.png">
-	</div>
+
 	<!-- 메뉴 -->
 	<a class="ui simple dropdown item godom">
 			가이드북
@@ -104,7 +93,8 @@ $(function(){
 			<i class="alarm icons" style="margin-right: 10px;"> 
 				<i class="bell large icon"></i> 
 				<!-- 알람 있을 경우 갯수만큼 -->
-				<div class="ui circular yellow mini floating label">2</div></i> 
+				<div class="ui circular yellow mini floating label">2</div>
+			</i> 
 			<i class="chat icons" style="margin-right: 30px;"> 
 				<i class="comments large icon"></i> 
 				<!-- 알람 있을 경우 갯수만큼 -->
@@ -113,7 +103,7 @@ $(function(){
 			
 			<!-- 로그인버튼 -->
 			<c:if test="${loginMember == null }">
-			<a style="background: #c0e7f8; color: #000; width: 90px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer" id="loginTag">로그인</a>
+			<a style="background: #c0e7f8; color: #000; width: 100px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer" id="loginTag">로그인</a>
 			</c:if>
 			
 			<!-- 로그인 했을 때 회원정보 -->
@@ -142,6 +132,7 @@ $(function(){
 		
 
 	</div>
+		</div>
 	<!-- modal -->
 	<div class="ui mini modal">
 		<div class="header">
@@ -190,30 +181,8 @@ function loginWithKakao() {
   };
 //]]>
 </script>
-		</div> -->
-	</div>
-</div>
-</div>
-<!-- modal -->
-<div class="ui tiny modal">
-<div class="header">
-<p style="font-weight: bold; text-align: center"><font color="#95d6f3">여길잡아</font> 로그인하기</p>
- </div>
-<div class="content"> 
-<div class="ui left icon input">
-<input type="text" placeholder="아이디를 입력하세요.">
-<i class="user icon"></i>
-</div><br>
-<div class="ui left icon input">
-<input type="password" placeholder="비밀번호를 입력하세요.">
-<i class="lock icon"></i>
-</div>
-</div>
-<div class="actions">
-<div class="ui cancel button">취소</div>
-<div class="ui approve button">확인</div>
-</div>
-</div>
+	
+
 </header>
 <footer>
 copyright@iei.or.kr 2019-11-26 <br>

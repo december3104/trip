@@ -6,10 +6,10 @@ import org.springframework.stereotype.Controller;
 import com.a2b.trip.guidebook.model.service.GuidebookService;
 
 @Controller
-public class GuideBookController {
+public class GuidebookController {
 
 	@Autowired
-	private GuidebookService guideBookService;
+	private GuidebookService guidebookService;
 	
-	public GuideBookController() {}
+	public GuidebookController() {}
 }

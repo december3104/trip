@@ -1,5 +1,7 @@
 package com.a2b.trip.member.model.service;
 
+import java.util.ArrayList;
+
 import com.a2b.trip.member.model.vo.Member;
 
 public interface MemberService {
@@ -11,5 +13,7 @@ public interface MemberService {
 	int updateGuideMember(String member_id);
 	int deleteMember(String member_id);
 	int selectSearchMemberId(String member_id);
+	ArrayList<Member> selectListAllMember();
+	ArrayList<Member> selectListAllGuide();
 	
 }

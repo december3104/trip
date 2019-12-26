@@ -34,4 +34,16 @@
 	<select id="selectSearchMemberId" parameterType="string" resultType="_int">
 		select count(member_id) from member where member_id = #{value}
 	</select>
+		
+	<select id="selectListAllMember" resultType="Member">
+		select * from member where guide_qualification='NONE' or guide_qualification = 'WAIT'
+	</select>
+	
+	<select id="selectListAllGuide" resultType="GuideMember">
+		select member_name, member_id, member_gender, member_email, guide_grade, guide_report_count 
+		from member
+		full outer join guide on member.member_id = guide.guide_id
+		where guide_qualification = 'DONE'
+	</select>
+	
 </mapper>

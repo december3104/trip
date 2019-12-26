@@ -4,11 +4,11 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository("guideBookMakingDao")
-public class GuideBookMakingDao {
+@Repository("guidebookMakingDao")
+public class GuidebookMakingDao {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public GuideBookMakingDao() {}
+	public GuidebookMakingDao() {}
 }

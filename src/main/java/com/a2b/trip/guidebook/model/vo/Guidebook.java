@@ -3,7 +3,7 @@ package com.a2b.trip.guidebook.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
-public class GuideBook implements Serializable {
+public class Guidebook implements Serializable {
 	private static final long serialVersionUID = 10000L;
 	
 	private String book_no;
@@ -17,9 +17,9 @@ public class GuideBook implements Serializable {
 	private String share_check;
 	private String pdf_file_name;
 	
-	public GuideBook() {}
+	public Guidebook() {}
 
-	public GuideBook(String book_no, String book_id, Date book_change_date, String travel_detail,
+	public Guidebook(String book_no, String book_id, Date book_change_date, String travel_detail,
 			Date travel_start_date, Date travel_end_date, String travel_theme, String book_name, String share_check,
 			String pdf_file_name) {
 		super();

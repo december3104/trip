@@ -4,32 +4,34 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="memberMapper">
 	
-	<select id="loginCheck" parameterType="Member" resultType="Member">
-		select * from member where userid = #{userid} and userpwd = #{userpwd}
-	</select>
-	
-	<select id="selectOne" parameterType="string" resultType="Member">
-		select * from member where userid = #{value}
+	<select id="loginChkMember" parameterType="Member" resultType="Member">
+		select * from member where member_id = #{member_id}
 	</select>
 	
 	<insert id="insertMember" parameterType="Member">
-		insert into member values (#{userid}, #{userpwd}, #{username}, #{gender}, #{age}, #{phone}, #{email}, #{hobby}, #{etc}, default, sysdate)
+		insert into member values (#{member_id}, #{member_name}, #{member_pwd}, #{member_email}, 
+		#{member_gender}, #{member_phone}, #{member_birth}, #{member_profile_original}, 
+		#{member_profile_rename}, default, default, default, default, null)
 	</insert>
 	
+	<select id="selectOneMember" parameterType="string" resultType="Member">
+		select * from member where member_id = #{value}
+	</select>
+	
 	<update id="updateMember" parameterType="Member">
-		update member set userpwd = #{userpwd}, email = #{email}, phone = #{phone}, etc = #{etc}, hobby = #{hobby},  lastmodified = sysdate where userid = #{userid}
+		update member set member_pwd = #{member_pwd}, member_email = #{member_email},
+		member_phone = #{member_phone}, member_profile_original = #{member_profile_original}
+	</update>
+	
+	<update id ="updateGuideMember" parameterType="string">
+		update member set guide_qualification = 'NONE' where member_id = #{value}
 	</update>
 	
 	<delete id="deleteMember" parameterType="string">
-		delete from member where userid = #{value}
+		delete member where member_id = #{value}
 	</delete>
 	
-	<select id="selectList" resultType="Member">
-		select * from member
+	<select id="selectSearchMemberId" parameterType="string" resultType="_int">
+		select count(member_id) from member where member_id = #{value}
 	</select>
-	
-	<select id="checkDupId" parameterType="string" resultType="_int">
-		select count(userid) from member where userid = #{value}
-	</select>
-
 </mapper>

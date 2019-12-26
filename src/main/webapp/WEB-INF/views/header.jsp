@@ -142,14 +142,6 @@ $(function(){
 		
 
 	</div>
-	<table class="ui celled striped table" style="margin-top : 100px;">
-			<tr><th><h3>테스트</h3></th></tr>
-			<tr><td><ul>동행찾기<li style="list-style: none">20019년 12월 24일</li></ul></td></tr>
-			<tr><td><ul>동행찾기<li style="list-style: none">20019년 12월 24일</li></ul></td></tr>
-			<tr><td><ul>동행찾기<li style="list-style: none">20019년 12월 24일</li></ul></td></tr>
-			<tr><td><ul>동행찾기<li style="list-style: none">20019년 12월 24일</li></ul></td></tr>
-			<tr><td><ul>동행찾기<li style="list-style: none">20019년 12월 24일</li></ul></td></tr>
-		</table>
 	<!-- modal -->
 	<div class="ui mini modal">
 		<div class="header">

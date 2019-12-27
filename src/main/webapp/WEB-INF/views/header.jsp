@@ -55,60 +55,58 @@ footer {
 	text-align:center;
 	padding-top:15px;
 }
-
 </style>
 </head>
 <body>
 <header>
-<div class="ui top fixed borderless massive menu" style="width: 80%; margin: 0 10% 0 10%">
 <div class="ui container">
-		<!-- 사이트 로고 -->
-		<div class="item">
-			<img src="resources/images/logo.png">
-		</div>
-
+<div class="ui top fixed borderless massive menu" style="width: 80%; margin: 0 10% 0 10%">
+	<!-- 사이트 로고 -->
+	<div class="item">
+		<img src="resources/images/logo.png">
+	</div>
 	<!-- 메뉴 -->
 	<a class="ui simple dropdown item godom">
-			가이드북
-			<div class="menu">
-				<div class="item" onclick="location.href='goplace.do'">계획하기</div>
-				<div class="item">제작하기</div>
-				<div class="item">공유 게시판</div>
-			</div>
-		</a> 
-		<a class="item godom">현지 가이드 매칭</a> 
-		<a class="item godom">동행 찾기</a> 
-		<a class="item godom">이용방법</a> 
-		<a class="ui simple dropdown item godom">고객센터
-			<div class="menu">
-				<div class="item">공지사항</div>
-				<div class="item">Q&A</div>
-				<div class="item">가이드 신청</div>
-			</div>
-		</a>
-		<!-- 우측 상단 사용자정보&아이콘들 -->
-		<div class="item right menu" align="right" style="margin-right: 0;">
-			<i class="snowflake large icon" style="margin-right: 10px;"></i> 
-			
-			<i class="alarm icons" style="margin-right: 10px;"> 
-				<i class="bell large icon"></i> 
-				<!-- 알람 있을 경우 갯수만큼 -->
-				<div class="ui circular yellow mini floating label">2</div>
-			</i> 
-			<i class="chat icons" style="margin-right: 30px;"> 
-				<i class="comments large icon"></i> 
-				<!-- 알람 있을 경우 갯수만큼 -->
-				<div class="ui circular blue mini floating label">2</div>
-			</i>
-			
-			<!-- 로그인버튼 -->
-			<c:if test="${loginMember == null }">
-			<a style="background: #c0e7f8; color: #000; width: 100px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer" id="loginTag">로그인</a>
-			</c:if>
-			
-			<!-- 로그인 했을 때 회원정보 -->
-			<c:if test="${loginMember != null }">
-			<div class="ui simple dropdown item" id="userDiv">
+		가이드북
+		<div class="menu">
+			<div class="item" onclick="location.href='goplace.do'">계획하기</div>
+			<div class="item">제작하기</div>
+			<div class="item">공유 게시판</div>
+		</div>
+	</a> 
+	<a class="item godom">현지 가이드 매칭</a> 
+	<a class="item godom">동행 찾기</a> 
+	<a class="item godom">이용방법</a> 
+	<a class="ui simple dropdown item godom">고객센터
+		<div class="menu">
+			<div class="item">공지사항</div>
+			<div class="item">Q&A</div>
+			<div class="item">가이드 신청</div>
+		</div>
+	</a>
+	<!-- 우측 상단 사용자정보&아이콘들 -->
+	<div class="item right menu" align="right" style="margin-right: 0;">
+		<i class="snowflake large icon" style="margin-right: 10px;"></i> 
+		
+		<i class="alarm icons" style="margin-right: 10px;"> 
+			<i class="bell large icon"></i> 
+			<!-- 알람 있을 경우 갯수만큼 -->
+			<div class="ui circular yellow mini floating label">2</div>
+		</i> 
+		<i class="chat icons" style="margin-right: 30px;"> 
+			<i class="comments large icon"></i> 
+			<!-- 알람 있을 경우 갯수만큼 -->
+			<div class="ui circular blue mini floating label">2</div>
+		</i>
+		
+		<!-- 로그인버튼 -->
+		<c:if test="${loginMember == null }">
+		<a style="background: #c0e7f8; color: #000; width: 100px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer" id="loginTag">로그인</a>
+		</c:if>
+		
+		<!-- 로그인 했을 때 회원정보 -->
+		<c:if test="${loginMember != null }">
+		<div class="ui simple dropdown item" id="userDiv">
 			<c:if test="${loginMember.member_profile_rename != null }">
 			<img class="ui mini circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }">
 			</c:if>
@@ -127,12 +125,9 @@ footer {
 			</div>
 		</div>
 		</c:if>
-		</div>
-		
-		
-
 	</div>
-		</div>
+</div>
+</div>
 	<!-- modal -->
 	<div class="ui mini modal">
 		<div class="header">
@@ -186,8 +181,6 @@ function loginWithKakao() {
   };
 //]]>
 </script>
-	
-
 </header>
 <footer>
 copyright@iei.or.kr 2019-11-26 <br>

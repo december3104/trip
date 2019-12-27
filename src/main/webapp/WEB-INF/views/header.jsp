@@ -122,7 +122,7 @@ footer {
 				<div class="item">내 가이드북</div>
 				<div class="item">가이드 매칭 기록</div>
 				<div class="item">동행 매칭 기록</div>
-				<div class="item">내 정보 수정</div>
+				<div class="item" onclick="location.href='selectListAllMember.ad'">내 정보 수정</div>
 				<div class="item" id="logoutTag">로그아웃</div>
 			</div>
 		</div>
@@ -153,10 +153,13 @@ footer {
 			<div class="ui left icon input" style="width: 100%; margin-top: 15px">
 				<input type="password" placeholder="비밀번호를 입력하세요." name="member_pwd" id="member_pwd"> <i class="lock icon"></i>
 			</div>
-			<div class="ui input" style="margin-top: 15px; text-align: left">
-				<label for="loginSave">
-					<input type="checkbox" style="margin-top: 3px" id="loginSave">로그인 상태 유지
-				</label>
+			<div class="ui form">
+				<div class="inline field">
+					<div class="ui checkbox" style="margin-top: 15px; text-align: left">
+						<input type="checkbox" tabindex="0" class="hidden" style="margin-top: 3px" id="loginSave">
+						<label for="loginSave">로그인 상태 유지</label>
+					</div>
+				</div>
 			</div>
 			<button class="ui button" type="submit" style="width: 100%; margin: 0; background: #c0e7f8; margin-top: 15px">로그인</button>
 			</form>

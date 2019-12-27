@@ -1,5 +1,7 @@
 package com.a2b.trip.member.model.service;
 
+import java.util.ArrayList;
+
 import com.a2b.trip.member.model.vo.Member;
 
 public interface MemberService {

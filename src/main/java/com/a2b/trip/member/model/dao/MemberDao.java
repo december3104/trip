@@ -1,5 +1,8 @@
 package com.a2b.trip.member.model.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -48,5 +51,6 @@ public class MemberDao {
 	public int selectSearchMemberId(String member_id) {
 		return sqlSession.selectOne("memberMapper.selectSearchMemberId", member_id);
 	}
+
 
 }

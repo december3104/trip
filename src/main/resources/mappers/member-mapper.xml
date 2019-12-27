@@ -34,4 +34,5 @@
 	<select id="selectSearchMemberId" parameterType="string" resultType="_int">
 		select count(member_id) from member where member_id = #{value}
 	</select>
+
 </mapper>

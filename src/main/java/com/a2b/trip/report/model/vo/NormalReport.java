@@ -3,12 +3,10 @@ package com.a2b.trip.report.model.vo;
 import java.io.Serializable;
 import java.sql.Date;
 
-import org.springframework.stereotype.Component;
-
-@Component
-public class Report implements Serializable {
-	private static final long serialVersionUID = 6000L;
+public class NormalReport implements Serializable{
+	private static final long serialVersionUID =  6222L;
 	
+	private String member_name;
 	private int report_no;
 	private String clame_id;
 	private String report_id;
@@ -16,14 +14,15 @@ public class Report implements Serializable {
 	private String report_status;
 	private Date report_date;
 	private Date complete_date;
-	private String report_alarm;
 	private String report_type;
+	
+	
+	public NormalReport() {}
 
-	public Report() {}
-
-	public Report(int report_no, String clame_id, String report_id, String report_content, String report_status,
-			Date report_date, Date complete_date, String report_alarm, String report_type) {
+	public NormalReport(String member_name, int report_no, String clame_id, String report_id, String report_content,
+			String report_status, Date report_date, Date complete_date, String report_type) {
 		super();
+		this.member_name = member_name;
 		this.report_no = report_no;
 		this.clame_id = clame_id;
 		this.report_id = report_id;
@@ -31,8 +30,15 @@ public class Report implements Serializable {
 		this.report_status = report_status;
 		this.report_date = report_date;
 		this.complete_date = complete_date;
-		this.report_alarm = report_alarm;
 		this.report_type = report_type;
+	}
+
+	public String getMember_name() {
+		return member_name;
+	}
+
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
 	}
 
 	public int getReport_no() {
@@ -91,14 +97,6 @@ public class Report implements Serializable {
 		this.complete_date = complete_date;
 	}
 
-	public String getReport_alarm() {
-		return report_alarm;
-	}
-
-	public void setReport_alarm(String report_alarm) {
-		this.report_alarm = report_alarm;
-	}
-
 	public String getReport_type() {
 		return report_type;
 	}
@@ -110,11 +108,15 @@ public class Report implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Report [report_no=" + report_no + ", clame_id=" + clame_id + ", report_id=" + report_id
-				+ ", report_content=" + report_content + ", report_status=" + report_status + ", report_date="
-				+ report_date + ", complete_date=" + complete_date + ", report_alarm=" + report_alarm + ", report_type="
-				+ report_type + "]";
+		return "NormalReport [member_name=" + member_name + ", report_no=" + report_no + ", clame_id=" + clame_id
+				+ ", report_id=" + report_id + ", report_content=" + report_content + ", report_status=" + report_status
+				+ ", report_date=" + report_date + ", complete_date=" + complete_date + ", report_type=" + report_type
+				+ "]";
 	}
 
+
 	
+	
+	
+
 }

@@ -13,5 +13,7 @@ public interface ReportService {
 
 	ArrayList<Report> selectDetailViewNormalReport(String member_id);
 
+	ArrayList<Report> selectDetailViewGuideReport(String member_id);
+
 
 }

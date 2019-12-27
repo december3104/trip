@@ -10,7 +10,7 @@
 <title>여길잡아</title>
 </head>
 <body>
-<h1>일반 회원 신고 처리</h1>
+<h1>가이드 회원 신고 처리</h1>
 
 
 
@@ -26,10 +26,10 @@
 		<th>누적신고</th>
 	</tr> -->
 	
-	<c:forEach begin="0" var="Nreport" items="${normalDetailViewReportList }" varStatus="status">                  
-	<c:out value="${Nreport.member_name }" /> <br>
-	<c:out value="${Nreport.report_date }" /> <br><br>
-	<c:out value="${Nreport.report_content }" />
+	<c:forEach begin="0" var="Greport" items="${guideDetailViewReportList }" varStatus="status">                  
+	<c:out value="${Greport.member_name }" /> <br>
+	<c:out value="${Greport.report_date }" /> <br><br>
+	<c:out value="${Greport.report_content }" />
 	
 	
 	</c:forEach>   

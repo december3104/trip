@@ -32,6 +32,10 @@ public class ReportDao {
 		List<Report> list = sqlSession.selectList("reportMapper.selectDetailViewNormalReport", member_id);
 		return (ArrayList<Report>)list;
 	}
+	public ArrayList<Report> selectDetailViewGuideReport(String member_id) {
+		List<Report> list = sqlSession.selectList("reportMapper.selectDetailViewGuideReport", member_id);
+		return (ArrayList<Report>)list;
+	}
 
 
 }

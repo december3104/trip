@@ -67,7 +67,18 @@ public class ReportController {
 		return mv;
 	}
 	
-	
+	//가이드 회원 신고처리 상세 보기
+	@RequestMapping("selectDetailViewGuideReport.ad")
+	public ModelAndView selectDetailViewGuideReport(@RequestParam("member_id") String member_id ,ModelAndView mv) {
+		ArrayList<Report> list = reportService.selectDetailViewGuideReport(member_id);
+		
+		logger.info(list.toString());
+		
+		mv.addObject("guideDetailViewReportList", list);
+		mv.setViewName("admin/report/guideDetailReportList");
+		
+		return mv;
+	}
 	
 	
 	

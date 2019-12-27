@@ -32,6 +32,11 @@ public class ReportServiceImpl implements ReportService {
 	public ArrayList<Report> selectDetailViewNormalReport(String member_id) {
 		return reportDao.selectDetailViewNormalReport(member_id);
 	}
+
+	@Override
+	public ArrayList<Report> selectDetailViewGuideReport(String member_id) {
+		return reportDao.selectDetailViewGuideReport(member_id);
+	}
 	
 	
 	

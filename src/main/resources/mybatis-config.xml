@@ -6,9 +6,11 @@
 	<typeAliases>
 		<typeAlias type="com.a2b.trip.member.model.vo.Member" alias="Member" />
 		<typeAlias type="com.a2b.trip.guide.model.vo.GuideMember" alias="GuideMember"/>
+		<typeAlias type="com.a2b.trip.report.model.vo.Report" alias="Report"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
+		<mapper resource="mappers/report-mapper.xml"/>
 	</mappers>
 </configuration>

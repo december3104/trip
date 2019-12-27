@@ -25,6 +25,25 @@ $(function(){
 	})
 });
 </script>
+
+<style type="text/css">
+#userDiv {
+	padding : 0;
+	width: 100px;
+}
+#userDiv:hover{
+	background: #fff;
+}
+
+.ui.buttons>.ui.dropdown:last-child .menu, .ui.menu .right.dropdown.item .menu, .ui.menu .right.menu .dropdown:last-child .menu{
+	left: -60px;
+	right: auto;
+}
+
+
+</style>
+
+
 </head>
 <body>
 <div class="ui top fixed borderless massive menu" style="width:80%; margin:0 10% 0 10%;">
@@ -39,13 +58,13 @@ $(function(){
 			<div class="menu">
 				<div class="item" onclick="location.href='selectListAllMember.ad'">일반회원</div>
 				<div class="item" onclick="location.href='selectListAllGuide.ad'">가이드</div>
-				<div class="item" >가이드 신청</div>
+				<div class="item" onclick="location.href='selectListApplyGuide.ad'">가이드 신청</div>
 			</div>
 	</a>
 	<a class="ui simple dropdown item godom">신고 처리
 			<div class="menu">
-				<div class="item">일반회원</div>
-				<div class="item">가이드</div>
+				<div class="item" onclick="location.href='selectListNormalReport.ad'">일반회원</div>
+				<div class="item" onclick="location.href='selectListGuideReport.ad'">가이드</div>
 			</div>
 	</a>
 	<a class="item godom">공지사항 관리</a>

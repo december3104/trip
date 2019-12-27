@@ -7,6 +7,8 @@
 		<typeAlias type="com.a2b.trip.member.model.vo.Member" alias="Member" />
 		<typeAlias type="com.a2b.trip.guide.model.vo.GuideMember" alias="GuideMember"/>
 		<typeAlias type="com.a2b.trip.report.model.vo.Report" alias="Report"/>
+		<typeAlias type="com.a2b.trip.report.model.vo.NormalReport" alias="NormalReport"/>
+		<typeAlias type="com.a2b.trip.report.model.vo.GuideReport" alias="GuideReport"/>
 	</typeAliases>
 	
 	<mappers>

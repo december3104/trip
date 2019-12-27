@@ -12,8 +12,18 @@
 		select * from member where member_level = 2 and guide_qualification = 'DONE'
 	</select>
 	
-	<select id="selectDetailViewNormalReport" parameterType="string" resultType="Report">
-		select * from report where report_type = 'NORMAL' and clame_id = #{value}
+	<select id="selectDetailViewNormalReport" parameterType="string" resultType="NormalReport">
+		select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type
+		from member
+		full outer join report on member.member_id = report.clame_id
+		where report_type = 'NORMAL' and clame_id = #{value}
+	</select>
+	
+	<select id="selectDetailViewGuideReport" parameterType="string" resultType="GuideReport">
+		select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type
+		from member
+		full outer join report on member.member_id = report.clame_id
+		where report_type = 'GUIDE' and clame_id = #{value}
 	</select>
 	
 </mapper>

@@ -16,8 +16,6 @@ public class GuideMember implements Serializable{
 	private int guide_report_count;
 	
 	
-	
-	
 	public GuideMember() {}
 
 	public GuideMember(String member_name, String member_id, String member_gender, String member_email,

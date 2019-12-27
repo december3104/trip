@@ -2,12 +2,15 @@ package com.a2b.trip.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -27,8 +30,12 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	//로그 처리용 객체 의존성 주입 처리함(종속 객체 주입)
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	public MemberController() {}
 	
@@ -146,5 +153,42 @@ public class MemberController {
 		
 	}
 	
+	
+	
+	//작성자 : ssm
+	//2019.12.26
+	
+	//일반 회원 목록 조회
+	@RequestMapping("selectListAllMember.ad")
+	public ModelAndView selectListAllMember(ModelAndView mv) {		
+		ArrayList<Member> list = memberService.selectListAllMember();
+		
+		logger.info(list.toString());
+		
+		mv.addObject("memberList", list);
+		mv.setViewName("admin/member/memberList_ad");
+		
+		return mv;
+	}
+	
+	
+	
+	// 가이드 목록 조회
+	@RequestMapping("selectListAllGuide.ad")
+	public ModelAndView selectListAllGuide(ModelAndView mv) {
+		ArrayList<Member> list = memberService.selectListAllGuide();
+		
+		logger.info(list.toString());
+		
+		mv.addObject("guideList", list);
+		mv.setViewName("admin/member/guideList_ad");
+		
+		return mv;
+	}
+	
+	
+	
+	
+	//end
 	
 }

@@ -1,5 +1,7 @@
 package com.a2b.trip.member.model.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +57,17 @@ public class MemberServiceImpl implements MemberService {
 	public int selectSearchMemberId(String member_id) {
 		return memberDao.selectSearchMemberId(member_id);
 	}
+
+	@Override
+	public ArrayList<Member> selectListAllMember() {
+		return memberDao.selectListAllMember();
+	}
+
+	@Override
+	public ArrayList<Member> selectListAllGuide() {
+		return memberDao.selectListAllGuide();
+	}
+	
+	
 	
 }

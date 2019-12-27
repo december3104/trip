@@ -1,5 +1,8 @@
 package com.a2b.trip.member.model.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -47,6 +50,17 @@ public class MemberDao {
 	// 아이디 중복 확인
 	public int selectSearchMemberId(String member_id) {
 		return sqlSession.selectOne("memberMapper.selectSearchMemberId", member_id);
+	}
+
+	public ArrayList<Member> selectListAllMember() {
+		List<Member> list = sqlSession.selectList("memberMapper.selectListAllMember");
+		return (ArrayList<Member>)list;
+		
+	}
+
+	public ArrayList<Member> selectListAllGuide() {
+		List<Member> list = sqlSession.selectList("memberMapper.selectListAllGuide");
+		return (ArrayList<Member>)list;
 	}
 
 }

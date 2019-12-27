@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reportMapper">
+	
+	<select id="selectListNormalReport" resultType="Member">
+		 select * from member where member_level = 1 and guide_qualification = 'NONE'
+	</select>
+	
+	<select id="selectListGuideReport" resultType="Member">
+		select * from member where member_level = 2 and guide_qualification = 'DONE'
+	</select>
+	
+	<select id="selectDetailViewNormalReport" parameterType="string" resultType="Report">
+		select * from report where report_type = 'NORMAL' and clame_id = #{value}
+	</select>
+	
+</mapper>

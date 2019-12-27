@@ -15,5 +15,6 @@ public interface MemberService {
 	int selectSearchMemberId(String member_id);
 	ArrayList<Member> selectListAllMember();
 	ArrayList<Member> selectListAllGuide();
+	ArrayList<Member> selectListApplyGuide();
 	
 }

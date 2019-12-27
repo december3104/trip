@@ -68,5 +68,10 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectListAllGuide();
 	}
 
+	@Override
+	public ArrayList<Member> selectListApplyGuide() {
+		return memberDao.selectListApplyGuide();
+	}
+
 	
 }

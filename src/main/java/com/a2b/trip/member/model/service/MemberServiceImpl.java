@@ -67,7 +67,6 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<Member> selectListAllGuide() {
 		return memberDao.selectListAllGuide();
 	}
-	
-	
+
 	
 }

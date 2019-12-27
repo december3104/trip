@@ -45,5 +45,5 @@
 		full outer join guide on member.member_id = guide.guide_id
 		where guide_qualification = 'DONE'
 	</select>
-	
+
 </mapper>

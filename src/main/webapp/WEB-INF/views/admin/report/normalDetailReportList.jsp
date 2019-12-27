@@ -28,28 +28,7 @@
 	
 	<c:forEach begin="0" var="Nreport" items="${normalDetailViewReportList }" varStatus="status">                  
 	<c:out value="${Nreport.report_content }" />
-<%-- 
-		<tr>
-			<td>
-				<c:out value="${member.member_name }" />
-			</td>
-			<td>
-				<c:url value="selectDetailViewNormalReport.ad" var="detailReport">
-					<c:param name="member_id" value="${member.member_id }" />
-				</c:url>
-				<a href="${detailReport }"><c:out value="${member.member_id }" /></a> 
-			</td>
-			<td>
-				<c:out value="${member.member_gender }" />
-			</td>
-			<td>
-				<c:out value="${member.member_email }" />
-			</td>
-			<td>
-				<c:out value="${member.member_report_count }" />
-			</td>
-		</tr>
- --%>
+	
 	</c:forEach>   
 	
 </table>

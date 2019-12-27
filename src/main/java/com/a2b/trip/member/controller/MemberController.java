@@ -186,6 +186,18 @@ public class MemberController {
 		return mv;
 	}
 	
+	//가이드 신청 목록 조회
+	@RequestMapping("selectListApplyGuide.ad")
+	public ModelAndView selectListApplyGuide(ModelAndView mv) {
+		ArrayList<Member> list = memberService.selectListApplyGuide();
+		
+		logger.info(list.toString());
+		
+		mv.addObject("guideApplyList", list);
+		mv.setViewName("admin/member/guideApplyList");
+		
+		return mv;
+	}
 	
 	
 	

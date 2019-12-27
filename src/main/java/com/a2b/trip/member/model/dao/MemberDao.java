@@ -52,5 +52,15 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectSearchMemberId", member_id);
 	}
 
+	public ArrayList<Member> selectListAllMember() {
+		List<Member> list = sqlSession.selectList("memberMapper.selectListAllMember");
+		return (ArrayList<Member>)list;
+		
+	}
+
+	public ArrayList<Member> selectListAllGuide() {
+		List<Member> list = sqlSession.selectList("memberMapper.selectListAllGuide");
+		return (ArrayList<Member>)list;
+	}
 
 }

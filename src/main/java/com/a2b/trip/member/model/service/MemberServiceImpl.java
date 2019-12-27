@@ -58,5 +58,15 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectSearchMemberId(member_id);
 	}
 
+	@Override
+	public ArrayList<Member> selectListAllMember() {
+		return memberDao.selectListAllMember();
+	}
+
+	@Override
+	public ArrayList<Member> selectListAllGuide() {
+		return memberDao.selectListAllGuide();
+	}
+
 	
 }

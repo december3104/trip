@@ -37,9 +37,9 @@ $(function(){
 	<!-- 메뉴 -->
 	<a class="ui simple dropdown item godom">회원 관리
 			<div class="menu">
-				<div class="item">일반회원</div>
-				<div class="item">가이드</div>
-				<div class="item">가이드 신청</div>
+				<div class="item" onclick="location.href='selectListAllMember.ad'">일반회원</div>
+				<div class="item" onclick="location.href='selectListAllGuide.ad'">가이드</div>
+				<div class="item" >가이드 신청</div>
 			</div>
 	</a>
 	<a class="ui simple dropdown item godom">신고 처리

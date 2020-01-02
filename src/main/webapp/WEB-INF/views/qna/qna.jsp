@@ -6,14 +6,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="device=width-device, initial-scale=1">
-<link rel="stylesheet" href="/jun/resources/css/bootstrap.css">
-<title>jun</title>
-<script type="text/javascript" src="/jun/resources/js/jquery-3.4.1.min.js"></script>
+<link rel="stylesheet" href="/trip/resources/css/bootstrap.min.css">
+<title>trip</title>
+<script type="text/javascript" src="/trip/resources/js/jquery-3.4.1.min.js"></script>
+<style type="text/css">
+.page_div { margin : 15px 0 50px 0; }
+.paging { text-align : center; }
+.paging li { display : inline-block;}
+.paging a { display : block; width : auto; height : 30px; border : 1px solid #E7E6E6;  line-height: 30px; }
+.paging a:hover { color : black; border : 1px solid black;}
+.paging .side_w { margin : 0 10px 0 10px; }
+.paging .page_n { background-color : #c0e7f8; }
+.paging .page_n a { color : black; }
+</style>
 </head>
 <body>
 	<c:import url="/WEB-INF/views/header.jsp" />
 	<div class="container">
-		<div class="row" style="margin:30px 0 10px 0;">
+		<div class="row" style="margin:100px 0 10px 0;">
 			<div class="col-sm-1"></div>
 				<div class="col-sm-8">
 					<table>
@@ -26,7 +36,7 @@
 					</table>
 				</div>
 				<div class="col-sm-2 my-auto">
-					<button style="height:50px; width:130px;">글 쓰기</button>			
+					<button style="height:50px; width:130px; background:#c0e7f8;" onclick="location.href='insertQna.do'">글 쓰기</button>			
 				</div>
 			<div class="col-sm-1"></div>	
 		</div>
@@ -76,16 +86,27 @@
 						</li>
 					</c:forEach>
 				</ul>
-				<div class="text-center">
-					<ul class="pagination">
+				<div class="page_div">
+					<ul class="paging">
 						<c:if test="${ page.prev }">
-							<a href="javascript:page(${page.startPage-1});">&laquo;</a>
+							<li class="first"><a href="javascript:page(1)"><span class="side_w">&laquo;</span></a></li>
+						</c:if>
+						<c:if test="${ page.prev }">
+							<li class="prev"><a href="javascript:page(${ page.startPage-1 });"><span class="side_w">이전</span></a></li>
 						</c:if>
 						<c:forEach begin="${ page.startPage }" end="${ page.endPage }" var="idx">
-							<a href="javascript:page(${ idx })">${ idx }</a>
+							<c:if test="${ idx eq page.currentPage}">
+								<li class="page_n"><a href="javascript:page(${ idx })"><span class="side_w">${ idx }</span></a></li>
+							</c:if>
+							<c:if test="${ idx ne page.currentPage}">
+								<li><a href="javascript:page(${ idx })"><span class="side_w">${ idx }</span></a></li>
+							</c:if>
 						</c:forEach>
-						<c:if test="${ page.prev }">
-							<a href="javascript:page(${page.startPage+1});">&laquo;</a>
+						<c:if test="${ page.next }">
+							<li class="next"><a href="javascript:page(${ page.endPage+1 });"><span class="side_w">다음</span></a></li>
+						</c:if>
+						<c:if test="${ page.next }">
+							<li class="last"><a href="javascript:page(${ page.totalPage })"><span class="side_w">&raquo;</span></a></li>
 						</c:if>
 					</ul>
 				</div>
@@ -93,14 +114,13 @@
 			<div class="col-lg-1"></div>
 		</div>	<!-- row end -->
 	</div>	<!-- container end -->
-	<c:import url="/WEB-INF/views/footer.jsp" />
-<!-- js 외부파일 연결 -->
+
 <script type="text/javascript">
 /* 페이징 처리 함수 시작 */
 function page(idx){
 	var pagenum = idx;
 	var contentnum = $("#contentnum option:selected").val();
-	location.href="qna.do?currentPage=" + pagenum + "&currentBlock=" + contentnum ;
+	location.href="qna.do?currentPage=" + pagenum + "&contentNum=" + contentnum;
 }
 /* 페이징 처리 함수 끝 */
 

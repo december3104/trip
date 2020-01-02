@@ -9,10 +9,14 @@
 		<typeAlias type="com.a2b.trip.report.model.vo.Report" alias="Report"/>
 		<typeAlias type="com.a2b.trip.report.model.vo.NormalReport" alias="NormalReport"/>
 		<typeAlias type="com.a2b.trip.report.model.vo.GuideReport" alias="GuideReport"/>
+		<typeAlias type="com.a2b.trip.common.Page" alias="Page" />
+		<typeAlias type="com.a2b.trip.qna.model.vo.Qna" alias="Qna" />
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/report-mapper.xml"/>
+		<mapper resource="mappers/qna-mapper.xml" />
+		
 	</mappers>
 </configuration>

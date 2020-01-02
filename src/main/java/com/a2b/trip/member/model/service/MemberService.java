@@ -2,6 +2,7 @@ package com.a2b.trip.member.model.service;
 
 import java.util.ArrayList;
 
+import com.a2b.trip.guide.model.vo.Guide;
 import com.a2b.trip.member.model.vo.Member;
 
 public interface MemberService {
@@ -18,5 +19,6 @@ public interface MemberService {
 	ArrayList<Member> selectListAllMember();
 	ArrayList<Member> selectListAllGuide();
 	ArrayList<Member> selectListApplyGuide();
+	Member selectDetailViewMember(String member_id);
 	
 }

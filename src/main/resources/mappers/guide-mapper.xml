@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="guideMapper">
+	
+	<select id="selectDetailViewGuide"  parameterType="string" resultType="GuideDetail">
+		select loc_name, guide_contry, guide_address, guide_service, guide_lang, member_name, member_gender, member_birth, guide_phone, car_check, car_number,guide_qualification
+		from guide
+		right join location on guide.loc_code = location.LOC_CODE
+		left join member on member.member_id = guide.guide_id
+		where guide_qualification = 'DONE' and guide_id = #{value}
+	</select>
+	
+	<select id="selectDetailViewApplyGuide" parameterType="string" resultType="GuideDetail">
+		select loc_name, guide_contry, guide_address, guide_service, guide_lang, member_name, member_gender, member_birth, guide_phone, car_check, car_number,guide_qualification
+		from guide
+		full join location on guide.loc_code = location.LOC_CODE
+		full join member on member.member_id = guide.guide_id
+		where guide_qualification = 'WAIT' and guide_id = #{value}
+	</select>
+	
+</mapper>

@@ -11,12 +11,16 @@
 		<typeAlias type="com.a2b.trip.report.model.vo.GuideReport" alias="GuideReport"/>
 		<typeAlias type="com.a2b.trip.common.Page" alias="Page" />
 		<typeAlias type="com.a2b.trip.qna.model.vo.Qna" alias="Qna" />
+		<typeAlias type="com.a2b.trip.guide.model.vo.Guide" alias="Guide"/>
+		<typeAlias type="com.a2b.trip.guide.model.vo.GuideDetail" alias="GuideDetail"/>
+		
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mappers/member-mapper.xml" />
 		<mapper resource="mappers/report-mapper.xml"/>
 		<mapper resource="mappers/qna-mapper.xml" />
+		<mapper resource="mappers/guide-mapper.xml" />
 		
 	</mappers>
 </configuration>

@@ -78,6 +78,11 @@ public class MemberDao {
 		List<Member> list = sqlSession.selectList("memberMapper.selectListApplyGuide");		
 		return (ArrayList<Member>)list;
 	}
+	//관리자 일반회원 관리 상세보기
+	public Member selectDetailViewMember(String member_id) {
+		return sqlSession.selectOne("memberMapper.selectDetailViewMember", member_id);
+	}
+
 
 
 

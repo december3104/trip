@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.a2b.trip.guide.model.vo.Guide;
 import com.a2b.trip.member.model.service.MemberService;
 import com.a2b.trip.member.model.vo.Member;
 
@@ -303,14 +304,18 @@ public class MemberController {
 	}
 	
 	//회원 상세보기
-//	@RequestMapping("selectDetailViewMember.ad")
-//	public ModelAndView selectDetailViewMember(ModelAndView mv) {
-//		
-//		//Member member = memberService.selectDetailViewMember();
-//		
-//		return null;
-//	}
-	
+	@RequestMapping("selectDetailViewMember.ad")
+	public ModelAndView selectDetailViewMember(@RequestParam("member_id") String member_id,ModelAndView mv) {
+		Member member = memberService.selectDetailViewMember(member_id);
+		
+		logger.info(member.toString());
+		
+		mv.addObject("member", member);
+		mv.setViewName("admin/member/memberDetailView_ad");
+		
+		return mv;
+	}
+
 	
 	//end
 	

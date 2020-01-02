@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.a2b.trip.guide.model.vo.Guide;
 import com.a2b.trip.member.model.dao.MemberDao;
 import com.a2b.trip.member.model.vo.Member;
 
@@ -70,22 +71,30 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.selectSearchMemberPhone(member_phone);
 	}
 
-
+	//관리자 회원 전체 조회
 	@Override
 	public ArrayList<Member> selectListAllMember() {
 		return memberDao.selectListAllMember();
 	}
-
+	//관리자 가이드 전체 조회
 	@Override
 	public ArrayList<Member> selectListAllGuide() {
 		return memberDao.selectListAllGuide();
 	}
-
+	//관리자 가이드 신청 회원 전체 조회
 	@Override
 	public ArrayList<Member> selectListApplyGuide() {
 		return memberDao.selectListApplyGuide();
 	}
+	//관리자 일반회원 관리 상세보기
+	@Override
+	public Member selectDetailViewMember(String member_id) {
+		return memberDao.selectDetailViewMember(member_id);
+	}
 
+
+	
+	
 
 	
 }

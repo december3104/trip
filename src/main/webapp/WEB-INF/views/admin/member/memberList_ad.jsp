@@ -27,6 +27,12 @@
 				<c:out value="${member.member_name }" />
 			</td>
 			<td>
+				<c:url value="selectDetailViewMember.ad" var="detailMember">
+					<c:param name="member_id" value="${member.member_id }" />
+				</c:url>
+				<a href="${detailMember }"><c:out value="${member.member_id }" /></a> 
+			</td>
+			<td>
 				<c:out value="${member.member_id }" />
 			</td>
 			<td>

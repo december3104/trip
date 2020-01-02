@@ -199,6 +199,14 @@ public class MemberController {
 		return mv;
 	}
 	
+	//회원 상세보기
+//	@RequestMapping("selectDetailViewMember.ad")
+//	public ModelAndView selectDetailViewMember(ModelAndView mv) {
+//		
+//		//Member member = memberService.selectDetailViewMember();
+//		
+//		return null;
+//	}
 	
 	
 	//end

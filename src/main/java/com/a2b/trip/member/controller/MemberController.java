@@ -171,9 +171,50 @@ public class MemberController {
 	}
 	
 	// 일반 회원 정보 수정 처리
-	public String updateMember(Member member, Model model) {
+	@RequestMapping(value="updateMember.do", method=RequestMethod.POST)
+	public String updateMember(Member member, Model model, @RequestParam("updateProfileUpload") MultipartFile file, HttpServletRequest request) {
 		
-		return "main";
+		String updateOriginalFileName = file.getOriginalFilename();
+		// 비밀번호 암호화 처리
+				member.setMember_pwd(bcryptPasswordEncoder.encode(member.getMember_pwd()));
+			
+				logger.info(file.getOriginalFilename());
+				
+				// 프로필 사진 삭제 처리
+				
+				
+				
+				// 프로필 사진 저장 처리
+				String savePath = request.getSession().getServletContext().getRealPath("/resources/images/member_profile");
+				
+				String memberProfileOriginal = file.getOriginalFilename();
+
+				if (memberProfileOriginal != null) {
+					member.setMember_profile_original(memberProfileOriginal);
+					// 파일명 형식 변경
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+					// 바꿀 파일명 만들기 : 확장자는 원본과 동일하게 함.
+					String memberProfileRename = member.getMember_id() + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
+							+ memberProfileOriginal.substring(memberProfileOriginal.lastIndexOf(".") + 1);
+					logger.info(memberProfileRename);
+					member.setMember_profile_rename(memberProfileRename);
+					try {
+						file.transferTo(new File(savePath + "\\" + memberProfileRename));
+					} catch (IllegalStateException | IOException e) {
+						e.printStackTrace();
+					}
+				}
+				// 서비스로 전송하고 결과 받기
+				int result = memberService.insertMember(member);
+				
+				String viewFileName = "main";
+				
+				if (result <= 0) {		// 회원 가입 실패 했을 경우
+					model.addAttribute("message", "회원 가입 실패!");
+					viewFileName = "common/error";
+				}
+				
+				return viewFileName;
 	}
 	
 	// 가이드 회원 탈퇴 처리

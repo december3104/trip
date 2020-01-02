@@ -7,21 +7,16 @@
 <head>
 <meta charset="UTF-8">
 <title>여길잡아 내 정보 보기</title>
-<!-- 헤더푸터 -->
-<%@ include file="/WEB-INF/views/header.jsp" %>
 <!-- favicon -->
 <link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- 부트스트랩 -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
-<!-- 시맨틱유아이 -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"> -->
 <!-- 폰트css -->
 <link href="resources/css/font.css" rel="stylesheet" type="text/css"/>
 <!-- icon -->
 <link href="resources/css/all.css" rel="stylesheet">
+<!-- 헤더푸터 css -->
+<link href="resources/css/headerFooter.css" rel="stylesheet">
 <style type="text/css">
 .sidebarTd{
 	height: 70px;
@@ -32,31 +27,35 @@
 	cursor: pointer;
 }
 
-.table td {
+ .ui.celled.table tr td, .ui.celled.table tr th {
+	border: none;
+	border-left: 0;
+	border-right: 0;
+}
+
+.ui.celled.table tr td {
 	vertical-align: middle;
 }
 
-.btn{
-	width: 95px;
-	margin-top: 20px;
-}
+.ui.celled.table {
+	font-size: 13pt;
+} 
 
-.form-control:focus, 
-.custom-file-input:focus~.custom-file-label {
+.ui[class*="left icon"].input>input:focus {
 	box-shadow: 0 0 0 .2rem rgba(192, 231, 248, .5);
 	border: 1px solid #95d6f3;
 }
 
-.table th, .table td {
-	border: none;
+.ui.action.input input[type="text"]:focus{
+	border: 1px solid rgba(34,36,38,.15);
 }
 
-.table {
-	font-size: 13pt;
+.ui.action.input input[type="file"] {
+  display: none;
 }
+
 </style>
 <script type="text/javascript">
-
 
 var memberPhoneDupChk = 0;
 
@@ -98,16 +97,9 @@ function updateMemberChk(){
 	return true;
 }
 
-$(function(){
-	$('#updateProfileUpload').on('change',function(){
-	    //get the file name
-	    var fileName = $(this).val().replace('C:\\fakepath\\', " ");
-	    console.log(fileName);
-	    //replace the "Choose a file" label
-	    $(this).next('.custom-file-label').html(fileName);
-	});
-	
 
+	
+$(function(){
 	//전화번호 DB에 중복값 있는지 검사
 	$('#phoneUpdate').blur(function(){
 		
@@ -120,14 +112,14 @@ $(function(){
 			success: function(result){
 				
 				if (result == "DUP"){
-					$('#updatePhoneExplan').html('<font color="red">사용할 수 없는 전화번호입니다.</font>');
+					$('#updatePhoneExplan').html('<font color="red">&nbsp;사용할 수 없는 전화번호입니다.</font>');
 					memberPhoneDupChk = 1;
 				} else {
 					if (memberPhoneValue == ""){
-						$('#updatePhoneExplan').html('<font color="#cecece">전화번호 형식에 맞게 입력해주세요.</font>');
+						$('#updatePhoneExplan').html('<font color="#cecece">&nbsp;전화번호 형식에 맞게 입력해주세요.</font>');
 						memberPhoneDupChk = 1;
 					} else {
-						$('#updatePhoneExplan').html('<font color="green">사용할 수 있는 전화번호입니다.</font>');
+						$('#updatePhoneExplan').html('<font color="green">&nbsp;사용할 수 있는 전화번호입니다.</font>');
 						memberPhoneDupChk = 0;
 					}
 				}
@@ -136,17 +128,37 @@ $(function(){
 				console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
 			}
 		});
-	});	
+	});
+	
+	// 탈퇴하기 모달 창 띄우기
+	$('#showModal').on('click', function(){
+		console.log('함수 실행');
+		$('#secessionModal').modal("show");
+	});
+	
+	$("input:text").click(function() {
+		$(this).parent().find("input:file").click();
+	});
 
+	$('input:file', '.ui.action.input').on('change', function(e) {
+	 	var name = e.target.files[0].name;
+		$('input:text', $(e.target).parent()).val(name);
+	 });
 });
+	
+
+
+
 </script>
 </head>
 <body>
+<!-- 헤더 -->
+<header><jsp:include page="/WEB-INF/views/header.jsp" /></header>
 
-<div style="margin-top: 7%; margin-left: 10%; margin-right: 10%">
-	<div style="float: left; width: 20%">
-		<div class="table-responsive">
-			<table class="table table-bordered" style="text-align:center; font-size: 15pt; background: #DCF2FB">
+<div class="bodyCss" style="margin-left: 10%; margin-right: 10%">
+	<div class="bodyContentCss" style="float: left; width: 20%">
+		<div>
+			<table class="ui celled table" style="text-align:center; font-size: 15pt; background: #DCF2FB">
 				<tr><td class="sidebarTd">내 가이드북 보기</td></tr>
 				<tr><td class="sidebarTd">가이드 매칭 기록</td></tr>
 				<tr><td class="sidebarTd">동행 찾기 기록</td></tr>
@@ -155,21 +167,21 @@ $(function(){
 		</div>
 	</div>
 	<div style="float:left; margin-left: 3%; width: 75%">
-		<h2>내 정보 수정</h2>
+		<h2 style="font-family: GodoM">내 정보 수정</h2>
 		<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
-		<div class="table-responsive">
-			<form action="updateMember.do" method="POST" onsubmit="updateMemberChk();">
-				<table class="table" style="width: 100%; vertical-align: middle; border: 0; margin-top: 2%">
+		<div>
+			<form action="updateMember.do" method="POST" onsubmit="return updateMemberChk();"  enctype="multipart/form-data">
+				<table class="ui celled table" style="width: 100%; vertical-align: middle; border: 0; margin-top: 2%">
 					<c:if test="${loginMember.member_profile_rename != null}">
-					<tr><th colspan="2"><img class="img-circle" src="resources/images/member_profile/${loginMember.member_profile_rename }" style="width: 200px"></th></tr>
+					<tr><th colspan="2"><img class="ui medium circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }" style="width: 200px"></th></tr>
 					</c:if>
 					<c:if test="${loginMember.member_profile_rename  == null}">
-					<tr><th colspan="2"><img class="img-circle" src="resources/images/molly.png"></th></tr>
+					<tr><th colspan="2"><img class="ui medium circular image" src="resources/images/molly.png"></th></tr>
 					</c:if>
 					<tr><th>이름</th><td>${loginMember.member_name }</td></tr>
 					<tr><th>아이디</th><td>${loginMember.member_id }</td></tr>
-					<tr><th>비밀번호</th><td style="padding-bottom: 0"><div class="form-group"><input class="form-control" type="password" name="member_pwd" id="pwdUpdate" /></div></td></tr>
-					<tr><th>비밀번호 확인</th><td style="padding-bottom: 0"><div class="form-group"><input class="form-control" type="password" id="pwdUpdate2" /></div></td></tr>
+					<tr><th>비밀번호</th><td><div class="ui input"><input type="password" name="member_pwd" id="pwdUpdate" style="width: 250px; height:35px" /></div></td></tr>
+					<tr><th>비밀번호 확인</th><td><div class="ui input"><input type="password" id="pwdUpdate2" style="width: 250px; height: 35px" /></div></td></tr>
 					<tr><th>이메일 주소</th><td>${loginMember.member_email }</td></tr>
 					<tr>
 						<th>성별</th>
@@ -191,49 +203,74 @@ $(function(){
 					</tr>
 					<tr>
 						<th>전화번호</th>
-							<td style="padding-bottom: 0">
-								<div class="form-group">
-									<input class="form-control" value="${loginMember.member_phone }" name="member_phone" id="phoneUpdate" />
-									<span id="updatePhoneExplan"><font color="#cecece">- 없이 숫자만 입력하세요.</font></span>
+							<td>
+								<div class="ui input">
+									<input value="${loginMember.member_phone }" name="member_phone" id="phoneUpdate" style="width: 250px; height: 35px; font-family: GodoM" />
+									<span id="updatePhoneExplan" style="margin: auto"><font color="#cecece">&nbsp;- 없이 숫자만 입력하세요.</font></span>
 								</div>
 							</td>
 					</tr>
-					<tr><th>프로필 사진</th><td><div class="custom-file"><input class="custom-file-input" type="file" id="updateProfileUpload" accept="image/*" /><label class="custom-file-label" for="updateProfileUpload"></label></div></td></tr>
+					<tr>
+						<th>프로필 사진</th>
+							<td>
+								<div class="ui action input">
+									<input type="text" readonly style="cursor: pointer">
+									<input type="file" id="updateProfileUpload" accept="image/*" name="updateProfileUpload" />
+									<div class="ui icon button">
+										<i class="attach icon"></i>
+									</div>
+								</div>
+							</td>
+					</tr>
 					<tr>
 						<th colspan="2" style="text-align: center;">
-							<input class="btn" type="submit" value="확인" style="background: #c0e7f8">&emsp;&emsp;
-							<input class="btn" type="button" onclick="window.history.back();" value="취소">&emsp;&emsp;
-							<input class="btn" type="button" data-toggle="modal" data-target="#secessionModal" value="탈퇴하기">
-							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#secessionModal">
-							  Launch demo modal
-							</button>
+							<input class="ui button" type="submit" value="확인" style="background: #c0e7f8; width: 95px; height: 45px; margin-top: 20px; font-family: GodoM">&emsp;&emsp;
+							<input class="ui button" type="button" onclick="window.history.back();" value="취소" style="width: 95px; height: 45px; margin-top: 20px; font-family: GodoM">&emsp;&emsp;
+							<input class="ui button" type="button" id="showModal" value="탈퇴하기" style="width: 95px; height: 45px; margin-top: 20px; font-family: GodoM">
 						</th>
 					</tr>
+		
+
 				</table>
 			</form>
+
 		</div>
 	</div>
 	<!-- 탈퇴하기 모달 -->
-<div class="modal fade" id="secessionModal" tabindex="-1" role="dialog" aria-labelledby="secessionModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="secessionModalTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
+<div class="ui mini modal" id="secessionModal">
+	<i class="close icon"></i>
+	<div class="header">
+		<h4>회원 탈퇴</h4>
+	</div>
+	<div class="description">
+		<p>사용하고 계신 계정을 탈퇴할 경우 복구가 불가능합니다.</p>
+		<p>탈퇴 후 회원 정보 및 서비스 이용 기록은 모두 삭제되오니 신중하게 선택하여 주시기 바랍니다.</p>
+		<br>
+		<p>회원 탈퇴를 위해 비밀번호를 입력해주세요.</p>
+		<div class="ui input">
+			<input type="password" placeholder="비밀번호를 입력하세요.">
+		</div>
+		<br>
+		<div class="ui input">
+			<input type="radio" value="guide" id="guideSecession" name="secession">
+			<label for="guideSecession">가이드 탈퇴</label>
+		</div>
+		<div class="ui input">
+			<input type="radio" value="all" id="allSecession" name="secession">
+			<label for="allSecession">전체 탈퇴</label>
+		</div>
+		<div class="ui input">
+			<input type="checkbox" id="secessionChk">
+			<label for="secessionChk">안내사항을 모두 확인하였으며, 탈퇴시 계정의 데이터 복구가 불가능함에 동의합니다.</label>
+		</div>
+	</div>
+	<div class="actions">
+		<div class="ui button">확인</div>
+	</div>
 </div>
 </div>
 
+<!-- 푸터 -->
+<footer><jsp:include page="/WEB-INF/views/footer.jsp" /></footer>
 </body>
 </html>

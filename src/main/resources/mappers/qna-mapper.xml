@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qnaMapper">
+	
+	<select id="selectList" parameterType="Page" resultType="Qna">
+		<![CDATA[
+		SELECT * FROM (SELECT ROWNUM RNUM, QNA_NO, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_DATE, QNA_COMMENT, QNA_ALARM
+		                      FROM (SELECT * FROM QNA ORDER BY QNA_NO DESC)) WHERE RNUM >= #{ startRow } AND RNUM <= #{ endRow }
+		]]>
+	</select>
+	
+	<select id="selectTotal" resultType="_int">
+		SELECT COUNT(*) FROM QNA
+	</select>
+	
+</mapper>

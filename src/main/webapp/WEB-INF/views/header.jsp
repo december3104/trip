@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <title>header.jsp</title>
-<title></title>
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- 시맨틱유아이 -->
@@ -54,6 +53,7 @@ footer {
 	font-size:10pt;
 	text-align:center;
 	padding-top:15px;
+	margin-bottom: -5%;
 }
 </style>
 </head>
@@ -120,7 +120,7 @@ footer {
 				<div class="item">내 가이드북</div>
 				<div class="item">가이드 매칭 기록</div>
 				<div class="item">동행 매칭 기록</div>
-				<div class="item" onclick="location.href='selectListAllMember.ad'">내 정보 수정</div>
+				<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
 				<div class="item" id="logoutTag">로그아웃</div>
 			</div>
 		</div>
@@ -183,7 +183,7 @@ function loginWithKakao() {
 </script>
 </header>
 <footer>
-copyright@iei.or.kr 2019-11-26 <br>
+copyright a2b@a2b.com 2019-11-26 <br>
 서울시 강남구 역삼동 777, 2 ~ 5층 A2B, 여길잡아<br>
 TEL : 02-1234-5678, FAX : 02-1234-5679<br>
 </footer>

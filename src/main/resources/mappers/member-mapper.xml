@@ -10,7 +10,7 @@
 	
 	<insert id="insertMember" parameterType="Member">
 		insert into member values (#{member_id}, #{member_name}, #{member_pwd}, #{member_email}, 
-		#{member_gender}, #{member_phone}, #{member_birth}, #{member_profile_original}, 
+		#{member_gender}, #{member_phone}, to_date(#{member_birth}, 'YYYY/MM/DD'), #{member_profile_original}, 
 		#{member_profile_rename}, default, default, default, default, null)
 	</insert>
 	
@@ -33,6 +33,14 @@
 	
 	<select id="selectSearchMemberId" parameterType="string" resultType="_int">
 		select count(member_id) from member where member_id = #{value}
+	</select>
+	
+	<select id="selectSearchMemberEmail" parameterType="string" resultType="_int">
+		select count(member_email) from member where member_email = #{value}
+	</select>
+	
+	<select id="selectSearchMemberPhone" parameterType="string" resultType="_int">
+		select count(member_phone) from member where member_phone = #{value}
 	</select>
 		
 	<select id="selectListAllMember" resultType="Member">

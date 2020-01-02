@@ -13,6 +13,8 @@ public interface MemberService {
 	int updateGuideMember(String member_id);
 	int deleteMember(String member_id);
 	int selectSearchMemberId(String member_id);
+	int selectSearchMemberEmail(String member_email);
+	int selectSearchMemberPhone(String member_phone);
 	ArrayList<Member> selectListAllMember();
 	ArrayList<Member> selectListAllGuide();
 	ArrayList<Member> selectListApplyGuide();

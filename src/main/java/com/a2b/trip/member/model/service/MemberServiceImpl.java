@@ -57,6 +57,19 @@ public class MemberServiceImpl implements MemberService {
 	public int selectSearchMemberId(String member_id) {
 		return memberDao.selectSearchMemberId(member_id);
 	}
+	
+	// 이메일 주소 중복 확인
+	@Override
+	public int selectSearchMemberEmail(String member_email) {
+		return memberDao.selectSearchMemberEmail(member_email);
+	}
+
+	// 전화번호 중복 확인
+	@Override
+	public int selectSearchMemberPhone(String member_phone) {
+		return memberDao.selectSearchMemberPhone(member_phone);
+	}
+
 
 	@Override
 	public ArrayList<Member> selectListAllMember() {
@@ -72,6 +85,7 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<Member> selectListApplyGuide() {
 		return memberDao.selectListApplyGuide();
 	}
+
 
 	
 }

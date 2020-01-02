@@ -70,7 +70,7 @@ footer {
 		가이드북
 		<div class="menu">
 			<div class="item" onclick="location.href='goplace.do'">계획하기</div>
-			<div class="item">제작하기</div>
+			<div class="item" onclick="location.href='makeGuidebook.do'">제작하기</div>
 			<div class="item">공유 게시판</div>
 		</div>
 	</a> 

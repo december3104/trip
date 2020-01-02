@@ -19,8 +19,10 @@
 	</select>
 	
 	<update id="updateMember" parameterType="Member">
-		update member set member_pwd = #{member_pwd}, member_email = #{member_email},
-		member_phone = #{member_phone}, member_profile_original = #{member_profile_original}
+		update member set member_pwd = #{member_pwd}, member_phone = #{member_phone}
+		<if test="member_profile_orginal != null">
+		, member_profile_original = #{member_profile_original}, member_profile_rename = #{member_profile_rename}
+		</if>
 	</update>
 	
 	<update id ="updateGuideMember" parameterType="string">

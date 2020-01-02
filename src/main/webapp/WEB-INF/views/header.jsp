@@ -44,17 +44,6 @@ $(function(){
 	right: auto;
 }
 
-footer {
-	position:absolute;
-	bottom: 0;
-	width:100%;
-	height:50px;
-	text-shadow:1px 1px 2px white;
-	font-size:10pt;
-	text-align:center;
-	padding-top:15px;
-	margin-bottom: -5%;
-}
 </style>
 </head>
 <body>
@@ -63,7 +52,7 @@ footer {
 <div class="ui top fixed borderless massive menu" style="width: 80%; margin: 0 10% 0 10%">
 	<!-- 사이트 로고 -->
 	<div class="item">
-		<img src="resources/images/logo.png">
+		<img src="resources/images/logo.png" onclick="location.href='${pageContext.request.contextPath}/'" style="cursor: pointer">
 	</div>
 	<!-- 메뉴 -->
 	<a class="ui simple dropdown item godom">
@@ -182,10 +171,5 @@ function loginWithKakao() {
 //]]>
 </script>
 </header>
-<footer>
-copyright a2b@a2b.com 2019-11-26 <br>
-서울시 강남구 역삼동 777, 2 ~ 5층 A2B, 여길잡아<br>
-TEL : 02-1234-5678, FAX : 02-1234-5679<br>
-</footer>
 </body>
 </html>

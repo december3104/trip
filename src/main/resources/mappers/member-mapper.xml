@@ -57,5 +57,11 @@
 	<select id="selectListApplyGuide" resultType="Member">
 		select * from member where guide_qualification='WAIT'
 	</select>
+	
+	<select id="selectDetailViewMember"  parameterType="string" resultType="Member">
+		select * from member where member_id = #{value}
+	</select>
+	
+	
 
 </mapper>

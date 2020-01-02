@@ -28,7 +28,10 @@
 				<c:out value="${guide.member_name }" />
 			</td>
 			<td>
-				<c:out value="${guide.member_id }" />
+				<c:url value="selectDetailViewGuide.ad" var="detailGuide">
+					<c:param name="guide_id" value="${guide.member_id }" />
+				</c:url>
+				<a href="${detailGuide }"><c:out value="${guide.member_id }" /></a> 
 			</td>
 			<td>
 				<c:out value="${guide.member_gender }" />

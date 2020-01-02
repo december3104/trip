@@ -51,6 +51,17 @@ public class MemberDao {
 	public int selectSearchMemberId(String member_id) {
 		return sqlSession.selectOne("memberMapper.selectSearchMemberId", member_id);
 	}
+	
+	// 이메일 주소 중복 확인
+	public int selectSearchMemberEmail(String member_email) {
+		return sqlSession.selectOne("memberMapper.selectSearchMemberEmail", member_email);
+	}
+
+	// 전화번호 중복 확인
+	public int selectSearchMemberPhone(String member_phone) {
+		return sqlSession.selectOne("memberMapper.selectSearchMemberPhone", member_phone);
+	}
+	
 	// 일반 회원 조회
 	public ArrayList<Member> selectListAllMember() {
 		List<Member> list = sqlSession.selectList("memberMapper.selectListAllMember");
@@ -67,5 +78,7 @@ public class MemberDao {
 		List<Member> list = sqlSession.selectList("memberMapper.selectListApplyGuide");		
 		return (ArrayList<Member>)list;
 	}
+
+
 
 }

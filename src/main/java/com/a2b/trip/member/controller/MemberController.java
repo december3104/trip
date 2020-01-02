@@ -1,7 +1,9 @@
 package com.a2b.trip.member.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,14 +80,31 @@ public class MemberController {
 	
 	// 일반 회원가입 처리
 	@RequestMapping(value="insertMember.do", method=RequestMethod.POST)
-	public String insertMember(Member member, Model model, MultipartFile file, HttpServletRequest request) {
+	public String insertMember(Member member, @RequestParam(name="upProfile") MultipartFile file, Model model, HttpServletRequest request) {
 		// 비밀번호 암호화 처리
 		member.setMember_pwd(bcryptPasswordEncoder.encode(member.getMember_pwd()));
+	
+		logger.info(file.getOriginalFilename());
+		
 		// 프로필 사진 저장 처리
-		if (member.getMember_profile_original() != null) {
-			
-			String savePath = request.getSession().getServletContext().getRealPath("/resources/member_profile_upfiles");
-			
+		String savePath = request.getSession().getServletContext().getRealPath("/resources/images/member_profile");
+		
+		String memberProfileOriginal = file.getOriginalFilename();
+
+		if (memberProfileOriginal != null) {
+			member.setMember_profile_original(memberProfileOriginal);
+			// 파일명 형식 변경
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			// 바꿀 파일명 만들기 : 확장자는 원본과 동일하게 함.
+			String memberProfileRename = member.getMember_id() + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
+					+ memberProfileOriginal.substring(memberProfileOriginal.lastIndexOf(".") + 1);
+			logger.info(memberProfileRename);
+			member.setMember_profile_rename(memberProfileRename);
+			try {
+				file.transferTo(new File(savePath + "\\" + memberProfileRename));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
 		}
 		// 서비스로 전송하고 결과 받기
 		int result = memberService.insertMember(member);
@@ -96,10 +115,47 @@ public class MemberController {
 			model.addAttribute("message", "회원 가입 실패!");
 			viewFileName = "common/error";
 		}
+		
 		return viewFileName;
 	}
 	
+	// 일반 회원 정보 보기 - 비밀번호 확인 페이지로 이동
+	@RequestMapping("moveMemberInfoPage.do")
+	public String moveMemberInfoPage() {
+		return "member/memberInfoChkPage";
+	}
+	
+	// 일반 회원 정보 보기 - 비밀번호 확인 처리
+	@RequestMapping(value="selectMemberPwdChk.do", method=RequestMethod.POST)
+	public void selectMemberPwdChk(@RequestParam(name="member_pwd") String member_pwd, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		// 세션에서 정보 꺼내기
+		HttpSession session = request.getSession(false);
+		Member member = (Member)session.getAttribute("loginMember");
+		String memberPwd = member.getMember_pwd();
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (bcryptPasswordEncoder.matches(member_pwd, memberPwd)) {
+			out.append("OK");
+			out.flush();
+		} else {
+			out.append("NO");
+			out.flush();
+		}
+		
+		out.close();
+		
+	}
+	
+	// 일반 회원 정보 보기 - 수정 페이지로 이동
+	@RequestMapping("moveMemberUpdatePage.do")
+	public String moveMemberUpdatePage() {
+		return "member/memberUpdatePage";
+	}
+	
 	// 일반 회원 정보 보기 처리
+	@RequestMapping("memberInfo.do")
 	public ModelAndView memberInfo(@RequestParam("member_id") String member_id, ModelAndView mv) {
 		
 		Member member = memberService.selectOneMember(member_id);
@@ -133,8 +189,10 @@ public class MemberController {
 	}
 	
 	// 아이디 중복 확인 처리
+	@RequestMapping(value="selectSearchMemberId.do", method=RequestMethod.POST)
 	public void selectSearchMemberId(@RequestParam("member_id") String member_id, HttpServletResponse response) throws IOException {
 		
+		logger.info(member_id);
 		int result = memberService.selectSearchMemberId(member_id);
 		
 		response.setContentType("text/html; charset=utf-8");
@@ -144,15 +202,60 @@ public class MemberController {
 			out.append("OK");
 			out.flush();
 		}
+		
 		if (result == 1) {		// 존재하는 아이디
 			out.append("DUP");
 			out.flush();
 		}
+		
 		out.close();
 		
 		
 	}
 	
+	// 이메일 주소 중복 확인 처리
+	@RequestMapping(value="selectSearchMemberEmail.do", method=RequestMethod.POST)
+	public void selectSearchMemberEmail(@RequestParam("member_email") String member_email, HttpServletResponse response) throws IOException {
+		
+		int result = memberService.selectSearchMemberEmail(member_email);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (result == 0) {
+			out.append("OK");
+			out.flush();
+		}
+		
+		if (result == 1) {
+			out.append("DUP");
+			out.flush();
+		}
+		
+		out.close();
+	}
+	
+	// 전화번호 중복 확인 처리
+	@RequestMapping(value="selectSearchMemberPhone.do", method=RequestMethod.POST)
+	public void selectSearchMemberPhone(@RequestParam("member_phone") String member_phone, HttpServletResponse response) throws IOException {
+		
+		int result = memberService.selectSearchMemberPhone(member_phone);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (result == 0) {
+			out.append("OK");
+			out.flush();
+		}
+		
+		if (result == 1) {
+			out.append("DUP");
+			out.flush();
+		}
+		
+		out.close();
+	}
 	
 	
 	//작성자 : ssm

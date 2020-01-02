@@ -15,7 +15,7 @@ public class Member implements Serializable {
 	private String member_email;
 	private String member_gender;
 	private String member_phone;
-	private Date member_birth;
+	private String member_birth;
 	private String member_profile_original;
 	private String member_profile_rename;
 	private int member_report_count;
@@ -27,7 +27,7 @@ public class Member implements Serializable {
 	public Member() {}
 
 	public Member(String member_id, String member_name, String member_pwd, String member_email, String member_gender,
-			String member_phone, Date member_birth, String member_profile_original, String member_profile_rename,
+			String member_phone, String member_birth, String member_profile_original, String member_profile_rename,
 			int member_report_count, String guide_qualification, int member_level, Date enroll_date,
 			String guide_apply_alarm) {
 		super();
@@ -95,11 +95,11 @@ public class Member implements Serializable {
 		this.member_phone = member_phone;
 	}
 
-	public Date getMember_birth() {
+	public String getMember_birth() {
 		return member_birth;
 	}
 
-	public void setMember_birth(Date member_birth) {
+	public void setMember_birth(String member_birth) {
 		this.member_birth = member_birth;
 	}
 

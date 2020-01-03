@@ -9,4 +9,5 @@ public interface QnaService {
 
 	ArrayList<Qna> selectAllQna(Page page);
 	int selectTotal();
+	int insertQna(Qna qna);
 }

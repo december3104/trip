@@ -26,4 +26,9 @@ public class QnaServiceImpl implements QnaService {
 	public int selectTotal() {
 		return qnaDao.selectTotal();
 	}
+
+	@Override
+	public int insertQna(Qna qna) {
+		return qnaDao.insertQna(qna);
+	}
 }

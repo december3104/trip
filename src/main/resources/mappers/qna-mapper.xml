@@ -15,4 +15,7 @@
 		SELECT COUNT(*) FROM QNA
 	</select>
 	
+	<insert id="insertQna" parameterType="Qna">
+		INSERT INTO QNA VALUES (QNA_SEQ.NEXTVAL, #{qna_id}, #{qna_title}, #{qna_content}, sysdate, #{qna_comment}, #{qna_alarm})
+	</insert>
 </mapper>

@@ -43,12 +43,6 @@ $(function(){
 	left: -60px;
 	right: auto;
 }
-.ui.striped.table tbody tr:nth-child(2n-1), .ui.striped.table>tr:nth-child(2n-1) {
-	background-color: rgba(220,242,251,1);
-}
-.ui.striped.table tbody tr:nth-child(2n), .ui.striped.table>tr:nth-child(2n) {
-	background-color: #fff;
-}
 
 </style>
 </head>
@@ -61,46 +55,24 @@ $(function(){
 		<img src="resources/images/logo.png" onclick="location.href='${pageContext.request.contextPath}/'" style="cursor: pointer">
 	</div>
 	<!-- 메뉴 -->
-	<c:if test="${loginMember.member_level ne 3 }">
-		<a class="ui simple dropdown item godom">
-			가이드북
-			<div class="menu">
-				<div class="item" onclick="location.href='goplace.do'">계획하기</div>
-				<div class="item" onclick="location.href='makeGuidebook.do'">제작하기</div>
-				<div class="item">공유 게시판</div>
-			</div>
-		</a> 
-		<a class="item godom">현지 가이드 매칭</a> 
-		<a class="item godom">동행 찾기</a> 
-		<a class="item godom">이용방법</a> 
-		<a class="ui simple dropdown item godom">고객센터
-			<div class="menu">
-				<div class="item">공지사항</div>
-				<div class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">Q&A</div>
-				<div class="item">가이드 신청</div>
-			</div>
-		</a>
-	</c:if>
-	
-	<!-- 관리자 메뉴 -->
-	<c:if test="${loginMember.member_level eq 3}">
-		<a class="ui simple dropdown item godom">회원 관리
-				<div class="menu">
-					<div class="item" onclick="location.href='selectListAllMember.ad'">일반회원</div>
-					<div class="item" onclick="location.href='selectListAllGuide.ad'">가이드</div>
-					<div class="item" onclick="location.href='selectListApplyGuide.ad'">가이드 신청</div>
-				</div>
-		</a>
-		<a class="ui simple dropdown item godom">신고 처리
-				<div class="menu">
-					<div class="item" onclick="location.href='selectListNormalReport.ad'">일반회원</div>
-					<div class="item" onclick="location.href='selectListGuideReport.ad'">가이드</div>
-				</div>
-		</a>
-		<a class="item godom" onclick="location.href='selectListAllNotice.ad'">공지사항 관리</a>
-		<a class="item godom" onclick="location.href='qna.do?currentPage=1&contentNum=10'">QnA 관리</a>
-	</c:if>
-	
+	<a class="ui simple dropdown item godom">
+		가이드북
+		<div class="menu">
+			<div class="item" onclick="location.href='goplace.do'">계획하기</div>
+			<div class="item" onclick="location.href='makeGuidebook.do'">제작하기</div>
+			<div class="item">공유 게시판</div>
+		</div>
+	</a> 
+	<a class="item godom">현지 가이드 매칭</a> 
+	<a class="item godom">동행 찾기</a> 
+	<a class="item godom">이용방법</a> 
+	<a class="ui simple dropdown item godom">고객센터
+		<div class="menu">
+			<div class="item">공지사항</div>
+			<div class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">Q&A</div>
+			<div class="item">가이드 신청</div>
+		</div>
+	</a>
 	<!-- 우측 상단 사용자정보&아이콘들 -->
 	<div class="item right menu" align="right" style="margin-right: 0;">
 		<i class="snowflake large icon" style="margin-right: 10px;"></i> 
@@ -121,50 +93,26 @@ $(function(){
 		<a style="background: #c0e7f8; color: #000; width: 100px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer" id="loginTag">로그인</a>
 		</c:if>
 		
-		<!-- 관리자 로그인이 아닌경우 -->
-		<c:if test="${loginMember.member_level ne 3 }" > 
-			<!-- 로그인 했을 때 회원정보 -->
-			<c:if test="${loginMember != null }">
-			<div class="ui simple dropdown item" id="userDiv">
-				<c:if test="${loginMember.member_profile_rename != null }">
-				<img class="ui mini circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }">
-				</c:if>
-				<c:if test="${loginMember.member_profile_rename == null }">
-				<img class="ui mini circular image" src="resources/images/molly.png">
-				</c:if>
-				<div class="content">
-					<div class="ui sub header">&emsp; <font size="3pt">${loginMember.member_name }</font></div>
-				</div>
-				<div class="menu" style="text-align: center">
-					<div class="item">내 가이드북</div>
-					<div class="item">가이드 매칭 기록</div>
-					<div class="item">동행 매칭 기록</div>
-					<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
-					<div class="item" id="logoutTag">로그아웃</div>
-				</div>
-			</div>
+		<!-- 로그인 했을 때 회원정보 -->
+		<c:if test="${loginMember != null }">
+		<div class="ui simple dropdown item" id="userDiv">
+			<c:if test="${loginMember.member_profile_rename != null }">
+			<img class="ui mini circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }">
 			</c:if>
-		</c:if>
-		
-		<!-- 관리자 로그인인경우 -->
-		<c:if test="${loginMember.member_level eq 3 }">
-			<div class="ui simple dropdown item" id="userDiv">
-				<c:if test="${loginMember.member_profile_rename != null }">
-				<img class="ui mini circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }">
-				</c:if>
-				<c:if test="${loginMember.member_profile_rename == null }">
-				<img class="ui mini circular image" src="resources/images/molly.png">
-				</c:if>
-				<div class="content">
-					<div class="ui sub header">&emsp; <font size="3pt">${loginMember.member_name }</font></div>
-				</div>
-				
-				<div class="menu" style="text-align: center">
-					<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
-					<div class="item" id="logoutTag">로그아웃</div>
-				</div>
-				
+			<c:if test="${loginMember.member_profile_rename == null }">
+			<img class="ui mini circular image" src="resources/images/molly.png">
+			</c:if>
+			<div class="content">
+				<div class="ui sub header">&emsp; <font size="3pt">${loginMember.member_name }</font></div>
 			</div>
+			<div class="menu" style="text-align: center">
+				<div class="item">내 가이드북</div>
+				<div class="item">가이드 매칭 기록</div>
+				<div class="item">동행 매칭 기록</div>
+				<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
+				<div class="item" id="logoutTag">로그아웃</div>
+			</div>
+		</div>
 		</c:if>
 	</div>
 </div>

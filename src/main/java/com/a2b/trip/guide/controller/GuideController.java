@@ -48,7 +48,7 @@ public class GuideController {
 	//가이드 상세보기 거절
 	@RequestMapping("detailApplyRejectGuide.ad")
 	public String detailApplyRejectGuide(@RequestParam("guide_id") String guide_id) {
-		int result = guideService.detailApplyRejectGuide(guide_id);
+		int result = guideService.detailApplyRejectGuide1(guide_id);
 		int result2 = guideService.detailApplyRejectGuide2(guide_id);
 		String viewFileName = "";
 		if(result == 1 && result2 == 1) {
@@ -65,7 +65,7 @@ public class GuideController {
 	public String updateDetailAcceptGuide(@RequestParam("guide_id") String guide_id) {
 		String viewFileName = "";
 		
-		int result = guideService.updateDetailAcceptGuide(guide_id);
+		int result = guideService.updateDetailAcceptGuide1(guide_id);
 		int result2 = guideService.updateDetailAcceptGuide2(guide_id);
 		
 		logger.info(result + " // " + result2); 

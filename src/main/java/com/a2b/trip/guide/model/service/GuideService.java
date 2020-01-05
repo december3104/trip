@@ -8,11 +8,11 @@ public interface GuideService {
 
 	GuideDetail selectDetailViewApplyGuide(String guide_id);
 
-	int detailApplyRejectGuide(String guide_id);
+	int detailApplyRejectGuide1(String guide_id);
 
 	int detailApplyRejectGuide2(String guide_id);
 
-	int updateDetailAcceptGuide(String guide_id);
+	int updateDetailAcceptGuide1(String guide_id);
 
 	int updateDetailAcceptGuide2(String guide_id);
 

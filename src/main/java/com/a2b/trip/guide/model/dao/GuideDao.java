@@ -22,16 +22,16 @@ public class GuideDao {
 		return sqlSession.selectOne("guideMapper.selectDetailViewApplyGuide", guide_id);
 	}
 	//관리자 가이드 신청 거절
-	public int detailApplyRejectGuide(String guide_id) {
+	public int detailApplyRejectGuide1(String guide_id) {
 		return sqlSession.update("guideMapper.detailApplyRejectGuide1",guide_id);
 	}
 	//관리자 가이드 신청 거절
-	public int detailApplyRejectGuide1(String guide_id) {
+	public int detailApplyRejectGuide2(String guide_id) {
 		return sqlSession.delete("memberMapper.detailApplyRejectGuide2",guide_id);
 	}
 	//관리자 가이드 신청 승인
-	public int updateDetailAcceptGuide(String guide_id) {
-		return sqlSession.update("guideMapper.updateDetailAcceptGuide", guide_id);
+	public int updateDetailAcceptGuide1(String guide_id) {
+		return sqlSession.update("guideMapper.updateDetailAcceptGuide1", guide_id);
 	}
 	//관리자 가이드 신청 승인
 	public int updateDetailAcceptGuide2(String guide_id) {

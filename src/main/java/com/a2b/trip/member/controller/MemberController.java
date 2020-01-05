@@ -52,7 +52,7 @@ public class MemberController {
 			if (bcryptPasswordEncoder.matches(member.getMember_pwd(), loginMember.getMember_pwd())) {
 				session.setAttribute("loginMember", loginMember);
 				if (loginMember.getMember_level() == 3) {
-					viewFileName = "main";
+					viewFileName = "admin/main_ad";
 				}
 			} else {
 				model.addAttribute("message", "일치하는 회원 정보가 없습니다.");

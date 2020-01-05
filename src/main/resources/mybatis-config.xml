@@ -14,7 +14,6 @@
 		<typeAlias type="com.a2b.trip.guide.model.vo.Guide" alias="Guide"/>
 		<typeAlias type="com.a2b.trip.guide.model.vo.GuideDetail" alias="GuideDetail"/>
 		<typeAlias type="com.a2b.trip.notice.model.vo.Notice" alias="Notice"/>
-		
 	</typeAliases>
 	
 	<mappers>

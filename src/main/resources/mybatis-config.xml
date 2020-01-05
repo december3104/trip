@@ -13,7 +13,7 @@
 		<typeAlias type="com.a2b.trip.qna.model.vo.Qna" alias="Qna" />
 		<typeAlias type="com.a2b.trip.guide.model.vo.Guide" alias="Guide"/>
 		<typeAlias type="com.a2b.trip.guide.model.vo.GuideDetail" alias="GuideDetail"/>
-		
+		<typeAlias type="com.a2b.trip.notice.model.vo.Notice" alias="Notice"/>
 	</typeAliases>
 	
 	<mappers>
@@ -21,6 +21,7 @@
 		<mapper resource="mappers/report-mapper.xml"/>
 		<mapper resource="mappers/qna-mapper.xml" />
 		<mapper resource="mappers/guide-mapper.xml" />
+		<mapper resource="mappers/notice-mapper.xml"/>
 		
 	</mappers>
 </configuration>

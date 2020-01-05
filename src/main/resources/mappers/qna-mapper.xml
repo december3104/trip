@@ -11,11 +11,30 @@
 		]]>
 	</select>
 	
+	<select id="selectListMyQna" parameterType="Page" resultType="Qna">
+		<![CDATA[
+		SELECT * FROM (SELECT ROWNUM RNUM, QNA_NO, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_DATE, QNA_COMMENT, QNA_ALARM FROM 
+		(SELECT * FROM QNA WHERE QNA_ID=#{qna_id} ORDER BY QNA_NO DESC)) WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+		]]>
+	</select>
+	
 	<select id="selectTotal" resultType="_int">
 		SELECT COUNT(*) FROM QNA
 	</select>
 	
+	<select id="selectMyTotal" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM QNA WHERE QNA_ID = #{ qna_id }
+	</select>
+	
+	<select id="selectOne" parameterType="_int" resultType="Qna">
+		SELECT QNA_NO, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_DATE, QNA_COMMENT, QNA_ALARM, MEMBER_NAME, MEMBER_GENDER, MEMBER_PROFILE_RENAME FROM QNA LEFT JOIN MEMBER ON MEMBER_ID = QNA_ID WHERE QNA_NO = #{ value }
+	</select>
+	
 	<insert id="insertQna" parameterType="Qna">
-		INSERT INTO QNA VALUES (QNA_SEQ.NEXTVAL, #{qna_id}, #{qna_title}, #{qna_content}, sysdate, #{qna_comment}, #{qna_alarm})
+		INSERT INTO QNA VALUES (QNA_SEQ.NEXTVAL, #{ qna_id }, #{ qna_title }, #{ qna_content }, sysdate, #{ qna_comment }, #{ qna_alarm })
 	</insert>
+	
+	<update id="updateQna" parameterType="Qna">
+		UPDATE QNA SET QNA_TITLE = #{ qna_title }, QNA_CONTENT = #{ qna_content }, QNA_ALARM = #{ qna_alarm }, QNA_DATE = sysdate WHERE QNA_NO = #{ qna_no }
+	</update>
 </mapper>

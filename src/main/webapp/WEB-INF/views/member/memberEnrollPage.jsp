@@ -63,7 +63,7 @@ a:hover {
 	background: #c0e7f8
 }
 
-.ui[class*="left icon"].input>input:focus {
+.eight.wide.field>input:focus {
 	box-shadow: 0 0 0 .2rem rgba(192, 231, 248, .5);
 	border: 1px solid #95d6f3;
 }
@@ -138,14 +138,20 @@ $(function(){
 			success: function(result){
 				
 				if (result == "DUP" || memberIdValue == "a2b" || memberIdValue == "admin") {
-					$('#memberIdExplan').html('<font color="red">사용할 수 없는 아이디입니다.</font>');
+					$('#enrollChkContent').html('<font size="3pt">사용할 수 없는 아이디입니다.</font>');
+					$('#enrollChkBtn').css('background', '#D52828').css('color', '#fff');
+					$('#enrollChkModal').modal('show');
 					memberIdDupChk = 1;
 				} else {
 					if (memberIdValue == ""){
-						$('#memberIdExplan').html('<font color="#cecece">아이디는 4~12자 영소문자와 숫자로만 입력해주세요.</font>');
+						$('#enrollChkContent').html('<font size="3pt">아이디는 4~12자 영소문자와 숫자로만 입력해주세요.</font>');
+						$('#enrollChkBtn').css('background', '#c0e7f8').css('color', '000');
+						$('#enrollChkModal').modal('show');
 						memberIdDupChk = 1;
 					} else {
-						$('#memberIdExplan').html('<font color="green">사용할 수 있는 아이디입니다.</font>');
+						$('#enrollChkContent').html('<font size="3pt">사용할 수 있는 아이디입니다.</font>');
+						$('#enrollChkBtn').css('background', '#28D542').css('color', '000');
+						$('#enrollChkModal').modal('show');
 						memberIdDupChk = 0;
 					}
 				}
@@ -408,13 +414,15 @@ function checkForm(){
 }
 
 $(function(){
-	$('#profileUpload').on('change',function(){
-	    //get the file name
-	    var fileName = $(this).val().replace('C:\\fakepath\\', " ");
-	    console.log(fileName);
-	    //replace the "Choose a file" label
-	    $(this).next('.custom-file-label').html(fileName);
+	// 파일 input
+	$("input:text").click(function() {
+		$(this).parent().find("input:file").click();
 	});
+
+	$('input:file', '.ui.action.input').on('change', function(e) {
+	 	var name = e.target.files[0].name;
+		$('input:text', $(e.target).parent()).val(name);
+	 });
 
 });
 
@@ -441,7 +449,7 @@ $(function(){
 							<td>
 								<div class="eight wide field">
 									<input type="text" placeholder="아이디를 입력해주세요." name="member_id" id="member_id" style="font-family:GodoM" /> 	
-									<span id="memberIdExplan"><font color="#cecece">아이디는 4~12자 영소문자와 숫자로만 입력해주세요.</font></span>
+									<span id="memberIdExplan"><font color="#aaaaaa">아이디는 4~12자 영소문자와 숫자로만 입력해주세요.</font></span>
 								</div>
 							</td>
 					</tr>
@@ -450,7 +458,7 @@ $(function(){
 							<td>
 								<div class="eight wide field">
 									<input type="password" placeholder="비밀번호를 입력해주세요." name="member_pwd" id="member_pwd" style="font-family:GodoM" />
-									<span id="memberPwdExplan"><font color="#cecece">비밀번호는 최소 하나의 문자 + 하나의 숫자 + 하나의 특수 문자 포함, 최소 6자리로 입력해주세요.</font></span>
+									<span id="memberPwdExplan"><font color="#aaaaaa">비밀번호는 최소 하나의 문자 + 하나의 숫자 + 하나의 특수 문자 포함, 최소 6자리로 입력해주세요.</font></span>
 								</div>
 							</td>
 					</tr>
@@ -466,8 +474,8 @@ $(function(){
 						<th><i class="fas fa-check"></i>&nbsp;이메일 주소</th>
 							<td>
 								<div class="eight wide field">
-									<input type="email" placeholder="이메일 주소를 입력해주세요." name="member_email" id="member_email" />
-									<span id="memberEmailExplan"><font color="#cecece">이메일 주소 형식에 맞게 입력해주세요.</font></span>
+									<input type="email" placeholder="이메일 주소를 입력해주세요." name="member_email" id="member_email" style="font-family:GodoM" />
+									<span id="memberEmailExplan"><font color="#aaaaaa">이메일 주소 형식에 맞게 입력해주세요.</font></span>
 								</div>
 							</td>
 					</tr>
@@ -488,8 +496,8 @@ $(function(){
 						<th><i class="fas fa-check"></i>&nbsp;생년월일</th>
 							<td>
 								<div class="eight wide field">
-									<input class="form-control" type="text" placeholder="ex) 19901224" name="member_birth" id="member_birth" />
-									<span id="memberBirthExplan"><font color="#cecece">생년월일을 숫자 8자리로 입력하세요.</font></span>
+									<input class="form-control" type="text" placeholder="ex) 19901224" name="member_birth" id="member_birth" style="font-family:GodoM" />
+									<span id="memberBirthExplan"><font color="#aaaaaa">생년월일을 숫자 8자리로 입력하세요.</font></span>
 								</div>
 							</td>
 					</tr>
@@ -497,8 +505,8 @@ $(function(){
 						<th><i class="fas fa-check"></i>&nbsp;전화번호</th>
 							<td>
 								<div class="eight wide field">
-									<input type="text" placeholder="ex) 03180000000" name="member_phone" id="member_phone" />
-									<span id="memberPhoneExplan"><font color="#cecece">- 없이 숫자만 입력하세요.</font></span>
+									<input type="text" placeholder="ex) 03180000000" name="member_phone" id="member_phone" style="font-family:GodoM" />
+									<span id="memberPhoneExplan"><font color="#aaaaaa">- 없이 숫자만 입력하세요.</font></span>
 								</div>
 							</td>
 					</tr>
@@ -506,7 +514,7 @@ $(function(){
 						<th>프로필 사진</th>
 							<td>
 								<div class="ui action input seven wide field">
-									<input type="text" readonly style="cursor: pointer" placeholder="파일을 선택해주세요.">
+									<input type="text" readonly style="cursor: pointer; font-family:GodoM" placeholder="파일을 선택해주세요." />
 									<input type="file" id="profileUpload" accept="image/*" name="upProfile" readonly />
 									<div class="ui icon button" style="width: auto">
 										<i class="attach icon"></i>
@@ -768,6 +776,17 @@ $(function(){
 					</tr>										
 				</table>
 			</form>	
+		</div>
+	</div>
+	
+	<!-- 안내창 모달 -->
+	<div class="ui mini modal" id="enrollChkModal">
+		
+		<div class="description" style="padding: 5%">
+			<p id="enrollChkContent"></p>
+		</div>
+		<div class="actions">
+			<div class="fluid ui ok button" style="font-family: GodoM; margin: 0; background: #c0e7f8" id="enrollChkBtn">확인</div>
 		</div>
 	</div>
 </div>

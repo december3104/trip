@@ -47,6 +47,13 @@ $(function(){
 	right: auto;
 }
 
+.ui.striped.table tbody tr:nth-child(2n-1), .ui.striped.table>tr:nth-child(2n-1) {
+   background-color: rgba(220,242,251,1);
+}
+.ui.striped.table tbody tr:nth-child(2n), .ui.striped.table>tr:nth-child(2n) {
+   background-color: #fff;
+}
+
 .ui[class*="left icon"].input>input:focus {
 	box-shadow: 0 0 0 .2rem rgba(192, 231, 248, .5);
 	border: 1px solid #95d6f3;

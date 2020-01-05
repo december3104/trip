@@ -71,9 +71,15 @@ public class MemberController {
 	}
 	
 	// 일반 회원가입 페이지로 이동 처리
-	@RequestMapping("moveMemberEnrollPage")
+	@RequestMapping("moveMemberEnrollPage.do")
 	public String moveMemberEnrollPage() {
 		return "member/memberEnrollPage";
+	}
+	
+	// main으로 페이지 이동 처리
+	@RequestMapping("moveMainPage.do")
+	public String moveMainPage() {
+		return "main";
 	}
 	
 	// 일반 회원가입 처리
@@ -81,8 +87,6 @@ public class MemberController {
 	public String insertMember(Member member, @RequestParam(name="upProfile") MultipartFile file, Model model, HttpServletRequest request) {
 		// 비밀번호 암호화 처리
 		member.setMember_pwd(bcryptPasswordEncoder.encode(member.getMember_pwd()));
-	
-		logger.info(file.getOriginalFilename());
 		
 		// 프로필 사진 저장 처리
 		String savePath = request.getSession().getServletContext().getRealPath("/resources/images/member_profile");
@@ -96,7 +100,7 @@ public class MemberController {
 			// 바꿀 파일명 만들기 : 확장자는 원본과 동일하게 함.
 			String memberProfileRename = member.getMember_id() + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
 					+ memberProfileOriginal.substring(memberProfileOriginal.lastIndexOf(".") + 1);
-			logger.info(memberProfileRename);
+			
 			member.setMember_profile_rename(memberProfileRename);
 			try {
 				file.transferTo(new File(savePath + "\\" + memberProfileRename));
@@ -107,7 +111,7 @@ public class MemberController {
 		// 서비스로 전송하고 결과 받기
 		int result = memberService.insertMember(member);
 		
-		String viewFileName = "main";
+		String viewFileName = "redirect:/moveMainPage.do";
 		
 		if (result <= 0) {		// 회원 가입 실패 했을 경우
 			model.addAttribute("message", "회원 가입 실패!");
@@ -190,44 +194,35 @@ public class MemberController {
 		// 비밀번호 암호화 처리
 		sessionMember.setMember_pwd(bcryptPasswordEncoder.encode(member.getMember_pwd()));
 			
-
 		// 파일 저장될 경로 설정
 		String savePath = request.getSession().getServletContext().getRealPath("/resources/images/member_profile");
 
-			try {
-				if (file.isEmpty() == false) {
-					updateOriginalFileName = file.getOriginalFilename();
-					// 프로필 사진 삭제 처리
-					
-					File deleteFile = new File(savePath + "\\" + deleteProfileName);
-					if (deleteFile.exists()) {
-						logger.info("넘오옴");
-						deleteFile.delete();
-					}
-					
-					if(!deleteFile.exists()) {
-						logger.info("넘어옴");
-					}
-					
-
-					
-					
-					sessionMember.setMember_profile_original(updateOriginalFileName);
-					// 파일명 형식 변경
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-					// 바꿀 파일명 만들기 : 확장자는 원본과 동일하게 함.
-					
-					updateRenameFileName = sessionMember.getMember_id() + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
-							+ updateOriginalFileName.substring(updateOriginalFileName.lastIndexOf(".") + 1);
-					// logger.info(updateRenameFileName);
-				// 프로필 사진 저장 처리
+		try {
+			if (file.isEmpty() == false) {
+				updateOriginalFileName = file.getOriginalFilename();
 				
+				// 프로필 사진 삭제 처리
+				File deleteFile = new File(savePath + "\\" + deleteProfileName);
+				if (deleteFile.exists()) {
+					deleteFile.delete();
+				}
+	
+				sessionMember.setMember_profile_original(updateOriginalFileName);
+				// 파일명 형식 변경
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				// 바꿀 파일명 만들기 : 확장자는 원본과 동일하게 함.
+				
+				updateRenameFileName = sessionMember.getMember_id() + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
+						+ updateOriginalFileName.substring(updateOriginalFileName.lastIndexOf(".") + 1);
+			
+				// 프로필 사진 저장 처리
+			
 				file.transferTo(new File(savePath + "\\" + updateRenameFileName));
 				sessionMember.setMember_profile_rename(updateRenameFileName);
-				}
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
 			}
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
 		
 		
 		// 서비스로 전송하고 결과 받기
@@ -235,7 +230,7 @@ public class MemberController {
 		 
 		 System.out.println(result);
 		
-		String viewFileName = "main";
+		String viewFileName = "redirect:/moveMainPage.do";
 		
 		if (result <= 0) {		// 회원 가입 실패 했을 경우
 			model.addAttribute("message", "회원 가입 실패!");
@@ -262,8 +257,7 @@ public class MemberController {
 	// 아이디 중복 확인 처리
 	@RequestMapping(value="selectSearchMemberId.do", method=RequestMethod.POST)
 	public void selectSearchMemberId(@RequestParam("member_id") String member_id, HttpServletResponse response) throws IOException {
-		
-		logger.info(member_id);
+
 		int result = memberService.selectSearchMemberId(member_id);
 		
 		response.setContentType("text/html; charset=utf-8");

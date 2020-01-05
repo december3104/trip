@@ -423,9 +423,8 @@ $(function(){
 	 	var name = e.target.files[0].name;
 		$('input:text', $(e.target).parent()).val(name);
 	 });
-
+	
 });
-
 </script>
 </head>
 <body>
@@ -483,7 +482,7 @@ $(function(){
 						<th><i class="fas fa-check"></i>&nbsp;성별</th>
 							<td>
 								<div class="ui radio checkbox">
-									<input type="radio" name="member_gender" velue="M" id="genderM" />
+									<input type="radio" name="member_gender" value="M" id="genderM" />
 									<label for="genderM" style="cursor: pointer">남자</label>
 								</div>&emsp;
 								<div class="ui radio checkbox">
@@ -770,8 +769,8 @@ $(function(){
 					</tr>
 					<tr>
 						<th colspan="2" style="text-align: center">
-							<input class="ui button" type="submit" id="submitBtn" value="가입하기" />&emsp;&emsp;
-							<button class="ui button" type="reset" id="cancelBtn" onclick="window.history.back();">취소</button>
+							<input class="ui button" type="submit" id="submitBtn" value="가입하기" style="margin-bottom: 5%" />&emsp;&emsp;
+							<button class="ui button" type="reset" id="cancelBtn" onclick="window.history.back();" style="margin-bottom: 5%">취소</button>
 						</th>
 					</tr>										
 				</table>

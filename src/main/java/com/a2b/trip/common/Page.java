@@ -16,11 +16,12 @@ public class Page implements java.io.Serializable {
 	private int startRow;	//db에서 조회할 시작 rowNum
 	private int endRow;	//db에서 조회할 마지막 rowNum
 	private int totalPage;	//	총 페이지 수
+	private String qna_id;	//	내가 쓴글 보기에 필요한 아이디
 	
 	public Page() {}
 
 	public Page(int totalCount, int currentPage, int contentNum, int startPage, int endPage, boolean prev, boolean next,
-			int currentBlock, int lastBlock, int startRow, int endRow, int totalPage) {
+			int currentBlock, int lastBlock, int startRow, int endRow, int totalPage, String qna_id) {
 		super();
 		this.totalCount = totalCount;
 		this.currentPage = currentPage;
@@ -34,6 +35,7 @@ public class Page implements java.io.Serializable {
 		this.startRow = startRow;
 		this.endRow = endRow;
 		this.totalPage = totalPage;
+		this.qna_id = qna_id;
 	}
 
 	public int getTotalCount() {
@@ -131,13 +133,21 @@ public class Page implements java.io.Serializable {
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
 	}
+	
+	public String getQna_id() {
+		return qna_id;
+	}
+
+	public void setQna_id(String qna_id) {
+		this.qna_id = qna_id;
+	}
 
 	@Override
 	public String toString() {
 		return "Page [totalCount=" + totalCount + ", currentPage=" + currentPage + ", contentNum=" + contentNum
 				+ ", startPage=" + startPage + ", endPage=" + endPage + ", prev=" + prev + ", next=" + next
 				+ ", currentBlock=" + currentBlock + ", lastBlock=" + lastBlock + ", startRow=" + startRow + ", endRow="
-				+ endRow + ", totalPage=" + totalPage + "]";
+				+ endRow + ", totalPage=" + totalPage + ", qna_id=" + qna_id + "]";
 	}
 	
 	public void calcRow(int currentPage) {

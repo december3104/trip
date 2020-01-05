@@ -5,8 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="device=width-device, initial-scale=1">
-<link rel="stylesheet" href="/trip/resources/css/bootstrap.min.css">
 <title>trip</title>
 <script type="text/javascript" src="/trip/resources/js/jquery-3.4.1.min.js"></script>
 <style type="text/css">
@@ -37,20 +35,21 @@
 			</div>
 			<div class="two wide column">
 				<c:if test="${!empty loginMember.member_id }">
-					<button style="height:50px; width:130px; background:#c0e7f8;" onclick="location.href='goPageInsertQna.do'">글 쓰기</button>
-				</c:if>		
+					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='goPageInsertQna.do'">글 쓰기</button>
+					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
+				</c:if>	
 			</div>
 			<div class="one wide column"></div>
 		</div>
 		<div class="ui grid">
 			<div class="one wide column"></div>
 			<div class="fourteen wide column">
-				<table class="ui striped table">
-					<thead>
-				  		<tr>
+				<table class="ui striped table">			
+					<tbody>			
+				  		<tr style="height:60px;">
 					  		<th>
-						    	<form class="ui form" style="margin:0">
-						    		<div class="field">
+						    	<form class="ui form" style="margin-left : 2%">
+						    		<div class="eight wide field">
 							    		<div class="ui icon input">
 											<input type="text" placeholder="검색할 내용이나 제목을 입력하세요.">
 			  								<i class="circular search link icon"></i>
@@ -59,19 +58,24 @@
 								</form>
 							</th>
 							<th>
-								<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px;">
-									<option value="10">10개씩 보기</option>
-									<option value="20">20개씩 보기</option>
-									<option value="30">30개씩 보기</option>
-								</select>
+								<div class="eight wide field">
+									<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px; float : right; margin-right : 5%;">
+										<option value="10">10개씩 보기</option>
+										<option value="20">20개씩 보기</option>
+										<option value="30">30개씩 보기</option>
+									</select>
+								</div>
 							</th>
 						</tr>
-					</thead>
-					<tbody>
+					
+					
 						<c:forEach var="list" items="${ qnaList }">
 							<tr>
-					      		<td>
-					      			<a href="#">${ list.qna_title }</a><br>
+					      		<td style="width : 70%">
+					      			<c:url var="goToDetailView" value="selectDetailViewQna.do">
+					      				<c:param name="qna_no" value="${ list.qna_no }"></c:param>
+					      			</c:url>
+					      			<a href="${ goToDetailView }">${ list.qna_title }</a><br>
 					      			<small>${ list.qna_id }님이 ${ list.qna_date }에 작성</small>
 					      		</td>
 					      		<td>

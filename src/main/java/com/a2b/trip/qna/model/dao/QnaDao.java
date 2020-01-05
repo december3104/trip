@@ -28,4 +28,21 @@ public class QnaDao {
 	public int insertQna(Qna qna) {
 		return sqlSession.insert("qnaMapper.insertQna", qna);
 	}
+
+	public Qna selectDetailViewQna(int qna_no) {
+		return sqlSession.selectOne("qnaMapper.selectOne", qna_no);
+	}
+
+	public int updateQna(Qna qna) {
+		return sqlSession.update("qnaMapper.updateQna", qna);
+	}
+
+	public ArrayList<Qna> selectListMyQna(Page page) {
+		return (ArrayList)sqlSession.selectList("qnaMapper.selectListMyQna", page);
+	}
+
+	public int selectMyTotal(String qna_id) {
+		return sqlSession.selectOne("qnaMapper.selectMyTotal", qna_id);
+	}
+
 }

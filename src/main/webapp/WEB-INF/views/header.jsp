@@ -82,6 +82,7 @@ $(function(){
 		</a>
 	</c:if>
 	
+	
 	<!-- 관리자 메뉴 -->
 	<c:if test="${loginMember.member_level eq 3}">
 		<a class="ui simple dropdown item godom">회원 관리

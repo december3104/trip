@@ -57,9 +57,9 @@
 			</td>
 			<td>
 				<c:url value="selectDetailViewGuideReport.ad" var="detailReport">
-					<c:param name="member_id" value="${guide.member_id }" />
+					<c:param name="member_id" value="${guide.report_id }" />
 				</c:url>
-				<a href="${detailReport }"><c:out value="${guide.member_id }" /></a> 
+				<a href="${detailReport }"><c:out value="${guide.report_id }" /></a> 
 			</td>
 			<td>
 				<c:out value="${guide.member_gender }" />

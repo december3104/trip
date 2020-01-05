@@ -115,7 +115,7 @@
 			</table>
 			<div style="text-align: center;">
 				<input class="ui button" style="background:#c0e7f8;" type="submit" value="자격박탈"> &emsp;&emsp;
-				<input class="ui button" style="" type="button" value="뒤로">
+				<a href="selectListAllGuide.ad"><input class="ui button" style="" type="button" value="뒤로"></a>
 			</div>
 		</div>
 	</div>

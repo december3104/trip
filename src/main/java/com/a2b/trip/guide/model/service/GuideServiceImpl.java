@@ -23,6 +23,26 @@ public class GuideServiceImpl implements GuideService {
 	public GuideDetail selectDetailViewApplyGuide(String guide_id) {
 		return guideDao.selectDetailViewApplyGuide(guide_id);
 	}
+
+	@Override
+	public int detailApplyRejectGuide(String guide_id) {
+		return guideDao.detailApplyRejectGuide(guide_id);
+	}
+
+	@Override
+	public int detailApplyRejectGuide2(String guide_id) {
+		return guideDao.detailApplyRejectGuide1(guide_id);
+	}
+
+	@Override
+	public int updateDetailAcceptGuide(String guide_id) {
+		return guideDao.updateDetailAcceptGuide(guide_id);
+	}
+
+	@Override
+	public int updateDetailAcceptGuide2(String guide_id) {
+		return guideDao.updateDetailAcceptGuide2(guide_id);
+	}
 	
 	
 }

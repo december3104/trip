@@ -20,9 +20,10 @@
 	
 	<update id="updateMember" parameterType="Member">
 		update member set member_pwd = #{member_pwd}, member_phone = #{member_phone}
-		<if test="member_profile_orginal != null">
-		, member_profile_original = #{member_profile_original}, member_profile_rename = #{member_profile_rename}
+		<if test="member_profile_original != null">
+			, member_profile_original = #{member_profile_original}, member_profile_rename = #{member_profile_rename}
 		</if>
+		where member_id = #{member_id}
 	</update>
 	
 	<update id ="updateGuideMember" parameterType="string">

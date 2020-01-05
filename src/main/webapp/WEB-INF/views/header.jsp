@@ -31,6 +31,9 @@ $(function(){
 });
 </script>
 <style type="text/css">
+* {
+	font-family: GodoM;
+}
 #userDiv {
 	padding : 0;
 	width: 100px;
@@ -44,6 +47,39 @@ $(function(){
 	right: auto;
 }
 
+.ui[class*="left icon"].input>input:focus {
+	box-shadow: 0 0 0 .2rem rgba(192, 231, 248, .5);
+	border: 1px solid #95d6f3;
+}
+
+.ui.action.input input[type="text"]:focus{
+	border: 1px solid rgba(34,36,38,.15);
+}
+
+.ui.action.input input[type="file"] {
+  display: none;
+} 
+
+.ui.checkbox input:checked ~ .box:before, 
+.ui.checkbox input:checked ~ label:before {
+    border-color: #95d6f3 !important;
+    color: #95d6f3 !important;
+}
+
+.ui.checkbox input[type=radio]:focus ~ .box:after,
+.ui.checkbox input[type=radio]:focus ~ label:after{
+	background: #95d6f3 !important;
+}
+
+.ui.checkbox input[type=radio]:checked ~ .box:after,
+.ui.checkbox input[type=radio]:checked ~ label:after{
+	background: #95d6f3 !important;
+}
+
+.ui.checkbox input[type=checkbox]:checked ~ .box:after,
+.ui.checkbox input[type=checkbox]:checked ~ label:after{
+	color: #95d6f3 !important;
+}
 </style>
 </head>
 <body>
@@ -95,25 +131,66 @@ $(function(){
 		
 		<!-- 로그인 했을 때 회원정보 -->
 		<c:if test="${loginMember != null }">
-		<div class="ui simple dropdown item" id="userDiv">
-			<c:if test="${loginMember.member_profile_rename != null }">
-			<img class="ui mini circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }">
-			</c:if>
-			<c:if test="${loginMember.member_profile_rename == null }">
-			<img class="ui mini circular image" src="resources/images/molly.png">
-			</c:if>
-			<div class="content">
-				<div class="ui sub header">&emsp; <font size="3pt">${loginMember.member_name }</font></div>
+			<c:if test="${loginMember.member_level ne 3 }">
+			<div class="ui simple dropdown item" id="userDiv">
+				<c:if test="${loginMember.member_profile_rename != null }">
+				<img class="ui mini circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }">
+				</c:if>
+				<c:if test="${loginMember.member_profile_rename == null }">
+				<img class="ui mini circular image" src="resources/images/molly.png">
+				</c:if>
+				<div class="content">
+					<div class="ui sub header">&emsp; <font size="3pt">${loginMember.member_name }</font></div>
+				</div>
+				<div class="menu" style="text-align: center">
+					<div class="item">내 가이드북</div>
+					<div class="item">가이드 매칭 기록</div>
+					<div class="item">동행 매칭 기록</div>
+					<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
+					<div class="item" id="logoutTag">로그아웃</div>
+				</div>
 			</div>
-			<div class="menu" style="text-align: center">
-				<div class="item">내 가이드북</div>
-				<div class="item">가이드 매칭 기록</div>
-				<div class="item">동행 매칭 기록</div>
-				<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
-				<div class="item" id="logoutTag">로그아웃</div>
+			</c:if>
+		
+		  	 <!-- 관리자 메뉴 -->
+		  	 <c:if test="${loginMember.member_level eq 3}">
+		      <a class="ui simple dropdown item godom">회원 관리
+		            <div class="menu">
+		               <div class="item" onclick="location.href='selectListAllMember.ad'">일반회원</div>
+		               <div class="item" onclick="location.href='selectListAllGuide.ad'">가이드</div>
+		               <div class="item" onclick="location.href='selectListApplyGuide.ad'">가이드 신청</div>
+		            </div>
+		      </a>
+		      <a class="ui simple dropdown item godom">신고 처리
+		            <div class="menu">
+		               <div class="item" onclick="location.href='selectListNormalReport.ad'">일반회원</div>
+		               <div class="item" onclick="location.href='selectListGuideReport.ad'">가이드</div>
+		            </div>
+		      </a>
+		      <a class="item godom" onclick="location.href='selectListAllNotice.ad'">공지사항 관리</a>
+		      <a class="item godom" onclick="location.href='qna.do?currentPage=1&contentNum=10'">QnA 관리</a>
+      
+		       <!-- 관리자 로그인인경우 -->
+		       <div class="ui simple dropdown item" id="userDiv">
+					<c:if test="${loginMember.member_profile_rename != null }">
+						<img class="ui mini circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }">
+					</c:if>
+					<c:if test="${loginMember.member_profile_rename == null }">
+						<img class="ui mini circular image" src="resources/images/molly.png">
+					</c:if>
+					<div class="content">
+						<div class="ui sub header">&emsp; <font size="3pt">${loginMember.member_name }</font></div>
+					</div>
+						
+					<div class="menu" style="text-align: center">
+						<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
+						<div class="item" id="logoutTag">로그아웃</div>
+					</div>
+				   
 			</div>
-		</div>
-		</c:if>
+      
+  		 </c:if>
+   	</c:if>
 	</div>
 </div>
 </div>

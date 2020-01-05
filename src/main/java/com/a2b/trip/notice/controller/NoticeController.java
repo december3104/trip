@@ -54,4 +54,19 @@ public class NoticeController {
 		
 		return mv;
 	}
+	
+	//관리자 공지사항 삭제
+	@RequestMapping("deleteDetailNotice.ad")
+	public String deleteDetailNotice(@RequestParam("notice_no") int notice_no) {
+		int result = noticeService.deleteDetailNotice(notice_no);
+		
+		String viewFileName =" ";
+		if(result == 1) {
+			viewFileName = "redirect:/selectListAllNotice.ad";
+		}else {
+			viewFileName = "common/error";
+		}
+		
+		return viewFileName;
+	}
 }

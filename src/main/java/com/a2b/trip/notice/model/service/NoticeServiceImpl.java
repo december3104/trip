@@ -27,6 +27,13 @@ public class NoticeServiceImpl implements NoticeService {
 	public Notice selectDetailViewNotice(int notice_no) {
 		return noticeDao.selectDetailViewNotice(notice_no);
 	}
+
+
+	@Override
+	public int deleteDetailNotice(int notice_no) {
+		return noticeDao.deleteDetailNotice(notice_no);
+	}
+	
 	
 	
 }

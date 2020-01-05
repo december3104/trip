@@ -33,11 +33,45 @@ public class ReportServiceImpl implements ReportService {
 	public ArrayList<Report> selectDetailViewNormalReport(String member_id) {
 		return reportDao.selectDetailViewNormalReport(member_id);
 	}
-
+	//가이드 회원 신고 상세보기
 	@Override
 	public ArrayList<Report> selectDetailViewGuideReport(String member_id) {
 		return reportDao.selectDetailViewGuideReport(member_id);
 	}
+	//일반 회원 신고 승인(member)
+	@Override
+	public int updateDetailAcceptNormalReport1(String report_id) {
+		return reportDao.updateDetailAcceptNormalReport1(report_id);
+	}
+	//일반 회원 신고 승인(report)
+	@Override
+	public int updateDetailAcceptNormalReport2(int report_no) {
+		return reportDao.updateDetailAcceptNormalReport2(report_no);
+	}
+	// 일반 회원 신고 거절
+	@Override
+	public int detailRejectNormalReport(int report_no) {
+		return reportDao.detailRejectNormalReport(report_no);
+	}
+	//가이드 회원 신고 승인(member)
+	@Override
+	public int updateDetailAcceptGuideReport1(String report_id) {
+		return reportDao.updateDetailAcceptGuideReport1(report_id);
+	}
+	//가이드 회원 신고 승인(report)
+	@Override
+	public int updateDetailAcceptGuideReport2(int report_no) {
+		return reportDao.updateDetailAcceptGuideReport2(report_no);
+	}
+	//가이드 회원 신고 거절
+	@Override
+	public int detailRejectGuideReport(int report_no) {
+		return reportDao.detailRejectGuideReport(report_no);
+	}
+	
+
+	
+	
 	
 	
 	

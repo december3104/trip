@@ -33,10 +33,37 @@ public class ReportDao {
 		List<Report> list = sqlSession.selectList("reportMapper.selectDetailViewNormalReport", member_id);
 		return (ArrayList<Report>)list;
 	}
+	//가이드 회원 신고 상세보기
 	public ArrayList<Report> selectDetailViewGuideReport(String member_id) {
 		List<Report> list = sqlSession.selectList("reportMapper.selectDetailViewGuideReport", member_id);
 		return (ArrayList<Report>)list;
 	}
+	//일반 회원 신고 거절 처리
+	public int detailRejectNormalReport(int report_no) {
+		return sqlSession.delete("reportMapper.detailRejectNormalReport", report_no);
+	}
+	//일반 회원 신고 승인 처리(membrer)
+	public int updateDetailAcceptNormalReport1(String report_id) {
+		return sqlSession.update("memberMapper.updateDetailAcceptNormalReport1", report_id);
+	}
+	//일반 회원 신고 승인 처리(report)
+	public int updateDetailAcceptNormalReport2(int report_no) {
+		return sqlSession.update("reportMapper.updateDetailAcceptNormalReport2",report_no);
+	}
+	//가이드 회원 신고 승인(member)
+	public int updateDetailAcceptGuideReport1(String report_id) {
+		return sqlSession.update("memberMapper.updateDetailAcceptGuideReport1",report_id);
+	}
+	//가이드 회원 신고 승인(report)
+	public int updateDetailAcceptGuideReport2(int report_no) {
+		return sqlSession.update("reportMapper.updateDetailAcceptGuideReport2",report_no);
+	}
+	//가이드 회원 신고 거절 
+	public int detailRejectGuideReport(int report_no) {
+		return sqlSession.delete("reportMapper.detailRejectGuideReport",report_no);
+	}
+	
+	
 
 
 }

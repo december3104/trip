@@ -10,6 +10,8 @@ public interface NoticeService {
 
 	Notice selectDetailViewNotice(int notice_no);
 
+	int deleteDetailNotice(int notice_no);
+
 	
 
 }

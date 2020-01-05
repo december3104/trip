@@ -44,14 +44,15 @@
 						<td>
 							<ul style="text-align: left; list-style: none;">
 								<li>신고자 : <c:out value="${Greport.clame_id }" /></li>
+								<li>신고 대상 : <c:out value="${Greport.report_id }" /></li>
 								<li>신고시간 : <c:out value="${Greport.report_date }" /></li>
 							</ul>
 							<ul style="text-align: left; list-style: none;">
 								<li><c:out value="${Greport.report_content }" /></li>
 							</ul>
 							<div style="width:100%; text-align:right;">
-								<input class="ui button" style="background:#c0e7f8;" type="submit" value="승인"> &emsp;&emsp;
-								<input class="ui button" style="" type="button" value="거절">
+								<a href="updateDetailAcceptGuideReport.ad?report_id=${Greport.report_id }&report_no=${Greport.report_no }"><input class="ui button" style="background:#c0e7f8;" type="submit" value="승인"></a> &emsp;&emsp;
+								<a href="detailRejectGuideReport.ad?report_id=${Greport.report_id }&report_no=${Greport.report_no }"><input class="ui button" style="" type="button" value="거절"></a>
 							</div>
 						</td>
 					

@@ -7,8 +7,8 @@
 	<select id="selectListNormalReport" resultType="NormalReport">
 		select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
 		from member
-		right join report on member.member_id = report.report_id
-		where report_type = 'NORMAL' and guide_qualification = 'NONE' and report_status = 'WAIT'
+		full join report on member.member_id = report.report_id
+		where report_type = 'NORMAL' and report_status = 'WAIT'
 		order by report_date desc
 	</select>
 	
@@ -34,5 +34,21 @@
 		right join report on member.member_id = report.report_id
 		where report_type = 'GUIDE' and report_id = #{value}
 	</select>
+	
+	<delete id="detailRejectNormalReport" parameterType="int">
+		delete report where report_no = #{value}
+	</delete>
+	
+	<update id="updateDetailAcceptNormalReport2" parameterType="int">
+		update report set report_status = 'DONE', complete_date = sysdate  where report_no = #{value}
+	</update>
+	
+	<delete id="detailRejectGuideReport" parameterType="int">
+		delete report where report_no = #{value}
+	</delete>
+	
+	<update id="updateDetailAcceptGuideReport2" parameterType="int">
+		update report set report_status = 'DONE', complete_date = sysdate  where report_no = #{value}
+	</update>
 	
 </mapper>

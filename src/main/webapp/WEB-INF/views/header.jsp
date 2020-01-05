@@ -91,6 +91,7 @@ $(function(){
 		<img src="resources/images/logo.png" onclick="location.href='${pageContext.request.contextPath}/'" style="cursor: pointer">
 	</div>
 	<!-- 메뉴 -->
+	<c:if test="${loginMember.member_level ne 3 }">
 	<a class="ui simple dropdown item godom">
 		가이드북
 		<div class="menu">
@@ -123,6 +124,7 @@ $(function(){
 			<!-- 알람 있을 경우 갯수만큼 -->
 			<div class="ui circular blue mini floating label">2</div>
 		</i>
+		</c:if>
 		
 		<!-- 로그인버튼 -->
 		<c:if test="${loginMember == null }">
@@ -169,6 +171,20 @@ $(function(){
 		      </a>
 		      <a class="item godom" onclick="location.href='selectListAllNotice.ad'">공지사항 관리</a>
 		      <a class="item godom" onclick="location.href='qna.do?currentPage=1&contentNum=10'">QnA 관리</a>
+      			<!-- 우측 상단 사용자정보&아이콘들 -->
+				<div class="item right menu" align="right" style="margin-right: 0;">
+					<i class="snowflake large icon" style="margin-right: 10px;"></i> 
+					
+					<i class="alarm icons" style="margin-right: 10px;"> 
+						<i class="bell large icon"></i> 
+						<!-- 알람 있을 경우 갯수만큼 -->
+						<div class="ui circular yellow mini floating label">2</div>
+					</i> 
+					<i class="chat icons" style="margin-right: 30px;"> 
+						<i class="comments large icon"></i> 
+						<!-- 알람 있을 경우 갯수만큼 -->
+						<div class="ui circular blue mini floating label">2</div>
+					</i>
       
 		       <!-- 관리자 로그인인경우 -->
 		       <div class="ui simple dropdown item" id="userDiv">

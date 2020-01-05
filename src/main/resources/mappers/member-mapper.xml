@@ -65,7 +65,7 @@
 		select * from member where member_id = #{value}
 	</select>
 	
-	<update id="detailApplyRejectGuide1" parameterType="string">
+	<update id="detailApplyRejectGuide2" parameterType="string">
 		update member set guide_qualification = 'NONE' where member_id = #{value}
 	</update>
 	

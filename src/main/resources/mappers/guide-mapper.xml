@@ -19,13 +19,12 @@
 		full join member on member.member_id = guide.guide_id
 		where guide_qualification = 'WAIT' and guide_id = #{value}
 	</select>
-	
-	<update id="updateDetailAcceptGuide" parameterType="string">
-		update guide set guide_apply = 'DONE' where guide_id = #{value}
-	</update>
-	
-	<delete id="detailApplyRejectGuide2" parameterType="string">
+		
+	<delete id="detailApplyRejectGuide1" parameterType="string">
 		delete guide where guide_id = #{value}
 	</delete>
 	
+	<update id="updateDetailAcceptGuide1" parameterType="string">
+		update guide set guide_apply = 'DONE' where guide_id = #{value}
+	</update>
 </mapper>

@@ -23,22 +23,22 @@ public class GuideServiceImpl implements GuideService {
 	public GuideDetail selectDetailViewApplyGuide(String guide_id) {
 		return guideDao.selectDetailViewApplyGuide(guide_id);
 	}
-
+	//가이드 신청 거절
 	@Override
-	public int detailApplyRejectGuide(String guide_id) {
-		return guideDao.detailApplyRejectGuide(guide_id);
-	}
-
-	@Override
-	public int detailApplyRejectGuide2(String guide_id) {
+	public int detailApplyRejectGuide1(String guide_id) {
 		return guideDao.detailApplyRejectGuide1(guide_id);
 	}
-
+	//가이드 신청 거절
 	@Override
-	public int updateDetailAcceptGuide(String guide_id) {
-		return guideDao.updateDetailAcceptGuide(guide_id);
+	public int detailApplyRejectGuide2(String guide_id) {
+		return guideDao.detailApplyRejectGuide2(guide_id);
 	}
-
+	//가이드 신청 승인
+	@Override
+	public int updateDetailAcceptGuide1(String guide_id) {
+		return guideDao.updateDetailAcceptGuide1(guide_id);
+	}
+	//가이드 신청 승인
 	@Override
 	public int updateDetailAcceptGuide2(String guide_id) {
 		return guideDao.updateDetailAcceptGuide2(guide_id);

@@ -9,36 +9,119 @@
 <head>
 <meta charset="UTF-8">
 <title>여길잡아</title>
+<!-- favicon -->
+<link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
+<!-- jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- 폰트css -->
+<link href="resources/css/font.css" rel="stylesheet" type="text/css"/>
+<!-- icon -->
+<link href="resources/css/all.css" rel="stylesheet">
+<!-- 헤더푸터 css -->
+<link href="resources/css/headerFooter.css" rel="stylesheet">
+<style type="text/css">
+.ui.striped.table td{
+	font-size:13pt;
+	text-align:center;
+	
+}
+
+</style>
 </head>
 <body>
-<h1>가이드 상세보기</h1>
+<!-- 헤더 -->
+<header>
+	<jsp:include page="/WEB-INF/views/header.jsp" />
+</header>
 
-<table>
-	활동 국가 : <c:out value="${guide.loc_name }" /> <br>
-	거주 국가 : <c:out value="${guide.guide_contry }" /> <br>
-	현 거주지 주소 : <c:out value="${guide.guide_address }" /> <br>
-	성별 : <c:out value="${guide.member_gender }" /> <br>
-	가능 서비스 : <c:out value="${guide.guide_service }" /> <br>
-	사용가능 언어 : <c:out value="${guide.guide_lang }" /> <br>
-	이름 : <c:out value="${guide.member_name }" /> <br>
-	성별 : <c:out value="${guide.member_gender }" /> <br>
-	출생년도 : <fmt:parseDate value="${guide.member_birth}" var="guideBirth" pattern="yyyy-MM-dd"/>
-			<fmt:formatDate value="${guideBirth}" pattern="yyyy년 MM월 dd일"/> <br>
-	전화번호 : <c:out value="${guide.guide_phone }" /> <br>
-	<c:if test="${guide.car_check ne 'N' }">
-		본인차량 유무 : <c:out value="${guide.car_check }" /> <c:out value="${guide.car_number }" /> <br>	
-	</c:if>
-
-	
-	
-	
-	
-
-	
-	
-	
-</table>
-
+<div class="bodyCss" style="margin-left: 15%; margin-right: 15%">
+	<div class="bodyContentCss">
+		<div>
+			<h1 style="font-family: GodoM">가이드 상세보기</h1>
+			<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
+			<table class="ui table" style="border:none;">
+				<tr style="font-size: 13pt;">
+					<th>활동 국가</th>
+					<td style="border-top:0;">
+						<c:out value="${guide.loc_name }" />
+					</td>
+				</tr>
+				
+				<tr style="font-size: 13pt;">
+					<th>현 거주지 주소</th>
+					<td style="border-top:0;">
+						<c:out value="${guide.guide_address }" />
+					</td>
+				</tr>
+				
+				<tr style="font-size: 13pt;">
+					<th>성별</th>
+					<td style="border-top:0;">
+						<c:out value="${guide.member_gender }" />
+					</td>
+				</tr>
+				
+				<tr style="font-size: 13pt;">
+					<th>가능 서비스</th>
+					<td style="border-top:0;">
+						<c:out value="${guide.guide_service }" />
+					</td>
+				</tr>
+				
+				<tr style="font-size: 13pt;">
+					<th>사용가능 언어</th>
+					<td style="border-top:0;">
+						<c:out value="${guide.guide_lang }" />
+					</td>
+				</tr>
+				
+				<tr style="font-size: 13pt;">
+					<th>이름</th>
+					<td style="border-top:0;">
+						<c:out value="${guide.member_name }" />
+					</td>
+				</tr>
+				
+				<tr style="font-size: 13pt;">
+					<th>성별</th>
+					<td style="border-top:0;">
+						<c:out value="${guide.member_gender }" />
+					</td>
+				</tr>
+				
+				<tr style="font-size: 13pt;">
+					<th>출생년도</th>
+					<td style="border-top:0;">
+						<c:out value="${guide.guide_contry }" />
+					</td>
+				</tr>
+				
+				<tr style="font-size: 13pt;">
+					<th>전화번호</th>
+					<td style="border-top:0;">
+						<fmt:parseDate value="${guide.member_birth}" var="guideBirth" pattern="yyyy-MM-dd"/>
+						<fmt:formatDate value="${guideBirth}" pattern="yyyy년 MM월 dd일"/>
+					</td>
+				</tr>
+				
+				<c:if test="${guide.car_check ne 'N' }">
+					<tr style="font-size: 13pt;">
+						<th>본인차량 유무</th>
+						<td style="border-top:0;">
+							<c:out value="${guide.car_check }" /> - <c:out value="${guide.car_number }" />
+						</td>
+					</tr>
+				</c:if>
+			</table>
+			<div style="text-align: center;">
+				<input class="ui button" style="background:#c0e7f8;" type="submit" value="자격박탈"> &emsp;&emsp;
+				<input class="ui button" style="" type="button" value="뒤로">
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 푸터 -->
+<footer><jsp:include page="/WEB-INF/views/footer.jsp" /></footer>
 
 </body>
 </html>

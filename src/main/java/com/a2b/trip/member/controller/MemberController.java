@@ -58,6 +58,7 @@ public class MemberController {
 				model.addAttribute("message", "일치하는 회원 정보가 없습니다.");
 				viewFileName = "common/error";
 		}
+			
 		return viewFileName;
 	}
 	

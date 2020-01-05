@@ -15,12 +15,16 @@ public class NormalReport implements Serializable{
 	private Date report_date;
 	private Date complete_date;
 	private String report_type;
-	
+	// 성별 , 아메일 ,  누적신고
+	private String member_gender;
+	private String member_email;
+	private String member_report_count;
 	
 	public NormalReport() {}
 
 	public NormalReport(String member_name, int report_no, String clame_id, String report_id, String report_content,
-			String report_status, Date report_date, Date complete_date, String report_type) {
+			String report_status, Date report_date, Date complete_date, String report_type, String member_gender,
+			String member_email, String member_report_count) {
 		super();
 		this.member_name = member_name;
 		this.report_no = report_no;
@@ -31,6 +35,9 @@ public class NormalReport implements Serializable{
 		this.report_date = report_date;
 		this.complete_date = complete_date;
 		this.report_type = report_type;
+		this.member_gender = member_gender;
+		this.member_email = member_email;
+		this.member_report_count = member_report_count;
 	}
 
 	public String getMember_name() {
@@ -105,14 +112,40 @@ public class NormalReport implements Serializable{
 		this.report_type = report_type;
 	}
 
+	public String getMember_gender() {
+		return member_gender;
+	}
+
+	public void setMember_gender(String member_gender) {
+		this.member_gender = member_gender;
+	}
+
+	public String getMember_email() {
+		return member_email;
+	}
+
+	public void setMember_email(String member_email) {
+		this.member_email = member_email;
+	}
+
+	public String getMember_report_count() {
+		return member_report_count;
+	}
+
+	public void setMember_report_count(String member_report_count) {
+		this.member_report_count = member_report_count;
+	}
+
 
 	@Override
 	public String toString() {
 		return "NormalReport [member_name=" + member_name + ", report_no=" + report_no + ", clame_id=" + clame_id
 				+ ", report_id=" + report_id + ", report_content=" + report_content + ", report_status=" + report_status
 				+ ", report_date=" + report_date + ", complete_date=" + complete_date + ", report_type=" + report_type
-				+ "]";
+				+ ", member_gender=" + member_gender + ", member_email=" + member_email + ", member_report_count="
+				+ member_report_count + "]";
 	}
+
 
 
 	

@@ -3,6 +3,7 @@ package com.a2b.trip.guide.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.jaas.LoginExceptionResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,4 +44,39 @@ public class GuideController {
 		mv.setViewName("admin/member/guideApplyDetailView");
 		return mv;
 	}
+	
+	//가이드 상세보기 거절
+	@RequestMapping("detailApplyRejectGuide.ad")
+	public String detailApplyRejectGuide(@RequestParam("guide_id") String guide_id) {
+		int result = guideService.detailApplyRejectGuide(guide_id);
+		int result2 = guideService.detailApplyRejectGuide2(guide_id);
+		String viewFileName = "";
+		if(result == 1 && result2 == 1) {
+			viewFileName = "redirect:/selectListApplyGuide.ad";
+		}else {
+			viewFileName = "common/error";
+		}
+		
+		return viewFileName;
+	}
+	
+	//가이드 상세보기 수락
+	@RequestMapping("updateDetailAcceptGuide.ad")
+	public String updateDetailAcceptGuide(@RequestParam("guide_id") String guide_id) {
+		String viewFileName = "";
+		
+		int result = guideService.updateDetailAcceptGuide(guide_id);
+		int result2 = guideService.updateDetailAcceptGuide2(guide_id);
+		
+		logger.info(result + " // " + result2); 
+		
+		if(result == 1 && result2 == 1) {
+			viewFileName = "redirect:/selectListApplyGuide.ad";
+		}else {
+			viewFileName = "common/error";
+		}
+		
+		return viewFileName;
+	}
+	
 }

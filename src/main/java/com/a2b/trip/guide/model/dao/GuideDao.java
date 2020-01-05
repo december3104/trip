@@ -21,4 +21,20 @@ public class GuideDao {
 	public GuideDetail selectDetailViewApplyGuide(String guide_id) {
 		return sqlSession.selectOne("guideMapper.selectDetailViewApplyGuide", guide_id);
 	}
+
+	public int detailApplyRejectGuide(String guide_id) {
+		return sqlSession.update("guideMapper.detailApplyRejectGuide1",guide_id);
+	}
+
+	public int detailApplyRejectGuide1(String guide_id) {
+		return sqlSession.delete("memberMapper.detailApplyRejectGuide2",guide_id);
+	}
+
+	public int updateDetailAcceptGuide(String guide_id) {
+		return sqlSession.update("guideMapper.updateDetailAcceptGuide", guide_id);
+	}
+
+	public int updateDetailAcceptGuide2(String guide_id) {
+		return sqlSession.update("memberMapper.updateDetailAcceptGuide2", guide_id);
+	}
 }

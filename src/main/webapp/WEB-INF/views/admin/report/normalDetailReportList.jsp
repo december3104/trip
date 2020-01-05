@@ -43,8 +43,8 @@
 					<tr style="font-size: 13pt;">
 						<td>
 							<ul style="text-align: left; list-style: none;">
-								<li><c:out value="${Nreport.member_name }" /></li>
-								<li><c:out value="${Nreport.report_date }" /></li>
+								<li>신고자 : <c:out value="${Nreport.clame_id }" /></li>
+								<li>신고시간 : <c:out value="${Nreport.report_date }" /></li>
 							</ul>
 							<ul style="text-align: left; list-style: none;">
 								<li><c:out value="${Nreport.report_content }" /></li>
@@ -53,8 +53,8 @@
 					</tr>	
 					<tr>
 						<td style="text-align: right">
-							<input class="ui button" style="background:#c0e7f8;" type="submit" value="승인"> &emsp;&emsp;
-							<input class="ui button" style="" type="button" value="취소">
+							<a><input class="ui button" style="background:#c0e7f8;" type="submit" value="승인"></a> &emsp;&emsp;
+							<a href="detailRejectNormalReport.ad?report_id=${Nreport.report_id }"><input class="ui button" style="" type="button" value="거절"></a>
 						</td>
 					</tr>
 					

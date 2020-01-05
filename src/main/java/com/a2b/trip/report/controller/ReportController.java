@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.a2b.trip.member.model.vo.Member;
 import com.a2b.trip.report.model.service.ReportService;
+import com.a2b.trip.report.model.vo.GuideReport;
+import com.a2b.trip.report.model.vo.NormalReport;
 import com.a2b.trip.report.model.vo.Report;
 
 @Controller
@@ -31,7 +32,7 @@ public class ReportController {
 	//일반 회원 신고처리 목록 조회
 	@RequestMapping("selectListNormalReport.ad")
 	public ModelAndView selectListNormalReport(ModelAndView mv) {
-		ArrayList<Member> list = reportService.selectListNormalReport();
+		ArrayList<NormalReport> list = reportService.selectListNormalReport();
 		
 		logger.info(list.toString());
 		
@@ -57,7 +58,7 @@ public class ReportController {
 	//가이드 회원 신고처리 목록 조회
 	@RequestMapping("selectListGuideReport.ad")
 	public ModelAndView selectListGuideReport(ModelAndView mv) {
-		ArrayList<Member> list = reportService.selectListGuideReport();
+		ArrayList<GuideReport> list = reportService.selectListGuideReport();
 		
 		logger.info(list.toString());
 		
@@ -80,6 +81,13 @@ public class ReportController {
 		return mv;
 	}
 	
+	//일반 회원 신고 처리 거절
+	@RequestMapping("detailRejectNormalReport.ad")
+	public String detailRejectNormalReport(@RequestParam("report_id") String report_id) {
+		logger.info(report_id);
+		
+		return null;
+	}
 	
 	
 	//end

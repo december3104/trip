@@ -115,8 +115,8 @@
 				</c:if>
 			</table>
 			<div style="text-align: center;">
-				<input class="ui button" style="background:#c0e7f8;" type="submit" value="수락"> &emsp;&emsp;
-				<input class="ui button" style="" type="button" value="거절">
+				<a href="updateDetailAcceptGuide.ad?guide_id=${guideApply.guide_id }"><input class="ui button" style="background:#c0e7f8;" type="submit" value="수락"></a> &emsp;&emsp;
+				<a href="detailApplyRejectGuide.ad?guide_id=${guideApply.guide_id }"><input class="ui button" style="" type="button" value="거절"></a>
 			</div>
 		</div>
 	</div>

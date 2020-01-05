@@ -55,9 +55,9 @@
 						</td>
 						<td>
 							<c:url value="selectDetailViewNormalReport.ad" var="detailReport">
-								<c:param name="member_id" value="${member.member_id }" />
+								<c:param name="member_id" value="${member.report_id }" />
 							</c:url>
-							<a href="${detailReport }"><c:out value="${member.member_id }" /></a> 
+							<a href="${detailReport }"><c:out value="${member.report_id }" /></a> 
 						</td>
 						<td>
 							<c:out value="${member.member_gender }" />

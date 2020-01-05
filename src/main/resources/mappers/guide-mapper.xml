@@ -20,7 +20,7 @@
 		where guide_qualification = 'WAIT' and guide_id = #{value}
 	</select>
 	
-	<update id="updateDetailAcceptGuide" parameterType="string">
+	<update id="updateDetailAcceptGuide1" parameterType="string">
 		update guide set guide_apply = 'DONE' where guide_id = #{value}
 	</update>
 	

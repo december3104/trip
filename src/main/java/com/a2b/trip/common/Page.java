@@ -5,7 +5,7 @@ public class Page implements java.io.Serializable {
 	private static final long serialVersionUID = 20000L;
 	
 	private int totalCount;	//	전체 게시물 개수
-	private int currentPage;	//	현재 페이지 번호
+	private int currentPage=1;	//	현재 페이지 번호
 	private int contentNum=10;	//	한 페이지에 몇개 표시할지
 	private int startPage=1;	//	현재 페이지 블록의 시작 페이지
 	private int endPage=10;	//	현재 페이지 블록의 마지막 페이지

@@ -24,4 +24,8 @@ public class QnaDao {
 	public int selectTotal() {
 		return sqlSession.selectOne("qnaMapper.selectTotal");
 	}
+
+	public int insertQna(Qna qna) {
+		return sqlSession.insert("qnaMapper.insertQna", qna);
+	}
 }

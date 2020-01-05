@@ -220,7 +220,7 @@ $(function(){
 						<th style="font-size: 13pt">프로필 사진</th>
 							<td style="border-top: 0">
 								<div class="ui action input">
-									<input type="text" readonly style="cursor: pointer; width: 310px">
+									<input type="text" readonly style="cursor: pointer; width: 310px" placeholder="파일을 선택해주세요" />
 									<input type="file" id="updateProfileUpload" accept="image/*" name="updateProfileUpload" readonly />
 									<div class="ui icon button">
 										<i class="attach icon"></i>

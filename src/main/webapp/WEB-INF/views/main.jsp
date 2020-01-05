@@ -25,6 +25,7 @@ a:hover,
 p:hover {
 	color: #95d6f3;
 }
+
 </style>
 </head>
 <body>

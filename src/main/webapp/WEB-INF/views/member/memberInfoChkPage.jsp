@@ -32,7 +32,7 @@ function memberPwdChk(){
 			if (result == "OK"){
 				location.href="moveMemberUpdatePage.do";
 			} else {
-				alert("비밀번호가 일치하지 않습니다. 비밀번호를 확인해주세요.");
+				$('#passwordChkModal').modal('show');
 				$('#memberPwdChk').select();
 			}
 		},
@@ -41,6 +41,14 @@ function memberPwdChk(){
 		}
 	});
 }
+
+$(function(){
+	$('#memberPwdChk').keypress(function(event){
+		if (event.which == 13){
+			memberPwdChk();
+		}
+	});
+});
 </script>
 <style type="text/css">
 .sidebarTd{
@@ -84,9 +92,20 @@ h2, .ui.button {
 		<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
 		<table class="ui celled table" style="width: 50%; vertical-align: middle; border: 0; margin-top: 2%">
 			<tr><td colspan="2" style="border-top: 0"><p style="font-size: 13pt">개인정보 보호를 위해 비밀번호를 입력해주세요.</p></td></tr> 
-			<tr><td style="padding-bottom: 0; border: 0"><div class="ui left icon input"><input type="password" name="member_pwd" id="memberPwdChk" style="width: 300px"> <i class="lock icon"></i></div></td>
-					<td style="padding-bottom: 0; border: 0"><input class="ui button" value="확인" onclick="memberPwdChk();" style="width: 95px; background: #c0e7f8; font-family: GodoM" /></td></tr>
+			<tr><td style="padding-bottom: 0; border: 0; width: 300px"><div class="ui left icon input"><input type="password" name="member_pwd" id="memberPwdChk" style="width: 300px"> <i class="lock icon"></i></div></td>
+					<td style="padding-bottom: 0; border: 0"><input class="ui button" value="확인" onclick="memberPwdChk();" style="width: 95px; background: #c0e7f8; font-family: GodoM" readonly /></td></tr>
 		</table>
+	</div>
+	<!-- 안내창 모달 -->
+	<div class="ui mini modal" id="passwordChkModal">
+		
+		<div class="description" style="padding: 5%">
+			<p>비밀번호가 일치하지 않습니다.</p>
+			<p>비밀번호를 확인해주세요.</p>
+		</div>
+		<div class="actions">
+			<div class="fluid ui ok button" style="font-family: GodoM; margin: 0; background: #c0e7f8">확인</div>
+		</div>
 	</div>
 </div>
 

@@ -51,9 +51,6 @@ public class MemberController {
 		String viewFileName = "main";
 			if (bcryptPasswordEncoder.matches(member.getMember_pwd(), loginMember.getMember_pwd())) {
 				session.setAttribute("loginMember", loginMember);
-				if (loginMember.getMember_level() == 3) {
-					viewFileName = "admin/main_ad";
-				}
 			} else {
 				model.addAttribute("message", "일치하는 회원 정보가 없습니다.");
 				viewFileName = "common/error";
@@ -174,48 +171,80 @@ public class MemberController {
 	// 일반 회원 정보 수정 처리
 	@RequestMapping(value="updateMember.do", method=RequestMethod.POST)
 	public String updateMember(Member member, Model model, @RequestParam("updateProfileUpload") MultipartFile file, HttpServletRequest request) {
+		// 세션에서 정보 꺼내기
+		HttpSession session = request.getSession(false);
+		Member sessionMember = (Member)session.getAttribute("loginMember");
 		
-		String updateOriginalFileName = file.getOriginalFilename();
-		// 비밀번호 암호화 처리
-				member.setMember_pwd(bcryptPasswordEncoder.encode(member.getMember_pwd()));
-			
-				logger.info(file.getOriginalFilename());
-				
-				// 프로필 사진 삭제 처리
-				
-				
-				
-				// 프로필 사진 저장 처리
-				String savePath = request.getSession().getServletContext().getRealPath("/resources/images/member_profile");
-				
-				String memberProfileOriginal = file.getOriginalFilename();
+		String deleteProfileName = sessionMember.getMember_profile_rename();
 
-				if (memberProfileOriginal != null) {
-					member.setMember_profile_original(memberProfileOriginal);
+		String updateOriginalFileName = null;
+		String updateRenameFileName = null;
+		
+		// 전화번호 같은지 확인
+		if (!(member.getMember_phone().equals(sessionMember.getMember_phone()))) {
+			sessionMember.setMember_phone(member.getMember_phone());
+		} 
+		
+		System.out.println(file.isEmpty());
+		
+		// 비밀번호 암호화 처리
+		sessionMember.setMember_pwd(bcryptPasswordEncoder.encode(member.getMember_pwd()));
+			
+
+		// 파일 저장될 경로 설정
+		String savePath = request.getSession().getServletContext().getRealPath("/resources/images/member_profile");
+
+			try {
+				if (file.isEmpty() == false) {
+					updateOriginalFileName = file.getOriginalFilename();
+					// 프로필 사진 삭제 처리
+					
+					File deleteFile = new File(savePath + "\\" + deleteProfileName);
+					if (deleteFile.exists()) {
+						logger.info("넘오옴");
+						deleteFile.delete();
+					}
+					
+					if(!deleteFile.exists()) {
+						logger.info("넘어옴");
+					}
+					
+
+					
+					
+					sessionMember.setMember_profile_original(updateOriginalFileName);
 					// 파일명 형식 변경
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 					// 바꿀 파일명 만들기 : 확장자는 원본과 동일하게 함.
-					String memberProfileRename = member.getMember_id() + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
-							+ memberProfileOriginal.substring(memberProfileOriginal.lastIndexOf(".") + 1);
-					logger.info(memberProfileRename);
-					member.setMember_profile_rename(memberProfileRename);
-					try {
-						file.transferTo(new File(savePath + "\\" + memberProfileRename));
-					} catch (IllegalStateException | IOException e) {
-						e.printStackTrace();
-					}
+					
+					updateRenameFileName = sessionMember.getMember_id() + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
+							+ updateOriginalFileName.substring(updateOriginalFileName.lastIndexOf(".") + 1);
+					// logger.info(updateRenameFileName);
+				// 프로필 사진 저장 처리
+				
+				file.transferTo(new File(savePath + "\\" + updateRenameFileName));
+				sessionMember.setMember_profile_rename(updateRenameFileName);
 				}
-				// 서비스로 전송하고 결과 받기
-				int result = memberService.insertMember(member);
-				
-				String viewFileName = "main";
-				
-				if (result <= 0) {		// 회원 가입 실패 했을 경우
-					model.addAttribute("message", "회원 가입 실패!");
-					viewFileName = "common/error";
-				}
-				
-				return viewFileName;
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+		
+		
+		// 서비스로 전송하고 결과 받기
+		 int result = memberService.updateMember(sessionMember);
+		 
+		 System.out.println(result);
+		
+		String viewFileName = "main";
+		
+		if (result <= 0) {		// 회원 가입 실패 했을 경우
+			model.addAttribute("message", "회원 가입 실패!");
+			viewFileName = "common/error";
+		} else {
+			session.setAttribute("loginMember", sessionMember);
+		}
+		
+		return viewFileName;
 	}
 	
 	// 가이드 회원 탈퇴 처리

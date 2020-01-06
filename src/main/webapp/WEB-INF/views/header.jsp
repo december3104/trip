@@ -108,7 +108,7 @@ $(function(){
 		</div>
 	</a> 
 	<a class="item godom">현지 가이드 매칭</a> 
-	<a class="item godom">동행 찾기</a> 
+	<a class="item godom" href="selectAllFellowBoard.do?currentPage=1&contentNum=10">동행 찾기</a> 
 	<a class="item godom">이용방법</a> 
 	<a class="ui simple dropdown item godom">고객센터
 		<div class="menu">

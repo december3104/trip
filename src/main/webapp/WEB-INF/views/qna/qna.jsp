@@ -36,7 +36,6 @@
 			<div class="two wide column">
 				<c:if test="${!empty loginMember.member_id }">
 					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='goPageInsertQna.do'">글 쓰기</button>
-					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
 				</c:if>	
 			</div>
 			<div class="one wide column"></div>
@@ -48,30 +47,27 @@
 					<tbody>			
 				  		<tr style="height:60px;">
 					  		<th>
-						    	<form class="ui form" style="margin-left : 2%">
-						    		<div class="eight wide field">
-							    		<div class="ui icon input">
-											<input type="text" placeholder="검색할 내용이나 제목을 입력하세요.">
-			  								<i class="circular search link icon"></i>
-										</div>
+						    	<form class="ui form" style="margin-left : 2%">					    		
+							    	<div class="ui icon input">
+										<input type="text" placeholder="검색할 내용이나 제목을 입력하세요.">
+		  								<i class="circular search link icon"></i>								
 									</div>
 								</form>
 							</th>
 							<th>
-								<div class="eight wide field">
-									<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px; float : right; margin-right : 5%;">
-										<option value="10">10개씩 보기</option>
-										<option value="20">20개씩 보기</option>
-										<option value="30">30개씩 보기</option>
-									</select>
-								</div>
+								<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px; float : right; margin-right : 5%;">
+									<option value="10">10개씩 보기</option>
+									<option value="20">20개씩 보기</option>
+									<option value="30">30개씩 보기</option>
+								</select>
+							</th>
+							<th class="right aligned">
+								<button class="ui button" style="font-family : GodoM;height:45px; width:130px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
 							</th>
 						</tr>
-					
-					
 						<c:forEach var="list" items="${ qnaList }">
 							<tr>
-					      		<td style="width : 70%">
+					      		<td style="width : 70%" colspan="2">
 					      			<c:url var="goToDetailView" value="selectDetailViewQna.do">
 					      				<c:param name="qna_no" value="${ list.qna_no }"></c:param>
 					      			</c:url>

@@ -1,4 +1,4 @@
-package com.a2b.trip.fellowboard.model.vo;
+package com.a2b.trip.fellow.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;

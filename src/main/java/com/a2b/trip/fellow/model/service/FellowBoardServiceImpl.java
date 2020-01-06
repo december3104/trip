@@ -1,9 +1,9 @@
-package com.a2b.trip.fellowboard.model.service;
+package com.a2b.trip.fellow.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.a2b.trip.fellowboard.model.dao.FellowBoardDao;
+import com.a2b.trip.fellow.model.dao.FellowBoardDao;
 
 @Service("fellowBoardService")
 public class FellowBoardServiceImpl implements FellowBoardService {

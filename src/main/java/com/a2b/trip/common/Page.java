@@ -181,7 +181,7 @@ public class Page implements java.io.Serializable {
 		return totalPage;
 	}
 	
-	public void saveStartPage(int currentBlock) {
+	public void saveStartPage(int currentBlock)  {
 		this.startPage = (currentBlock * 10)-9;
 		//	현재 페이지 블록 1이면 1,2,3,4,5,6,7,8,9,10
 		//	현재 페이지 블록 2이면 11,12,13,14,15,16,17,18,19,20

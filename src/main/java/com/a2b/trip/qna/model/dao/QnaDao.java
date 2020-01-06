@@ -1,6 +1,7 @@
 package com.a2b.trip.qna.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ public class QnaDao {
 	public QnaDao() {}
 	
 	public ArrayList<Qna> selectAllQna(Page page) {
-		return (ArrayList)sqlSession.selectList("qnaMapper.selectList", page);
+		List<Qna> list = sqlSession.selectList("qnaMapper.selectList", page);
+		return (ArrayList<Qna>)list;
 	}
 
 	public int selectTotal() {
@@ -38,7 +40,8 @@ public class QnaDao {
 	}
 
 	public ArrayList<Qna> selectListMyQna(Page page) {
-		return (ArrayList)sqlSession.selectList("qnaMapper.selectListMyQna", page);
+		List<Qna>list = sqlSession.selectList("qnaMapper.selectListMyQna", page);
+		return (ArrayList<Qna>)list;
 	}
 
 	public int selectMyTotal(String qna_id) {

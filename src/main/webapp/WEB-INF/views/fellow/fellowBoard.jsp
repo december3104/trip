@@ -65,22 +65,22 @@
 								<button class="ui button" style="font-family : GodoM;height:45px; width:130px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
 							</th>
 						</tr>
-						<c:forEach var="list" items="${ qnaList }">
+						<c:forEach var="list" items="${ fellowBoardList }">
 							<tr>
 					      		<td style="width : 70%" colspan="2">
-					      			<c:url var="goToDetailView" value="selectDetailViewQna.do">
+					      			<%-- <c:url var="goToDetailView" value="selectDetailViewQna.do">
 					      				<c:param name="qna_no" value="${ list.qna_no }"></c:param>
 					      			</c:url>
 					      			<a href="${ goToDetailView }">${ list.qna_title }</a><br>
-					      			<small>${ list.qna_id }님이 ${ list.qna_date }에 작성</small>
+					      			<small>${ list.qna_id }님이 ${ list.qna_date }에 작성</small> --%>
 					      		</td>
 					      		<td>
-					      			<c:if test="${ list.qna_comment eq 'N' }">
+					      			<%-- <c:if test="${ list.qna_comment eq 'N' }">
 										답변 대기중
 									</c:if>
 									<c:if test="${ list.qna_comment ne 'N' }">
 										답변 완료
-									</c:if>
+									</c:if> --%>
 					      		</td>
 							</tr>
 						</c:forEach>

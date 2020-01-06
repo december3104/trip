@@ -44,6 +44,7 @@
 						<td>
 							<ul style="text-align: left; list-style: none;">
 								<li>신고자 : <c:out value="${Nreport.clame_id }" /></li>
+								<li>신고 대상 : <c:out value="${Nreport.report_id }" /></li>
 								<li>신고시간 : <c:out value="${Nreport.report_date }" /></li>
 							</ul>
 							<ul style="text-align: left; list-style: none;">
@@ -53,8 +54,8 @@
 					</tr>	
 					<tr>
 						<td style="text-align: right">
-							<a><input class="ui button" style="background:#c0e7f8;" type="submit" value="승인"></a> &emsp;&emsp;
-							<a href="detailRejectNormalReport.ad?report_id=${Nreport.report_id }"><input class="ui button" style="" type="button" value="거절"></a>
+							<a href="updateDetailAcceptNormalReport.ad?report_id=${Nreport.report_id }&report_no=${Nreport.report_no }"><input class="ui button" style="background:#c0e7f8;" type="submit" value="승인"></a> &emsp;&emsp;
+							<a href="detailRejectNormalReport.ad?report_id=${Nreport.report_id }&report_no=${Nreport.report_no }"><input class="ui button" style="" type="button" value="거절"></a>
 						</td>
 					</tr>
 					

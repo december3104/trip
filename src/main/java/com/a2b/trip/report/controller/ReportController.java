@@ -81,15 +81,73 @@ public class ReportController {
 		return mv;
 	}
 	
-	//일반 회원 신고 처리 거절
-	@RequestMapping("detailRejectNormalReport.ad")
-	public String detailRejectNormalReport(@RequestParam("report_id") String report_id) {
-		logger.info(report_id);
+	//일반 회원 신고 처리 승인
+	@RequestMapping("updateDetailAcceptNormalReport.ad")
+	public String updateDetailAcceptNormalReport(@RequestParam("report_id") String report_id,@RequestParam("report_no") int report_no) {
+		int result1 = reportService.updateDetailAcceptNormalReport1(report_id);
+		int result2 = reportService.updateDetailAcceptNormalReport2(report_no);
+		String viewFileName = " ";
+		if(result1 == 1 && result2 == 1) {
+			viewFileName = "redirect:/selectListNormalReport.ad";
+		}else {
+			viewFileName = "common/error";
+		}
 		
-		return null;
+		return viewFileName;
 	}
 	
-	
+	//일반 회원 신고 거절 처리
+		@RequestMapping("detailRejectNormalReport.ad")
+		public String detailRejectNormalReport(@RequestParam("report_id") String report_id,@RequestParam("report_no") int report_no) {
+			int result = reportService.detailRejectNormalReport(report_no);
+			String viewFileName = " ";
+			if(result == 1) {
+				viewFileName = "redirect:/selectListNormalReport.ad";
+			}else {
+				viewFileName = "common/error";
+			}
+			return viewFileName;
+		}
+		
+	//가이드 회원 신고 승인 처리
+		@RequestMapping("updateDetailAcceptGuideReport.ad")
+		public String updateDetailAcceptGuideReport(@RequestParam("report_id") String report_id,@RequestParam("report_no") int report_no) {
+			
+			int result1 = reportService.updateDetailAcceptGuideReport1(report_id);
+			int result2 = reportService.updateDetailAcceptGuideReport2(report_no);
+			
+			String viewFileName = " ";
+			if(result1 == 1 && result2 == 1) {
+				viewFileName = "redirect:/selectListGuideReport.ad";
+			}else {
+				viewFileName = "common/error";
+			}
+			
+			return viewFileName;
+		}
+		
+	//가이드 회원 신고 거절 처리
+		@RequestMapping("detailRejectGuideReport.ad")
+		public String detailRejectGuideReport(@RequestParam("report_id") String report_id,@RequestParam("report_no") int report_no) {
+			logger.info(report_id + " / / " + report_no);
+			
+			int result = reportService.detailRejectGuideReport(report_no);
+			logger.info(result + "개 행 처리");
+			
+			String viewFileName = "";
+			if(result == 1) {
+				viewFileName = "redirect:/selectListGuideReport.ad";
+			}else {
+				viewFileName = "common/error";
+			}
+			return viewFileName;
+		}
+		
+		
+		
+		
+		
+		
 	//end
 	
 	

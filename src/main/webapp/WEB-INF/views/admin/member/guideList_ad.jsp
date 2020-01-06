@@ -60,7 +60,12 @@
 							<a href="${detailGuide }"><c:out value="${guide.member_id }" /></a> 
 						</td>
 						<td>
-							<c:out value="${guide.member_gender }" />
+							<c:if test="${guide.member_gender eq 'M' }">
+								남자
+							</c:if>
+							<c:if test="${guide.member_gender eq 'F' }">
+								여자
+							</c:if>
 						</td>
 						<td>
 							<c:out value="${guide.member_email }" />

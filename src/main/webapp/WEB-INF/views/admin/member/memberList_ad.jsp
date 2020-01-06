@@ -60,7 +60,12 @@
 						</td>
 						
 						<td>
-							<c:out value="${member.member_gender }" />
+							<c:if test="${member.member_gender eq 'M' }">
+								남자
+							</c:if>
+							<c:if test="${member.member_gender eq 'F' }">
+								여자
+							</c:if>
 						</td>
 						<td>
 							<c:out value="${member.member_email }" />

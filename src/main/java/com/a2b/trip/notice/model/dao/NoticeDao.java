@@ -27,4 +27,9 @@ public class NoticeDao {
 	public Notice selectDetailViewNotice(int notice_no) {
 		return sqlSession.selectOne("noticeMapper.selectDetailViewNotice", notice_no);
 	}
+
+
+	public int deleteDetailNotice(int notice_no) {
+		return sqlSession.delete("noticeMapper.deleteDetailNotice", notice_no);
+	}
 }

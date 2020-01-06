@@ -16,5 +16,17 @@ public interface ReportService {
 
 	ArrayList<Report> selectDetailViewGuideReport(String member_id);
 
+	int detailRejectNormalReport(int report_no);
+
+	int updateDetailAcceptNormalReport1(String report_id);
+
+	int updateDetailAcceptNormalReport2(int report_no);
+
+	int detailRejectGuideReport(int report_no);
+
+	int updateDetailAcceptGuideReport1(String report_id);
+
+	int updateDetailAcceptGuideReport2(int report_no);
+
 
 }

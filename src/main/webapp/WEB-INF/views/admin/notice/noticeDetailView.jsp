@@ -35,7 +35,7 @@
 	<div class="bodyContentCss">
 		<div>
 			<h1 style="font-family: GodoM">공지사항 상세보기</h1>
-			<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
+			<!-- <hr style="border: 3px solid #95d6f3; margin-bottom: 0px"> -->
 			<table class="ui table" style="border:none; width:70%;margin-left: 14.5%;">
 				<tr style="font-size: 15pt;">
 					<th style="background:#c0e7f8;">					
@@ -49,7 +49,7 @@
 				</tr>
 				<tr>
 					<th style="text-align:center;">
-						<input class="ui button" style="background:#c0e7f8; margin-top:5%; margin-bottom: 3%;" type="submit" value="삭제"> &emsp;&emsp;
+						<a href="deleteDetailNotice.ad?notice_no=${notice.notice_no }"><input class="ui button" style="background:#c0e7f8; margin-top:5%; margin-bottom: 3%;" type="submit" value="삭제"></a> &emsp;&emsp;
 						<a href="selectListAllNotice.ad"><input class="ui button" style="margin-top:5%; margin-bottom: 3%;" type="button" value="뒤로"></a>
 					</th>
 				</tr>

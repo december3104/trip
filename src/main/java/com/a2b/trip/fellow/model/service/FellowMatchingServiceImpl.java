@@ -1,9 +1,9 @@
-package com.a2b.trip.fellowmatching.model.service;
+package com.a2b.trip.fellow.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.a2b.trip.fellowmatching.model.dao.FellowMatchingDao;
+import com.a2b.trip.fellow.model.dao.FellowMatchingDao;
 
 @Service("fellowMatchingService")
 public class FellowMatchingServiceImpl implements FellowMatchingService {

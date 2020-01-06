@@ -154,7 +154,7 @@ $(function(){
 				<div class="menu" style="text-align: center">
 					<div class="item">내 가이드북</div>
 					<div class="item">가이드 매칭 기록</div>
-					<div class="item">동행 매칭 기록</div>
+					<div class="item" onclick="location.href='selectMyFellowMatching.do?fm_id=${loginMember.member_id}'">동행 매칭 기록</div>
 					<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
 					<div class="item" id="logoutTag">로그아웃</div>
 				</div>

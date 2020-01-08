@@ -150,15 +150,29 @@ public class Page implements java.io.Serializable {
 				+ endRow + ", totalPage=" + totalPage + ", qna_id=" + qna_id + "]";
 	}
 	
-	public void calcRow(int currentPage) {
-		this.startRow = (currentPage * contentNum) - 9;
-		this.endRow = currentPage * contentNum;
+	//db에서 한페이지에 표시할 갯수 
+	public void calcRow(int currentPage, int contentNum) {
+		if(contentNum == 10) {
+			this.startRow = (currentPage * contentNum) - 9;
+			this.endRow = currentPage * contentNum;
+		}else if(contentNum == 20){
+			this.startRow = (currentPage * contentNum) - 19;
+			this.endRow = currentPage * contentNum;
+		}else {
+			this.startRow = (currentPage * contentNum) - 29;
+			this.endRow = currentPage * contentNum;
+		}
 	}
 	
 	public void prevnext(int currentPage) {
 		if(currentPage > 0 && currentPage < 11) {
-			setPrev(false);
-			setNext(true);
+			if(totalPage < 11) {
+				setPrev(false);
+				setNext(false);
+			}else {
+				setPrev(false);
+				setNext(true);
+			}
 		}else if(getLastBlock() == getCurrentBlock()){
 			setPrev(true);
 			setNext(false);

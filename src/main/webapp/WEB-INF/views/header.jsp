@@ -102,7 +102,10 @@ $(function(){
 	<a class="ui simple dropdown item godom">
 		가이드북
 		<div class="menu">
-			<div class="item" onclick="location.href='goplace.do'">계획하기</div>
+			<c:url var="goplace" value="goplace.do">
+				<c:param name="member_id" value="${sessionScope.loginMember.member_id }"/>
+			</c:url>
+			<div class="item" onclick="location.href='${goplace }'">계획하기</div>
 			<div class="item" onclick="location.href='makeGuidebook.do'">제작하기</div>
 			<div class="item">공유 게시판</div>
 		</div>

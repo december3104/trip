@@ -1,7 +1,13 @@
-[16:47:56][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
-[16:48:00][WARN ][AbstractApplicationContext.java:557] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSession' defined in class path resource [root-context.xml]: Invocation of init method failed; nested exception is org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: java.io.IOException: Could not find resource mappers/member-mapper.xml
-[16:48:00][ERROR][ContextLoader.java:312] - Context initialization failed
-org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSession' defined in class path resource [root-context.xml]: Invocation of init method failed; nested exception is org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: java.io.IOException: Could not find resource mappers/member-mapper.xml
+[17:23:31][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
+[17:23:33][INFO ][ContextLoader.java:306] - Root WebApplicationContext initialized in 1870 ms
+[17:23:33][INFO ][FrameworkServlet.java:524] - Initializing Servlet 'appServlet'
+[17:23:35][INFO ][FrameworkServlet.java:546] - Completed initialization in 2142 ms
+[17:35:45][WARN ][AbstractHandlerExceptionResolver.java:197] - Resolved [org.springframework.validation.BindException: org.springframework.validation.BeanPropertyBindingResult: 1 errors
+Field error in object 'placeDaylist' on field 'daylist_end': rejected value []; codes [typeMismatch.placeDaylist.daylist_end,typeMismatch.daylist_end,typeMismatch.java.sql.Date,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [placeDaylist.daylist_end,daylist_end]; arguments []; default message [daylist_end]]; default message [Failed to convert property value of type 'java.lang.String' to required type 'java.sql.Date' for property 'daylist_end'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [java.sql.Date] for value ''; nested exception is java.lang.IllegalArgumentException]]
+[18:14:35][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
+[18:14:37][WARN ][AbstractApplicationContext.java:557] - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSession' defined in class path resource [root-context.xml]: Invocation of init method failed; nested exception is org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'mappers/place-mapper.xml'. Cause: java.lang.IllegalArgumentException: Mapped Statements collection already contains value for placeMapper.deletePlace. please check mappers/place-mapper.xml and mappers/place-mapper.xml
+[18:14:37][ERROR][ContextLoader.java:312] - Context initialization failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'sqlSession' defined in class path resource [root-context.xml]: Invocation of init method failed; nested exception is org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'mappers/place-mapper.xml'. Cause: java.lang.IllegalArgumentException: Mapped Statements collection already contains value for placeMapper.deletePlace. please check mappers/place-mapper.xml and mappers/place-mapper.xml
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1762)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:593)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
@@ -24,66 +30,45 @@ org.springframework.beans.factory.BeanCreationException: Error creating bean wit
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
 	at java.lang.Thread.run(Unknown Source)
-Caused by: org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: java.io.IOException: Could not find resource mappers/member-mapper.xml
+Caused by: org.springframework.core.NestedIOException: Failed to parse config resource: class path resource [mybatis-config.xml]; nested exception is org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'mappers/place-mapper.xml'. Cause: java.lang.IllegalArgumentException: Mapped Statements collection already contains value for placeMapper.deletePlace. please check mappers/place-mapper.xml and mappers/place-mapper.xml
 	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:511)
 	at org.mybatis.spring.SqlSessionFactoryBean.afterPropertiesSet(SqlSessionFactoryBean.java:424)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1821)
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1758)
 	... 21 more
-Caused by: org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: java.io.IOException: Could not find resource mappers/member-mapper.xml
+Caused by: org.apache.ibatis.builder.BuilderException: Error parsing SQL Mapper Configuration. Cause: org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'mappers/place-mapper.xml'. Cause: java.lang.IllegalArgumentException: Mapped Statements collection already contains value for placeMapper.deletePlace. please check mappers/place-mapper.xml and mappers/place-mapper.xml
 	at org.apache.ibatis.builder.xml.XMLConfigBuilder.parseConfiguration(XMLConfigBuilder.java:121)
 	at org.apache.ibatis.builder.xml.XMLConfigBuilder.parse(XMLConfigBuilder.java:98)
 	at org.mybatis.spring.SqlSessionFactoryBean.buildSqlSessionFactory(SqlSessionFactoryBean.java:508)
 	... 24 more
-Caused by: java.io.IOException: Could not find resource mappers/member-mapper.xml
-	at org.apache.ibatis.io.Resources.getResourceAsStream(Resources.java:114)
-	at org.apache.ibatis.io.Resources.getResourceAsStream(Resources.java:100)
-	at org.apache.ibatis.builder.xml.XMLConfigBuilder.mapperElement(XMLConfigBuilder.java:371)
+Caused by: org.apache.ibatis.builder.BuilderException: Error parsing Mapper XML. The XML location is 'mappers/place-mapper.xml'. Cause: java.lang.IllegalArgumentException: Mapped Statements collection already contains value for placeMapper.deletePlace. please check mappers/place-mapper.xml and mappers/place-mapper.xml
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.configurationElement(XMLMapperBuilder.java:122)
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.parse(XMLMapperBuilder.java:94)
+	at org.apache.ibatis.builder.xml.XMLConfigBuilder.mapperElement(XMLConfigBuilder.java:373)
 	at org.apache.ibatis.builder.xml.XMLConfigBuilder.parseConfiguration(XMLConfigBuilder.java:119)
 	... 26 more
-[16:48:52][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
-[16:48:56][INFO ][ContextLoader.java:306] - Root WebApplicationContext initialized in 3865 ms
-[16:48:56][INFO ][FrameworkServlet.java:524] - Initializing Servlet 'appServlet'
-[16:49:01][INFO ][FrameworkServlet.java:546] - Completed initialization in 5095 ms
-[16:49:07][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[16:51:22][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
-[16:51:26][INFO ][ContextLoader.java:306] - Root WebApplicationContext initialized in 3725 ms
-[16:51:26][INFO ][FrameworkServlet.java:524] - Initializing Servlet 'appServlet'
-[16:51:30][INFO ][FrameworkServlet.java:546] - Completed initialization in 4236 ms
-[16:51:33][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[16:52:08][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[16:54:57][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
-[16:55:01][INFO ][ContextLoader.java:306] - Root WebApplicationContext initialized in 4152 ms
-[16:55:02][INFO ][FrameworkServlet.java:524] - Initializing Servlet 'appServlet'
-[16:55:06][INFO ][FrameworkServlet.java:546] - Completed initialization in 4386 ms
-[16:55:06][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[16:55:35][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[16:56:05][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[16:56:20][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[16:58:24][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[16:59:50][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
-[16:59:55][INFO ][ContextLoader.java:306] - Root WebApplicationContext initialized in 4141 ms
-[16:59:55][INFO ][FrameworkServlet.java:524] - Initializing Servlet 'appServlet'
-[16:59:59][INFO ][FrameworkServlet.java:546] - Completed initialization in 4682 ms
-[17:00:00][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:00:44][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
-[17:00:49][INFO ][ContextLoader.java:306] - Root WebApplicationContext initialized in 4202 ms
-[17:00:49][INFO ][FrameworkServlet.java:524] - Initializing Servlet 'appServlet'
-[17:00:54][INFO ][FrameworkServlet.java:546] - Completed initialization in 5401 ms
-[17:00:55][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:01:05][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:01:28][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:01:59][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:03:24][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
-[17:03:28][INFO ][ContextLoader.java:306] - Root WebApplicationContext initialized in 3558 ms
-[17:03:28][INFO ][FrameworkServlet.java:524] - Initializing Servlet 'appServlet'
-[17:03:32][INFO ][FrameworkServlet.java:546] - Completed initialization in 3891 ms
-[17:03:34][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:06:24][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:08:13][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:08:51][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:10:43][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:11:02][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:13:04][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:15:31][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
-[17:16:07][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.
+Caused by: java.lang.IllegalArgumentException: Mapped Statements collection already contains value for placeMapper.deletePlace. please check mappers/place-mapper.xml and mappers/place-mapper.xml
+	at org.apache.ibatis.session.Configuration$StrictMap.put(Configuration.java:917)
+	at org.apache.ibatis.session.Configuration$StrictMap.put(Configuration.java:874)
+	at org.apache.ibatis.session.Configuration.addMappedStatement(Configuration.java:673)
+	at org.apache.ibatis.builder.MapperBuilderAssistant.addMappedStatement(MapperBuilderAssistant.java:302)
+	at org.apache.ibatis.builder.xml.XMLStatementBuilder.parseStatementNode(XMLStatementBuilder.java:109)
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.buildStatementFromContext(XMLMapperBuilder.java:137)
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.buildStatementFromContext(XMLMapperBuilder.java:130)
+	at org.apache.ibatis.builder.xml.XMLMapperBuilder.configurationElement(XMLMapperBuilder.java:120)
+	... 29 more
+[18:15:01][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
+[18:15:03][INFO ][ContextLoader.java:306] - Root WebApplicationContext initialized in 1758 ms
+[18:15:03][INFO ][FrameworkServlet.java:524] - Initializing Servlet 'appServlet'
+[18:15:05][INFO ][FrameworkServlet.java:546] - Completed initialization in 2255 ms
+[18:15:40][WARN ][DispatcherServlet.java:1248] - No mapping for POST /trip/deleteDaylist.do
+[18:16:26][WARN ][DispatcherServlet.java:1248] - No mapping for POST /trip/deleteDaylist.do
+[18:16:47][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
+[18:16:49][INFO ][ContextLoader.java:306] - Root WebApplicationContext initialized in 1817 ms
+[18:16:49][INFO ][FrameworkServlet.java:524] - Initializing Servlet 'appServlet'
+[18:16:51][INFO ][FrameworkServlet.java:546] - Completed initialization in 2041 ms
+[19:04:04][INFO ][ContextLoader.java:270] - Root WebApplicationContext: initialization started
+[19:04:05][INFO ][ContextLoader.java:306] - Root WebApplicationContext initialized in 1867 ms
+[19:04:05][INFO ][FrameworkServlet.java:524] - Initializing Servlet 'appServlet'
+[19:04:08][INFO ][FrameworkServlet.java:546] - Completed initialization in 2056 ms
+[19:04:38][INFO ][HomeController.java:27] - Welcome home! The client locale is ko_KR.

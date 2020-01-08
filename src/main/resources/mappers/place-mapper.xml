@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="placeMapper">
+	<!-- 날짜리스트 생성 -->
+	<insert id="insertDaylist" parameterType="PlaceDaylist">
+		insert into placedaylist values(daylist_seq.nextval, #{daylist_name}, #{daylist_user}, #{daylist_start}, #{daylist_end})
+	</insert>
+
+	<!-- 날짜리스트 모두 조회 -->
+	<select id="selectDaylist" parameterType="string" resultType="PlaceDaylist">
+		select * from placedaylist where daylist_user = #{value}
+	</select>
+	
+	<!-- 시작,끝 범위내 날짜 조회 -->
+	<select id="selectDatelist" parameterType="_int" resultType="date">
+		<![CDATA[
+		select * from (
+			select (select daylist_start from placedaylist where daylist_no = #{value}) + level -1 as datelist
+			from dual connect by level <= (select daylist_end from placedaylist where daylist_no = #{value})
+											- (select daylist_start from placedaylist where daylist_no = #{value}) +1 
+		)
+		]]>
+	</select>
+	
+	<!-- 회원의 장소리스트 모두 조회 -->
+	<select id="selectPlaceList" parameterType="string" resultType="Place">
+		select * from place where place_user = #{value}
+	</select>
+	
+	<!-- 해당 날짜의 장소리스트 조회 -->
+	<select id="selectDailyPlaceList" parameterType="Place" resultType="Place">
+		select * from place where place_user = #{place_user} and place_date = #{place_date}
+	</select>
+	
+	<!-- 장소 리스트에서 장소 삭제 -->
+	<delete id="deletePlace" parameterType="string">
+		delete from place where place_code=#{value}
+	</delete>
+	
+	<!-- 일정 목록에서 일정 삭제 -->
+	<delete id="deleteDaylist" parameterType="_int">
+		delete from placedaylist where daylist_no=#{value}
+	</delete>
+	
+</mapper>

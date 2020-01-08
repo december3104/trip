@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+/* 고도체 */
 @font-face { 
 	font-family: 'GodoM';
 	font-style: normal;
@@ -21,3 +22,57 @@
 .godom { font-family: 'GodoM', sans-serif;}
 
 .godob { font-family: 'GodoB', sans-serif}
+
+/* 유토이미지고딕체 */
+/* 얇 */
+@font-face { 
+	font-family: 'BBTreeGL'; 
+	font-weight: normal; 
+	font-style: normal;
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGL.woff') format('woff'); 
+}
+/* 중 */
+@font-face { 
+	font-family: 'BBTreeGR'; 
+	font-weight: normal; 
+	font-style: normal; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGR.woff') format('woff');
+}
+/* 굵게 */
+@font-face { 
+	font-family: 'BBTreeGB'; 
+	font-weight: normal; 
+	font-style: normal; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_nine_@1.1/BBTreeGB.woff') format('woff'); 
+}
+
+.utoL { font-family: 'BBTreeGL', sans-serif; }
+.utoR { font-family: 'BBTreeGR', sans-serif; }
+.utoB { font-family: 'BBTreeGB', sans-serif; }
+
+/* 넷마블체 */
+/* 얇 */
+@font-face { 
+	font-family: 'netmarbleL'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.1/netmarbleL.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+}
+/* 중 */
+@font-face { 
+	font-family: 'netmarbleM'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.1/netmarbleM.woff') format('woff');
+	font-weight: normal; 
+	font-style: normal; 
+}
+/* 굵 */
+@font-face { 
+	font-family: 'netmarbleB'; 
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.1/netmarbleB.woff') format('woff'); 
+	font-weight: normal; 
+	font-style: normal; 
+}
+	
+.netmarbleL { font-family: 'netmarbleL', sans-serif; }
+.netmarbleR { font-family: 'netmarbleR', sans-serif; }
+.netmarbleB { font-family: 'netmarbleB', sans-serif; }

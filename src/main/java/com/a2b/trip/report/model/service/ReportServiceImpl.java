@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.a2b.trip.common.Page;
 import com.a2b.trip.report.model.dao.ReportDao;
 import com.a2b.trip.report.model.vo.GuideReport;
 import com.a2b.trip.report.model.vo.NormalReport;
@@ -20,13 +21,13 @@ public class ReportServiceImpl implements ReportService {
 	
 	//일반 회원 신고 목록 조회
 	@Override
-	public ArrayList<NormalReport> selectListNormalReport() {
-		return reportDao.selectListNormalReport();
+	public ArrayList<NormalReport> selectListNormalReport(Page page) {
+		return reportDao.selectListNormalReport(page);
 	}
 	//가이드 회원 신고 목록 조회
 	@Override
-	public ArrayList<GuideReport> selectListGuideReport() {
-		return reportDao.selectListGuideReport();
+	public ArrayList<GuideReport> selectListGuideReport(Page page) {
+		return reportDao.selectListGuideReport(page);
 	}
 	//일반 회원 신고 상세보기
 	@Override
@@ -69,6 +70,16 @@ public class ReportServiceImpl implements ReportService {
 		return reportDao.detailRejectGuideReport(report_no);
 	}
 
+	//일반 회원 신고 전체 갯수 조회
+	@Override
+	public int selectTotal() {
+		return reportDao.selectTotal();
+	}
+	//가이드 회원 신고 전체 갯수 조회
+	@Override
+	public int selectTotalGuide() {
+		return reportDao.selectTotalGuide();
+	}
 	// 신고 하기
 	@Override
 	public int insertReport(Report report) {

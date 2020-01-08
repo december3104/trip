@@ -156,22 +156,6 @@ public class MemberController {
 		return "member/memberUpdatePage";
 	}
 	
-	// 일반 회원 정보 보기 처리
-	@RequestMapping("memberInfo.do")
-	public ModelAndView memberInfo(@RequestParam("member_id") String member_id, ModelAndView mv) {
-		
-		Member member = memberService.selectOneMember(member_id);
-		
-		if (member != null) {
-			mv.addObject("member", member);
-			mv.setViewName("member/memberInfo");
-		} else {
-			mv.addObject("message", "내 정보 보기 실패!");
-			mv.setViewName("common/error");
-		}
-		return mv;
-	}
-	
 	// 일반 회원 정보 수정 처리
 	@RequestMapping(value="updateMember.do", method=RequestMethod.POST)
 	public String updateMember(Member member, Model model, @RequestParam("updateProfileUpload") MultipartFile file, HttpServletRequest request) {

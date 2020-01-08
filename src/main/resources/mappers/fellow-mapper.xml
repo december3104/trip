@@ -4,8 +4,12 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="fellowMapper">
 	
-	<select id="selectMyFellowMatching" parameterType="string" resultType="FellowMatching">
-		select * from fellowmatching where fm_id = #{value}
+	<select id="selectMyFellowMatching" parameterType="string" resultType="Fellow">
+		select * from fellowmatching join fellowboard on fellowmatching.fb_no = fellowboard.fb_no join member on fellowboard.fb_id = member.member_id where fm_id = #{value}
+	</select>
+	
+	<select id="selectMyFellowMatchingOne" parameterType="string" resultType="Fellow">
+		select * from fellowmatching join fellowboard on fellowmatching.fb_no = fellowboard.fb_no join member on fellowboard.fb_id = member.member_id where fb_id = #{value}
 	</select>
 	
 	<select id="selectTotal" resultType="_int">

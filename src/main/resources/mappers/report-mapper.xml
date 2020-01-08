@@ -51,4 +51,8 @@
 		update report set report_status = 'DONE', complete_date = sysdate  where report_no = #{value}
 	</update>
 	
+	<insert id="insertReport" parameterType="Report">
+		insert into report values (report_seq.nextval, #{clame_id}, #{report_id}, #{report_content}, default, default, null, null, #{report_type})
+	</insert>
+	
 </mapper>

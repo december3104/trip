@@ -69,6 +69,7 @@ public class ReportServiceImpl implements ReportService {
 	public int detailRejectGuideReport(int report_no) {
 		return reportDao.detailRejectGuideReport(report_no);
 	}
+
 	//일반 회원 신고 전체 갯수 조회
 	@Override
 	public int selectTotal() {
@@ -78,6 +79,11 @@ public class ReportServiceImpl implements ReportService {
 	@Override
 	public int selectTotalGuide() {
 		return reportDao.selectTotalGuide();
+
+	// 신고 하기
+	@Override
+	public int insertReport(Report report) {
+		return reportDao.insertReport(report);
 	}
 	
 

@@ -70,6 +70,11 @@ public class ReportDao {
 		return sqlSession.selectOne("reportMapper.selectTotalGuide");
 	}
 	
+	// 신고 하기
+	public int insertReport(Report report) {
+		return sqlSession.insert("reportMapper.insertReport", report);
+	}
+	
 	
 
 

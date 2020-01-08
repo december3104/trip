@@ -74,6 +74,7 @@
 		update report set report_status = 'DONE', complete_date = sysdate  where report_no = #{value}
 	</update>
 	
+
 	<select id="selectTotal" resultType="_int">
 		select count(*) from (select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
 								from member
@@ -90,5 +91,10 @@
 								order by report_date desc)
 	</select>
 	
+
+	<insert id="insertReport" parameterType="Report">
+		insert into report values (report_seq.nextval, #{clame_id}, #{report_id}, #{report_content}, default, default, null, null, #{report_type})
+	</insert>
+
 	
 </mapper>

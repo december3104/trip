@@ -33,5 +33,7 @@ public interface ReportService {
 
 	int selectTotalGuide();
 
+	int insertReport(Report report);
+
 
 }

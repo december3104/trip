@@ -37,13 +37,15 @@
 			<h1 style="font-family: GodoM">공지사항 상세보기</h1>
 			<!-- <hr style="border: 3px solid #95d6f3; margin-bottom: 0px"> -->
 			<table class="ui table" style="border:none; width:70%;margin-left: 14.5%;">
-				<tr style="font-size: 15pt;">
+				<tr style="font-size: 15pt; height:50px;">
 					<th style="background:#c0e7f8;">					
-						<c:out value="${notice.notice_title }" />
+						${notice.notice_title }
+						<button class="ui button" style="font-family:GodoM;background:#c0e7f8;float:right;padding-top: 0px;padding-bottom: 0px;font-size: 13pt;" 
+							onclick="location.href='updateDetailNoticePage.ad?notice_no=${notice.notice_no}'">수정</button>
 					</th>
 				</tr>
 				<tr>
-					<th style="font-size: 13pt;">
+					<th style="font-size: 13pt;padding-top: 1.5%;">
 						${notice.notice_content }
 					</th>
 				</tr>

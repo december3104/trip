@@ -24,8 +24,25 @@
 	text-align:center;
 	
 }
+.page_div { margin : 15px 0 50px 0; }
+.paging { text-align : center; }
+.paging li { display : inline-block;}
+.paging a { display : block; width : auto; height : 30px; border : 1px solid #E7E6E6;  line-height: 30px; }
+.paging a:hover { color : black; border : 1px solid black;}
+.paging .side_w { margin : 0 10px 0 10px; }
+.paging .page_n { background-color : #c0e7f8; }
+.paging .page_n a { color : black; }
 
 </style>
+<script type="text/javascript">
+/* 페이징 처리 함수 시작 */
+function page(idx){
+	var pagenum = idx;
+	var contentnum = $("#contentnum option:selected").val();
+	location.href="selectListAllMember.ad?currentPage=" + pagenum + "&contentNum=" + "10";
+}
+/* 페이징 처리 함수 끝 */
+</script>
 </head>
 <body>
 <!-- 헤더 -->
@@ -33,7 +50,7 @@
 	<jsp:include page="/WEB-INF/views/header.jsp" />
 </header>
 
-<div class="bodyCss" style="margin-left: 15%; margin-right: 15%">
+<div class="bodyCss" style="margin-left: 15%; margin-right: 15%;min-height: 60%;">
 	<div class="bodyContentCss">
 		<div>
 			<h1 style="font-family: GodoM">일반 회원 관리</h1>
@@ -80,6 +97,39 @@
 		</div>
 	</div>
 </div>
+	<div class="page_div">
+		<ul class="paging">
+			<c:if test="${ page.prev }">
+				<li class="first"><a href="javascript:page(1)"><span
+						class="side_w">&laquo;</span></a></li>
+			</c:if>
+			<c:if test="${ page.prev }">
+				<li class="prev"><a
+					href="javascript:page(${ page.startPage-1 });"><span
+						class="side_w">이전</span></a></li>
+			</c:if>
+			<c:forEach begin="${ page.startPage }" end="${ page.endPage }"
+				var="idx">
+				<c:if test="${ idx eq page.currentPage}">
+					<li class="page_n"><a href="javascript:page(${ idx })"><span
+							class="side_w">${ idx }</span></a></li>
+				</c:if>
+				<c:if test="${ idx ne page.currentPage}">
+					<li><a href="javascript:page(${ idx })"><span
+							class="side_w">${ idx }</span></a></li>
+				</c:if>
+			</c:forEach>
+			<c:if test="${ page.next }">
+				<li class="next"><a
+					href="javascript:page(${ page.endPage+1 });"><span
+						class="side_w">다음</span></a></li>
+			</c:if>
+			<c:if test="${ page.next }">
+				<li class="last"><a href="javascript:page(${ page.totalPage })"><span
+						class="side_w">&raquo;</span></a></li>
+			</c:if>
+		</ul>
+	</div>
 <!-- 푸터 -->
 <footer><jsp:include page="/WEB-INF/views/footer.jsp" /></footer>
 </body>

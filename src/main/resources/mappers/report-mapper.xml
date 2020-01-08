@@ -5,20 +5,43 @@
 <mapper namespace="reportMapper">
 	
 	<select id="selectListNormalReport" resultType="NormalReport">
+		<![CDATA[
+		select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
+		from (select rownum renum, member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
+				from (select * from (select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
+									from member
+									full join report on member.member_id = report.report_id
+									where report_type = 'NORMAL' and report_status = 'WAIT'
+									order by report_date desc)))
+		where renum >= #{startRow} and renum <= #{endRow}
+		]]>
+		<!-- 
 		select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
 		from member
 		full join report on member.member_id = report.report_id
 		where report_type = 'NORMAL' and report_status = 'WAIT'
 		order by report_date desc
+		 -->
 	</select>
 	
 	<select id="selectListGuideReport" resultType="GuideReport">
+		<![CDATA[
+		select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
+		from (select rownum rgnum, member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
+				from (select * from (select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
+										from member
+										right join report on member.member_id = report.report_id
+										where report_type = 'GUIDE' and guide_qualification = 'NONE' and report_status = 'WAIT'
+										order by report_date desc)))
+		where rgnum >= #{startRow} and rgnum <= #{endRow}
+		]]>	
+		<!-- 
 		select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
 		from member
 		right join report on member.member_id = report.report_id
 		where report_type = 'GUIDE' and guide_qualification = 'NONE' and report_status = 'WAIT'
 		order by report_date desc
-		
+		 -->
 	</select>
 	
 	<select id="selectDetailViewNormalReport" parameterType="string" resultType="NormalReport">
@@ -50,5 +73,22 @@
 	<update id="updateDetailAcceptGuideReport2" parameterType="int">
 		update report set report_status = 'DONE', complete_date = sysdate  where report_no = #{value}
 	</update>
+	
+	<select id="selectTotal" resultType="_int">
+		select count(*) from (select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
+								from member
+								full join report on member.member_id = report.report_id
+								where report_type = 'NORMAL' and report_status = 'WAIT'
+								order by report_date desc)
+	</select>
+	
+	<select id="selectTotalGuide" resultType="_int">
+		select count(*) from (select member_name, report_no,clame_id,report_id,report_content,report_status,report_date,complete_date,report_type, member_gender, member_email ,member_report_count
+								from member
+								right join report on member.member_id = report.report_id
+								where report_type = 'GUIDE' and guide_qualification = 'NONE' and report_status = 'WAIT'
+								order by report_date desc)
+	</select>
+	
 	
 </mapper>

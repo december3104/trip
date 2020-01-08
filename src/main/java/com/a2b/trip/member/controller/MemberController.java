@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.a2b.trip.guide.model.vo.Guide;
+import com.a2b.trip.common.Page;
 import com.a2b.trip.member.model.service.MemberService;
 import com.a2b.trip.member.model.vo.Member;
 
@@ -328,8 +328,21 @@ public class MemberController {
 	
 	//일반 회원 목록 조회
 	@RequestMapping("selectListAllMember.ad")
-	public ModelAndView selectListAllMember(ModelAndView mv) {		
-		ArrayList<Member> list = memberService.selectListAllMember();
+	public ModelAndView selectListAllMember(ModelAndView mv, Page page) {		
+		
+		int totalCount = memberService.selectTotal();
+		int currentPage = page.getCurrentPage();
+		page.setTotalCount(totalCount);	//	전체 게시물 갯수 (db에서 조회해 와서 Page 클레스에 저장)
+		page.calcRow(currentPage,10);	//	db에서 조회할 ROWNUM 시작과 끝 계산
+		page.saveCurrentBlock(currentPage);	//	페이지 	
+		page.saveLastBlock(totalCount);
+		page.calcPage(totalCount, page.getContentNum());	//	맨 마지막 페이지 계산
+		
+		page.prevnext(currentPage);
+		page.saveStartPage(page.getCurrentBlock());
+		page.saveEndPage(page.getLastBlock(), page.getCurrentBlock());
+		
+		ArrayList<Member> list = memberService.selectListAllMember(page);
 		
 		logger.info(list.toString());
 		
@@ -343,8 +356,20 @@ public class MemberController {
 	
 	// 가이드 목록 조회
 	@RequestMapping("selectListAllGuide.ad")
-	public ModelAndView selectListAllGuide(ModelAndView mv) {
-		ArrayList<Member> list = memberService.selectListAllGuide();
+	public ModelAndView selectListAllGuide(ModelAndView mv, Page page) {
+		int totalCount = memberService.selectTotalGuide();
+		int currentPage = page.getCurrentPage();
+		page.setTotalCount(totalCount);	//	전체 게시물 갯수 (db에서 조회해 와서 Page 클레스에 저장)
+		page.calcRow(currentPage,10);	//	db에서 조회할 ROWNUM 시작과 끝 계산
+		page.saveCurrentBlock(currentPage);	//	페이지 	
+		page.saveLastBlock(totalCount);
+		page.calcPage(totalCount, page.getContentNum());	//	맨 마지막 페이지 계산
+		
+		page.prevnext(currentPage);
+		page.saveStartPage(page.getCurrentBlock());
+		page.saveEndPage(page.getLastBlock(), page.getCurrentBlock());
+		
+		ArrayList<Member> list = memberService.selectListAllGuide(page);
 		
 		logger.info(list.toString());
 		
@@ -356,8 +381,20 @@ public class MemberController {
 	
 	//가이드 신청 목록 조회
 	@RequestMapping("selectListApplyGuide.ad")
-	public ModelAndView selectListApplyGuide(ModelAndView mv) {
-		ArrayList<Member> list = memberService.selectListApplyGuide();
+	public ModelAndView selectListApplyGuide(ModelAndView mv,Page page) {
+		int totalCount = memberService.selectTotalApplyGuide();	//	게시물 총 갯수(현제 db에 저장된 값)
+		int currentPage = page.getCurrentPage();
+		page.setTotalCount(totalCount);	//	전체 게시물 갯수 (db에서 조회해 와서 Page 클레스에 저장)
+		page.calcRow(currentPage,10);	//	db에서 조회할 ROWNUM 시작과 끝 계산
+		page.saveCurrentBlock(currentPage);	//	페이지 	
+		page.saveLastBlock(totalCount);
+		page.calcPage(totalCount, page.getContentNum());	//	맨 마지막 페이지 계산
+		
+		page.prevnext(currentPage);
+		page.saveStartPage(page.getCurrentBlock());
+		page.saveEndPage(page.getLastBlock(), page.getCurrentBlock());
+		
+		ArrayList<Member> list = memberService.selectListApplyGuide(page);
 		
 		logger.info(list.toString());
 		

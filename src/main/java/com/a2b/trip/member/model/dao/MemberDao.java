@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.a2b.trip.common.Page;
 import com.a2b.trip.member.model.vo.Member;
 
 @Repository("memberDao")
@@ -63,24 +64,36 @@ public class MemberDao {
 	}
 	
 	// 일반 회원 조회
-	public ArrayList<Member> selectListAllMember() {
-		List<Member> list = sqlSession.selectList("memberMapper.selectListAllMember");
+	public ArrayList<Member> selectListAllMember(Page page) {
+		List<Member> list = sqlSession.selectList("memberMapper.selectListAllMember", page);
 		return (ArrayList<Member>)list;
 		
 	}
 	// 가이드 회원 조회
-	public ArrayList<Member> selectListAllGuide() {
-		List<Member> list = sqlSession.selectList("memberMapper.selectListAllGuide");
+	public ArrayList<Member> selectListAllGuide(Page page) {
+		List<Member> list = sqlSession.selectList("memberMapper.selectListAllGuide",page);
 		return (ArrayList<Member>)list;
 	}
 	// 가이드 신청 회원 조회
-	public ArrayList<Member> selectListApplyGuide() {
-		List<Member> list = sqlSession.selectList("memberMapper.selectListApplyGuide");		
+	public ArrayList<Member> selectListApplyGuide(Page page) {
+		List<Member> list = sqlSession.selectList("memberMapper.selectListApplyGuide",page);		
 		return (ArrayList<Member>)list;
 	}
 	//관리자 일반회원 관리 상세보기
 	public Member selectDetailViewMember(String member_id) {
 		return sqlSession.selectOne("memberMapper.selectDetailViewMember", member_id);
+	}
+	//전체 회원 수 조회
+	public int selectTotal() {
+		return sqlSession.selectOne("memberMapper.selectTotal");
+	}
+	//전체 가이드 수 조회
+	public int selectTotalGuide() {
+		return sqlSession.selectOne("memberMapper.selectTotalGuide");
+	}
+	//전체 가이드 신청자 수 조회
+	public int selectTotalApplyGuide() {
+		return sqlSession.selectOne("memberMapper.selectTotalApplyGuide");
 	}
 
 

@@ -75,6 +75,11 @@ public class ReportDao {
 		return sqlSession.insert("reportMapper.insertReport", report);
 	}
 	
+	// 신고 하기
+	public int insertReport(Report report) {
+		return sqlSession.insert("reportMapper.insertReport", report);
+	}
+	
 	
 
 

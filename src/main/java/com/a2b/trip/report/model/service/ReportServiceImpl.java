@@ -68,6 +68,12 @@ public class ReportServiceImpl implements ReportService {
 	public int detailRejectGuideReport(int report_no) {
 		return reportDao.detailRejectGuideReport(report_no);
 	}
+
+	// 신고 하기
+	@Override
+	public int insertReport(Report report) {
+		return reportDao.insertReport(report);
+	}
 	
 
 	

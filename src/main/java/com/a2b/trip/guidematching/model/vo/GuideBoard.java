@@ -1,4 +1,4 @@
-package com.a2b.trip.guideboard.model.vo;
+package com.a2b.trip.guidematching.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;

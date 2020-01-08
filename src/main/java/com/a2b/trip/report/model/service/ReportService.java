@@ -28,5 +28,6 @@ public interface ReportService {
 
 	int updateDetailAcceptGuideReport2(int report_no);
 
+	int insertReport(Report report);
 
 }

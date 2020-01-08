@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.a2b.trip.fellow.model.dao.FellowMatchingDao;
-import com.a2b.trip.fellow.model.vo.FellowMatching;
+import com.a2b.trip.fellow.model.vo.Fellow;
 
 @Service("fellowMatchingService")
 public class FellowMatchingServiceImpl implements FellowMatchingService {
@@ -17,7 +17,12 @@ public class FellowMatchingServiceImpl implements FellowMatchingService {
 	public FellowMatchingServiceImpl() {}
 
 	@Override
-	public ArrayList<FellowMatching> selectMyFellowMatching(String fm_id) {
+	public ArrayList<Fellow> selectMyFellowMatching(String fm_id) {
 		return fellowMatchingDao.selectMyFellowMatching(fm_id);
+	}
+
+	@Override
+	public Fellow selectMyFellowMatchingOne(String fb_id) {
+		return fellowMatchingDao.selectMyFellowMatchingOne(fb_id);
 	}
 }

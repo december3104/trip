@@ -15,7 +15,7 @@ public class NormalReport implements Serializable{
 	private Date report_date;
 	private Date complete_date;
 	private String report_type;
-	// 성별 , 아메일 ,  누적신고
+	// 성별 , 이메일 ,  누적신고
 	private String member_gender;
 	private String member_email;
 	private String member_report_count;

@@ -63,6 +63,11 @@ public class ReportDao {
 		return sqlSession.delete("reportMapper.detailRejectGuideReport",report_no);
 	}
 	
+	// 신고 하기
+	public int insertReport(Report report) {
+		return sqlSession.insert("reportMapper.insertReport", report);
+	}
+	
 	
 
 

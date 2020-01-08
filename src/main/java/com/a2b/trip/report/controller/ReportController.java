@@ -2,14 +2,20 @@ package com.a2b.trip.report.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.a2b.trip.member.model.vo.Member;
 import com.a2b.trip.report.model.service.ReportService;
 import com.a2b.trip.report.model.vo.GuideReport;
 import com.a2b.trip.report.model.vo.NormalReport;
@@ -147,8 +153,29 @@ public class ReportController {
 		
 		
 		
-		
 	//end
+		
+	// 혜진
+	//신고하기
+	@RequestMapping(value="insertReport.do", method=RequestMethod.POST)
+	public String insertReport(Report report, HttpServletRequest request, Model model) {
+		// 세션에서 정보 꺼내기
+		HttpSession session = request.getSession(false);
+		Member member = (Member)session.getAttribute("loginMember");
+		String clame_id = member.getMember_id();
+		
+		report.setClame_id(clame_id);
+		
+		int result = reportService.insertReport(report);
+		
+		String viewFileName = "redirect:/selectMyFellowMatching.do";
+	
+		if (result <= 0) {
+			viewFileName = "common/error";
+		}
+	
+		return viewFileName;
+	}
 	
 	
 }

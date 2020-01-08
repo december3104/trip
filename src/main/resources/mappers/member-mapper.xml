@@ -47,19 +47,47 @@
 	</select>
 		
 	<select id="selectListAllMember" resultType="Member">
-		select * from member where guide_qualification='NONE' or guide_qualification = 'WAIT'
+		<![CDATA[
+		select * 
+		from 
+			  (select rownum mnum, MEMBER_ID, MEMBER_NAME, MEMBER_PWD, MEMBER_EMAIL, MEMBER_GENDER, MEMBER_PHONE, MEMBER_BIRTH, MEMBER_PROFILE_ORIGINAL, 
+			  						MEMBER_PROFILE_RENAME, MEMBER_REPORT_COUNT, GUIDE_QUALIFICATION, MEMBER_LEVEL, ENROLL_DATE, GUIDE_APPLY_ALARM
+				from (select * from member order by ENROLL_DATE desc))
+		where mnum >= #{startRow} and mnum <= #{endRow}
+		]]>
 	</select>
 	
 	<select id="selectListAllGuide" resultType="GuideMember">
+		<![CDATA[
+		select member_name, member_id, member_gender, member_email, guide_grade, guide_report_count
+		from (select rownum gnum, member_name, member_id, member_gender, member_email, guide_grade, guide_report_count
+				from (select * from (select member_name, member_id, member_gender, member_email, guide_grade, guide_report_count 
+									from member
+									full outer join guide on member.member_id = guide.guide_id
+									where guide_qualification = 'DONE')))
+		where gnum >= #{startRow} and gnum <= #{endRow}
+		]]>
+	<!-- 
 		select member_name, member_id, member_gender, member_email, guide_grade, guide_report_count 
 		from member
 		full outer join guide on member.member_id = guide.guide_id
 		where guide_qualification = 'DONE'
+	 -->
 	</select>
 	
 	<select id="selectListApplyGuide" resultType="Member">
+		<![CDATA[
+		SELECT * 
+		FROM (SELECT ROWNUM mnum, MEMBER_ID,MEMBER_NAME,MEMBER_PWD,MEMBER_EMAIL,MEMBER_GENDER,MEMBER_PHONE,MEMBER_BIRTH,
+						MEMBER_PROFILE_ORIGINAL,MEMBER_PROFILE_RENAME,MEMBER_REPORT_COUNT,GUIDE_QUALIFICATION,MEMBER_LEVEL,ENROLL_DATE,GUIDE_APPLY_ALARM
+				from (select * from member where guide_qualification='WAIT')) 
+		WHERE mnum >= #{ startRow } AND mnum <= #{ endRow }
+		]]>
+		<!-- 
 		select * from member where guide_qualification='WAIT'
+		 -->
 	</select>
+	
 	
 	<select id="selectDetailViewMember"  parameterType="string" resultType="Member">
 		select * from member where member_id = #{value}
@@ -80,5 +108,20 @@
 	<update id="updateDetailAcceptGuideReport1" parameterType="string">
 		update member set member_report_count = member_report_count+1 where member_id = #{value}
 	</update>
+	
+	<select id="selectTotal" resultType="_int">
+		select count(*) from member
+	</select>
+	
+	<select id="selectTotalGuide" resultType="_int">
+		select count(*) from (select member_name, member_id, member_gender, member_email, guide_grade, guide_report_count 
+								from member
+								full outer join guide on member.member_id = guide.guide_id
+								where guide_qualification = 'DONE')
+	</select>
+	
+	<select id="selectTotalApplyGuide" resultType="_int">
+		select count(*) from member where guide_qualification='WAIT'
+	</select>
 	
 </mapper>

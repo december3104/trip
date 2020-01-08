@@ -29,6 +29,7 @@
 	<filter-mapping>
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>*.do</url-pattern>
+		<url-pattern>*.ad</url-pattern>
 	</filter-mapping>	
 
 	<!-- Processes application requests -->

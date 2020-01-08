@@ -14,4 +14,6 @@ public interface QnaService {
 	int updateQna(Qna qna);
 	ArrayList<Qna> selectListMyQna(Page page);
 	int selectMyTotal(String qna_id);
+	int deleteQna(int qna_no);
+	
 }

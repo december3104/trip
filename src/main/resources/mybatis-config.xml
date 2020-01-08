@@ -16,7 +16,9 @@
 		<typeAlias type="com.a2b.trip.notice.model.vo.Notice" alias="Notice"/>
 		<typeAlias type="com.a2b.trip.fellow.model.vo.FellowMatching" alias="FellowMatching" />
 		<typeAlias type="com.a2b.trip.fellow.model.vo.FellowBoard" alias="FellowBoard" />
-		<typeAlias type="com.a2b.trip.place.model.vo.PlaceDaylist" alias="PlaceDaylist" />
+		<typeAlias type="com.a2b.trip.fellow.model.vo.Fellow" alias="Fellow" />
+		<typeAlias type="com.a2b.trip.location.model.vo.Location" alias="Location" />
+    <typeAlias type="com.a2b.trip.place.model.vo.PlaceDaylist" alias="PlaceDaylist" />
 		<typeAlias type="com.a2b.trip.place.model.vo.Place" alias="Place" />
 	</typeAliases>
 	
@@ -27,6 +29,7 @@
 		<mapper resource="mappers/guide-mapper.xml" />
 		<mapper resource="mappers/notice-mapper.xml"/>
 		<mapper resource="mappers/fellow-mapper.xml" />
-		<mapper resource="mappers/place-mapper.xml" />
+    <mapper resource="mappers/place-mapper.xml" />
+		
 	</mappers>
 </configuration>

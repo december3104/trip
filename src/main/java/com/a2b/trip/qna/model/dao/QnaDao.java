@@ -48,4 +48,8 @@ public class QnaDao {
 		return sqlSession.selectOne("qnaMapper.selectMyTotal", qna_id);
 	}
 
+	public int deleteQna(int qna_no) {
+		return sqlSession.delete("qnaMapper.deleteQna", qna_no);
+	}
+
 }

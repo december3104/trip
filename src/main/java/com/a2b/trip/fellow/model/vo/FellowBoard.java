@@ -22,12 +22,13 @@ public class FellowBoard implements Serializable {
 	private String fb_deadline_check;
 	private int fb_number;
 	private int fb_comp_number;
+	private String member_profile_rename;
 
 	public FellowBoard() {}
 
 	public FellowBoard(int fb_no, String fb_id, String fb_title, String fb_content, Date fb_start_date,
 			Date fb_end_date, String fb_contry, String fb_city, String fb_gender, Date fb_write_date,
-			String fb_deadline_check, int fb_number, int fb_comp_number) {
+			String fb_deadline_check, int fb_number, int fb_comp_number, String member_profile_rename) {
 		super();
 		this.fb_no = fb_no;
 		this.fb_id = fb_id;
@@ -42,6 +43,7 @@ public class FellowBoard implements Serializable {
 		this.fb_deadline_check = fb_deadline_check;
 		this.fb_number = fb_number;
 		this.fb_comp_number = fb_comp_number;
+		this.member_profile_rename = member_profile_rename;
 	}
 
 	public int getFb_no() {
@@ -147,6 +149,14 @@ public class FellowBoard implements Serializable {
 	public void setFb_comp_number(int fb_comp_number) {
 		this.fb_comp_number = fb_comp_number;
 	}
+	
+	public String getMember_profile_rename() {
+		return member_profile_rename;
+	}
+
+	public void setMember_profile_rename(String member_profile_rename) {
+		this.member_profile_rename = member_profile_rename;
+	}
 
 	@Override
 	public String toString() {
@@ -154,7 +164,7 @@ public class FellowBoard implements Serializable {
 				+ fb_content + ", fb_start_date=" + fb_start_date + ", fb_end_date=" + fb_end_date + ", fb_contry="
 				+ fb_contry + ", fb_city=" + fb_city + ", fb_gender=" + fb_gender + ", fb_write_date=" + fb_write_date
 				+ ", fb_deadline_check=" + fb_deadline_check + ", fb_number=" + fb_number + ", fb_comp_number="
-				+ fb_comp_number + "]";
+				+ fb_comp_number + ", member_profile_rename=" + member_profile_rename + "]";
 	}
 	
 }

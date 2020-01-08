@@ -22,8 +22,7 @@
 	<c:import url="/WEB-INF/views/header.jsp" />
 	<div class="ui container" style="margin:120px 0 120px 0;">
 		<div class="ui grid">
-			<div class="one wide column"></div>
-			<div class="twelve wide column">
+			<div class="fourteen wide column">
 				<table>
 						<tr>
 							<td><h1>QnA</h1></td>
@@ -36,47 +35,48 @@
 			<div class="two wide column">
 				<c:if test="${!empty loginMember.member_id }">
 					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='goPageInsertQna.do'">글 쓰기</button>
-					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
 				</c:if>	
 			</div>
-			<div class="one wide column"></div>
 		</div>
 		<div class="ui grid">
-			<div class="one wide column"></div>
-			<div class="fourteen wide column">
+			<div class="sixteen wide column">
 				<table class="ui striped table">			
 					<tbody>			
 				  		<tr style="height:60px;">
-					  		<th>
-						    	<form class="ui form" style="margin-left : 2%">
-						    		<div class="eight wide field">
-							    		<div class="ui icon input">
-											<input type="text" placeholder="검색할 내용이나 제목을 입력하세요.">
-			  								<i class="circular search link icon"></i>
-										</div>
-									</div>
-								</form>
-							</th>
-							<th>
-								<div class="eight wide field">
-									<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px; float : right; margin-right : 5%;">
-										<option value="10">10개씩 보기</option>
-										<option value="20">20개씩 보기</option>
-										<option value="30">30개씩 보기</option>
-									</select>
-								</div>
+					  		<th colspan="3">
+					  			<div class="ui grid">
+					  				<div class="five wide column">
+					  					<form class="ui form" style="margin-left : 2%">				    		
+								    		<div class="ui icon input">
+												<input type="text" placeholder="검색할 내용이나 제목을 입력하세요." style="width:300px;">
+				  								<i class="circular search link icon"></i>								
+											</div>
+										</form>
+					  				</div>
+					  				<div class="eight wide column">
+					  					<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px;margin-right : 5%;">
+											<option value="10">10개씩 보기</option>
+											<option value="20">20개씩 보기</option>
+											<option value="30">30개씩 보기</option>
+										</select>
+					  				</div>
+					  				<div class="three wide column right aligned">
+						  				<c:if test="${ sessionScope.loginMember ne null }">
+											<button class="ui button" style="font-family : GodoM;height:45px; width:130px; background:#c0e7f8;" onclick="location.href='qna.do'">전체 글 보기</button>
+										</c:if>
+					  				</div>
+					  			</div>
 							</th>
 						</tr>
-					
-					
 						<c:forEach var="list" items="${ qnaList }">
 							<tr>
-					      		<td style="width : 70%">
+					      		<td style="padding-left:15px;width : 70%" colspan="2">
 					      			<c:url var="goToDetailView" value="selectDetailViewQna.do">
 					      				<c:param name="qna_no" value="${ list.qna_no }"></c:param>
 					      			</c:url>
-					      			<a href="${ goToDetailView }">${ list.qna_title }</a><br>
-					      			<small>${ list.qna_id }님이 ${ list.qna_date }에 작성</small>
+					      			<a href="${ goToDetailView }"><font size="3">${ list.qna_title }</font></a><br>
+					      			<small><font color="gray">${ list.qna_id }님이 ${ list.qna_date }에 작성</font></small><br><br>
+					      			${ list.qna_content }
 					      		</td>
 					      		<td>
 					      			<c:if test="${ list.qna_comment eq 'N' }">
@@ -91,7 +91,6 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="one wide column"></div>
 		</div>
 		<div class="page_div">
 			<ul class="paging">
@@ -129,15 +128,6 @@ function page(idx){
 }
 /* 페이징 처리 함수 끝 */
 
-/* 목록 홀수 번째 색상 변경 시작*/
-var jun = document.getElementsByClassName("jun-style");
-
-for(var i = 0; jun.length; i++){	
-	if(i%2 != 0){
-		jun[i].style.backgroundColor = "#EBF9FF";
-	}
-}
-/* 목록 홀수 번째 색상 변경 끝*/
 </script>
 </body>
 </html>

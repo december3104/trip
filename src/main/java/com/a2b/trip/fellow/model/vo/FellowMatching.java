@@ -15,6 +15,7 @@ public class FellowMatching implements Serializable {
 	private Date fm_date;
 	private int fm_number;
 	private String fm_accept_check;
+	private Date fm_accept_date;
 	private String fm_content;
 	private String fb_alarm;
 	private String fm_alarm;
@@ -22,7 +23,7 @@ public class FellowMatching implements Serializable {
 	public FellowMatching() {}
 
 	public FellowMatching(int fb_no, String fm_id, String fm_gender, Date fm_date, int fm_number,
-			String fm_accept_check, String fm_content, String fb_alarm, String fm_alarm) {
+			String fm_accept_check, Date fm_accept_date, String fm_content, String fb_alarm, String fm_alarm) {
 		super();
 		this.fb_no = fb_no;
 		this.fm_id = fm_id;
@@ -30,6 +31,7 @@ public class FellowMatching implements Serializable {
 		this.fm_date = fm_date;
 		this.fm_number = fm_number;
 		this.fm_accept_check = fm_accept_check;
+		this.fm_accept_date = fm_accept_date;
 		this.fm_content = fm_content;
 		this.fb_alarm = fb_alarm;
 		this.fm_alarm = fm_alarm;
@@ -83,6 +85,14 @@ public class FellowMatching implements Serializable {
 		this.fm_accept_check = fm_accept_check;
 	}
 
+	public Date getFm_accept_date() {
+		return fm_accept_date;
+	}
+
+	public void setFm_accept_date(Date fm_accept_date) {
+		this.fm_accept_date = fm_accept_date;
+	}
+
 	public String getFm_content() {
 		return fm_content;
 	}
@@ -110,8 +120,10 @@ public class FellowMatching implements Serializable {
 	@Override
 	public String toString() {
 		return "FellowMatching [fb_no=" + fb_no + ", fm_id=" + fm_id + ", fm_gender=" + fm_gender + ", fm_date="
-				+ fm_date + ", fm_number=" + fm_number + ", fm_accept_check=" + fm_accept_check + ", fm_content="
-				+ fm_content + ", fb_alarm=" + fb_alarm + ", fm_alarm=" + fm_alarm + "]";
+				+ fm_date + ", fm_number=" + fm_number + ", fm_accept_check=" + fm_accept_check + ", fm_accept_date="
+				+ fm_accept_date + ", fm_content=" + fm_content + ", fb_alarm=" + fb_alarm + ", fm_alarm=" + fm_alarm
+				+ "]";
 	}
 
+	
 }

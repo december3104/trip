@@ -24,8 +24,25 @@
 	text-align:center;
 	
 }
+.page_div { margin : 15px 0 50px 0; }
+.paging { text-align : center; }
+.paging li { display : inline-block;}
+.paging a { display : block; width : auto; height : 30px; border : 1px solid #E7E6E6;  line-height: 30px; }
+.paging a:hover { color : black; border : 1px solid black;}
+.paging .side_w { margin : 0 10px 0 10px; }
+.paging .page_n { background-color : #c0e7f8; }
+.paging .page_n a { color : black; }
 
 </style>
+<script type="text/javascript">
+/* 페이징 처리 함수 시작 */
+function page(idx){
+	var pagenum = idx;
+	var contentnum = $("#contentnum option:selected").val();
+	location.href="selectListAllMember.ad?currentPage=" + pagenum + "&contentNum=" + "10";
+}
+/* 페이징 처리 함수 끝 */
+</script>
 </head>
 <body>
 
@@ -35,57 +52,80 @@
 </header>
 
 
-<div class="bodyCss" style="margin-left: 15%; margin-right: 15%">
-	<div class="bodyContentCss">
-		<div>
+	<div class="bodyCss" style="margin-left: 15%; margin-right: 15%;min-height: 60%;">
+		<div class="bodyContentCss">
+			<div>
 
-<h1 style="font-family: GodoM">가이드 회원 신고처리</h1>
+				<h1 style="font-family: GodoM">가이드 회원 신고처리</h1>
 
-<table class="ui striped table">
-	<tr style="height:60px; text-align:center; font-size: 15pt;">
-		<th>이름</th>
-		<th>아이디</th>
-		<th>성별</th>
-		<th>이메일</th>
-		<th>누적신고</th>
-	</tr>
-	
-	<c:forEach begin="0" var="guide" items="${guideReportList }" varStatus="status">                  
-		<tr>
-			<td>
-				<c:out value="${guide.member_name }" />
-			</td>
-			<td>
-				<c:url value="selectDetailViewGuideReport.ad" var="detailReport">
-					<c:param name="member_id" value="${guide.report_id }" />
-				</c:url>
-				<a href="${detailReport }"><c:out value="${guide.report_id }" /></a> 
-			</td>
-			<td>
-				<c:if test="${guide.member_gender eq 'M' }">
+				<table class="ui striped table">
+					<tr style="height: 60px; text-align: center; font-size: 15pt;">
+						<th>이름</th>
+						<th>아이디</th>
+						<th>성별</th>
+						<th>이메일</th>
+						<th>누적신고</th>
+					</tr>
+
+					<c:forEach begin="0" var="guide" items="${guideReportList }"
+						varStatus="status">
+						<tr>
+							<td><c:out value="${guide.member_name }" /></td>
+							<td><c:url value="selectDetailViewGuideReport.ad"
+									var="detailReport">
+									<c:param name="member_id" value="${guide.report_id }" />
+								</c:url> <a href="${detailReport }"><c:out
+										value="${guide.report_id }" /></a></td>
+							<td><c:if test="${guide.member_gender eq 'M' }">
 					남자
-				</c:if>
-				<c:if test="${guide.member_gender eq 'F' }">
+				</c:if> <c:if test="${guide.member_gender eq 'F' }">
 					여자
-				</c:if>
-			</td>
-			<td>
-				<c:out value="${guide.member_email }" />
-			</td>
-			<td>
-				<c:out value="${guide.member_report_count }" />
-			</td>
-		</tr>
-	</c:forEach>   
-	
-</table>
+				</c:if></td>
+							<td><c:out value="${guide.member_email }" /></td>
+							<td><c:out value="${guide.member_report_count }" /></td>
+						</tr>
+					</c:forEach>
 
+				</table>
+
+			</div>
 		</div>
 	</div>
-</div>
+	<div class="page_div">
+		<ul class="paging">
+			<c:if test="${ page.prev }">
+				<li class="first"><a href="javascript:page(1)"><span
+						class="side_w">&laquo;</span></a></li>
+			</c:if>
+			<c:if test="${ page.prev }">
+				<li class="prev"><a
+					href="javascript:page(${ page.startPage-1 });"><span
+						class="side_w">이전</span></a></li>
+			</c:if>
+			<c:forEach begin="${ page.startPage }" end="${ page.endPage }"
+				var="idx">
+				<c:if test="${ idx eq page.currentPage}">
+					<li class="page_n"><a href="javascript:page(${ idx })"><span
+							class="side_w">${ idx }</span></a></li>
+				</c:if>
+				<c:if test="${ idx ne page.currentPage}">
+					<li><a href="javascript:page(${ idx })"><span
+							class="side_w">${ idx }</span></a></li>
+				</c:if>
+			</c:forEach>
+			<c:if test="${ page.next }">
+				<li class="next"><a
+					href="javascript:page(${ page.endPage+1 });"><span
+						class="side_w">다음</span></a></li>
+			</c:if>
+			<c:if test="${ page.next }">
+				<li class="last"><a href="javascript:page(${ page.totalPage })"><span
+						class="side_w">&raquo;</span></a></li>
+			</c:if>
+		</ul>
+	</div>
 
-
-<!-- 푸터 -->
+	<!-- 푸터 -->
 <footer><jsp:include page="/WEB-INF/views/footer.jsp" /></footer>
 </body>
 </html>

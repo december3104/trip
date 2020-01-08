@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.a2b.trip.common.Page;
 import com.a2b.trip.report.model.vo.GuideReport;
 import com.a2b.trip.report.model.vo.NormalReport;
 import com.a2b.trip.report.model.vo.Report;
@@ -19,13 +20,13 @@ public class ReportDao {
 	
 	public ReportDao() {}
 	//일반 회원 신고 목록 조회
-	public ArrayList<NormalReport> selectListNormalReport() {
-		List<NormalReport> list = sqlSession.selectList("reportMapper.selectListNormalReport");
+	public ArrayList<NormalReport> selectListNormalReport(Page page) {
+		List<NormalReport> list = sqlSession.selectList("reportMapper.selectListNormalReport", page);
 		return (ArrayList<NormalReport>)list;
 	}
 	//가이드 회원 신고 목록 조회
-	public ArrayList<GuideReport> selectListGuideReport() {
-		List<GuideReport> list = sqlSession.selectList("reportMapper.selectListGuideReport");
+	public ArrayList<GuideReport> selectListGuideReport(Page page) {
+		List<GuideReport> list = sqlSession.selectList("reportMapper.selectListGuideReport", page);
 		return (ArrayList<GuideReport>)list;
 	}
 	//일반 회원 신고 상세보기
@@ -61,6 +62,17 @@ public class ReportDao {
 	//가이드 회원 신고 거절 
 	public int detailRejectGuideReport(int report_no) {
 		return sqlSession.delete("reportMapper.detailRejectGuideReport",report_no);
+	}
+	public int selectTotal() {
+		return sqlSession.selectOne("reportMapper.selectTotal");
+	}
+	public int selectTotalGuide() {
+		return sqlSession.selectOne("reportMapper.selectTotalGuide");
+	}
+	
+	// 신고 하기
+	public int insertReport(Report report) {
+		return sqlSession.insert("reportMapper.insertReport", report);
 	}
 	
 	

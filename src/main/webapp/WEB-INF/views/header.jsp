@@ -154,7 +154,7 @@ $(function(){
 				<div class="menu" style="text-align: center">
 					<div class="item">내 가이드북</div>
 					<div class="item">가이드 매칭 기록</div>
-					<div class="item" onclick="location.href='selectMyFellowMatching.do?fm_id=${loginMember.member_id}'">동행 매칭 기록</div>
+					<div class="item" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</div>
 					<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
 					<div class="item" id="logoutTag">로그아웃</div>
 				</div>
@@ -165,18 +165,18 @@ $(function(){
 		  	 <c:if test="${loginMember.member_level eq 3}">
 		      <a class="ui simple dropdown item godom">회원 관리
 		            <div class="menu">
-		               <div class="item" onclick="location.href='selectListAllMember.ad'">일반회원</div>
-		               <div class="item" onclick="location.href='selectListAllGuide.ad'">가이드</div>
-		               <div class="item" onclick="location.href='selectListApplyGuide.ad'">가이드 신청</div>
+		               <div class="item" onclick="location.href='selectListAllMember.ad?currentPage=1&contentNum=10'">일반회원</div><!-- 0 -->
+		               <div class="item" onclick="location.href='selectListAllGuide.ad?currentPage=1&contentNum=10'">가이드</div><!-- 0 -->
+		               <div class="item" onclick="location.href='selectListApplyGuide.ad?currentPage=1&contentNum=10'">가이드 신청</div> <!--?currentPage=1&contentNum=10 -->
 		            </div>
 		      </a>
 		      <a class="ui simple dropdown item godom">신고 처리
 		            <div class="menu">
-		               <div class="item" onclick="location.href='selectListNormalReport.ad'">일반회원</div>
-		               <div class="item" onclick="location.href='selectListGuideReport.ad'">가이드</div>
+		               <div class="item" onclick="location.href='selectListNormalReport.ad?currentPage=1&contentNum=10'">일반회원</div><!-- 0 -->
+		               <div class="item" onclick="location.href='selectListGuideReport.ad?currentPage=1&contentNum=10'">가이드</div><!-- 0 -->
 		            </div>
 		      </a>
-		      <a class="item godom" onclick="location.href='selectListAllNotice.ad'">공지사항 관리</a>
+		      <a class="item godom" onclick="location.href='selectListAllNotice.ad?currentPage=1&contentNum=10'">공지사항 관리</a><!-- 0 -->
 		      <a class="item godom" onclick="location.href='qna.do?currentPage=1&contentNum=10'">QnA 관리</a>
       			<!-- 우측 상단 사용자정보&아이콘들 -->
 				<div class="item right menu" align="right" style="margin-right: 0;">

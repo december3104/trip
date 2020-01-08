@@ -5,7 +5,19 @@
 <mapper namespace="noticeMapper">
 	
 	<select id="selectListAllNotice" resultType="Notice">
-		select * from notice order by notice_title desc
+		<![CDATA[
+		select * 
+		from 
+			  (select rownum nnum, NOTICE_NO,NOTICE_ID, NOTICE_DATE, NOTICE_TITLE, NOTICE_VIEW_COUNT, NOTICE_FILE_ORIGIN, NOTICE_FILE_RENAME, NOTICE_CONTENT
+				from (select * from notice order by notice_date desc))
+		where nnum >= #{startRow} and nnum <= #{endRow}
+		]]>
+	</select>
+		<select id="selectList" parameterType="Page" resultType="Qna">
+		<![CDATA[
+		SELECT * FROM (SELECT ROWNUM RNUM, QNA_NO, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_DATE, QNA_COMMENT, QNA_ALARM
+		                      FROM (SELECT * FROM QNA ORDER BY QNA_NO DESC)) WHERE RNUM >= #{ startRow } AND RNUM <= #{ endRow }
+		]]>
 	</select>
 	
 	<select id="selectDetailViewNotice" parameterType="int" resultType="Notice">
@@ -16,4 +28,17 @@
 		delete notice where notice_no = #{value}
 	</delete>
 	
+	<insert id="insertNotice" parameterType="Notice">
+		insert into notice values (notice_seq.nextval, #{notice_id}, default, #{notice_title}, default, null, null, #{notice_content})
+	</insert>
+	
+	<select id="selectTotal" resultType="_int">
+		select count(*) from notice
+	</select>
+	
+	<update id="updateDetailNotice" parameterType="Notice">
+		update notice
+		set notice_title = #{notice_title}, notice_date = sysdate, notice_content = #{notice_content}
+		where notice_no = #{notice_no}
+	</update>
 </mapper>

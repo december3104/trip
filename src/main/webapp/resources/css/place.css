@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/* 버튼 폰트 */
+.ui.mini.button {
+	font-family:GodoM;
+	font-size:15pt;
+}
+
+/* 스크롤바 css */
+.scrollColor::-webkit-scrollbar{width: 6px;}
+.scrollColor::-webkit-scrollbar-track {background-color:#DCF2FB;} 
+.scrollColor::-webkit-scrollbar-thumb {background-color:#95d6f3;border-radius: 10px;}
+.scrollColor::-webkit-scrollbar-thumb:hover {background: #2185d0;}
+
+.trash {margin-right:10px}

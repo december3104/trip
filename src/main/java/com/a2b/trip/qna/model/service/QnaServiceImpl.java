@@ -52,4 +52,9 @@ public class QnaServiceImpl implements QnaService {
 		return qnaDao.selectMyTotal(qna_id);
 	}
 
+	@Override
+	public int deleteQna(int qna_no) {
+		return qnaDao.deleteQna(qna_no);
+	}
+
 }

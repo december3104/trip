@@ -37,4 +37,8 @@
 	<update id="updateQna" parameterType="Qna">
 		UPDATE QNA SET QNA_TITLE = #{ qna_title }, QNA_CONTENT = #{ qna_content }, QNA_ALARM = #{ qna_alarm }, QNA_DATE = sysdate WHERE QNA_NO = #{ qna_no }
 	</update>
+	
+	<delete id="deleteQna" parameterType="_int">
+		DELETE FROM QNA WHERE QNA_NO = #{ qna_no }
+	</delete>
 </mapper>

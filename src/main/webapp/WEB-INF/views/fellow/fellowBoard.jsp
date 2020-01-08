@@ -22,27 +22,24 @@
 	<c:import url="/WEB-INF/views/header.jsp" />
 	<div class="ui container" style="margin:120px 0 120px 0;">
 		<div class="ui grid">
-			<div class="one wide column"></div>
-			<div class="twelve wide column">
+			<div class="fourteen wide column">
 				<table>
-						<tr>
-							<td><h1>동행찾기</h1></td>
-						</tr>
-						<tr>
-							<td><p>해외에서 외로워 하지 마세요~</p></td>
-						</tr>
-					</table>
+					<tr>
+						<td><h1>동행찾기</h1></td>
+					</tr>
+					<tr>
+						<td><p>해외에서 외로워 하지 마세요~</p></td>
+					</tr>
+				</table>
 			</div>
 			<div class="two wide column">
 				<c:if test="${!empty loginMember.member_id }">
-					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='goPageInsertQna.do'">글 쓰기</button>
+					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='goPageInsertFellowBoard.do'">글 쓰기</button>
 				</c:if>	
 			</div>
-			<div class="one wide column"></div>
 		</div>
 		<div class="ui grid">
-			<div class="one wide column"></div>
-			<div class="fourteen wide column">
+			<div class="sixteen wide column">
 				<table class="ui striped table">			
 					<tbody>			
 				  		<tr style="height:60px;">
@@ -67,27 +64,55 @@
 						</tr>
 						<c:forEach var="list" items="${ fellowBoardList }">
 							<tr>
-					      		<td style="width : 70%" colspan="2">
-					      			<%-- <c:url var="goToDetailView" value="selectDetailViewQna.do">
-					      				<c:param name="qna_no" value="${ list.qna_no }"></c:param>
-					      			</c:url>
-					      			<a href="${ goToDetailView }">${ list.qna_title }</a><br>
-					      			<small>${ list.qna_id }님이 ${ list.qna_date }에 작성</small> --%>
+								<td style="width : 20%; padding-left:20px;">
+									<div class="ui horizontal list">
+										<div class="item">
+											<c:if test="${ list.member_profile_rename ne null }">
+												<img class="ui mini circular image" src="resources/images/member_profile/${ list.member_profile_rename }">
+											</c:if>
+											<c:if test="${ list.member_profile_rename eq null }">
+												<img class="ui mini circular image" src="resources/images/molly.png">
+											</c:if>
+											<div class="content">
+												<div class="header">${ list.fb_id }</div>
+												<c:if test="${ list.fb_gender eq 'M' }">
+													<i class="mars icon blue"></i>
+												</c:if>
+												<c:if test="${ list.fb_gender eq 'F' }">
+													<i class="venus icon red"></i>
+												</c:if>
+											</div>
+										</div>
+									</div>
+								</td>
+					      		<td style="width : 60%">
+					      			<div class="ui horizontal list">
+										<div class="item">
+											<div class="content">
+												<c:url var="goToDetailView" value="selectOneFellowBoard.do">
+					      							<c:param name="fb_no" value="${ list.fb_no }"></c:param>
+					      						</c:url>
+												<div style="margin-top:8px;"><a href="${ goToDetailView }">${ list.fb_title }</a></div>
+												<div style="margin-top:5px;"><small>동행일 : ${ list.fb_start_date } 부터 ${ list.fb_end_date } 까지</small></div>
+											</div>
+										</div>
+									</div>
 					      		</td>
 					      		<td>
-					      			<%-- <c:if test="${ list.qna_comment eq 'N' }">
-										답변 대기중
-									</c:if>
-									<c:if test="${ list.qna_comment ne 'N' }">
-										답변 완료
-									</c:if> --%>
+					      			<div class="ui horizontal list">
+										<div class="item">
+											<div class="content">
+												<div>국가 : ${ list.fb_contry }</div>
+												<div>도시 : ${ list.fb_city }</div>
+											</div>
+										</div>
+									</div>
 					      		</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</div>
-			<div class="one wide column"></div>
 		</div>
 		<div class="page_div">
 			<ul class="paging">
@@ -120,18 +145,18 @@
 function page(idx){
 	var pagenum = idx;
 	var contentnum = $("#contentnum option:selected").val();
-	location.href="qna.do?currentPage=" + pagenum + "&contentNum=" + contentnum;
+	location.href="selectAllFellowBoard.do?currentPage=" + pagenum + "&contentNum=" + contentnum;
 }
 /* 페이징 처리 함수 끝 */
 
 /* 목록 홀수 번째 색상 변경 시작*/
-var jun = document.getElementsByClassName("jun-style");
+/* var jun = document.getElementsByClassName("jun-style");
 
 for(var i = 0; jun.length; i++){	
 	if(i%2 != 0){
 		jun[i].style.backgroundColor = "#EBF9FF";
 	}
-}
+} */
 /* 목록 홀수 번째 색상 변경 끝*/
 </script>
 </body>

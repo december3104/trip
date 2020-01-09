@@ -42,4 +42,8 @@ public class FellowBoardDao {
 		List<FellowMatching> list = sqlSession.selectList("fellowMapper.selectAllFellowMatching", fb_no);
 		return (ArrayList<FellowMatching>)list;
 	}
+
+	public int insertFellowBoard(FellowBoard fb) {
+		return sqlSession.insert("fellowMapper.insertFellowBoard", fb);
+	}
 }

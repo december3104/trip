@@ -28,10 +28,15 @@
 	</select>
 	
 	<select id="selectAllLocation" resultType="Location">
-		SELECT * FROM LOCATION
+		SELECT * FROM LOCATION ORDER BY LOC_NAME ASC
 	</select>
 	
 	<select id="selectAllFellowMatching" parameterType="_int" resultType="FellowMatching">
 		SELECT * FROM FELLOWMATCHING WHERE FB_NO = #{ fb_no }
 	</select>
+	
+	<insert id="insertFellowBoard" parameterType="FellowBoard">
+		INSERT INTO FELLOWBOARD VALUES (FELLOWBOARD_SEQ.NEXTVAL, #{ fb_id }, #{ fb_title }, #{ fb_content }, #{ fb_start_date }, #{ fb_end_date }, #{ fb_contry }, #{ fb_city }, #{ fb_gender }, sysdate, #{ fb_deadline_check }, #{ fb_number }, #{ fb_comp_number })
+	</insert>
+	
 </mapper>

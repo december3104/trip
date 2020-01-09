@@ -35,16 +35,16 @@
 											<tr>
 												<td><h1>${ notice.notice_id }</h1></td>
 											</tr>
-											<%-- <tr>
+											<tr>
 												<td>
-													<c:if test="${ notice.member_profile_rename ne null }">
-														<img class="ui tiny circular image" src="resources/images/member_profile/${qna.member_profile_rename }">
+													<c:if test="${ member.member_profile_rename ne null }">
+														<img class="ui tiny circular image" src="resources/images/member_profile/${member.member_profile_rename }">
 													</c:if>
-													<c:if test="${ notice.member_profile_rename eq null }">
+													<c:if test="${ member.member_profile_rename eq null }">
 														<img class="ui tiny circular image" src="resources/images/molly.png">
 													</c:if>
 												</td>
-											</tr> --%>
+											</tr>
 										</table>
 									</div>	
 								</div>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.a2b.trip.common.Page;
+import com.a2b.trip.member.model.vo.Member;
 import com.a2b.trip.notice.model.dao.NoticeDao;
 import com.a2b.trip.notice.model.vo.Notice;
 
@@ -53,6 +54,10 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.updateDetailNotice(notice);
 	}
 	
-	
+	//관리자 프로필 사진 조회용
+	@Override
+	public Member selectOneMember(String notice_id) {
+		return noticeDao.selectOneMember(notice_id);
+	}
 	
 }

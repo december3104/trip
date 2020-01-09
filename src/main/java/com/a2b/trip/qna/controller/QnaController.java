@@ -83,7 +83,7 @@ public class QnaController {
 			model.addAttribute("qnaList", qnaList);
 			model.addAttribute("page", page);
 
-			pageName = "qna/qna";
+			pageName = "redirect:qna.do";
 		} else {
 			System.out.println("에러페이지로");
 		}
@@ -164,6 +164,34 @@ public class QnaController {
 			System.out.println("실패");
 		}
 			return "redirect:qna.do";
+	}
+	
+	//QnA 검색
+	@RequestMapping("selectListQna.do")
+	public String selectListQna(Page page, Model model) {
+		String pageName = "";	
+		
+		int totalCount = qnaService.selectSearchTotal(page.getSearch()); // 게시물 총 갯수(현제 db에 저장된 값)
+		int currentPage = page.getCurrentPage();
+		page.setTotalCount(totalCount); // 전체 게시물 갯수 (db에서 조회해 와서 Page 클레스에 저장)
+		page.calcRow(currentPage, page.getContentNum()); // db에서 조회할 ROWNUM 시작과 끝 계산
+		page.saveCurrentBlock(currentPage); // 페이지
+		page.saveLastBlock(totalCount);
+		page.calcPage(totalCount, page.getContentNum()); // 맨 마지막 페이지 계산
+
+		page.prevnext(currentPage);
+		page.saveStartPage(page.getCurrentBlock());
+		page.saveEndPage(page.getLastBlock(), page.getCurrentBlock());
+		
+		ArrayList<Qna> qnaList = qnaService.selectListQna(page);
+		
+		model.addAttribute("qnaList", qnaList);
+		model.addAttribute("page", page);
+
+		pageName = "qna/qnaSearch";
+		
+		
+		return pageName;
 	}
 
 }

@@ -57,6 +57,7 @@
 					      		<td style="padding-left:15px;width : 70%" colspan="2">
 					      			<c:url var="goToDetailView" value="selectDetailViewNotice.do">
 					      				<c:param name="notice_no" value="${ list.notice_no }"></c:param>
+					      				<c:param name="notice_id" value="${ list.notice_id }"></c:param>
 					      			</c:url>
 					      			<a href="${ goToDetailView }"><font size="3">${ list.notice_title }</font></a><br>
 					      			<small><font color="gray">${ list.notice_id }님, ${ list.notice_date } 작성</font></small>

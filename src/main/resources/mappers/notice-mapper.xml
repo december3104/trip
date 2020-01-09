@@ -41,4 +41,8 @@
 		set notice_title = #{notice_title}, notice_date = sysdate, notice_content = #{notice_content}
 		where notice_no = #{notice_no}
 	</update>
+	
+	<select id="selectOneMember" parameterType="string" resultType="Member">
+		select member_profile_rename from member where member_id = #{ value }
+	</select>
 </mapper>

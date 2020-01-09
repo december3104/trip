@@ -41,4 +41,17 @@
 	<delete id="deleteQna" parameterType="_int">
 		DELETE FROM QNA WHERE QNA_NO = #{ qna_no }
 	</delete>
+	
+	<select id="selectListQna" parameterType="Page" resultType="Qna">
+		<![CDATA[
+		SELECT * FROM (SELECT ROWNUM RNUM, QNA_NO, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_DATE, QNA_COMMENT, QNA_ALARM FROM 
+		(SELECT * FROM QNA WHERE QNA_TITLE LIKE '%' || #{ search } || '%' OR QNA_CONTENT LIKE '%' || #{ search } || '%' ORDER BY QNA_NO DESC))
+		WHERE RNUM >= #{ startRow } AND RNUM <= #{ endRow } 
+		]]>
+	</select>
+	
+	<select id="selectSearchTotal" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM QNA WHERE QNA_TITLE LIKE '%' || #{ search } || '%' OR QNA_CONTENT LIKE '%' || #{ search } || '%'
+	</select>
+	
 </mapper>

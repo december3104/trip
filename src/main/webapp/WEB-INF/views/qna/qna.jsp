@@ -52,9 +52,9 @@
 					  		<th colspan="3">
 					  			<div class="ui grid">
 					  				<div class="five wide column">
-					  					<form class="ui form" style="margin-left : 2%">				    		
+					  					<form class="ui form" action="selectListQna.do" method="get" style="margin-left : 2%">				    		
 								    		<div class="ui icon input">
-												<input type="text" placeholder="검색할 내용이나 제목을 입력하세요." style="width:300px;">
+												<input type="text" placeholder="검색할 내용이나 제목을 입력하세요." style="width:300px;" name="search">
 				  								<i class="circular search link icon"></i>								
 											</div>
 										</form>

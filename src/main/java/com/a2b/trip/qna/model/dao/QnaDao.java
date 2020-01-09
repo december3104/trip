@@ -52,4 +52,13 @@ public class QnaDao {
 		return sqlSession.delete("qnaMapper.deleteQna", qna_no);
 	}
 
+	public ArrayList<Qna> selectListQna(Page page) {
+		List<Qna> list = sqlSession.selectList("qnaMapper.selectListQna", page);
+		return (ArrayList<Qna>)list;
+	}
+
+	public int selectSearchTotal(String search) {
+		return sqlSession.selectOne("qnaMapper.selectSearchTotal", search);
+	}
+
 }

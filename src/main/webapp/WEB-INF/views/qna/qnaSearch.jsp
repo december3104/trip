@@ -28,7 +28,7 @@
 <div class="bodyCss" style="margin-top: 0; margin-left: 10%; margin-right: 10%">
 	<div class="bodyContentCss">
 	<div class="ui container" style="margin:120px 0 120px 0;">
-		<div class="ui grid">
+		<div class="ui grid">		
 			<div class="fourteen wide column">
 				<table>
 						<tr>
@@ -43,7 +43,7 @@
 				<c:if test="${!empty loginMember.member_id }">
 					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='goPageInsertQna.do'">글 쓰기</button>
 				</c:if>	
-			</div>
+			</div>		
 		</div>
 		<div class="ui grid">
 			<div class="sixteen wide column">
@@ -55,7 +55,7 @@
 					  				<div class="five wide column">
 					  					<form class="ui form" action="selectListQna.do" method="post" style="margin-left : 2%">				    		
 								    		<div class="ui icon input">
-												<input type="text" placeholder="검색할 내용이나 제목을 입력하세요." style="width:300px;">
+												<input type="text" placeholder="검색할 내용이나 제목을 입력하세요." style="width:300px;" name="search">
 				  								<i class="circular search link icon"></i>								
 											</div>
 										</form>
@@ -85,7 +85,7 @@
 					  				</div>
 					  				<div class="three wide column right aligned">
 						  				<c:if test="${ sessionScope.loginMember ne null }">
-											<button class="ui button" style="font-family : GodoM;height:45px; width:130px; background:#c0e7f8;" onclick="location.href='qna.do'">전체 글 보기</button>
+											<button class="ui button" style="font-family : GodoM;height:45px; width:130px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
 										</c:if>
 					  				</div>
 					  			</div>
@@ -97,20 +97,47 @@
 					      			<c:url var="goToDetailView" value="selectDetailViewQna.do">
 					      				<c:param name="qna_no" value="${ list.qna_no }"></c:param>
 					      			</c:url>
-					      			<a href="${ goToDetailView }"><font size="3">${ list.qna_title }</font></a>
-					      			<br>
-					      			<br>
-					      			<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() >= 30 }">
-					      				${ fn:substring(fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")), 0, 30) } ...
+					      			<c:if test="${ page.search eq list.qna_title }">
+					      				<span style="background:red;">
+						      				<a href="${ goToDetailView }">
+							      				<font size="3" color="black">${ list.qna_title }</font>
+							      			</a>
+						      			</span>
 					      			</c:if>
-					      			<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() < 30 }">
-						      			<c:if test="${ list.qna_content.indexOf('</p>', 2) eq -1}">
-						      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) }	
-						      			</c:if>
-					      				<c:if test="${ list.qna_content.indexOf('</p>', 2) ne -1}">
-						      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) } ...	
-						      			</c:if>
-					      			</c:if><br>
+					      			<c:if test="${ page.search ne list.qna_title }">
+						      			<a href="${ goToDetailView }">
+						      				<font size="3">${ list.qna_title }</font>
+						      			</a>
+					      			</c:if>
+					      			<br>
+					      			<br>
+					      			<!-- 검색어가 글 내용에 있는경우 -->
+					      			<c:if test="${ list.qna_content.indexOf(page.search, 1) ne -1 }"> 
+					      				<!-- 검색어 부터 끝까지가 30글자를 넘는 경우 -->
+					      				<c:if test="${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.length()).length() >= 30 }">
+					      					<span style="background:red">${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.indexOf(page.search)+page.search.length()) }</span>
+					      					${ fn:substring(fn:substring(list.qna_content, list.qna_content.indexOf(page.search)+page.search.length(), list.qna_content.indexOf(page.search)+page.search.length()+list.qna_content.indexOf("</p>")), 0, 30) } ...
+					      				</c:if>
+					      				<c:if test="${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.length()).length() < 30 }">
+					      					<span style="background:red">${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.indexOf(page.search)+page.search.length()) }</span>
+					      					${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search)+page.search.length(), list.qna_content.indexOf(page.search)+page.search.length()+list.qna_content.indexOf("</p>")) }
+					      				</c:if>
+					      			</c:if>
+					      			<c:if test="${ list.qna_content.indexOf(page.search, 1) eq -1 }">
+					      				<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() >= 30 }">
+					      					${ fn:substring(fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")), 0, 30) } ...
+					      				</c:if>
+					      				<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() < 30 }">
+							      			<c:if test="${ list.qna_content.indexOf('</p>', 2) eq -1}">
+							      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) }	
+							      			</c:if>
+						      				<c:if test="${ list.qna_content.indexOf('</p>', 2) ne -1}">
+							      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) } ...	
+							      			</c:if>
+					      				</c:if>
+					      			</c:if>
+					      			
+					      			<br>
 					      			<small><font color="gray">${ list.qna_id }님이 ${ list.qna_date }에 작성</font></small>
 					      		</td>
 					      		<td>
@@ -152,26 +179,27 @@
 			</ul>
 		</div>
 	</div>
-</div>
+	</div>
 </div>
 <footer>
 	<jsp:include page="/WEB-INF/views/footer.jsp" />
 </footer>
+
 <script type="text/javascript">
 /* 페이징 처리 함수 시작 */
 function page(idx){
+	var search = '${ page.search }';
 	var pagenum = idx;
 	var contentnum = $("#contentnum option:selected").val();
-	var qna_id = "${ loginMember.member_id }";
-	location.href="selectListMyQna.do?currentPage=" + pagenum + "&contentNum=" + contentnum + "&qna_id=" + qna_id;
+	location.href="selectListQna.do?currentPage=" + pagenum + "&contentNum=" + contentnum + "&search=" + search;
 }
 /* 페이징 처리 함수 끝 */
 
 //한페이지에 보여줄 리스트 갯수 함수
 function changeContentNum(){
+	var search = '${ page.search }';
 	var contentnum = $("#contentnum option:selected").val();
-	var qna_id = "${ loginMember.member_id }";
-	location.href="selectListMyQna.do?contentNum=" + contentnum + "&qna_id=" + qna_id;
+	location.href="selectListQna.do?contentNum=" + contentnum + "&search=" + search;
 };
 
 </script>

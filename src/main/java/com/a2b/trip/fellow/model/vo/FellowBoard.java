@@ -20,15 +20,13 @@ public class FellowBoard implements Serializable {
 	private String fb_gender;
 	private Date fb_write_date;
 	private String fb_deadline_check;
-	private int fb_number;
-	private int fb_comp_number;
 	private String member_profile_rename;
 
 	public FellowBoard() {}
 
 	public FellowBoard(int fb_no, String fb_id, String fb_title, String fb_content, Date fb_start_date,
 			Date fb_end_date, String fb_contry, String fb_city, String fb_gender, Date fb_write_date,
-			String fb_deadline_check, int fb_number, int fb_comp_number, String member_profile_rename) {
+			String fb_deadline_check, String member_profile_rename) {
 		super();
 		this.fb_no = fb_no;
 		this.fb_id = fb_id;
@@ -41,8 +39,6 @@ public class FellowBoard implements Serializable {
 		this.fb_gender = fb_gender;
 		this.fb_write_date = fb_write_date;
 		this.fb_deadline_check = fb_deadline_check;
-		this.fb_number = fb_number;
-		this.fb_comp_number = fb_comp_number;
 		this.member_profile_rename = member_profile_rename;
 	}
 
@@ -134,22 +130,6 @@ public class FellowBoard implements Serializable {
 		this.fb_deadline_check = fb_deadline_check;
 	}
 
-	public int getFb_number() {
-		return fb_number;
-	}
-
-	public void setFb_number(int fb_number) {
-		this.fb_number = fb_number;
-	}
-
-	public int getFb_comp_number() {
-		return fb_comp_number;
-	}
-
-	public void setFb_comp_number(int fb_comp_number) {
-		this.fb_comp_number = fb_comp_number;
-	}
-	
 	public String getMember_profile_rename() {
 		return member_profile_rename;
 	}
@@ -163,8 +143,7 @@ public class FellowBoard implements Serializable {
 		return "FellowBoard [fb_no=" + fb_no + ", fb_id=" + fb_id + ", fb_title=" + fb_title + ", fb_content="
 				+ fb_content + ", fb_start_date=" + fb_start_date + ", fb_end_date=" + fb_end_date + ", fb_contry="
 				+ fb_contry + ", fb_city=" + fb_city + ", fb_gender=" + fb_gender + ", fb_write_date=" + fb_write_date
-				+ ", fb_deadline_check=" + fb_deadline_check + ", fb_number=" + fb_number + ", fb_comp_number="
-				+ fb_comp_number + ", member_profile_rename=" + member_profile_rename + "]";
+				+ ", fb_deadline_check=" + fb_deadline_check + ", member_profile_rename=" + member_profile_rename + "]";
 	}
-	
+
 }

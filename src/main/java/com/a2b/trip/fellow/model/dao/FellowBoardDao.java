@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.a2b.trip.common.Page;
+import com.a2b.trip.fellow.model.vo.Fellow;
 import com.a2b.trip.fellow.model.vo.FellowBoard;
 import com.a2b.trip.fellow.model.vo.FellowMatching;
 import com.a2b.trip.location.model.vo.Location;
@@ -41,5 +42,16 @@ public class FellowBoardDao {
 	public ArrayList<FellowMatching> selectAllFellowmatching(int fb_no) {
 		List<FellowMatching> list = sqlSession.selectList("fellowMapper.selectAllFellowMatching", fb_no);
 		return (ArrayList<FellowMatching>)list;
+	}
+
+	// 동행 찾기 기록
+	public ArrayList<Fellow> selectMyFellowBoard(String fb_id) {
+		List<Fellow> list = sqlSession.selectList("fellowMapper.selectMyFellowBoard", fb_id);
+		return (ArrayList<Fellow>)list;
+	}
+
+	// 한명 조회
+	public Fellow selectMyFellowBoardOne(String fm_id) {
+		return sqlSession.selectOne("fellowMapper.selectMyFellowBoardOne", fm_id);
 	}
 }

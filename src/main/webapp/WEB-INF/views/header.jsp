@@ -12,12 +12,12 @@
 <!-- 시맨틱유아이 -->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-<!-- 폰트css -->
-<link href="resources/css/font.css" rel="stylesheet" type="text/css"/>
 <!-- 카카오톡 api -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <!-- favicon -->
 <link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
+<!-- Lato 폰트 -->
+<link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
 <script type="text/javascript">
 $(function(){
 	$('#loginTag').on('click', function(){
@@ -32,8 +32,21 @@ $(function(){
 </script>
 <style type="text/css">
 * {
-	font-family: GodoM;
+	font-family: 'Lato', sans-serif;
 }
+
+h1, h2, h3, h4, h5{
+	font-weight: 900;
+}
+
+.ui.menu .ui.dropdown .menu>.item{
+	font-weight: 700!important;
+}
+
+.ui.menu, .ui.dropdown, .menu>.item{
+	font-weight: 900!important;
+}
+
 #userDiv {
 	padding : 0;
 	width: 100px;

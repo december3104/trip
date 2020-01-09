@@ -19,11 +19,14 @@ public class FellowMatching implements Serializable {
 	private String fm_content;
 	private String fb_alarm;
 	private String fm_alarm;
+	private String fb_report;
+	private String fm_report;
 
 	public FellowMatching() {}
 
 	public FellowMatching(int fb_no, String fm_id, String fm_gender, Date fm_date, int fm_number,
-			String fm_accept_check, Date fm_accept_date, String fm_content, String fb_alarm, String fm_alarm) {
+			String fm_accept_check, Date fm_accept_date, String fm_content, String fb_alarm, String fm_alarm,
+			String fb_report, String fm_report) {
 		super();
 		this.fb_no = fb_no;
 		this.fm_id = fm_id;
@@ -35,6 +38,8 @@ public class FellowMatching implements Serializable {
 		this.fm_content = fm_content;
 		this.fb_alarm = fb_alarm;
 		this.fm_alarm = fm_alarm;
+		this.fb_report = fb_report;
+		this.fm_report = fm_report;
 	}
 
 	public int getFb_no() {
@@ -117,13 +122,28 @@ public class FellowMatching implements Serializable {
 		this.fm_alarm = fm_alarm;
 	}
 
+	public String getFb_report() {
+		return fb_report;
+	}
+
+	public void setFb_report(String fb_report) {
+		this.fb_report = fb_report;
+	}
+
+	public String getFm_report() {
+		return fm_report;
+	}
+
+	public void setFm_report(String fm_report) {
+		this.fm_report = fm_report;
+	}
+
 	@Override
 	public String toString() {
 		return "FellowMatching [fb_no=" + fb_no + ", fm_id=" + fm_id + ", fm_gender=" + fm_gender + ", fm_date="
 				+ fm_date + ", fm_number=" + fm_number + ", fm_accept_check=" + fm_accept_check + ", fm_accept_date="
 				+ fm_accept_date + ", fm_content=" + fm_content + ", fb_alarm=" + fb_alarm + ", fm_alarm=" + fm_alarm
-				+ "]";
+				+ ", fb_report=" + fb_report + ", fm_report=" + fm_report + "]";
 	}
 
-	
 }

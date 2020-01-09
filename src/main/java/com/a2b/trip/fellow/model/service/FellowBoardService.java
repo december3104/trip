@@ -3,6 +3,7 @@ package com.a2b.trip.fellow.model.service;
 import java.util.ArrayList;
 
 import com.a2b.trip.common.Page;
+import com.a2b.trip.fellow.model.vo.Fellow;
 import com.a2b.trip.fellow.model.vo.FellowBoard;
 import com.a2b.trip.fellow.model.vo.FellowMatching;
 import com.a2b.trip.location.model.vo.Location;
@@ -14,5 +15,6 @@ public interface FellowBoardService {
 	FellowBoard selectOneFellowBoard(int fb_no);
 	ArrayList<Location> selectAllLocation();
 	ArrayList<FellowMatching> selectAllFellowMatching(int fb_no);
-
+	ArrayList<Fellow> selectMyFellowBoard(String fb_id);
+	Fellow selectMyFellowBoardOne(String fm_id);
 }

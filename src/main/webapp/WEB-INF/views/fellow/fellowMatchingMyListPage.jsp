@@ -14,8 +14,6 @@
 <!-- 시맨틱유아이 -->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-<!-- 폰트css -->
-<link href="resources/css/font.css" rel="stylesheet" type="text/css"/>
 <!-- icon -->
 <link href="resources/css/all.css" rel="stylesheet">
 <!-- 헤더푸터 css -->
@@ -34,6 +32,7 @@
 	height: 70px;
 	vertical-align: middle;
 	font-size: 15pt;
+	font-weight: 700;
 }
 
 .sidebarTd:hover{
@@ -44,9 +43,6 @@
 	width: 20%;
 }
 
-* {
-	font-family : BBTreeGR;
-}
 </style>
 <script type="text/javascript">
 
@@ -70,13 +66,14 @@ function fellowModalOpen(fb_id){
 				var fellowContent = decodeURIComponent(data.fellowContent.replace(/\+/gi, " "));
 				
 				/* <tr><th><img src="resources/images/"' + fellowProfile + '"></th></tr> */
-				var tableContent = '<tr><td style="height: 30px"><img class="ui medium circular image" src="resources/images/' + fellowProfile + '" style="width: 100px"></td>' + 
-				'<td><ul style="list-style: none"><li style="font-size: 15pt">' + fellowName + '</li><li style="font-size: 13pt">(' + fellowId + ')</li></td></tr>' +
-				'<tr><th style="padding-left: 5%">방문 국가</th><td style="border-top: none">' + fellowContry + '</td></tr>' + 
-				'<tr><th style="padding-left: 5%">방문 도시</th><td style="border-top: none">' + fellowCity + '</td></tr>' +
-				'<tr><th style="padding-left: 5%">동행일</th><td style="border-top: none">' + fellowStartDate + ' ~ ' + fellowEndDate + '</td></tr>' +
-				'<tr><th style="padding-left: 5%">제목</th><td style="border-top: none">' + fellowTitle + '</td></tr>' +
-				'<tr><th style="padding-left: 5%">내용</th><td style="border-top: none">' + fellowContent + '</td></tr>';
+				var tableContent = '<tr><td style="height: 30px;"><img class="ui medium circular image" src="resources/images/' + fellowProfile + '" style="width: 100px"></td>' + 
+				'<td><ul style="list-style: none"><li style="font-size: 15pt;">' + fellowName + '</li><li style="font-size: 13pt;">(' + fellowId + ')</li></td></tr>' +
+				'<tr><th style="padding-left: 5%;">방문 국가</th><td style="border-top: none; font-size: 12pt">' + fellowContry + '</td></tr>' + 
+				'<tr><th style="padding-left: 5%;">방문 도시</th><td style="border-top: none; font-size: 12pt">' + fellowCity + '</td></tr>' +
+				'<tr><th style="padding-left: 5%;">동행일</th><td style="border-top: none; font-size: 12pt">' + fellowStartDate + ' ~ ' + fellowEndDate + '</td></tr>' +
+				'<tr><th style="padding-left: 5%;">제목</th><td style="border-top: none; font-size: 12pt">' + fellowTitle + '</td></tr>' +
+				'<tr><th style="padding-left: 5%;">내용</th><td style="border-top: none; font-size: 12pt">' + fellowContent + '</td></tr>' +
+				'<tr><th></th><td style="border-top: none;"></td></tr>';
 			 	$('#fellowModalTable').html(tableContent); 
 			 	$('#fellowModal').modal('show'); 
 
@@ -119,36 +116,41 @@ $(function(){
 		</div>
 	</div>
 	<div style="float:left; margin-left: 3%; width: 75%">
-		<h2 style="font-family: GodoM">동행 찾기 기록</h2>
+		<h2 style="font-family: Lato">동행 찾기 기록</h2>
 		<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
 		<div class="container">
-			<table class="ui striped table" style="text-align:center">
+			<table class="ui striped table" style="text-align:center; font-family: Lato">
 				<tr><th style="width: 20%">동행자</th><th style="width: 30%">매칭일</th><th style="width: 20%">여행 국가</th><th style="width: 20%">여행 도시</th><th></th></tr>
 				<c:forEach var="fellowMatchingOne" items="${fellowMatchingMyList }">
 				<tr>
-					<td><a href="javascript:void(0);" onclick="fellowModalOpen('${fellowMatchingOne.fb_id}');" id="fellowInfo"  style="cursor: pointer">${fellowMatchingOne.member_name }(${fellowMatchingOne.fb_id })</a></td>
+					<td style="font-size: 12pt"><a href="javascript:void(0);" onclick="fellowModalOpen('${fellowMatchingOne.fb_id}');" class="fellowInfo"  style="cursor: pointer; font-family: Lato; font-weight: 700">${fellowMatchingOne.member_name }(${fellowMatchingOne.fb_id })</a></td>
 					<c:if test="${fellowMatchingOne.fm_accept_date == null }">
-					<td>매칭 대기중입니다.</td>
+					<td style="font-size: 12pt">매칭 대기중입니다.</td>
 					</c:if>
 					<c:if test="${fellowMatchingOne.fm_accept_date != null }">
 					<fmt:parseDate value="${fellowMatchingOne.fm_accept_date}" var="accept_date" pattern="yyyy-MM-dd"/>
-					<td><fmt:formatDate value="${accept_date}" pattern="yyyy년 MM월 dd일"/></td>
+					<td style="font-size: 12pt"><fmt:formatDate value="${accept_date}" pattern="yyyy년 MM월 dd일"/></td>
 					</c:if>
-					<td>${fellowMatchingOne.fb_contry }</td>
-					<td>${fellowMatchingOne.fb_city }</td>
+					<td style="font-size: 12pt">${fellowMatchingOne.fb_contry }</td>
+					<td style="font-size: 12pt">${fellowMatchingOne.fb_city }</td>
 					<c:set var="today" value="<%=new java.util.Date()%>"/>
 					<fmt:formatDate var="now" type="date" value="${today}" pattern="yyyy.MM.dd"/>
 					<fmt:parseDate value="${fellowMatchingOne.fm_accept_date}" var="accept_date" pattern="yyyy-MM-dd"/>
 					<fmt:formatDate var="accept" value="${accept_date}" pattern="yyyy.MM.dd"/>
 					<c:choose>
-						<c:when test="${fellowMatchingOne.fm_accept_check eq 'DONE' && now > accept && reportDone ne 'OK'}">
-						<td><a href="javascript:void(0);" onclick="fellowReportModalOpen('${fellowMatchingOne.fb_id}')" style="cursor: pointer; color: red; text-decoration: none" id="reportATag">신고</a></td>
+						<c:when test="${fellowMatchingOne.fm_accept_check eq 'DONE' && now > accept && reportDone ne 'OK' && fellowMatchingOne.fb_report eq 'N'}">
+						<td><a href="javascript:void(0);" onclick="fellowReportModalOpen('${fellowMatchingOne.fb_id}')" style="cursor: pointer; color: red; text-decoration: none; font-size: 12pt" id="reportATag">신고</a></td>
 						</c:when>
 						<c:otherwise>
 						<td></td>
 						</c:otherwise>
 					</c:choose>
 				</tr>
+				</c:forEach>
+				<c:forEach var="fellowBoardOne" items="${fellowBoardMyList }">
+				<tr>
+					<td><a href="javascript:void(0);" onclick="fellowModalOpen('${fellowBoardOne.fm_id}');" class="fellowInfo" style="cursor: pointer">${fellowBoardOne.member_name }(${fellowBoardOne.fm_id })</a></td>
+					
 				</c:forEach>
 			</table>
 		</div>
@@ -169,12 +171,12 @@ $(function(){
 	<div class="ui tiny modal" id="fellowReportModal">
 		<div class="description" style="padding: 5%">
 			<table class="ui table" style="text-align: center">
-				<tr><td style="font-size: 13pt">동행과 함께한 여행에서 불편한 점이 있으셨나요?</td></tr>
+				<tr><td style="font-size: 13pt; font-weight: 700">동행과 함께한 여행에서 불편한 점이 있으셨나요?</td></tr>
 				<tr>
 					<td>
 						<form class="ui form" action="insertReport.do" method="post" id="reportModalSubmit">
 							<div class="field">
-								<textarea placeholder="신고하실 내용을 자세히 입력해주세요." name="report_content"></textarea>
+								<textarea placeholder="신고하실 내용을 자세히 입력해주세요." name="report_content" style="border: none"></textarea>
 							</div>
 							<div class="field">
 								<input type="hidden" name="report_id" id="myPageFellowReportId">

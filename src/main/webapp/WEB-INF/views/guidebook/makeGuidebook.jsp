@@ -62,6 +62,32 @@ $(function(){
 		}
 		}); */
    
+$(function(){
+	$('#btnSaveDesign').on('click', function(){
+		var bookName = $('#book_title').text();
+		$('#bookName').attr('value', bookName);
+		console.log(bookName);
+	
+		var travelDetail = $('#TrDetail').val();
+		$('#travelDetail').attr('value', travelDetail);
+		console.log(travelDetail);
+		
+		var chkRadio = $('input[name=theme]:checked').val();
+		console.log(chkRadio);
+		$('#travelTheme').attr('value', chkRadio);
+		
+		var startDate = $('#startDate').val();
+		console.log(startDate);
+		$('#travelStartDate').attr('value', startDate);
+		
+		var endDate = $('#endDate').val();
+		console.log(endDate);
+		$('#travelEndDate').attr('value', endDate);
+		
+		
+		$('#insertGuideForm').submit();
+	});
+});
 </script>
 
 <!-- <script>
@@ -97,12 +123,12 @@ $(function(){
 					<i class="redo icon"></i>
 				</button>
 				<div class="guidebook_name">
-					<input type="text" name="book_name" value=""><!-- <p contenteditable="true" id="book_title"> 제목을 입력하세요.</p>-->
+					<p contenteditable="true" id="book_title"> 제목을 입력하세요.</p>
 					<i class="pencil alternate icon"></i>
 				</div>
 			</div>
 			<div class="header_right">
-				<button type="button" id="btnSaveDesign" onclick="location.href='insertGuidebook.do'">
+				<button type="button" id="btnSaveDesign">
 					<span>저장</span>
 				</button>
 				
@@ -132,7 +158,7 @@ $(function(){
 			<div class="innerTab">
 				<div>
 				여행상세설명<br>
-				<textarea rows="5" cols="45" placeholder="이번 여행에 관한 간략한 소개글이나 여행스토리를 남겨보세요!" name="travel_detail"></textarea> 
+				<textarea rows="5" cols="45" placeholder="이번 여행에 관한 간략한 소개글이나 여행스토리를 남겨보세요!" id="TrDetail"></textarea> 
 				</div><br>
 		     	<div align="center">
 			     	<table style="text-align: center;">
@@ -142,9 +168,9 @@ $(function(){
 						<td>종료일</td>
 					</tr>
 					<tr >
-						<td><input type="date" name="travel_start_date"></td>
+						<td><input type="date" id="startDate"></td>
 						<td>&nbsp; ~ &nbsp;</td>
-						<td><input type="date" name="travel_end_date"></td>
+						<td><input type="date" id="endDate"></td>
 					</tr>
 					
 					</table><br>
@@ -155,24 +181,30 @@ $(function(){
 				<tr>
 					<td>
 					<i class="user icon"></i><br>
-					<input type="radio" name="travel_theme" value="나홀로"> 나홀로
+					<input type="radio" name="theme" value="나홀로"> 나홀로
 					</td>
 					<td><i class="heart icon"></i><br>
-					<input type="radio" name="travel_theme" value="커플"> 커플</td>
+					<input type="radio" name="theme" value="커플"> 커플</td>
 					<td><i class="users icon"></i><br>
-					<input type="radio" name="travel_theme" value="친구와"> 친구와</td>
+					<input type="radio" name="theme" value="친구와"> 친구와</td>
 				</tr>
 				<tr>
 					<td><i class="users icon"></i><br>
-					<input type="radio" name="travel_theme" value="가족여행"> 가족여행</td>
+					<input type="radio" name="theme" value="가족여행"> 가족여행</td>
 					<td><i class="users icon"></i><br>
-					<input type="radio" name="travel_theme" value="패키지">패키지</td>
+					<input type="radio" name="theme" value="패키지">패키지</td>
 					<td><i class="briefcase icon"></i><br>
-					<input type="radio" name="travel_theme" value="비즈니스"> 비즈니스</td>
+					<input type="radio" name="theme" value="비즈니스"> 비즈니스</td>
 				</tr>
 				</table>
 				</div>
-				
+				<form action="insertGuidebook.do" method="post" id="insertGuideForm">
+					<input type="hidden" id="bookName" name="book_name">
+					<input type="hidden" id="travelDetail" name="travel_detail">
+					<input type="hidden" id="travelTheme" name="travel_theme">
+					<input type="hidden" id="travelStartDate" name="travel_start_date">
+					<input type="hidden" id="travelEndDate" name="travel_end_date">
+				</form>
 			
 		  </div>
 		</div>

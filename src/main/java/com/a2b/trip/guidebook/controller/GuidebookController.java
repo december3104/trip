@@ -42,9 +42,9 @@ public class GuidebookController {
 		
 		guidebook.setBook_id(memberId);
 		
-		System.out.println(guidebook.getBook_id());
+		System.out.println(guidebook.getBook_name() + ", " + guidebook.getTravel_detail() + ". " + guidebook.getTravel_theme() + ", " + guidebook.getTravel_start_date() + ", " + guidebook.getTravel_end_date() + ", " + guidebook.getBook_id());
 		
-		   int result = guidebookService.insertGuidebook(guidebook);
+		//   int result = guidebookService.insertGuidebook(guidebook);
 		   
 		   String viewFileName = "guidebook/makeGuidebook";
 		   

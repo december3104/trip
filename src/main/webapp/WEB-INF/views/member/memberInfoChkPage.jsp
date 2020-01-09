@@ -12,8 +12,6 @@
 <!-- 시맨틱유아이 -->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-<!-- 폰트css -->
-<link href="resources/css/font.css" rel="stylesheet" type="text/css"/>
 <!-- icon -->
 <link href="resources/css/all.css" rel="stylesheet">
 <!-- 헤더푸터 css -->
@@ -54,6 +52,7 @@ $(function(){
 .sidebarTd{
 	height: 70px;
 	vertical-align: middle;
+	font-weight: 700;
 }
 
 .sidebarTd:hover{
@@ -67,16 +66,13 @@ $(function(){
 	border: 1px solid #95d6f3;
 }
 
-h2, .ui.button {
-	font-family: GodoM;
-}
 </style>
 </head>
 <body>
 <!-- 헤더 -->
 <header><jsp:include page="/WEB-INF/views/header.jsp" /></header>
 
-<div class="bodyCss" style="margin-left: 10%; margin-right: 10%">
+<div class="bodyCss" style="margin-left: 15%; margin-right: 15%">
 	<div class="bodyContentCss" style="float: left; width: 20%">
 		<div>
 			<table class="ui  celled table" style="text-align:center; font-size: 15pt; background: #DCF2FB">
@@ -88,12 +84,12 @@ h2, .ui.button {
 		</div>
 	</div>
 	<div style="float:left; margin-left: 3%; width: 75%">
-		<h2 style="font-family: GodoM">내 정보 수정</h2>
+		<h2 style="font-weight: 900">내 정보 수정</h2>
 		<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
 		<table class="ui celled table" style="width: 50%; vertical-align: middle; border: 0; margin-top: 2%">
 			<tr><td colspan="2" style="border-top: 0"><p style="font-size: 13pt">개인정보 보호를 위해 비밀번호를 입력해주세요.</p></td></tr> 
 			<tr><td style="padding-bottom: 0; border: 0; width: 300px"><div class="ui left icon input"><input type="password" name="member_pwd" id="memberPwdChk" style="width: 300px"> <i class="lock icon"></i></div></td>
-					<td style="padding-bottom: 0; border: 0"><input class="ui button" value="확인" onclick="memberPwdChk();" style="width: 95px; background: #c0e7f8; font-family: GodoM" readonly /></td></tr>
+					<td style="padding-bottom: 0; border: 0"><input class="ui button" value="확인" onclick="memberPwdChk();" style="width: 95px; background: #c0e7f8" readonly /></td></tr>
 		</table>
 	</div>
 	<!-- 안내창 모달 -->
@@ -104,7 +100,7 @@ h2, .ui.button {
 			<p>비밀번호를 확인해주세요.</p>
 		</div>
 		<div class="actions">
-			<div class="fluid ui ok button" style="font-family: GodoM; margin: 0; background: #c0e7f8">확인</div>
+			<div class="fluid ui ok button" style="margin: 0; background: #c0e7f8">확인</div>
 		</div>
 	</div>
 </div>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.a2b.trip.common.Page;
+import com.a2b.trip.fellow.model.service.FellowMatchingService;
 import com.a2b.trip.member.model.vo.Member;
 import com.a2b.trip.report.model.service.ReportService;
 import com.a2b.trip.report.model.vo.GuideReport;
@@ -27,6 +28,9 @@ public class ReportController {
 
 	@Autowired
 	private ReportService reportService;
+	
+	@Autowired
+	private FellowMatchingService fellowMatchingService;
 	
 	
 	//로그 처리용 객체 의존성 주입 처리함(종속 객체 주입)

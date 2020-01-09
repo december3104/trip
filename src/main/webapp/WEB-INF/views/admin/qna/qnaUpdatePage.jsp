@@ -85,7 +85,7 @@
 					<div class="ui card" style="width: 100%;">
 						<div class="ui three column grid">
 							<div class="row" style="height: 200px;">
-								<div class="column"	style="width: 22%; text-align: center; padding: 1rem 1rem 1rem 1rem;">
+								<div class="column"	style="width: 21%; text-align: center; padding: 1rem 1rem 1rem 1rem;">
 									<p style="font-size: 2rem; margin: 10px 0px 0px 0px;">${loginMember.member_id }</p>
 									<div>
 										<c:if test="${ loginMember.member_profile_rename ne null }">
@@ -106,7 +106,7 @@
 									<input type="hidden" value="${loginMember.member_id }" name="qc_id">
 									<div class="column"	style="width: 107%; text-align: left; padding: 1rem 1rem 1rem 1rem;">
 										<div style="float:left;">
-											<textarea rows="8" cols="110" name="commentInput">${QC.qc_content }</textarea>
+											<textarea rows="8" cols="100" name="commentInput">${QC.qc_content }</textarea>
 										</div>
 										<div style="float: left; margin-left: 5%; margin-top: 11%;">
 										<input class="ui button" type="submit" value="저장" 

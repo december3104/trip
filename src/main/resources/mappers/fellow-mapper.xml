@@ -8,9 +8,25 @@
 		select * from fellowmatching join fellowboard on fellowmatching.fb_no = fellowboard.fb_no join member on fellowboard.fb_id = member.member_id where fm_id = #{value}
 	</select>
 	
+	<select id="selectMyFellowBoard" parameterType="string" resultType="Fellow">
+		select * from fellowboard join fellowmatching on fellowboard.fb_no = fellowmatching.fb_no join member on fellowmatching.fm_id = member.member_id where fb_id = #{value}
+	</select>
+	
 	<select id="selectMyFellowMatchingOne" parameterType="string" resultType="Fellow">
 		select * from fellowmatching join fellowboard on fellowmatching.fb_no = fellowboard.fb_no join member on fellowboard.fb_id = member.member_id where fb_id = #{value}
 	</select>
+	
+	<select id="selectMyFellowBoardOne" parameterType="string" resultType="Fellow">
+		select * from fellowboard join fellowmatching on fellowboard.fb_no = fellowmatching.fb_no join member on fellowmatching.fm_id = member.member_id where fm_id = #{value}
+	</select>
+	
+	<update id="updateFellowBoardReport" parameterType="_int">
+		update fellowmatching set fb_report = 'Y' where fb_no = #{value}
+	</update>
+	
+	<update id="updateFellowMatchingReport" parameterType="_int">
+		update fellowmatching set fm_report = 'Y' where fb_no = #{value}
+	</update>
 	
 	<select id="selectTotal" resultType="_int">
 		SELECT COUNT(*) FROM FELLOWBOARD

@@ -17,8 +17,8 @@ public class Fellow implements Serializable {
 	private String fb_gender;
 	private Date fb_write_date;
 	private String fb_deadline_check;
-	private int fb_number;
-	private int fb_comp_number;
+	private String fb_report;
+	private String fm_report;
 	private String fm_id;
 	private String fm_gender;
 	private Date fm_date;
@@ -47,7 +47,7 @@ public class Fellow implements Serializable {
 
 	public Fellow(int fb_no, String fb_id, String fb_title, String fb_content, Date fb_start_date, Date fb_end_date,
 			String fb_contry, String fb_city, String fb_gender, Date fb_write_date, String fb_deadline_check,
-			int fb_number, int fb_comp_number, String fm_id, String fm_gender, Date fm_date, int fm_number,
+			String fb_report, String fm_report, String fm_id, String fm_gender, Date fm_date, int fm_number,
 			String fm_accept_check, Date fm_accept_date, String fm_content, String fb_alarm, String fm_alarm,
 			String member_id, String member_name, String member_pwd, String member_email, String member_gender,
 			String member_phone, String member_birth, String member_profile_original, String member_profile_rename,
@@ -65,8 +65,8 @@ public class Fellow implements Serializable {
 		this.fb_gender = fb_gender;
 		this.fb_write_date = fb_write_date;
 		this.fb_deadline_check = fb_deadline_check;
-		this.fb_number = fb_number;
-		this.fb_comp_number = fb_comp_number;
+		this.fb_report = fb_report;
+		this.fm_report = fm_report;
 		this.fm_id = fm_id;
 		this.fm_gender = fm_gender;
 		this.fm_date = fm_date;
@@ -180,20 +180,20 @@ public class Fellow implements Serializable {
 		this.fb_deadline_check = fb_deadline_check;
 	}
 
-	public int getFb_number() {
-		return fb_number;
+	public String getFb_report() {
+		return fb_report;
 	}
 
-	public void setFb_number(int fb_number) {
-		this.fb_number = fb_number;
+	public void setFb_report(String fb_report) {
+		this.fb_report = fb_report;
 	}
 
-	public int getFb_comp_number() {
-		return fb_comp_number;
+	public String getFm_report() {
+		return fm_report;
 	}
 
-	public void setFb_comp_number(int fb_comp_number) {
-		this.fb_comp_number = fb_comp_number;
+	public void setFm_report(String fm_report) {
+		this.fm_report = fm_report;
 	}
 
 	public String getFm_id() {
@@ -385,18 +385,16 @@ public class Fellow implements Serializable {
 		return "Fellow [fb_no=" + fb_no + ", fb_id=" + fb_id + ", fb_title=" + fb_title + ", fb_content=" + fb_content
 				+ ", fb_start_date=" + fb_start_date + ", fb_end_date=" + fb_end_date + ", fb_contry=" + fb_contry
 				+ ", fb_city=" + fb_city + ", fb_gender=" + fb_gender + ", fb_write_date=" + fb_write_date
-				+ ", fb_deadline_check=" + fb_deadline_check + ", fb_number=" + fb_number + ", fb_comp_number="
-				+ fb_comp_number + ", fm_id=" + fm_id + ", fm_gender=" + fm_gender + ", fm_date=" + fm_date
-				+ ", fm_number=" + fm_number + ", fm_accept_check=" + fm_accept_check + ", fm_accept_date="
-				+ fm_accept_date + ", fm_content=" + fm_content + ", fb_alarm=" + fb_alarm + ", fm_alarm=" + fm_alarm
-				+ ", member_id=" + member_id + ", member_name=" + member_name + ", member_pwd=" + member_pwd
-				+ ", member_email=" + member_email + ", member_gender=" + member_gender + ", member_phone="
-				+ member_phone + ", member_birth=" + member_birth + ", member_profile_original="
-				+ member_profile_original + ", member_profile_rename=" + member_profile_rename
-				+ ", member_report_count=" + member_report_count + ", guide_qualification=" + guide_qualification
-				+ ", member_level=" + member_level + ", enroll_date=" + enroll_date + ", guide_apply_alarm="
-				+ guide_apply_alarm + "]";
+				+ ", fb_deadline_check=" + fb_deadline_check + ", fb_report=" + fb_report + ", fm_report=" + fm_report
+				+ ", fm_id=" + fm_id + ", fm_gender=" + fm_gender + ", fm_date=" + fm_date + ", fm_number=" + fm_number
+				+ ", fm_accept_check=" + fm_accept_check + ", fm_accept_date=" + fm_accept_date + ", fm_content="
+				+ fm_content + ", fb_alarm=" + fb_alarm + ", fm_alarm=" + fm_alarm + ", member_id=" + member_id
+				+ ", member_name=" + member_name + ", member_pwd=" + member_pwd + ", member_email=" + member_email
+				+ ", member_gender=" + member_gender + ", member_phone=" + member_phone + ", member_birth="
+				+ member_birth + ", member_profile_original=" + member_profile_original + ", member_profile_rename="
+				+ member_profile_rename + ", member_report_count=" + member_report_count + ", guide_qualification="
+				+ guide_qualification + ", member_level=" + member_level + ", enroll_date=" + enroll_date
+				+ ", guide_apply_alarm=" + guide_apply_alarm + "]";
 	}
 
-	
 }

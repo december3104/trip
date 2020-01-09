@@ -11,8 +11,6 @@
 <!-- 시맨틱유아이 -->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-<!-- 폰트css -->
-<link href="resources/css/font.css" rel="stylesheet" type="text/css"/>
 <!-- 헤더푸터 css -->
 <link href="resources/css/headerFooter.css" rel="stylesheet">
 <style type="text/css">
@@ -20,11 +18,11 @@ a,p {
 	text-decoration : none;
 	color: #000;
 }
-
+/* 
 a:hover,
 p:hover {
 	color: #95d6f3;
-}
+} */
 
 </style>
 </head>

@@ -9,9 +9,15 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="/trip/resources/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/trip/resources/se2/js/service/HuskyEZCreator.js"></script>
+<!-- 헤더푸터 css -->
+<link href="resources/css/headerFooter.css" rel="stylesheet">
 </head>
 <body>
-	<c:import url="/WEB-INF/views/header.jsp" />
+<header>
+	<jsp:include page="/WEB-INF/views/header.jsp" />
+</header>
+<div class="bodyCss" style="margin-top: 0; margin-left: 10%; margin-right: 10%">
+	<div class="bodyContentCss">
 	<div class="ui container" style="margin:120px 0 120px 0;">
 		<div class="ui grid">
 			<div class="one wide column"></div>
@@ -61,10 +67,11 @@
 			<div class="one wide column"></div>	
 		</div>
 	</div>
-	
-		<div>
-			
-		</div>	
+	</div>		
+</div>
+<footer>
+	<jsp:include page="/WEB-INF/views/footer.jsp" />
+</footer>	
 <script type="text/javascript">
 $(function(){
 	//전역변수선언

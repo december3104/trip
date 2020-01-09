@@ -7,9 +7,11 @@
 <meta charset="UTF-8">
 <title>trip</title>
 <script type="text/javascript" src="/trip/resources/js/jquery-3.4.1.min.js"></script>
+<!-- 헤더푸터 css -->
+<link href="resources/css/headerFooter.css" rel="stylesheet">
 <style type="text/css">
-.page_div { margin : 15px 0 50px 0; }
-.paging { text-align : center; }
+.page_div { margin-top : 15px}
+.paging { text-align : center; padding-left:0;}
 .paging li { display : inline-block;}
 .paging a { display : block; width : auto; height : 30px; border : 1px solid #E7E6E6;  line-height: 30px; }
 .paging a:hover { color : black; border : 1px solid black;}
@@ -19,7 +21,11 @@
 </style>
 </head>
 <body>
-	<c:import url="/WEB-INF/views/header.jsp" />
+<header>
+	<jsp:include page="/WEB-INF/views/header.jsp" />
+</header>
+<div class="bodyCss" style="margin-top: 0; margin-left: 10%; margin-right: 10%">
+	<div class="bodyContentCss">
 	<div class="ui container" style="margin:120px 0 120px 0;">
 		<div class="ui grid">
 			<div class="fourteen wide column">
@@ -43,23 +49,45 @@
 				<table class="ui striped table">			
 					<tbody>			
 				  		<tr style="height:60px;">
-					  		<th>
-						    	<form class="ui form" style="margin-left : 2%">					    		
-							    	<div class="ui icon input">
-										<input type="text" placeholder="검색할 내용이나 제목을 입력하세요.">
-		  								<i class="circular search link icon"></i>								
-									</div>
-								</form>
-							</th>
-							<th>
-								<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px; float : right; margin-right : 5%;">
-									<option value="10">10개씩 보기</option>
-									<option value="20">20개씩 보기</option>
-									<option value="30">30개씩 보기</option>
-								</select>
-							</th>
-							<th class="right aligned">
-								<button class="ui button" style="font-family : GodoM;height:45px; width:130px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
+					  		<th colspan="3">
+					  			<div class="ui grid">
+					  				<div class="five wide column">
+					  					<form class="ui form" style="margin-left : 2%">				    		
+								    		<div class="ui icon input">
+												<input type="text" placeholder="검색할 내용이나 제목을 입력하세요." style="width:300px;">
+				  								<i class="circular search link icon"></i>								
+											</div>
+										</form>
+					  				</div>
+					  				<div class="eight wide column">
+					  					<c:if test="${ page.contentNum eq 10 }">
+						  					<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px;margin-right : 5%;" onchange="changeContentNum();">
+												<option value="10" selected>10개씩 보기</option>
+												<option value="20">20개씩 보기</option>
+												<option value="30">30개씩 보기</option>
+											</select>
+										</c:if>
+										<c:if test="${ page.contentNum eq 20 }">
+						  					<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px;margin-right : 5%;" onchange="changeContentNum();">
+												<option value="10">10개씩 보기</option>
+												<option value="20" selected>20개씩 보기</option>
+												<option value="30">30개씩 보기</option>
+											</select>
+										</c:if>
+										<c:if test="${ page.contentNum eq 30 }">
+						  					<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px;margin-right : 5%;" onchange="changeContentNum();">
+												<option value="10">10개씩 보기</option>
+												<option value="20">20개씩 보기</option>
+												<option value="30" selected>30개씩 보기</option>
+											</select>
+										</c:if>
+					  				</div>
+					  				<div class="three wide column right aligned">
+						  				<c:if test="${ sessionScope.loginMember ne null }">
+											<button class="ui button" style="font-family : GodoM;height:45px; width:130px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
+										</c:if>
+					  				</div>
+					  			</div>
 							</th>
 						</tr>
 						<c:forEach var="list" items="${ fellowBoardList }">
@@ -139,7 +167,11 @@
 			</ul>
 		</div>
 	</div>
-
+	</div>
+</div>
+<footer>
+	<jsp:include page="/WEB-INF/views/footer.jsp" />
+</footer>
 <script type="text/javascript">
 /* 페이징 처리 함수 시작 */
 function page(idx){
@@ -149,15 +181,12 @@ function page(idx){
 }
 /* 페이징 처리 함수 끝 */
 
-/* 목록 홀수 번째 색상 변경 시작*/
-/* var jun = document.getElementsByClassName("jun-style");
+//한페이지에 보여줄 리스트 갯수 함수
+function changeContentNum(){
+	var contentnum = $("#contentnum option:selected").val();
+	location.href="selectAllFellowBoard.do?contentNum=" + contentnum;
+};
 
-for(var i = 0; jun.length; i++){	
-	if(i%2 != 0){
-		jun[i].style.backgroundColor = "#EBF9FF";
-	}
-} */
-/* 목록 홀수 번째 색상 변경 끝*/
 </script>
 </body>
 </html>

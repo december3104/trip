@@ -28,84 +28,38 @@
 	<div class="bodyContentCss">
 	<div class="ui container" style="margin:120px 0 120px 0;">
 		<div class="ui grid">		
-			<div class="fourteen wide column">
+			<div class="sixteen wide column">
 				<table>
 						<tr>
-							<td><h1>QnA</h1></td>
+							<td><h1>공지사항</h1></td>
 						</tr>
 						<tr>
-							<td><p>궁금한 점이 있으면 무엇이든 물어보세요!</p></td>
+							<td><p>최근 소식을 전해드립니다.</p></td>
 						</tr>
 					</table>
 			</div>
-			<div class="two wide column">
-				<c:if test="${!empty loginMember.member_id }">
-					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='goPageInsertQna.do'">글 쓰기</button>
-				</c:if>	
-			</div>		
 		</div>
 		<div class="ui grid">
 			<div class="sixteen wide column">
 				<table class="ui striped table">			
 					<tbody>			
 				  		<tr style="height:60px;">
-					  		<th colspan="3">
+					  		<th>
 					  			<div class="ui grid">
-					  				<div class="five wide column">
-					  					<form class="ui form" style="margin-left : 2%">				    		
-								    		<div class="ui icon input">
-												<input type="text" placeholder="검색할 내용이나 제목을 입력하세요." style="width:300px;">
-				  								<i class="circular search link icon"></i>								
-											</div>
-										</form>
-					  				</div>
-					  				<div class="eight wide column">
-					  					<c:if test="${ page.contentNum eq 10 }">
-						  					<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px;margin-right : 5%;" onchange="changeContentNum();">
-												<option value="10" selected>10개씩 보기</option>
-												<option value="20">20개씩 보기</option>
-												<option value="30">30개씩 보기</option>
-											</select>
-										</c:if>
-										<c:if test="${ page.contentNum eq 20 }">
-						  					<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px;margin-right : 5%;" onchange="changeContentNum();">
-												<option value="10">10개씩 보기</option>
-												<option value="20" selected>20개씩 보기</option>
-												<option value="30">30개씩 보기</option>
-											</select>
-										</c:if>
-										<c:if test="${ page.contentNum eq 30 }">
-						  					<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px;margin-right : 5%;" onchange="changeContentNum();">
-												<option value="10">10개씩 보기</option>
-												<option value="20">20개씩 보기</option>
-												<option value="30" selected>30개씩 보기</option>
-											</select>
-										</c:if>
-					  				</div>
-					  				<div class="three wide column right aligned">
-						  				<c:if test="${ sessionScope.loginMember ne null }">
-											<button class="ui button" style="font-family : GodoM;height:45px; width:130px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
-										</c:if>
+					  				<div class="sixteen wide column">
+					  					<div style="margin-left : 20px">총 ${ page.totalCount } 게시물</div>
 					  				</div>
 					  			</div>
 							</th>
 						</tr>
-						<c:forEach var="list" items="${ qnaList }">
+						<c:forEach var="list" items="${ noticeList }">
 							<tr>
 					      		<td style="padding-left:15px;width : 70%" colspan="2">
-					      			<c:url var="goToDetailView" value="selectDetailViewQna.do">
-					      				<c:param name="qna_no" value="${ list.qna_no }"></c:param>
+					      			<c:url var="goToDetailView" value="selectDetailViewNotice.do">
+					      				<c:param name="notice_no" value="${ list.notice_no }"></c:param>
 					      			</c:url>
-					      			<a href="${ goToDetailView }"><font size="3">${ list.qna_title }</font></a><br>
-					      			<small><font color="gray">${ list.qna_id }님이 ${ list.qna_date }에 작성</font></small>
-					      		</td>
-					      		<td>
-					      			<c:if test="${ list.qna_comment eq 'N' }">
-										답변 대기중
-									</c:if>
-									<c:if test="${ list.qna_comment ne 'N' }">
-										답변 완료
-									</c:if>
+					      			<a href="${ goToDetailView }"><font size="3">${ list.notice_title }</font></a><br>
+					      			<small><font color="gray">${ list.notice_id }님, ${ list.notice_date } 작성</font></small>
 					      		</td>
 							</tr>
 						</c:forEach>
@@ -143,13 +97,12 @@
 <footer>
 	<jsp:include page="/WEB-INF/views/footer.jsp" />
 </footer>
-
 <script type="text/javascript">
 /* 페이징 처리 함수 시작 */
 function page(idx){
 	var pagenum = idx;
 	var contentnum = $("#contentnum option:selected").val();
-	location.href="qna.do?currentPage=" + pagenum + "&contentNum=" + contentnum;
+	location.href="selectListAllNotice.do?currentPage=" + pagenum;
 }
 /* 페이징 처리 함수 끝 */
 

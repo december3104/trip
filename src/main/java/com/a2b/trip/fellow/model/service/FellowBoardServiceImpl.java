@@ -44,7 +44,7 @@ public class FellowBoardServiceImpl implements FellowBoardService {
 	public ArrayList<FellowMatching> selectAllFellowMatching(int fb_no) {
 		return fellowBoardDao.selectAllFellowmatching(fb_no);
 	}
-
+  
 	// 동행 찾기 기록
 	@Override
 	public ArrayList<Fellow> selectMyFellowBoard(String fb_id) {
@@ -55,5 +55,9 @@ public class FellowBoardServiceImpl implements FellowBoardService {
 	@Override
 	public Fellow selectMyFellowBoardOne(String fm_id) {
 		return fellowBoardDao.selectMyFellowBoardOne(fm_id);
+
+	@Override
+	public int insertFellowBoard(FellowBoard fb) {
+		return fellowBoardDao.insertFellowBoard(fb);
 	}
 }

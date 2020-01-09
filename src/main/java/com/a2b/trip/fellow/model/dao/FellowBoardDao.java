@@ -53,7 +53,8 @@ public class FellowBoardDao {
 	// 한명 조회
 	public Fellow selectMyFellowBoardOne(String fm_id) {
 		return sqlSession.selectOne("fellowMapper.selectMyFellowBoardOne", fm_id);
-
+	}
+	
 	public int insertFellowBoard(FellowBoard fb) {
 		return sqlSession.insert("fellowMapper.insertFellowBoard", fb);
 

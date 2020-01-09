@@ -55,7 +55,8 @@ public class FellowBoardServiceImpl implements FellowBoardService {
 	@Override
 	public Fellow selectMyFellowBoardOne(String fm_id) {
 		return fellowBoardDao.selectMyFellowBoardOne(fm_id);
-
+	}
+	
 	@Override
 	public int insertFellowBoard(FellowBoard fb) {
 		return fellowBoardDao.insertFellowBoard(fb);

@@ -24,8 +24,8 @@
 	text-align:center;
 	
 }
-.page_div { margin : 15px 0 50px 0; }
-.paging { text-align : center; }
+.page_div { margin : 15px 0 50px 0;}
+.paging { text-align : center; } /* padding-left:0px; 넣음댑니다 */
 .paging li { display : inline-block;}
 .paging a { display : block; width : auto; height : 30px; border : 1px solid #E7E6E6;  line-height: 30px; }
 .paging a:hover { color : black; border : 1px solid black;}
@@ -96,10 +96,9 @@ function page(idx){
 			</table>
 		</div>
 	</div>
-</div>
 	<div class="page_div">
-		<ul class="paging">
-			<c:if test="${ page.prev }">
+		<ul class="paging" style="padding-left: 0px;">
+		<c:if test="${ page.prev }">
 				<li class="first"><a href="javascript:page(1)"><span
 						class="side_w">&laquo;</span></a></li>
 			</c:if>
@@ -116,11 +115,11 @@ function page(idx){
 				</c:if>
 				<c:if test="${ idx ne page.currentPage}">
 					<li><a href="javascript:page(${ idx })"><span
-							class="side_w">${ idx }</span></a></li>
+						class="side_w">${ idx }</span></a></li>
 				</c:if>
 			</c:forEach>
 			<c:if test="${ page.next }">
-				<li class="next"><a
+			<li class="next"><a
 					href="javascript:page(${ page.endPage+1 });"><span
 						class="side_w">다음</span></a></li>
 			</c:if>
@@ -130,6 +129,8 @@ function page(idx){
 			</c:if>
 		</ul>
 	</div>
+</div>
+
 <!-- 푸터 -->
 <footer><jsp:include page="/WEB-INF/views/footer.jsp" /></footer>
 </body>

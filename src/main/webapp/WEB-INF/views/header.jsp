@@ -115,7 +115,7 @@ $(function(){
 	<a class="item godom">이용방법</a> 
 	<a class="ui simple dropdown item godom">고객센터
 		<div class="menu">
-			<div class="item">공지사항</div>
+			<div class="item" onclick="location.href='selectListAllNotice.do'">공지사항</div>
 			<div class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">Q&A</div>
 			<div class="item">가이드 신청</div>
 		</div>

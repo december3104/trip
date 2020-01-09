@@ -8,9 +8,15 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="/trip/resources/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/trip/resources/se2/js/service/HuskyEZCreator.js"></script>
+<!-- 헤더푸터 css -->
+<link href="resources/css/headerFooter.css" rel="stylesheet">
 </head>
 <body>
-	<c:import url="/WEB-INF/views/header.jsp" />
+<header>
+	<jsp:include page="/WEB-INF/views/header.jsp" />
+</header>
+<div class="bodyCss" style="margin-top: 0; margin-left: 10%; margin-right: 10%">
+	<div class="bodyContentCss">
 	<div class="ui container" style="margin:120px 0 120px 0;">
 		<div class="ui grid">
 			<div class="sixteen wide column">
@@ -39,13 +45,6 @@
 													</c:if>
 												</td>
 											</tr>
-											<c:if test="${ fb.fb_id eq loginMember.member_id }">
-												<tr style="height:100px;">
-													<td>
-														<button onclick="location.href='goPageUpdateQna.do?qna_no=${ fb.fb_no }'" class="ui button" style="width : 120px">글 수정하기</button>
-													</td>
-												</tr>
-											</c:if>
 										</table>
 									</div>
 								</div><!-- 3칸 -->
@@ -72,6 +71,17 @@
 									</div>
 								</div>
 							</div><!-- grid -->
+							<div class="ui grid">
+								<c:if test="${ fb.fb_id eq loginMember.member_id }">
+									<div class="sixteen wide column">
+										<div class="center aligned" style="margin:2%">
+											<button onclick="location.href='goPageUpdateFellowBoard.do?fb_no=${ fb.fb_no }'" class="ui button" style="width : 120px">수정하기</button>
+											&nbsp;&nbsp;&nbsp;
+											<button onclick="location.href='deleteFellowBoard.do?fb_no=${ fb.fb_no }'" class="ui button" style="width : 120px">삭제하기</button>
+										</div>
+									</div>
+								</c:if>
+							</div>
 							<c:if test="${ loginMember.member_id ne fb.fb_id }">
 								<div class="ui grid">
 									<div class="sixteen wide column">
@@ -106,8 +116,8 @@
 							<div class="content">
 								<div class="ui grid">
 									<div class="three wide column">
-										<div style="margin: 30px 30px 30px 10px;">
-											<table style="width : 200px; text-align:center;">
+										<div style="margin: 30px 0px 30px 10px;">
+											<table style="text-align:center;">
 												<tr>
 													<div class="ui horizontal list" style="margin-left:30px;">
 														<div class="item">
@@ -129,13 +139,6 @@
 														</div>
 													</div>
 												</tr>
-												<c:if test="${ fb.fb_id eq loginMember.member_id }">
-													<tr style="height:100px;">
-														<td>
-															<button onclick="location.href='goPageUpdateQna.do?qna_no=${ fb.fb_no }'" class="ui button" style="width : 120px">글 수정하기</button>
-														</td>
-													</tr>
-												</c:if>
 											</table>
 										</div>
 									</div><!-- 3칸 -->
@@ -155,6 +158,12 @@
 											</c:if>
 											<c:if test="${ list.fm_accept_check eq 'RJCT'}">
 												거절함
+											</c:if>
+										</c:if>
+										<c:if test="${ loginMember.member_id eq list.fm_id }">
+											<c:if test="${ list.fm_accept_check eq 'WAIT' }">
+												<button onclick="location.href='goPageUpdateQna.do?qna_no=${ fb.fb_no }'" class="ui button" style="width : 70px">수정</button>
+												<button onclick="location.href='goPageUpdateQna.do?qna_no=${ fb.fb_no }'" class="ui button" style="width : 70px">삭제</button>
 											</c:if>
 										</c:if>
 									</div>
@@ -182,5 +191,10 @@
 			</div>
 		</c:if>
 	</div>
+	</div>
+</div>
+<footer>
+	<jsp:include page="/WEB-INF/views/footer.jsp" />
+</footer>
 </body>
 </html>

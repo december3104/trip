@@ -43,4 +43,9 @@ public class FellowBoardServiceImpl implements FellowBoardService {
 	public ArrayList<FellowMatching> selectAllFellowMatching(int fb_no) {
 		return fellowBoardDao.selectAllFellowmatching(fb_no);
 	}
+
+	@Override
+	public int insertFellowBoard(FellowBoard fb) {
+		return fellowBoardDao.insertFellowBoard(fb);
+	}
 }

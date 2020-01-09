@@ -14,5 +14,6 @@ public interface FellowBoardService {
 	FellowBoard selectOneFellowBoard(int fb_no);
 	ArrayList<Location> selectAllLocation();
 	ArrayList<FellowMatching> selectAllFellowMatching(int fb_no);
+	int insertFellowBoard(FellowBoard fb);
 
 }

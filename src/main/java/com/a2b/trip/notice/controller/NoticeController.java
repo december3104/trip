@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,6 +54,32 @@ public class NoticeController {
 		return mv;
 	}
 	
+	//일반회원 공지사항 게시판 리스트 조회 상준
+	@RequestMapping("selectListAllNotice.do")
+	public String selectAllNotice(Page page, Model model) {
+		
+		int totalCount = noticeService.selectTotal();	//	게시물 총 갯수(현제 db에 저장된 값)
+		int currentPage = page.getCurrentPage();
+		page.setTotalCount(totalCount);	//	전체 게시물 갯수 (db에서 조회해 와서 Page 클레스에 저장)
+		page.calcRow(currentPage, 10);	//	db에서 조회할 ROWNUM 시작과 끝 계산
+		page.saveCurrentBlock(currentPage);	//	페이지 	
+		page.saveLastBlock(totalCount);
+		page.calcPage(totalCount, page.getContentNum());	//	맨 마지막 페이지 계산
+		
+		page.prevnext(currentPage);
+		page.saveStartPage(page.getCurrentBlock());
+		page.saveEndPage(page.getLastBlock(), page.getCurrentBlock());
+		
+		ArrayList<Notice> noticeList = noticeService.selectListAllNotice(page);
+		
+		logger.info(noticeList.toString());
+		
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("page", page);
+		
+		return "notice/notice";
+	}
+	
 	//관리자 공지사항 글쓰기
 	@RequestMapping("insertWordNotice.ad")
 	public String insertWordNotice() {
@@ -68,6 +95,16 @@ public class NoticeController {
 		mv.setViewName("admin/notice/noticeDetailView");
 		
 		return mv;
+	}
+	
+	//일반회원 공지사항 상세보기
+	@RequestMapping("selectDetailViewNotice.do")
+	public String selectDetailViewNotice2(@RequestParam("notice_no") int notice_no, Model model) {
+		Notice notice = noticeService.selectDetailViewNotice(notice_no);
+		
+		model.addAttribute("notice", notice);
+		
+		return "notice/noticeDetailView";
 	}
 	
 	//관리자 공지사항 삭제

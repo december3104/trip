@@ -7,6 +7,8 @@ package com.a2b.trip.qna.controller;
 
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +19,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.a2b.trip.common.Page;
 import com.a2b.trip.qna.model.service.QnaService;
 import com.a2b.trip.qna.model.vo.Qna;
+import com.a2b.trip.qna.model.vo.QnaComment;
 
 @Controller
 public class QnaController {
 
 	@Autowired
 	private QnaService qnaService;
-
+	
+	//로그 처리용 객체 의존성 주입 처리함(종속 객체 주입)
+	private static final Logger logger = LoggerFactory.getLogger(QnaController.class);
+	
 	public QnaController() {
 	}
 
@@ -93,9 +99,11 @@ public class QnaController {
 
 	// QnA 상세보기
 	@RequestMapping("selectDetailViewQna.do")
-	public String selectDetailViewQna(@RequestParam("qna_no") int qna_no, Qna qna, Model model) {
+	public String selectDetailViewQna(@RequestParam("qna_no") int qna_no, Qna qna, Model model, QnaComment QC) {
 		qna = qnaService.selectDetailViewQna(qna_no);
+		QC = qnaService.selectQnaComment(qna_no);
 		model.addAttribute("qna", qna);
+		model.addAttribute("QC", QC);
 		return "qna/qnaDetailView";
 	}
 
@@ -165,5 +173,53 @@ public class QnaController {
 		}
 			return "redirect:qna.do";
 	}
+	
+	//2020_01_09 ssm
+	
+	//qna 답글 작성
+	@RequestMapping(value = "insertReplyQnA.ad", method = RequestMethod.POST)
+	public String insertReplyQnA(QnaComment qc,@RequestParam(name="qna_no") int qna_no, @RequestParam(name="commentInput", required=false) String commentInput) {
+		qc.setQc_content(commentInput);
+		logger.info(qc.toString());
+		int result = qnaService.insertReplyQnA(qc);
+		
+		logger.info(qc+"개 행 처리");
+		
+		String viewFileName = "";
+		if (result > 0) {
+			viewFileName = "redirect:selectDetailViewQna.do?qna_no="+qna_no;
+		}else {
+			viewFileName = "common/error";
+		}
+			return viewFileName;
+	}
+	
+	//qna 답글 수정 페이지로 이동
+	@RequestMapping("updateReplyQnAPage.ad")
+	public String updateReplyQnAPage(@RequestParam("qna_no") int qna_no, Qna qna, Model model, QnaComment QC) {
+		qna = qnaService.selectDetailViewQna(qna_no);
+		QC = qnaService.selectQnaComment(qna_no);
+		model.addAttribute("qna", qna);
+		model.addAttribute("QC", QC);
+		return "admin/qna/qnaUpdatePage";
+	}
+	
+	//qna 답글 수정
+	@RequestMapping(value = "updateReplyQnA.ad", method = RequestMethod.POST)
+	public String updateReplyQnA(QnaComment qc,@RequestParam(name="qna_no") int qna_no, @RequestParam(name="commentInput", required=false) String commentInput) {
+		qc.setQc_content(commentInput);
+		int result = qnaService.updateReplyQnA(qc);
+		
+		String viewFileName = "";
+		if (result > 0) {
+			viewFileName = "redirect:selectDetailViewQna.do?qna_no="+qna_no;
+		}else {
+			viewFileName = "common/error";
+		}
+			return viewFileName;
+	}
+	
+	
+	//end
 
 }

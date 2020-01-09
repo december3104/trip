@@ -18,8 +18,9 @@
 		<typeAlias type="com.a2b.trip.fellow.model.vo.FellowBoard" alias="FellowBoard" />
 		<typeAlias type="com.a2b.trip.fellow.model.vo.Fellow" alias="Fellow" />
 		<typeAlias type="com.a2b.trip.location.model.vo.Location" alias="Location" />
-    <typeAlias type="com.a2b.trip.place.model.vo.PlaceDaylist" alias="PlaceDaylist" />
+   		<typeAlias type="com.a2b.trip.place.model.vo.PlaceDaylist" alias="PlaceDaylist" />
 		<typeAlias type="com.a2b.trip.place.model.vo.Place" alias="Place" />
+		<typeAlias type="com.a2b.trip.qna.model.vo.QnaComment" alias="QnaComment"/>
 	</typeAliases>
 	
 	<mappers>

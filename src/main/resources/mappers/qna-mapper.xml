@@ -27,7 +27,8 @@
 	</select>
 	
 	<select id="selectOne" parameterType="_int" resultType="Qna">
-		SELECT QNA_NO, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_DATE, QNA_COMMENT, QNA_ALARM, MEMBER_NAME, MEMBER_GENDER, MEMBER_PROFILE_RENAME FROM QNA LEFT JOIN MEMBER ON MEMBER_ID = QNA_ID WHERE QNA_NO = #{ value }
+		SELECT QNA_NO, QNA_ID, QNA_TITLE, QNA_CONTENT, QNA_DATE, QNA_COMMENT, QNA_ALARM, MEMBER_NAME, MEMBER_GENDER, MEMBER_PROFILE_RENAME FROM QNA 
+		LEFT JOIN MEMBER ON MEMBER_ID = QNA_ID WHERE QNA_NO = #{ value }
 	</select>
 	
 	<insert id="insertQna" parameterType="Qna">
@@ -41,4 +42,18 @@
 	<delete id="deleteQna" parameterType="_int">
 		DELETE FROM QNA WHERE QNA_NO = #{ qna_no }
 	</delete>
+	
+	<select id="selectQnaComment" parameterType="_int" resultType="QnaComment">
+		select qna_no, qc_id, qc_content, qc_date 
+		from qnacomment
+		left join member on member_id = qc_id where qna_no = #{value}
+	</select>
+	
+	<insert id="insertReplyQnA" parameterType="QnaComment">
+		insert into qnacomment values (#{qna_no}, #{qc_id}, #{qc_content}, sysdate)
+	</insert>
+	
+	<update id="updateReplyQnA" parameterType="QnaComment">
+		update qnacomment set qc_content = #{qc_content}, qc_date = sysdate where qna_no = #{qna_no} 
+	</update>
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.a2b.trip.common.Page;
 import com.a2b.trip.qna.model.vo.Qna;
+import com.a2b.trip.qna.model.vo.QnaComment;
 
 @Repository("qnaDao")
 public class QnaDao {
@@ -50,6 +51,18 @@ public class QnaDao {
 
 	public int deleteQna(int qna_no) {
 		return sqlSession.delete("qnaMapper.deleteQna", qna_no);
+	}
+
+	public QnaComment selectQnaComment(int qna_no) {
+		return sqlSession.selectOne("qnaMapper.selectQnaComment",qna_no);
+	}
+
+	public int insertReplyQnA(QnaComment qc) {
+		return sqlSession.insert("qnaMapper.insertReplyQnA", qc);
+	}
+
+	public int updateReplyQnA(QnaComment qc) {
+		return sqlSession.update("qnaMapper.updateReplyQnA", qc);
 	}
 
 }

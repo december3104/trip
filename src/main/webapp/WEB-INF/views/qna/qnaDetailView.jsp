@@ -141,7 +141,7 @@
 										<input type="hidden" value="${loginMember.member_id }" name="qc_id">
 										<div class="column"	style="width: 107%; text-align: left; padding: 1rem 1rem 1rem 1rem;">
 											<div style="float:left;">
-												<textarea rows="8" cols="110" name="commentInput"></textarea>
+												<textarea rows="8" cols="100" name="commentInput"></textarea>
 											</div>
 											<div style="float: left; margin-left: 5%; margin-top: 11%;">
 											<input class="ui button" type="submit" value="저장" 

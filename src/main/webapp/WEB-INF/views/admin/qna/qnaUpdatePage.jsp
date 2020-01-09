@@ -85,7 +85,7 @@
 					<div class="ui card" style="width: 100%;">
 						<div class="ui three column grid">
 							<div class="row" style="height: 200px;">
-								<div class="column"	style="width: 22%; text-align: center; padding: 1rem 1rem 1rem 1rem;">
+								<div class="column"	style="width: 21%; text-align: center; padding: 1rem 1rem 1rem 1rem;">
 									<p style="font-size: 2rem; margin: 10px 0px 0px 0px;">${loginMember.member_id }</p>
 									<div>
 										<c:if test="${ loginMember.member_profile_rename ne null }">

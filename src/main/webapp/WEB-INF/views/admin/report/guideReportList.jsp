@@ -92,7 +92,7 @@ function page(idx){
 		</div>
 	</div>
 	<div class="page_div">
-		<ul class="paging">
+		<ul class="paging" style="padding-left: 0px;">
 			<c:if test="${ page.prev }">
 				<li class="first"><a href="javascript:page(1)"><span
 						class="side_w">&laquo;</span></a></li>

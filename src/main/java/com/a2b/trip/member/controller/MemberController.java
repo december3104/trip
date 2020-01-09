@@ -401,6 +401,89 @@ public class MemberController {
 		return mv;
 	}
 
+	// 관리자  정보 보기 - 비밀번호 확인 페이지로 이동
+	@RequestMapping("moveAdminInfo.ad")
+	public String moveAdminInfo() {
+		return "admin/member/adminInfoChkPage";
+	}
+	
+	// 관리자 정보 보기 - 수정 페이지로 이동
+	@RequestMapping("adminUpdatePage.ad")
+	public String adminUpdatePage() {
+		return "admin/member/adminInfoUpdatePage";
+	}
+	
+	
+	// 관리자 정보 수정 처리
+	@RequestMapping(value="adminUpdateMember.ad", method=RequestMethod.POST)
+	public String adminUpdateMember(Member member, Model model, @RequestParam("updateProfileUpload") MultipartFile file, HttpServletRequest request) {
+		// 세션에서 정보 꺼내기
+		HttpSession session = request.getSession(false);
+		Member sessionMember = (Member)session.getAttribute("loginMember");
+		
+		String deleteProfileName = sessionMember.getMember_profile_rename();
+
+		String updateOriginalFileName = null;
+		String updateRenameFileName = null;
+		
+		/*// 전화번호 같은지 확인
+		if (!(member.getMember_phone().equals(sessionMember.getMember_phone()))) {
+			sessionMember.setMember_phone(member.getMember_phone());
+		} 
+		*/
+		
+		// 비밀번호 암호화 처리
+		sessionMember.setMember_pwd(bcryptPasswordEncoder.encode(member.getMember_pwd()));
+			
+		// 파일 저장될 경로 설정
+		String savePath = request.getSession().getServletContext().getRealPath("/resources/images/member_profile");
+
+		try {
+			if (file.isEmpty() == false) {
+				updateOriginalFileName = file.getOriginalFilename();
+				
+				// 프로필 사진 삭제 처리
+				File deleteFile = new File(savePath + "\\" + deleteProfileName);
+				if (deleteFile.exists()) {
+					deleteFile.delete();
+				}
+	
+				sessionMember.setMember_profile_original(updateOriginalFileName);
+				// 파일명 형식 변경
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				// 바꿀 파일명 만들기 : 확장자는 원본과 동일하게 함.
+				
+				updateRenameFileName = sessionMember.getMember_id() + "_" + sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
+						+ updateOriginalFileName.substring(updateOriginalFileName.lastIndexOf(".") + 1);
+			
+				// 프로필 사진 저장 처리
+			
+				file.transferTo(new File(savePath + "\\" + updateRenameFileName));
+				sessionMember.setMember_profile_rename(updateRenameFileName);
+			}
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		// 서비스로 전송하고 결과 받기
+		 int result = memberService.updateMember(sessionMember);
+		 
+		 System.out.println(result);
+		
+		String viewFileName = "redirect:/moveMainPage.do";
+		
+		if (result <= 0) {		// 회원 가입 실패 했을 경우
+			model.addAttribute("message", "회원 가입 실패!");
+			viewFileName = "common/error";
+		} else {
+			session.setAttribute("loginMember", sessionMember);
+		}
+		
+		return viewFileName;
+	}
+	
+	
 	
 	//end
 	

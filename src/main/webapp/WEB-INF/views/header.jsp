@@ -206,7 +206,7 @@ $(function(){
 					</div>
 						
 					<div class="menu" style="text-align: center">
-						<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
+						<div class="item" onclick="location.href='moveAdminInfo.ad'">내 정보 수정</div>
 						<div class="item" id="logoutTag">로그아웃</div>
 					</div>
 				   

@@ -19,12 +19,12 @@ public class PlaceDao {
 	
 	public PlaceDao() {}
 
-	//날짜리스트 생성
+	//일정리스트 생성
 	public int insertDaylist(PlaceDaylist daylist) {
 		return sqlSession.insert("placeMapper.insertDaylist", daylist);
 	}
 	
-	//회원의 날짜리스트 조회
+	//회원의 일정리스트 조회
 	public ArrayList<PlaceDaylist> selectDaylist(String member_id) {
 		List<PlaceDaylist> list = sqlSession.selectList("placeMapper.selectDaylist", member_id);
 		return (ArrayList<PlaceDaylist>)list;

@@ -3,14 +3,14 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="placeMapper">
-	<!-- 날짜리스트 생성 -->
+	<!-- 일정리스트 생성 -->
 	<insert id="insertDaylist" parameterType="PlaceDaylist">
 		insert into placedaylist values(daylist_seq.nextval, #{daylist_name}, #{daylist_user}, #{daylist_start}, #{daylist_end})
 	</insert>
 
-	<!-- 날짜리스트 모두 조회 -->
+	<!-- 회원의 일정리스트 모두 조회 -->
 	<select id="selectDaylist" parameterType="string" resultType="PlaceDaylist">
-		select * from placedaylist where daylist_user = #{value}
+		select * from placedaylist where daylist_user = #{value} order by daylist_no desc
 	</select>
 	
 	<!-- 시작,끝 범위내 날짜 조회 -->

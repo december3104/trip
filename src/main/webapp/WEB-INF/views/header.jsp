@@ -19,6 +19,8 @@
 <!-- Lato 폰트 -->
 <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
 <script type="text/javascript">
+
+
 $(function(){
 	$('#loginTag').on('click', function(){
 		$('.mini.modal').modal('show');
@@ -31,20 +33,40 @@ $(function(){
 });
 </script>
 <style type="text/css">
-* {
-	font-family: 'Lato', sans-serif;
-}
+@font-face { 
+	font-family: 'LotteMartDream'; 
+	font-style: normal; 
+	font-weight: 300; 
+	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff2') format('woff2'), 
+			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff') format('woff'); 
+} 
 
-h1, h2, h3, h4, h5{
-	font-weight: 900;
-}
+@font-face { 
+	font-family: 'LotteMartDream'; 
+	font-style: normal; 
+	font-weight: 400; 
+	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), 
+			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff'); 	
+} 
+
+@font-face { 
+	font-family: 'LotteMartDream'; 
+	font-style: normal; 
+	font-weight: 700; 
+	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff2') format('woff2'), 
+			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff') format('woff'); 
+} 
+
+.lottemartdream, * { font-family: 'LotteMartDream', sans-serif; }
+
+
 
 .ui.menu .ui.dropdown .menu>.item{
-	font-weight: 700!important;
+	font-weight: 400!important;
 }
 
 .ui.menu, .ui.dropdown, .menu>.item{
-	font-weight: 900!important;
+	font-weight: 700!important;
 }
 
 #userDiv {
@@ -151,7 +173,7 @@ h1, h2, h3, h4, h5{
 		
 		<!-- 로그인버튼 -->
 		<c:if test="${loginMember == null }">
-		<a style="background: #c0e7f8; color: #000; width: 100px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer" id="loginTag">로그인</a>
+		<a style="background: #c0e7f8; color: #000; width: 100px; margin-right: 20px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer; border-radius: .28571429rem" id="loginTag">로그인</a>
 		</c:if>
 		
 		<!-- 로그인 했을 때 회원정보 -->

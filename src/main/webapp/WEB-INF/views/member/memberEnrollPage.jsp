@@ -19,6 +19,31 @@
 <!-- 헤더푸터 css -->
 <link href="resources/css/headerFooter.css" rel="stylesheet">
 <style type="text/css">
+@font-face { 
+	font-family: 'LotteMartDream'; 
+	font-style: normal; 
+	font-weight: 300; 
+	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff2') format('woff2'), 
+			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff') format('woff'); 
+} 
+
+@font-face { 
+	font-family: 'LotteMartDream'; 
+	font-style: normal; 
+	font-weight: 400; 
+	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), 
+			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff'); 	
+} 
+
+@font-face { 
+	font-family: 'LotteMartDream'; 
+	font-style: normal; 
+	font-weight: 700; 
+	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff2') format('woff2'), 
+			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff') format('woff'); 
+} 
+
+.lottemartdream, * { font-family: 'LotteMartDream', sans-serif; }
 #memberEnrollTable tr {
 	border: none;
 }

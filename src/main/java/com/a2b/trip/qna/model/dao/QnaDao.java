@@ -61,6 +61,7 @@ public class QnaDao {
 
 	public int selectSearchTotal(String search) {
 		return sqlSession.selectOne("qnaMapper.selectSearchTotal", search);
+	}
 
 	public QnaComment selectQnaComment(int qna_no) {
 		return sqlSession.selectOne("qnaMapper.selectQnaComment",qna_no);

@@ -84,7 +84,7 @@ $(function(){
 		</div>
 	</div>
 	<div style="float:left; margin-left: 3%; width: 75%">
-		<h2 style="font-weight: 900">내 정보 수정</h2>
+		<h2 style="font-family: LotteMartDream">내 정보 수정</h2>
 		<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
 		<table class="ui celled table" style="width: 50%; vertical-align: middle; border: 0; margin-top: 2%">
 			<tr><td colspan="2" style="border-top: 0"><p style="font-size: 13pt">개인정보 보호를 위해 비밀번호를 입력해주세요.</p></td></tr> 

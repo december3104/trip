@@ -6,8 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>footer.jsp</title>
-<!-- 폰트css -->
-<link href="resources/css/font.css" rel="stylesheet" type="text/css"/>
 <style type="text/css">
 #footer {
 	margin-top:-1.9em;

@@ -161,7 +161,7 @@ $(function(){
 <div class="bodyCss" style="margin-left: 15%; margin-right: 15%">
 	<div class="bodyContentCss" style="float: left; width: 20%">
 		<div>
-			<table class="ui celled table" style="text-align:center; font-size: 15pt; background: #DCF2FB">
+			<table class="ui celled table" style="text-align:center; font-size: 15pt; background: #D3F0FE">
 				<tr><td class="sidebarTd">내 가이드북 보기</td></tr>
 				<tr><td class="sidebarTd">가이드 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='selectMyFellowMatching.do'">동행 찾기 기록</td></tr>

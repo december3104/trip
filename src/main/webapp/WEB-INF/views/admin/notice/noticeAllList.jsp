@@ -22,13 +22,15 @@
 	text-align:center;
 	
 }
-.overWord{
+.overWord>p{
+	display:block;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	width: 200px;
 	height: 20px;
 }
+
 .page_div { margin : 15px 0 50px 0; }
 .paging { text-align : center; }
 .paging li { display : inline-block;}
@@ -80,7 +82,7 @@ function page(idx){
 									<c:param name="notice_no" value="${nList.notice_no }" />
 								</c:url>
 								<a href="${detailNotice }"><li>${nList.notice_title }</li></a>
-								<li class="overWord">${nList.notice_content }</li>
+								<li style="height: 20px;overflow: hidden;"><div class="overWord">${nList.notice_content }</div></li>
 							</ul>
 						</td>
 						<td>

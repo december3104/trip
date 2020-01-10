@@ -37,7 +37,7 @@
 				<div class="ui card" style="width:auto;">
 					<div class="card"> 
 						<div class="content">
-							<form class="ui form" action="insertNotice.ad" method="post">
+							<form class="ui form" action="insertNotice.ad" method="post" id="noticeForm">
 							<input type="hidden" id="notice_id" name="notice_id" value="${ loginMember.member_id }">
 							<!-- <input type="hidden" name="qna_comment" value="N">그냥 값 날리기용?  -->
 								<div style="margin : 30px">
@@ -48,7 +48,7 @@
 									<div class="field">
 										<label>글 내용&nbsp;<small style="color:red;">필수</small></label>
 										<div style="border:1px solid rgba(34,36,38,.15);">
-											<textarea id="notice_content" name="notice_content" cols="10" rows="30" ></textarea>
+											<textarea id="notice_content" name="notice_content" cols="10" rows="30"></textarea>
 										</div>
 									</div>
 									<!-- 첨부파일 추가해야함. -->
@@ -65,7 +65,7 @@
 			<div class="one wide column"></div>	
 		</div>
 	</div>
-	
+
 <script type="text/javascript">
 $(function(){
 	//전역변수선언
@@ -92,6 +92,20 @@ $(function(){
 	    oEditors.getById["notice_content"].exec("UPDATE_CONTENTS_FIELD", []);
 	})
 	
+	//필수 입력 정규식 title 및 content
+	$("#noticeForm").submit(function() {
+		if($("input[name=notice_title]").val().length < 1){
+			alert("제목은 필수 입력입니다.");
+			$("input[name=notice_title]").focus()
+			return false;
+		}
+	 	if($("#notice_content").val().length < 12){
+			alert("내용은 필수 입력입니다.")
+			$("#notice_content").focus()
+			return false;
+		} 
+		return true;
+	});
 });
 </script>
 </body>

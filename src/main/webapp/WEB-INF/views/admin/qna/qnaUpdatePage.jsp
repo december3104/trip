@@ -110,8 +110,8 @@
 										</div>
 										<div style="float: left; margin-left: 5%; margin-top: 11%;">
 										<input class="ui button" type="submit" value="저장" 
-													style="font-family:GodoM;background:#c0e7f8;float:right;padding: 0px 20px 0px 20px;font-size: 15pt;
-													text-align: right;height: 35px;">
+													style="font-family:GodoM;background:#c0e7f8;float:right;padding: 0px 20px 0px 20px;
+													text-align: right;height: 35px;margin-top: 4%;">
 										</div>
 									</div>
 								</form>

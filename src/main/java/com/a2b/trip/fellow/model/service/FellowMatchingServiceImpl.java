@@ -25,4 +25,10 @@ public class FellowMatchingServiceImpl implements FellowMatchingService {
 	public Fellow selectMyFellowMatchingOne(String fb_id) {
 		return fellowMatchingDao.selectMyFellowMatchingOne(fb_id);
 	}
+
+	// 신고 처리 
+	@Override
+	public int updateFellowMatchingReport(int fb_no) {
+		return fellowMatchingDao.updateFellowMatchingReport(fb_no);
+	}
 }

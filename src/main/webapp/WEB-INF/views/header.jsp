@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <title>header.jsp</title>
+<!-- favicon -->
+<link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- 시맨틱유아이 -->
@@ -14,8 +16,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 <!-- 카카오톡 api -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<!-- favicon -->
-<link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
+
 
 <script type="text/javascript">
 

@@ -61,4 +61,10 @@ public class FellowBoardServiceImpl implements FellowBoardService {
 	public int insertFellowBoard(FellowBoard fb) {
 		return fellowBoardDao.insertFellowBoard(fb);
 	}
+
+	// 신고 처리
+	@Override
+	public int updateFellowBoardReport(int fb_no) {
+		return fellowBoardDao.updateFellowBoardReport(fb_no);
+	}
 }

@@ -59,4 +59,9 @@ public class FellowBoardDao {
 		return sqlSession.insert("fellowMapper.insertFellowBoard", fb);
 
 	}
+
+	// 신고 처리 후 컬럼값 변경
+	public int updateFellowBoardReport(int fb_no) {
+		return sqlSession.update("fellowMapper.updateFellowBoardReport", fb_no);
+	}
 }

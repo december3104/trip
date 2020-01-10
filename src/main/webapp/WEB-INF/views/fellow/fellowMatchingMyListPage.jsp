@@ -65,7 +65,6 @@ function fellowModalOpen(fb_id){
 				var fellowTitle = decodeURIComponent(data.fellowTitle.replace(/\+/gi, " "));
 				var fellowContent = decodeURIComponent(data.fellowContent.replace(/\+/gi, " "));
 				
-				/* <tr><th><img src="resources/images/"' + fellowProfile + '"></th></tr> */
 				var tableContent = '<tr><td style="height: 30px;"><img class="ui medium circular image" src="resources/images/' + fellowProfile + '" style="width: 100px"></td>' + 
 				'<td><ul style="list-style: none"><li style="font-size: 15pt;">' + fellowName + '</li><li style="font-size: 13pt;">(' + fellowId + ')</li></td></tr>' +
 				'<tr><th style="padding-left: 5%;">방문 국가</th><td style="border-top: none; font-size: 12pt">' + fellowContry + '</td></tr>' + 
@@ -85,9 +84,52 @@ function fellowModalOpen(fb_id){
 	});
 }
 
-function fellowReportModalOpen(fb_id){
+function fellowModalOpen2(fm_id){
 	$(function(){
+		$.ajax({
+			url: "selectMyFellowBoardOne.do",
+			data: {fm_id: fm_id},
+			type: "post",
+			dataType: "json",
+			success: function(data){
+				var fellowProfile = decodeURIComponent(data.fellowProfile.replace(/\+/gi, " "));
+				var fellowName = decodeURIComponent(data.fellowName.replace(/\+/gi, " "));
+				var fellowId = decodeURIComponent(data.fellowId.replace(/\+/gi, " "));
+				var fellowNumber = data.fellowNumber;
+				var fellowContry = decodeURIComponent(data.fellowContry.replace(/\+/gi, " "));
+				var fellowCity = decodeURIComponent(data.fellowCity.replace(/\+/gi, " "));
+				var fellowStartDate = data.fellowStartDate;
+				var fellowEndDate = data.fellowEndDate;
+				var fellowDate = data.fellowDate;
+				var fellowContent = decodeURIComponent(data.fellowContent.replace(/\+/gi, " "));
+				
+				console.log(fellowProfile + ", " + fellowName + ", " + fellowId + ", " + fellowNumber + ", " + fellowContry + ", " + fellowCity + ", " + fellowStartDate + ", " + fellowEndDate + ", " + fellowDate + ", " + fellowContent);
+				
+				var tableContent = '<tr><td style="height: 30px;"><img class="ui medium circular image" src="resources/images/' + fellowProfile + '" style="width: 100px"></td>' + 
+				'<td><ul style="list-style: none"><li style="font-size: 15pt;">' + fellowName + '</li><li style="font-size: 13pt;">(' + fellowId + ')</li></td></tr>' +
+				'<tr><th style="padding-left: 5%;">방문 국가</th><td style="border-top: none; font-size: 12pt">' + fellowContry + '</td></tr>' + 
+				'<tr><th style="padding-left: 5%;">방문 도시</th><td style="border-top: none; font-size: 12pt">' + fellowCity + '</td></tr>' +
+				'<tr><th style="padding-left: 5%;">동행일</th><td style="border-top: none; font-size: 12pt">' + fellowStartDate + ' ~ ' + fellowEndDate + '</td></tr>' +
+				'<tr><th style="padding-left: 5%;">동행 신청일</th><td style="border-top: none; font-size: 12pt">' + fellowDate + '</td></tr>' +
+				'<tr><th style="padding-left: 5%;">신청 인원</th><td style="border-top: none; font-size: 12pt">' + fellowNumber + '명</td></tr>' +
+				'<tr><th style="padding-left: 5%;">내용</th><td style="border-top: none; font-size: 12pt">' + fellowContent + '</td></tr>' +
+				'<tr><th></th><td style="border-top: none;"></td></tr>';
+			 	$('#fellowModalTable').html(tableContent); 
+			 	$('#fellowModal').modal('show'); 
+			},
+			error : function(request, status, errorData){
+				console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+			}
+		});
+	});
+}
+
+function fellowReportModalOpen(fb_id, report, fb_no){
+	$(function(){
+		console.log(fb_no);
 		$('#myPageFellowReportId').attr('value', fb_id);
+		$('#myPageFellowReportType').attr('value', report);
+		$('#myPageFellowNo').attr('value', fb_no);
 		console.log($('#myPageFellowReportId').val());
 		$('#fellowReportModal').modal('show');
 	});
@@ -119,11 +161,11 @@ $(function(){
 		<h2 style="font-family: LotteMartDream">동행 찾기 기록</h2>
 		<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
 		<div class="container">
-			<table class="ui striped table" style="text-align:center; font-family: Lato">
+			<table class="ui striped table" style="text-align:center">
 				<tr style="background: #C8EDFE"><th style="width: 20%">동행자</th><th style="width: 30%">매칭일</th><th style="width: 20%">여행 국가</th><th style="width: 20%">여행 도시</th><th></th></tr>
 				<c:forEach var="fellowMatchingOne" items="${fellowMatchingMyList }">
 				<tr>
-					<td style="font-size: 12pt"><a href="javascript:void(0);" onclick="fellowModalOpen('${fellowMatchingOne.fb_id}');" class="fellowInfo"  style="cursor: pointer; font-family: Lato; font-weight: 700">${fellowMatchingOne.member_name }(${fellowMatchingOne.fb_id })</a></td>
+					<td style="font-size: 12pt"><a href="javascript:void(0);" onclick="fellowModalOpen('${fellowMatchingOne.fb_id}');" class="fellowInfo"  style="cursor: pointer">${fellowMatchingOne.member_name }(${fellowMatchingOne.fb_id })</a></td>
 					<c:if test="${fellowMatchingOne.fm_accept_date == null }">
 					<td style="font-size: 12pt">매칭 대기중입니다.</td>
 					</c:if>
@@ -135,11 +177,11 @@ $(function(){
 					<td style="font-size: 12pt">${fellowMatchingOne.fb_city }</td>
 					<c:set var="today" value="<%=new java.util.Date()%>"/>
 					<fmt:formatDate var="now" type="date" value="${today}" pattern="yyyy.MM.dd"/>
-					<fmt:parseDate value="${fellowMatchingOne.fm_accept_date}" var="accept_date" pattern="yyyy-MM-dd"/>
-					<fmt:formatDate var="accept" value="${accept_date}" pattern="yyyy.MM.dd"/>
+					<fmt:parseDate value="${fellowMatchingOne.fb_end_date}" var="end_date" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate var="end" value="${end_date}" pattern="yyyy.MM.dd"/>
 					<c:choose>
-						<c:when test="${fellowMatchingOne.fm_accept_check eq 'DONE' && now > accept && reportDone ne 'OK' && fellowMatchingOne.fb_report eq 'N'}">
-						<td><a href="javascript:void(0);" onclick="fellowReportModalOpen('${fellowMatchingOne.fb_id}')" style="cursor: pointer; color: red; text-decoration: none; font-size: 12pt" id="reportATag">신고</a></td>
+						<c:when test="${fellowMatchingOne.fm_accept_check eq 'DONE' && now > end && fellowMatchingOne.fb_report eq 'N'}">
+						<td><a href="javascript:void(0);" onclick="fellowReportModalOpen('${fellowMatchingOne.fb_id}', 'fb', ${fellowMatchingOne.fb_no })" style="cursor: pointer; color: red; text-decoration: none; font-size: 12pt">신고</a></td>
 						</c:when>
 						<c:otherwise>
 						<td></td>
@@ -149,8 +191,24 @@ $(function(){
 				</c:forEach>
 				<c:forEach var="fellowBoardOne" items="${fellowBoardMyList }">
 				<tr>
-					<td><a href="javascript:void(0);" onclick="fellowModalOpen('${fellowBoardOne.fm_id}');" class="fellowInfo" style="cursor: pointer">${fellowBoardOne.member_name }(${fellowBoardOne.fm_id })</a></td>
-					
+					<td style="font-size: 12pt"><a href="javascript:void(0);" onclick="fellowModalOpen2('${fellowBoardOne.fm_id}');" class="fellowInfo" style="cursor: pointer">${fellowBoardOne.member_name }(${fellowBoardOne.fm_id })</a></td>
+					<fmt:parseDate value="${fellowBoardOne.fm_accept_date}" var="accept_date" pattern="yyyy-MM-dd"/>
+					<td style="font-size: 12pt"><fmt:formatDate value="${accept_date}" pattern="yyyy년 MM월 dd일"/></td>
+					<td style="font-size: 12pt">${fellowBoardOne.fb_contry }</td>
+					<td style="font-size: 12pt">${fellowBoardOne.fb_city }</td>
+					<c:set var="today" value="<%=new java.util.Date()%>"/>
+					<fmt:formatDate var="now" type="date" value="${today}" pattern="yyyy.MM.dd"/>
+					<fmt:parseDate value="${fellowBoardOne.fb_end_date}" var="end_date" pattern="yyyy-MM-dd"/>
+					<fmt:formatDate var="end" value="${end_date}" pattern="yyyy.MM.dd"/>
+					<c:choose>
+						<c:when test="${now > end && fellowBoardOne.fm_report eq 'N'}">
+						<td><a href="javascript:void(0);" onclick="fellowReportModalOpen('${fellowBoardOne.fm_id}', 'fm', ${fellowBoardOne.fb_no })" style="cursor: pointer; color: red; text-decoration: none; font-size: 12pt">신고</a></td>
+						</c:when>
+						<c:otherwise>
+						<td></td>
+						</c:otherwise>
+					</c:choose>
+				</tr>
 				</c:forEach>
 			</table>
 		</div>
@@ -163,7 +221,7 @@ $(function(){
 				</table>
 			</div>
 			<div class="actions">
-				<div class="fluid ui ok button" style="margin: 0; background: #c0e8f7; font-family: GodoM">확인</div>
+				<div class="fluid ui ok button" style="margin: 0; background: #c0e8f7">확인</div>
 			</div>
 		</div>
 	
@@ -181,6 +239,8 @@ $(function(){
 							<div class="field">
 								<input type="hidden" name="report_id" id="myPageFellowReportId">
 								<input type="hidden" name="report_type" value="NORMAL">
+								<input type="hidden" name="reportType" id="myPageFellowReportType">
+								<input type="hidden" name="fb_no" id="myPageFellowNo">
 							</div>
 						</form>
 					</td>
@@ -188,8 +248,8 @@ $(function(){
 			</table>
 		</div>
 		<div class="actions" style="text-align: center">
-			<div class="ui approve button" style="margin: 0; background: #D52828; font-family: GodoM; width: 100px; color: #fff" id="reportBtn">신고하기</div>&emsp; &emsp;
-			<div class="ui cancel button" style="margin: 0; font-family: GodoM; width: 100px">닫기</div>
+			<div class="ui approve button" style="margin: 0; background: #D52828; width: 100px; color: #fff" id="reportBtn">신고하기</div>&emsp; &emsp;
+			<div class="ui cancel button" style="margin: 0; width: 100px">닫기</div>
 		</div>
 	</div>
 </div>

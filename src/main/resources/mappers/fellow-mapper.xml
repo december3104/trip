@@ -5,11 +5,11 @@
 <mapper namespace="fellowMapper">
 	
 	<select id="selectMyFellowMatching" parameterType="string" resultType="Fellow">
-		select * from fellowmatching join fellowboard on fellowmatching.fb_no = fellowboard.fb_no join member on fellowboard.fb_id = member.member_id where fm_id = #{value}
+		select * from fellowmatching join fellowboard on fellowmatching.fb_no = fellowboard.fb_no join member on fellowboard.fb_id = member.member_id where fm_id = #{value} and fm_accept_check in ('DONE', 'WAIT')
 	</select>
 	
 	<select id="selectMyFellowBoard" parameterType="string" resultType="Fellow">
-		select * from fellowboard join fellowmatching on fellowboard.fb_no = fellowmatching.fb_no join member on fellowmatching.fm_id = member.member_id where fb_id = #{value}
+		select * from fellowboard join fellowmatching on fellowboard.fb_no = fellowmatching.fb_no join member on fellowmatching.fm_id = member.member_id where fb_id = #{value} and fm_accept_check = 'DONE'
 	</select>
 	
 	<select id="selectMyFellowMatchingOne" parameterType="string" resultType="Fellow">

@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>여길잡아</title>   
+<!-- favicon -->
+<link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- 시맨틱유아이 -->

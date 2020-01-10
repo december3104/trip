@@ -25,4 +25,9 @@ public class FellowMatchingDao {
 	public Fellow selectMyFellowMatchingOne(String fb_id) {
 		return sqlSession.selectOne("fellowMapper.selectMyFellowMatchingOne", fb_id);
 	}
+
+	// 신고 처리 후 컬럼값 변경
+	public int updateFellowMatchingReport(int fb_no) {
+		return sqlSession.update("fellowMapper.updateFellowMatchingReport", fb_no);
+	}
 }

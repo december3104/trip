@@ -30,6 +30,9 @@ public class FellowMatchingController {
 	@Autowired
 	private FellowMatchingService fellowMatchingService;
 	
+	@Autowired
+	private FellowBoardService fellowBoardService;
+	
 	public FellowMatchingController() {}
 	
 	//로그 처리용 객체 의존성 주입 처리함(종속 객체 주입)
@@ -44,15 +47,21 @@ public class FellowMatchingController {
 		String fm_id = member.getMember_id();
 		
 		ArrayList<Fellow> list = fellowMatchingService.selectMyFellowMatching(fm_id);
+		ArrayList<Fellow> list2 = fellowBoardService.selectMyFellowBoard(fm_id);
 		
-		model.addAttribute("fellowMatchingMyList", list);
+		if (list.size() > 0) {
+			model.addAttribute("fellowMatchingMyList", list);
+		}
+		if (list2.size() > 0) {
+			model.addAttribute("fellowBoardMyList", list2);
+		}
 		
 		return "fellow/fellowMatchingMyListPage";
 	}
 	
 	@RequestMapping(value="selectMyFellowMatchingOne.do", method=RequestMethod.POST)
 	@ResponseBody
-	public String selectMyFellowMatchingOne(@RequestParam ("fb_id") String fb_id, Model model, HttpServletResponse response) throws UnsupportedEncodingException {
+	public String selectMyFellowMatchingOne(@RequestParam ("fb_id") String fb_id, HttpServletResponse response) throws UnsupportedEncodingException {
 		
 		Fellow fellow = fellowMatchingService.selectMyFellowMatchingOne(fb_id);
 

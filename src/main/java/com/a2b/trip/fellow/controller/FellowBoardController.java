@@ -1,16 +1,23 @@
 package com.a2b.trip.fellow.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a2b.trip.common.Page;
 import com.a2b.trip.fellow.model.service.FellowBoardService;
+import com.a2b.trip.fellow.model.vo.Fellow;
 import com.a2b.trip.fellow.model.vo.FellowBoard;
 import com.a2b.trip.fellow.model.vo.FellowMatching;
 import com.a2b.trip.location.model.vo.Location;
@@ -107,6 +114,36 @@ public class FellowBoardController {
 		fb = fellowBoardService.selectOneFellowBoard(fb_no);
 		model.addAttribute("fb", fb);
 		return "fellow/fellowBoardUpdateForm";
+	}
+	
+	// 한명 조회
+	@RequestMapping(value="selectMyFellowBoardOne.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String selectMyFellowBoardOne(@RequestParam("fm_id") String fm_id, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		Fellow fellow = fellowBoardService.selectMyFellowBoardOne(fm_id);
+
+		response.setContentType("application/json; charset=utf-8");
+		
+		JSONObject job = new JSONObject();
+		if (fellow.getMember_profile_rename() != null) {
+			job.put("fellowProfile", URLEncoder.encode("member_profile/" + fellow.getMember_profile_rename(), "utf-8"));
+		} 
+		if (fellow.getMember_profile_rename() == null) {
+			job.put("fellowProfile", URLEncoder.encode("molly.png", "utf-8"));
+		}
+		job.put("fellowName", URLEncoder.encode(fellow.getMember_name(), "utf-8"));
+		job.put("fellowId", fellow.getFm_id());
+		job.put("fellowNumber", fellow.getFm_number());
+		job.put("fellowContry", URLEncoder.encode(fellow.getFb_contry(), "utf-8"));
+		job.put("fellowCity", URLEncoder.encode(fellow.getFb_city(), "utf-8"));
+		job.put("fellowStartDate", fellow.getFb_start_date().toString());
+		job.put("fellowEndDate", fellow.getFb_end_date().toString());
+		job.put("fellowDate", fellow.getFm_date().toString());
+		job.put("fellowContent", URLEncoder.encode(fellow.getFm_content(), "utf-8"));
+
+		
+		return job.toJSONString();
 	}
 	
 }

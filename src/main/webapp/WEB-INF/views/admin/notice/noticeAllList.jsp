@@ -82,7 +82,7 @@ function page(idx){
 									<c:param name="notice_no" value="${nList.notice_no }" />
 								</c:url>
 								<a href="${detailNotice }"><li>${nList.notice_title }</li></a>
-								<li style="height: 20px;overflow: hidden;"><div class="overWord">${nList.notice_content }</div></li>
+								<li style="height: 20px;overflow: hidden;font-size: 10pt;"><div class="overWord">${nList.notice_content }</div></li>
 							</ul>
 						</td>
 						<td>

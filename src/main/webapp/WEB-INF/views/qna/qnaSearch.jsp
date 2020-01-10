@@ -56,8 +56,9 @@
 					  					<form class="ui form" action="selectListQna.do" method="post" style="margin-left : 2%">				    		
 								    		<div class="ui icon input">
 												<input type="text" placeholder="검색할 내용이나 제목을 입력하세요." style="width:300px;" name="search">
-				  								<i class="circular search link icon"></i>								
+				  								<i class="circular search link icon"></i>
 											</div>
+											<div style="margin-left : 10px"><small>${ page.search } 로 검색한 항목입니다.</small></div>
 										</form>
 					  				</div>
 					  				<div class="eight wide column">
@@ -97,45 +98,38 @@
 					      			<c:url var="goToDetailView" value="selectDetailViewQna.do">
 					      				<c:param name="qna_no" value="${ list.qna_no }"></c:param>
 					      			</c:url>
-					      			<c:if test="${ page.search eq list.qna_title }">
-					      				<span style="background:red;">
-						      				<a href="${ goToDetailView }">
-							      				<font size="3" color="black">${ list.qna_title }</font>
-							      			</a>
-						      			</span>
-					      			</c:if>
-					      			<c:if test="${ page.search ne list.qna_title }">
-						      			<a href="${ goToDetailView }">
-						      				<font size="3">${ list.qna_title }</font>
-						      			</a>
-					      			</c:if>
+					      			<div id="t${ list.qna_no }" class="qnaTitle">
+					      				<a href="${ goToDetailView }">
+				      						${ list.qna_title }
+				      					</a>
+					      			</div>
+					      			
 					      			<br>
-					      			<br>
+					      			<div class="qnaContent" id="c${ list.qna_no }">${ list.qna_content }</div>
 					      			<!-- 검색어가 글 내용에 있는경우 -->
-					      			<c:if test="${ list.qna_content.indexOf(page.search, 1) ne -1 }"> 
-					      				<!-- 검색어 부터 끝까지가 30글자를 넘는 경우 -->
-					      				<c:if test="${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.length()).length() >= 30 }">
-					      					<span style="background:red">${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.indexOf(page.search)+page.search.length()) }</span>
-					      					${ fn:substring(fn:substring(list.qna_content, list.qna_content.indexOf(page.search)+page.search.length(), list.qna_content.indexOf(page.search)+page.search.length()+list.qna_content.indexOf("</p>")), 0, 30) } ...
-					      				</c:if>
-					      				<c:if test="${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.length()).length() < 30 }">
-					      					<span style="background:red">${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.indexOf(page.search)+page.search.length()) }</span>
-					      					${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search)+page.search.length(), list.qna_content.indexOf(page.search)+page.search.length()+list.qna_content.indexOf("</p>")) }
-					      				</c:if>
-					      			</c:if>
-					      			<c:if test="${ list.qna_content.indexOf(page.search, 1) eq -1 }">
-					      				<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() >= 30 }">
-					      					${ fn:substring(fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")), 0, 30) } ...
-					      				</c:if>
-					      				<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() < 30 }">
-							      			<c:if test="${ list.qna_content.indexOf('</p>', 2) eq -1}">
-							      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) }	
-							      			</c:if>
-						      				<c:if test="${ list.qna_content.indexOf('</p>', 2) ne -1}">
-							      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) } ...	
-							      			</c:if>
-					      				</c:if>
-					      			</c:if>
+<%-- 					      			<c:if test="${ list.qna_content.indexOf(page.search, 1) ne -1 }">  --%>
+<!-- 					      				검색어 부터 끝까지가 30글자를 넘는 경우 -->
+<%-- 					      				<c:if test="${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.length()).length() >= 30 }"> --%>
+<%-- 					      					<strong>${fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.indexOf(page.search)+page.search.length()) }</strong>${fn:substring(fn:substring(list.qna_content, list.qna_content.indexOf(page.search)+page.search.length(), list.qna_content.indexOf(page.search)+page.search.length()+list.qna_content.indexOf("</p>")), 0, 30) } ... --%>
+<%-- 					      				</c:if> --%>
+<%-- 					      				<c:if test="${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.length()).length() < 30 }"> --%>
+<%-- 					      					<strong>${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.indexOf(page.search)+page.search.length()) }</strong> --%>
+<%-- 					      					${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search)+page.search.length(), list.qna_content.indexOf(page.search)+page.search.length()+list.qna_content.indexOf("</p>")) } --%>
+<%-- 					      				</c:if> --%>
+<%-- 					      			</c:if> --%>
+<%-- 					      			<c:if test="${ list.qna_content.indexOf(page.search, 1) eq -1 }"> --%>
+<%-- 					      				<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() >= 30 }"> --%>
+<%-- 					      					${ fn:substring(fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")), 0, 30) } ... --%>
+<%-- 					      				</c:if> --%>
+<%-- 					      				<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() < 30 }"> --%>
+<%-- 							      			<c:if test="${ list.qna_content.indexOf('</p>', 2) eq -1}"> --%>
+<%-- 							      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) }	 --%>
+<%-- 							      			</c:if> --%>
+<%-- 						      				<c:if test="${ list.qna_content.indexOf('</p>', 2) ne -1}"> --%>
+<%-- 							      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) } ...	 --%>
+<%-- 							      			</c:if> --%>
+<%-- 					      				</c:if> --%>
+<%-- 					      			</c:if> --%>
 					      			
 					      			<br>
 					      			<small><font color="gray">${ list.qna_id }님이 ${ list.qna_date }에 작성</font></small>
@@ -201,6 +195,63 @@ function changeContentNum(){
 	var contentnum = $("#contentnum option:selected").val();
 	location.href="selectListQna.do?contentNum=" + contentnum + "&search=" + search;
 };
+
+function changeTitle(){
+	var qnaClassName = document.getElementsByClassName("qnaTitle");
+	var contentnum = $("#contentnum option:selected").val();
+	
+	for(var i = 0; contentnum > i; i++){
+		var qnaId = qnaClassName[i].getAttribute('id');
+		changeTitle2(qnaId);
+	}
+}
+
+function changeTitle2(value){
+	var title = $("#"+value).html();
+	var sech = '${ page.search }';
+	var aaa = new RegExp(sech, 'gi');
+	var cTitle = title.replace(aaa, "<strong><u>"+ sech +"</u></strong>");
+
+	document.getElementById(value).innerHTML = cTitle;
+}
+
+function changeContent(){
+	var qnaContentName = document.getElementsByClassName("qnaContent");
+	var contentnum = $("#contentnum option:selected").val();
+	
+	for(var i = 0; contentnum > i; i++){
+		var qnaId = qnaContentName[i].getAttribute('id');
+		changeContent2(qnaId);
+	}
+}
+
+function changeContent2(value){
+	var content = $("#"+value).html();
+	var content2 = $("#"+value).text();
+	var sech = '${ page.search }';
+	var ct = content.indexOf(sech);
+	var text = content.replace(/[<][^>]*[>]/gi, "");
+	
+	var aaa = new RegExp("^<p>*"+sech+"*</p>$", 'gi');
+	console.log("뭐니 = " + aaa);
+// 	var a = "개발asdfasdfasdf개발"; 
+// 	var results = a.match(/개발/g); 
+// 	if(results != null) {
+// 	    alert(results.length); // 2개이므로 2가 출력된다!
+// 	}
+
+	
+	console.log(ct);
+	console.log("html = " + content);
+	console.log("text = " + content2);
+	console.log("태그 제거 = " + text);
+}
+
+$(function(){
+	changeTitle();
+	changeContent();
+})
+
 
 </script>
 </body>

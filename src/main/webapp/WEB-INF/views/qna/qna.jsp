@@ -48,7 +48,7 @@
 			<div class="sixteen wide column">
 				<table class="ui striped table">			
 					<tbody>			
-				  		<tr style="height:60px;">
+				  		<tr style="height:60px; background: #c8edfe;">
 					  		<th colspan="3">
 					  			<div class="ui grid">
 					  				<div class="five wide column">

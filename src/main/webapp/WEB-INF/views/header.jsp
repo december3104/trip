@@ -61,7 +61,7 @@ h1, h2, h3, h4, h5{
 }
 
 .ui.striped.table tbody tr:nth-child(2n-1), .ui.striped.table>tr:nth-child(2n-1) {
-   background-color: rgba(220,242,251,1);
+   background-color: rgba(239,250,255,.5);
 }
 .ui.striped.table tbody tr:nth-child(2n), .ui.striped.table>tr:nth-child(2n) {
    background-color: #fff;

@@ -107,7 +107,7 @@ $(function(){
 <div class="bodyCss" style="margin-left: 15%; margin-right: 15%">
 	<div class="bodyContentCss" style="float: left; width: 20%">
 		<div>
-			<table class="ui celled table" style="text-align:center; font-size: 15pt; background: #DCF2FB">
+			<table class="ui celled table" style="text-align:center; font-size: 15pt; background: #E0F5FF">
 				<tr><td class="sidebarTd">내 가이드북 보기</td></tr>
 				<tr><td class="sidebarTd">가이드 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='selectMyFellowMatching.do'">동행 찾기 기록</td></tr>
@@ -120,7 +120,7 @@ $(function(){
 		<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
 		<div class="container">
 			<table class="ui striped table" style="text-align:center; font-family: Lato">
-				<tr><th style="width: 20%">동행자</th><th style="width: 30%">매칭일</th><th style="width: 20%">여행 국가</th><th style="width: 20%">여행 도시</th><th></th></tr>
+				<tr style="background: #E0F5FF"><th style="width: 20%">동행자</th><th style="width: 30%">매칭일</th><th style="width: 20%">여행 국가</th><th style="width: 20%">여행 도시</th><th></th></tr>
 				<c:forEach var="fellowMatchingOne" items="${fellowMatchingMyList }">
 				<tr>
 					<td style="font-size: 12pt"><a href="javascript:void(0);" onclick="fellowModalOpen('${fellowMatchingOne.fb_id}');" class="fellowInfo"  style="cursor: pointer; font-family: Lato; font-weight: 700">${fellowMatchingOne.member_name }(${fellowMatchingOne.fb_id })</a></td>

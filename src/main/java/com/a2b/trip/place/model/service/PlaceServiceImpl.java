@@ -18,13 +18,13 @@ public class PlaceServiceImpl implements PlaceService {
 	
 	public PlaceServiceImpl() {}
 
-	//날짜리스트 생성 메소드
+	//일정리스트 생성 메소드
 	@Override
 	public int insertDaylist(PlaceDaylist daylist) {
 		return placeDao.insertDaylist(daylist);
 	}
 	
-	//회원의 날짜리스트 조회
+	//회원의 일정리스트 조회
 	@Override
 	public ArrayList<PlaceDaylist> selectDaylist(String member_id) {
 		return placeDao.selectDaylist(member_id);

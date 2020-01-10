@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,6 +70,38 @@ $(function(){
 	$(".trashClass").mouseout(function(){
 		$(this).find(".trash").css("display","none");
 	})
+	
+	//이거 안씀
+	//날짜 선택시 해당 날짜 장소 출력 ajax로 처리
+	/* $(".dailySendLink").click(function(){
+		var user = $('input[name=place_user]').val();			//로그인 사용자명
+		var sendId = $(this).attr("id");						
+		var date = $("#"+sendId+"_send").val();					//보내는 날짜값(요일표시없음)
+		var daylistName = $("#"+sendId+"_daylistname").val();	//설정해줄 일정 이름 
+		var showDate = $(this).text();							//설정해줄 날짜(요일표시있음)
+		
+		$.ajax({
+			url:"dailyPlaces.do",
+			data:{place_user: user, place_date: date},
+			type:"post",
+			error: function(xhr, status, error){
+				alert("날짜 장소 ajax 불러오기 실패!");
+			},
+			success:function(data){
+				$.each(data, function(idx, val) {
+					console.log(idx + " " + val);
+					console.log(daylistName + ", " + showDate);
+				});
+				
+				//제목영역 값 지정해주기 
+				$("#yesDailyName").html(daylistName);
+				$("#yesDailyLabel").html("&emsp;&emsp;"+showDate);
+				
+				$("#dailyNo").css("display","none");
+				$("#dailyYes").css("display","block");
+			}
+		});
+	}); */
 });
 
 //일정 계산
@@ -83,7 +116,7 @@ function calcDay()
 	var dif = da2 - da1;
 	var cDay = 24 * 60 * 60 * 1000;	// 시 * 분 * 초 * 밀리세컨 = 날짜수
 	
-	//시작일보다 나중, 종료일보다 빨리 만 입력 가능하게 제한 
+	
 	document.getElementById("endDate").setAttribute("min", sdate);
 	document.getElementById("startDate").setAttribute("max", edate);
 	
@@ -114,9 +147,23 @@ function chkDateVal(){
 		return true;
 }
 
+//목록 제목에 날짜와 함께 표시할 요일 계산용
+function getDayLabel(){
+	var elem = document.getElementById("dayLabel");
+	var date = elem.value;
+	var week = new Array('일', '월', '화', '수', '목', '금', '토');
+	var day = new Date(date).getDay();
+	var dayLabel = week[day];
+	var str = "("+ dayLabel+ ")";	//뒤에 붙여넣을 요일 문자열
+	
+	elem.append(str);
+}
 </script>
+<style type="text/css">
+h1,h2,h3,h4,h5,h6 {display:inline;}
+</style>
 </head>
-<body>
+<body oncontextmenu="return false">
 <!-- 헤더 -->
 <header><jsp:include page="/WEB-INF/views/header.jsp" /></header>
 <!-- 헤더 끝 -->
@@ -133,7 +180,6 @@ function chkDateVal(){
 	</h2>
 	</div>&emsp;
 	<i class="pencil alternate large blue icon" id="setDate" data-content="일정을 만드시려면 아이콘을 클릭하세요."></i>
-
 	<div class="ui segment" style="width:80%;">
 		<div class="ui right attached rail">
 			<!-- 오른쪽 리스트 영역 -->
@@ -158,15 +204,22 @@ function chkDateVal(){
 								<!-- 현재 key에 해당하는 value값(리스트) 변수에 저장 -->
 								<c:set var="values" value="${dateMap[keys] }" />
 								<!-- 세부 날짜 목록 처리 -->	
-								<c:forEach var="dates" items="${values }">
+								<c:forEach var="dates" items="${values }" varStatus="status">
 									<p class="transition hidden" align="center">
 										<fmt:formatDate var="dateFormat" value="${dates }" pattern="yyyy-MM-dd (E)" />
 										<c:url var="daily" value="dailyPlaces.do">
 											<c:param name="place_user" value="${sessionScope.loginMember.member_id }"/>
 											<fmt:formatDate var="sendFmt" value="${dates }" pattern="yyyy-MM-dd" />
 											<c:param name="place_date" value="${sendFmt }"/>
+											<c:param name="daylist_name" value="${daylist.daylist_name }" />
 										</c:url>
-										<a href="${daily }" style="text-decoration:none;"><c:out value="${dateFormat }" /></a>
+										<!-- ajax용 -->
+										<%-- <input type="hidden" name="place_user" value="${sessionScope.loginMember.member_id }">
+										<fmt:formatDate var="sendFmt" value="${dates }" pattern="yyyy-MM-dd" />
+										<input type="hidden" name="place_date" id="${keys }_${sendFmt }_send" value="${sendFmt }">
+										<input type="hidden" id="${keys }_${sendFmt }_daylistname" value="${daylist.daylist_name }"> --%>
+										
+										<a class="dailySendLink" id="${keys }_${sendFmt }" href="${daily }"><c:out value="${dateFormat }" /></a>
 									</p>
 								</c:forEach>
 								</div>
@@ -179,18 +232,20 @@ function chkDateVal(){
 				</div>
 				<!-- 날짜 이동하기 목록 띄워주기  끝 -->
 				<!-- 처음 페이지 접근시 전체 목록 띄워주기 -->
+				<c:if test="${dailyPlaces eq null }">
+				<div id="dailyNo">
 				<div style="text-align:center;">
-					<h3 class="netmarbleB" >내가 담은 장소</h3>
+					<h2 class="lottemartdream">내가 담은 장소</h2><i class="pencil alternate icon"></i>
 				</div>
 				<hr>
 				<div class="ui relaxed divided list scrollColor" style="height:600px;overflow:auto;">
 					<c:forEach var="placeList" items="${placeList }">
 					<div class="ui accordion" id="div_${placeList.place_code }" style="display:block;">
 						<div class="item title trashClass">
-							<div class="ui raised segment" style="font-size: 13pt;">
+							<div class="ui raised segment">
 								<i class="large map marker alternate icon"></i>
 								${placeList.place_kr }
-								<i class="small trash alternate icon delPlace" id="${placeList.place_code }" style="float:right;display:none;"></i>
+								<i class="trash alternate icon delPlace" id="${placeList.place_code }" style="float:right;display:none;"></i>
 							</div>
 						</div>
 						<div class="content" style="background-color:#DCF2FB;">
@@ -207,6 +262,47 @@ function chkDateVal(){
 					</div>
 					</c:forEach>
 				</div>
+				</div>
+				</c:if>
+				<!-- 날짜선택으로 접속시 해당 날짜에 장소들만 보여주기 -->
+				<c:if test="${dailyPlaces != '' || dailyPlaces ne null }">
+				<div id="dailyYes">
+				<div style="text-align:center;">
+					<h3 class="lottemartdream" id="yesDailyName" style="margin-bottom:0;">${daily_name }</h3><i class="pencil alternate icon"></i>
+					<br><fmt:formatDate var="dailyLabel" value="${daily_date }" pattern="yyyy-MM-dd (E)" />
+					<font id="yesDailyLabel" size="1" style="margin-top:0;">&emsp;&emsp;${dailyLabel }</font>
+				</div>
+				<hr>
+				<div class="ui relaxed divided list scrollColor" style="height:600px;overflow:auto;">
+					<c:if test="${empty dailyPlaces }">
+						<center>해당 날짜에 담은 장소가 없습니다.</center>
+					</c:if>
+					<c:forEach var="dailyPlaces" items="${dailyPlaces }">
+					<div class="ui accordion" id="div_${dailyPlaces.place_code }" style="display:block;">
+						<div class="item title trashClass">
+							<div class="ui raised segment">
+								<i class="large map marker alternate icon"></i>
+								${dailyPlaces.place_kr }
+								<i class="trash alternate icon delPlace" id="${dailyPlaces.place_code }" style="float:right;display:none;"></i>
+							</div>
+						</div>
+						<div class="content" style="background-color:#DCF2FB;">
+							<table class="transition hidden" width="100%" style="text-align:center;">
+								<tr><td>${dailyPlaces.place_en }</td></tr>
+								<tr><td>${dailyPlaces.place_loc }</td></tr>
+								<tr><td>${dailyPlaces.place_address }</td></tr>
+								<tr><td>${dailyPlaces.place_phone }</td></tr>
+								<tr><td>${dailyPlaces.open_time }</td></tr>
+								<tr><td>${dailyPlaces.close_time }</td></tr>
+								<tr><td>방문예정날짜<br>${dailyPlaces.place_date }</td></tr>
+							</table>
+						</div>
+					</div>
+					</c:forEach>
+				</div>
+				</div>
+				</c:if>
+				
 				<%-- 
 				<!-- 상세날짜 장소리스트 출력 -->
 				<div style="text-align:center;">

@@ -7,15 +7,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.a2b.trip.member.model.vo.Member;
 import com.a2b.trip.place.model.service.PlaceService;
 import com.a2b.trip.place.model.vo.Place;
 import com.a2b.trip.place.model.vo.PlaceDaylist;
@@ -28,9 +32,32 @@ public class PlaceController {
 	
 	public PlaceController() {}
 	
-	//계획하기 페이지로 이동처리용 메소드
+	//계획하기 페이지 메소드
 	@RequestMapping("goplace.do")
-	public String placeViewPage(Model model, String member_id) {
+	public String placeViewPage(Model model, Date place_date, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		Member member = (Member)session.getAttribute("loginMember");
+		String member_id = member.getMember_id();
+		
+		//일정 생성 후 redirect로 받은 값 꺼내기
+		Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
+		if(flashMap != null) {
+			member_id = (String)flashMap.get("member_id");
+		}
+		
+		//날짜 클릭으로 넘어올시 해당 날짜의 장소리스트 받기
+		Map<String,?> flashMap2 = RequestContextUtils.getInputFlashMap(request);
+		if(flashMap2 != null) {
+			member_id = (String)flashMap.get("member_id");
+			String daily_name = (String)flashMap.get("daily_name");
+			Date daily_date = (Date)flashMap.get("daily_date");
+			@SuppressWarnings("unchecked")
+			ArrayList<Place> dailyPlaces = (ArrayList<Place>)flashMap.get("dailyPlaces");
+			model.addAttribute("dailyPlaces", dailyPlaces);
+			model.addAttribute("daily_name", daily_name);
+			model.addAttribute("daily_date", daily_date);
+		}
+		
 		
 		//로그인 한 회원이 가진 리스트(날짜,장소)가 있으면 같이 뿌려주기
 		ArrayList<PlaceDaylist> daylist = placeService.selectDaylist(member_id);
@@ -44,12 +71,6 @@ public class PlaceController {
 		for(int i=0; i<daylist.size(); i++) {
 			key = daylist.get(i).getDaylist_no();
 			valueList = placeService.selectDatelist(key);
-			/*for(int j=0; j<valueList.size(); j++) {
-				java.util.Date utilDate = new java.util.Date();		
-				utilDate = valueList.get(j);
-				java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());	//util.Date를 sql.Date로 바꿔서 map에 집어넣음
-				dateMap.put(key, sqlDate);
-			}*/
 			dateMap.put(key, valueList);
 		}
 		
@@ -60,38 +81,52 @@ public class PlaceController {
 			fileName = "common/error";
 		}
 		else {
+			if(flashMap2 == null) {
+				model.addAttribute("placeList", placeList);
+			}
 			model.addAttribute("daylist", daylist);
 			model.addAttribute("dateMap", dateMap);
-			model.addAttribute("placeList", placeList);
 		}
 		 
 		return fileName;
 	}
 	
-	//날짜리스트 생성 메소드
+	//일정리스트 생성 메소드
 	@RequestMapping(value="insertDaylist.do", method= {RequestMethod.POST, RequestMethod.GET})
-	public String insertDaylist(PlaceDaylist daylist, Model model, RedirectAttributes redirectAttr) {
+	public String insertDaylist(PlaceDaylist daylist, Model model, HttpServletRequest request) {
 		//서비스로 전송하고 결과 받기
 		int result = placeService.insertDaylist(daylist);
 		
-		String fileName = "place/placeView";
-		
 		if(result <=0) {	//날짜리스트 생성 실패시
-			model.addAttribute("message", "날짜리스트 생성 실패");
-			fileName = "common/error";
+			model.addAttribute("message", "일정리스트 생성 실패");
+			return "common/error";
 		}
 		else {
-//			redirectAttr.addFlashAttribute("member_id", daylist.getDaylist_user());
-//			fileName = "redirect:goplace.do?member_id="+ daylist.getDaylist_user();
-			placeViewPage(model, daylist.getDaylist_user());
+			FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
+			flashMap.put("member_id", daylist.getDaylist_user());
+			return "redirect:goplace.do";
 		}
 		
-		return fileName;
 	}
 	
-	//날짜 클릭시 해당 날짜의 장소리스트 불러오기 메소드
+	//일정 클릭시 해당 날짜의 장소리스트 불러오기 메소드
 	@RequestMapping(value="dailyPlaces.do", method={RequestMethod.POST, RequestMethod.GET})
-	public String selectDailyPlaceList(Place place, Model model, RedirectAttributes redirectAttr) {
+	public String selectDailyPlaceList(Place place, String daylist_name, HttpServletRequest request) {
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ dailyPlaces.do @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		//장소 목록 조회
+		ArrayList<Place> dailyPlaces = placeService.selectDailyPlaceList(place);
+		
+		FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
+		flashMap.put("dailyPlaces", dailyPlaces);
+		flashMap.put("member_id", place.getPlace_user());
+		flashMap.put("daily_name", daylist_name);
+		flashMap.put("daily_date", place.getPlace_date());
+		return "redirect:goplace.do";
+	}
+	
+	/*//날짜 클릭시 해당 날짜의 장소리스트 불러오기 메소드
+	@RequestMapping(value="dailyPlaces.do", method={RequestMethod.POST, RequestMethod.GET})
+	public String selectDailyPlaceList(Place place, String daylist_name, Model model, RedirectAttributes redirectAttr) {
 
 		//장소 목록 조회
 		ArrayList<Place> placeList = placeService.selectDailyPlaceList(place);
@@ -104,12 +139,12 @@ public class PlaceController {
 		}
 		else {
 			model.addAttribute("dailyPlaces", placeList);
-//			redirectAttr.addFlashAttribute("member_id", place.getPlace_user());
-//			fileName = "redirect:goplace.do?member_id="+ place.getPlace_user();
+			model.addAttribute("daily_name", daylist_name);
+			model.addAttribute("daily_date", place.getPlace_date());
 		}
 		
 		return fileName;
-	}
+	}*/
 	
 	//장소 리스트에서 장소 삭제 처리 메소드
 	@RequestMapping(value="deletePlace.do", method= RequestMethod.POST)

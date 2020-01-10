@@ -1,8 +1,13 @@
 @charset "UTF-8";
 
+/* 전체 폰트 */
+.lottemartdream {
+	font-family:LotteMartDream;
+}
+
 /* 버튼 폰트 */
 .ui.mini.button {
-	font-family:GodoM;
+	font-family:LotteMartDream;
 	font-size:15pt;
 }
 
@@ -13,3 +18,5 @@
 .scrollColor::-webkit-scrollbar-thumb:hover {background: #2185d0;}
 
 .trash {margin-right:10px}
+
+h1,h2,h3,h4,h5,h6 {display:inline;}

@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5{
 
 #userDiv {
 	padding : 0;
-	width: 100px;
+	width: 120px;
 }
 #userDiv:hover{
 	background: #fff;

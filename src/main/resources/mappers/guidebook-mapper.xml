@@ -5,8 +5,14 @@
 <mapper namespace="guidebookMapper">
 
 	<insert id="insertGuidebook" parameterType="Guidebook">
-		insert into guidebook values ('gb0' || guidebook_seq.nextval, #{book_id}, sysdate, #{travel_detail}, #{travel_start_date}, 
-		#{travel_end_date}, #{travel_theme}, #{book_name}, default, null)
+		insert into guidebook values ('gb0' || guidebook_seq.nextval, #{book_id}, sysdate, 
+		<if test="travel_detail != null">
+			#{travel_detail},
+		</if>
+		<if test="travel_detail == null">
+			null,
+		</if>
+		#{travel_start_date}, #{travel_end_date}, #{travel_theme}, #{book_name}, default, null)
 	</insert>
 	
 	<select id="loginCheck" parameterType="Member" resultType="Member">

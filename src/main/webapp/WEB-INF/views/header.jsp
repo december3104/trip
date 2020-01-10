@@ -16,8 +16,7 @@
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <!-- favicon -->
 <link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
-<!-- Lato 폰트 -->
-<link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
+
 <script type="text/javascript">
 
 

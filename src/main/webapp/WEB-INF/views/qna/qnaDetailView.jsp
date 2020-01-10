@@ -102,14 +102,15 @@
 										</c:if>
 									</div>
 								</div>
-								<div class="column"	style="width: 75%; text-align: left; padding: 1rem 1rem 1rem 1rem; margin-top: 5%;">
-									<p>${QC.qc_content }</p>
+								<div class="column"	style="width: 75%; text-align: left; padding: 1rem 1rem 1rem 1rem; margin-top: 2%;font-size:4;">
+									<p><font size="4">${QC.qc_content }</font></p>
 									<c:if test="${loginMember.member_level eq '3' }">
 										<button class="ui button" 
-										style="font-family:GodoM;background:#c0e7f8;float:right;padding: 0px 20px 0px 20px;font-size: 15pt;text-align: right;height: 35px;" 
+										style="font-family:GodoM;background:#c0e7f8;float:right;padding: 0px 20px 0px 20px;font-size: 15pt;
+										text-align: right;height: 35px;margin-top: 5%;" 
 										onclick="location.href='updateReplyQnAPage.ad?qna_no=${qna.qna_no}'">수정</button>
 									</c:if>
-									<p>${QC.qc_date } 작성</p>
+									<p style="margin-top: 8%;">${QC.qc_date }에 작성</p>
 								</div>
 							</div>
 						</div>

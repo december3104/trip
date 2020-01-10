@@ -8,4 +8,5 @@ public interface FellowMatchingService {
 
 	ArrayList<Fellow> selectMyFellowMatching(String fm_id);
 	Fellow selectMyFellowMatchingOne(String fb_id);
+	int updateFellowMatchingReport(int fb_no);
 }

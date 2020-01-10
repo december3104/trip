@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.a2b.trip.common.Page;
+import com.a2b.trip.fellow.model.service.FellowBoardService;
 import com.a2b.trip.fellow.model.service.FellowMatchingService;
 import com.a2b.trip.member.model.vo.Member;
 import com.a2b.trip.report.model.service.ReportService;
@@ -31,6 +32,9 @@ public class ReportController {
 	
 	@Autowired
 	private FellowMatchingService fellowMatchingService;
+	
+	@Autowired
+	private FellowBoardService fellowBoardService;
 	
 	
 	//로그 처리용 객체 의존성 주입 처리함(종속 객체 주입)
@@ -187,7 +191,7 @@ public class ReportController {
 	// 혜진
 	//신고하기
 	@RequestMapping(value="insertReport.do", method=RequestMethod.POST)
-	public String insertReport(Report report, HttpServletRequest request, Model model) {
+	public String insertReport(Report report, @RequestParam("reportType") String reportType, @RequestParam("fb_no") int fb_no, HttpServletRequest request, Model model) {
 		// 세션에서 정보 꺼내기
 		HttpSession session = request.getSession(false);
 		Member member = (Member)session.getAttribute("loginMember");
@@ -196,10 +200,18 @@ public class ReportController {
 		report.setClame_id(clame_id);
 		
 		int result = reportService.insertReport(report);
+		int updateResult = 0;
+		if (reportType.equals("fm")) {
+			updateResult = fellowMatchingService.updateFellowMatchingReport(fb_no);
+		}
+		if (reportType.equals("fb")) {
+			updateResult = fellowBoardService.updateFellowBoardReport(fb_no);
+		}
+		
 		
 		String viewFileName = "redirect:/selectMyFellowMatching.do";
 	
-		if (result <= 0) {
+		if (result <= 0 || updateResult <= 0) {
 			viewFileName = "common/error";
 		}
 	

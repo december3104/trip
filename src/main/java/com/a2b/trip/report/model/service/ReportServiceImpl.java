@@ -85,13 +85,8 @@ public class ReportServiceImpl implements ReportService {
 	public int insertReport(Report report) {
 		return reportDao.insertReport(report);
 	}
-	
 
-	
-	
-	
-	
-	
+
 	
 	
 }

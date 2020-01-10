@@ -1,4 +1,4 @@
-package com.a2b.trip.qnacomment.model.vo;
+package com.a2b.trip.qna.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -13,15 +13,17 @@ public class QnaComment implements Serializable {
 	private String qc_id;
 	private String qc_content;
 	private Date qc_date;
+	private String member_profile_rename;
 
 	public QnaComment() {}
 
-	public QnaComment(int qna_no, String qc_id, String qc_content, Date qc_date) {
+	public QnaComment(int qna_no, String qc_id, String qc_content, Date qc_date, String member_profile_rename) {
 		super();
 		this.qna_no = qna_no;
 		this.qc_id = qc_id;
 		this.qc_content = qc_content;
 		this.qc_date = qc_date;
+		this.member_profile_rename = member_profile_rename;
 	}
 
 	public int getQna_no() {
@@ -56,10 +58,20 @@ public class QnaComment implements Serializable {
 		this.qc_date = qc_date;
 	}
 
+	public String getMember_profile_rename() {
+		return member_profile_rename;
+	}
+
+	public void setMember_profile_rename(String member_profile_rename) {
+		this.member_profile_rename = member_profile_rename;
+	}
+
 	@Override
 	public String toString() {
 		return "QnaComment [qna_no=" + qna_no + ", qc_id=" + qc_id + ", qc_content=" + qc_content + ", qc_date="
-				+ qc_date + "]";
+				+ qc_date + ", member_profile_rename=" + member_profile_rename + "]";
 	}
+
+	
 	
 }

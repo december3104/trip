@@ -82,79 +82,43 @@
 					</div>
 				</div>
 				<!-- qna 답글 -->
-				<!-- 답글이 있는 경우 -->
-				<c:if test="${!empty QC }">
 					<div class="ui card" style="width: 100%;">
 						<div class="ui three column grid">
 							<div class="row" style="height: 200px;">
-								<div class="column"	style="width: 22%; text-align: center; padding: 1rem 1rem 1rem 1rem;">
-									<p style="font-size: 2rem; margin: 10px 0px 0px 0px;">${QC.qc_id }</p>
+								<div class="column"	style="width: 21%; text-align: center; padding: 1rem 1rem 1rem 1rem;">
+									<p style="font-size: 2rem; margin: 10px 0px 0px 0px;">${loginMember.member_id }</p>
 									<div>
-										<c:if test="${ QC.member_profile_rename ne null }">
+										<c:if test="${ loginMember.member_profile_rename ne null }">
 											<img class="ui tiny circular image"
-												src="resources/images/member_profile/${qna.member_profile_rename }"
+												src="resources/images/member_profile/${loginMember.member_profile_rename }"
 												style="display: block; margin: 0px auto;">
 										</c:if>
-										<c:if test="${ QC.member_profile_rename eq null }">
+										<c:if test="${ loginMember.member_profile_rename eq null }">
 											<img class="ui tiny circular image"
 												src="resources/images/molly.png"
 												style="display: block; margin: 0px auto;">
 										</c:if>
 									</div>
 								</div>
-								<div class="column"	style="width: 75%; text-align: left; padding: 1rem 1rem 1rem 1rem; margin-top: 5%;">
-									<p>${QC.qc_content }</p>
-									<c:if test="${loginMember.member_level eq '3' }">
-										<button class="ui button" 
-										style="font-family:GodoM;background:#c0e7f8;float:right;padding: 0px 20px 0px 20px;font-size: 15pt;text-align: right;height: 35px;" 
-										onclick="location.href='updateReplyQnAPage.ad?qna_no=${qna.qna_no}'">수정</button>
-									</c:if>
-									<p>${QC.qc_date } 작성</p>
-								</div>
+								<c:if test="${loginMember.member_level eq '3' }">
+								<form action="updateReplyQnA.ad" method="post">
+									<input type="hidden" value="${qna.qna_no }" name="qna_no">
+									<input type="hidden" value="${loginMember.member_id }" name="qc_id">
+									<div class="column"	style="width: 107%; text-align: left; padding: 1rem 1rem 1rem 1rem;">
+										<div style="float:left;">
+											<textarea rows="8" cols="100" name="commentInput">${QC.qc_content }</textarea>
+										</div>
+										<div style="float: left; margin-left: 5%; margin-top: 11%;">
+										<input class="ui button" type="submit" value="저장" 
+													style="font-family:GodoM;background:#c0e7f8;float:right;padding: 0px 20px 0px 20px;font-size: 15pt;
+													text-align: right;height: 35px;">
+										</div>
+									</div>
+								</form>
+								</c:if>
 							</div>
 						</div>
 					</div>
-				</c:if>
-				<c:if test="${loginMember.member_level eq '3' }">
-					<!-- 답글이 없는 경우 -->
-					<c:if test="${empty QC }">
-						<div class="ui card" style="width: 100%;">
-							<div class="ui three column grid">
-								<div class="row" style="height: 200px;">
-									<div class="column"	style="width: 21%; text-align: center; padding: 1rem 1rem 1rem 1rem;">
-										<p style="font-size: 2rem; margin: 10px 0px 0px 0px;">${loginMember.member_id }</p>
-										<div>
-											<c:if test="${ loginMember.member_profile_rename ne null }">
-												<img class="ui tiny circular image"
-													src="resources/images/member_profile/${loginMember.member_profile_rename }"
-													style="display: block; margin: 0px auto;">
-											</c:if>
-											<c:if test="${ loginMember.member_profile_rename eq null }">
-												<img class="ui tiny circular image"
-													src="resources/images/molly.png"
-													style="display: block; margin: 0px auto;">
-											</c:if>
-										</div>
-									</div>
-									<form action="insertReplyQnA.ad" method="post">
-										<input type="hidden" value="${qna.qna_no }" name="qna_no">
-										<input type="hidden" value="${loginMember.member_id }" name="qc_id">
-										<div class="column"	style="width: 107%; text-align: left; padding: 1rem 1rem 1rem 1rem;">
-											<div style="float:left;">
-												<textarea rows="8" cols="100" name="commentInput"></textarea>
-											</div>
-											<div style="float: left; margin-left: 5%; margin-top: 11%;">
-											<input class="ui button" type="submit" value="저장" 
-														style="font-family:GodoM;background:#c0e7f8;float:right;padding: 0px 20px 0px 20px;font-size: 15pt;
-														text-align: right;height: 35px;">
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</c:if>
-				</c:if>
 				<!-- qna 답글 끝 -->
 			</div>
 		</div>

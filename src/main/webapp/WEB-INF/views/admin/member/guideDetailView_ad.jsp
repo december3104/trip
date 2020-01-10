@@ -81,23 +81,23 @@
 						<c:out value="${guide.member_name }" />
 					</td>
 				</tr>
-				
+				<%-- 
 				<tr style="font-size: 13pt;">
 					<th>성별</th>
 					<td style="border-top:0;">
 						<c:out value="${guide.member_gender }" />
 					</td>
 				</tr>
-				
+				 --%>
 				<tr style="font-size: 13pt;">
-					<th>출생년도</th>
+					<th>전화번호</th>
 					<td style="border-top:0;">
-						<c:out value="${guide.guide_contry }" />
+						<c:out value="${guide.guide_phone }" />
 					</td>
 				</tr>
 				
 				<tr style="font-size: 13pt;">
-					<th>전화번호</th>
+					<th>출생년도</th>
 					<td style="border-top:0;">
 						<fmt:parseDate value="${guide.member_birth}" var="guideBirth" pattern="yyyy-MM-dd"/>
 						<fmt:formatDate value="${guideBirth}" pattern="yyyy년 MM월 dd일"/>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.a2b.trip.common.Page;
 import com.a2b.trip.qna.model.vo.Qna;
+import com.a2b.trip.qna.model.vo.QnaComment;
 
 public interface QnaService {
 
@@ -17,5 +18,8 @@ public interface QnaService {
 	int deleteQna(int qna_no);
 	ArrayList<Qna> selectListQna(Page page);
 	int selectSearchTotal(String search);
-	
+	QnaComment selectQnaComment(int qna_no);
+	int insertReplyQnA(QnaComment qc);
+	int updateReplyQnA(QnaComment qc);
+
 }

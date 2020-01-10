@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.a2b.trip.fellow.model.service.FellowBoardService;
 import com.a2b.trip.fellow.model.service.FellowMatchingService;
 import com.a2b.trip.fellow.model.vo.Fellow;
 import com.a2b.trip.member.model.vo.Member;
@@ -72,6 +73,7 @@ public class FellowMatchingController {
 		job.put("fellowEndDate", fellow.getFb_end_date().toString());
 		job.put("fellowTitle", URLEncoder.encode(fellow.getFb_title(), "utf-8"));
 		job.put("fellowContent", URLEncoder.encode(fellow.getFb_content(), "utf-8"));
+
 		
 		return job.toJSONString();
 	}

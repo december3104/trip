@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="guidebookMapper">
+
+	<insert id="insertGuidebook" parameterType="Guidebook">
+		insert into guidebook values ('gb0' || guidebook_seq.nextval, #{book_id}, sysdate, #{travel_detail}, #{travel_start_date}, 
+		#{travel_end_date}, #{travel_theme}, #{book_name}, default, null)
+	</insert>
+	
+	<select id="loginCheck" parameterType="Member" resultType="Member">
+		select * from member where userid = #{userid} and userpwd = #{userpwd}
+	</select>
+	
+	<select id="selectOne" parameterType="string" resultType="Member">
+		select * from member where userid = #{value}
+	</select>
+	
+	
+	
+	<update id="updateMember" parameterType="Member">
+		update member set userpwd = #{userpwd}, email = #{email}, phone = #{phone}, etc = #{etc}, hobby = #{hobby},  lastmodified = sysdate where userid = #{userid}
+	</update>
+	
+	<delete id="deleteMember" parameterType="string">
+		delete from member where userid = #{value}
+	</delete>
+	
+	<select id="selectList" resultType="Member">
+		select * from member
+	</select>
+	
+	<select id="checkDupId" parameterType="string" resultType="_int">
+		select count(userid) from member where userid = #{value}
+	</select>
+
+</mapper>

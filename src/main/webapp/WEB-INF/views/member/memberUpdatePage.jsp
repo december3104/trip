@@ -11,8 +11,6 @@
 <link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- 폰트css -->
-<link href="resources/css/font.css" rel="stylesheet" type="text/css"/>
 <!-- icon -->
 <link href="resources/css/all.css" rel="stylesheet">
 <!-- 헤더푸터 css -->
@@ -22,6 +20,7 @@
 	height: 70px;
 	vertical-align: middle;
 	font-size: 15pt;
+	font-weight: 700;
 }
 
 .sidebarTd:hover{
@@ -44,8 +43,6 @@
 .ui.action.input input[type="file"] {
   display: none;
 } 
-
-
 </style>
 <script type="text/javascript">
 
@@ -161,7 +158,7 @@ $(function(){
 <!-- 헤더 -->
 <header><jsp:include page="/WEB-INF/views/header.jsp" /></header>
 
-<div class="bodyCss" style="margin-left: 10%; margin-right: 10%">
+<div class="bodyCss" style="margin-left: 15%; margin-right: 15%">
 	<div class="bodyContentCss" style="float: left; width: 20%">
 		<div>
 			<table class="ui celled table" style="text-align:center; font-size: 15pt; background: #DCF2FB">
@@ -173,7 +170,7 @@ $(function(){
 		</div>
 	</div>
 	<div style="float:left; margin-left: 3%; width: 75%">
-		<h2 style="font-family: GodoM">내 정보 수정</h2>
+		<h2 style="font-family: Lato; font-weight: 900">내 정보 수정</h2>
 		<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
 		<div>
 			<form action="updateMember.do" method="POST" onsubmit="return updateMemberChk();"  enctype="multipart/form-data">
@@ -211,7 +208,7 @@ $(function(){
 						<th style="font-size: 13pt">전화번호</th>
 							<td style="border-top: 0">
 								<div class="ui left icon input">
-									<input value="${loginMember.member_phone }" name="member_phone" id="phoneUpdate" style="width: 350px; font-family: GodoM" /><i class="phone icon"></i>
+									<input value="${loginMember.member_phone }" name="member_phone" id="phoneUpdate" style="width: 350px; font-family: Lato" /><i class="phone icon"></i>
 									<span id="updatePhoneExplan" style="margin: auto"><font color="#cecece">&nbsp;- 없이 숫자만 입력하세요.</font></span>
 								</div>
 							</td>
@@ -230,9 +227,9 @@ $(function(){
 					</tr>
 					<tr>
 						<th colspan="2" style="text-align: center">
-							<input class="ui button" type="submit" value="확인" style="background: #c0e7f8; width: 95px; height: 45px; margin-top: 20px; font-family: GodoM">&emsp;&emsp;
-							<input class="ui button" type="button" onclick="window.history.back();" value="취소" style="width: 95px; height: 45px; margin-top: 20px; font-family: GodoM">&emsp;&emsp;
-							<input class="ui button" type="button" id="showModal" value="탈퇴하기" style="width: 95px; height: 45px; margin-top: 20px; font-family: GodoM">
+							<input class="ui button" type="submit" value="확인" style="background: #c0e7f8; width: 95px; height: 45px; margin-top: 20px; font-family: Lato">&emsp;&emsp;
+							<input class="ui button" type="button" onclick="window.history.back();" value="취소" style="width: 95px; height: 45px; margin-top: 20px; font-family: Lato">&emsp;&emsp;
+							<input class="ui button" type="button" id="showModal" value="탈퇴하기" style="width: 95px; height: 45px; margin-top: 20px; font-family: Lato">
 						</th>
 					</tr>
 		
@@ -250,7 +247,7 @@ $(function(){
 			<p id="updateChkContent"></p>
 		</div>
 		<div class="actions">
-			<div class="fluid ui ok button" style="font-family: GodoM; margin: 0; background: #c0e7f8" id="updateChkBtn">확인</div>
+			<div class="fluid ui ok button" style="font-family: Lato; margin: 0; background: #c0e7f8" id="updateChkBtn">확인</div>
 		</div>
 	</div>
 	
@@ -258,7 +255,7 @@ $(function(){
 	<div class="ui mini modal" id="secessionModal">
 	
 		<div class="header">
-			<h3 style="font-family: GodoM">회원 탈퇴</h3>
+			<h3 style="font-family: Lato">회원 탈퇴</h3>
 		</div>
 		<div class="description" style="padding: 5%">
 			<p>사용하고 계신 계정을 탈퇴할 경우 복구가 불가능합니다.</p>
@@ -284,7 +281,7 @@ $(function(){
 			</div>
 		</div>
 		<div class="actions">
-			<div class="fluid ui ok button" style="margin: 0; background: #c0e8f7; font-family: GodoM">확인</div>
+			<div class="fluid ui ok button" style="margin: 0; background: #c0e8f7; font-family: Lato">확인</div>
 		</div>
 	</div>
 </div>

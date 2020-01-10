@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.a2b.trip.common.Page;
 import com.a2b.trip.qna.model.dao.QnaDao;
 import com.a2b.trip.qna.model.vo.Qna;
+import com.a2b.trip.qna.model.vo.QnaComment;
 
 @Service("qnaService")
 public class QnaServiceImpl implements QnaService {
@@ -66,5 +67,33 @@ public class QnaServiceImpl implements QnaService {
 	public int selectSearchTotal(String search) {
 		return qnaDao.selectSearchTotal(search);
 	}
+
+	//2020_01_09 ssm
+	
+	//qnacomment 조회
+	@Override
+	public QnaComment selectQnaComment(int qna_no) {
+		return qnaDao.selectQnaComment(qna_no);
+	}
+	//qnacomment 입력
+	@Override
+	public int insertReplyQnA(QnaComment qc) {
+		return qnaDao.insertReplyQnA(qc);
+	}
+	//qnacomment 수정
+	@Override
+	public int updateReplyQnA(QnaComment qc) {
+		return qnaDao.updateReplyQnA(qc);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//end
 
 }

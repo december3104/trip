@@ -58,7 +58,15 @@ public class QnaServiceImpl implements QnaService {
 		return qnaDao.deleteQna(qna_no);
 	}
 
-	
+	@Override
+	public ArrayList<Qna> selectListQna(Page page) {
+		return qnaDao.selectListQna(page);
+	}
+
+	@Override
+	public int selectSearchTotal(String search) {
+		return qnaDao.selectSearchTotal(search);
+	}
 
 	//2020_01_09 ssm
 	
@@ -87,4 +95,5 @@ public class QnaServiceImpl implements QnaService {
 	
 	
 	//end
+
 }

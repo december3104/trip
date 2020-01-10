@@ -16,8 +16,10 @@ public interface QnaService {
 	ArrayList<Qna> selectListMyQna(Page page);
 	int selectMyTotal(String qna_id);
 	int deleteQna(int qna_no);
+	ArrayList<Qna> selectListQna(Page page);
+	int selectSearchTotal(String search);
 	QnaComment selectQnaComment(int qna_no);
 	int insertReplyQnA(QnaComment qc);
 	int updateReplyQnA(QnaComment qc);
-	
+
 }

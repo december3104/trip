@@ -47,4 +47,8 @@ public class NoticeDao {
 	public int updateDetailNotice(Notice notice) {
 		return sqlSession.update("noticeMapper.updateDetailNotice", notice);
 	}
+
+	public Member selectOneMember(String notice_id) {
+		return sqlSession.selectOne("noticeMapper.selectOneMember", notice_id);
+	}
 }

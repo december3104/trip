@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.a2b.trip.common.Page;
+import com.a2b.trip.member.model.vo.Member;
 import com.a2b.trip.notice.model.service.NoticeService;
 import com.a2b.trip.notice.model.vo.Notice;
 
@@ -97,12 +98,14 @@ public class NoticeController {
 		return mv;
 	}
 	
-	//일반회원 공지사항 상세보기
+	//일반회원 공지사항 상세보기 상준
 	@RequestMapping("selectDetailViewNotice.do")
-	public String selectDetailViewNotice2(@RequestParam("notice_no") int notice_no, Model model) {
+	public String selectDetailViewNotice2(@RequestParam("notice_no") int notice_no, @RequestParam("notice_id") String notice_id, Model model) {
 		Notice notice = noticeService.selectDetailViewNotice(notice_no);
+		Member member = noticeService.selectOneMember(notice_id);
 		
 		model.addAttribute("notice", notice);
+		model.addAttribute("member", member);
 		
 		return "notice/noticeDetailView";
 	}

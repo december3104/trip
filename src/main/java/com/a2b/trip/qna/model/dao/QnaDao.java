@@ -53,6 +53,15 @@ public class QnaDao {
 		return sqlSession.delete("qnaMapper.deleteQna", qna_no);
 	}
 
+
+	public ArrayList<Qna> selectListQna(Page page) {
+		List<Qna> list = sqlSession.selectList("qnaMapper.selectListQna", page);
+		return (ArrayList<Qna>)list;
+	}
+
+	public int selectSearchTotal(String search) {
+		return sqlSession.selectOne("qnaMapper.selectSearchTotal", search);
+
 	public QnaComment selectQnaComment(int qna_no) {
 		return sqlSession.selectOne("qnaMapper.selectQnaComment",qna_no);
 	}
@@ -63,6 +72,7 @@ public class QnaDao {
 
 	public int updateReplyQnA(QnaComment qc) {
 		return sqlSession.update("qnaMapper.updateReplyQnA", qc);
+
 	}
 
 }

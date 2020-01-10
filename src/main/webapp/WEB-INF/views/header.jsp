@@ -22,7 +22,7 @@
 
 $(function(){
 	$('#loginTag').on('click', function(){
-		$('.mini.modal').modal('show');
+		$('#loginModalOpen').modal('show');
 	});
 	
 	$('#logoutTag').on('click', function(){
@@ -56,7 +56,7 @@ $(function(){
 			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff') format('woff'); 
 } 
 
-.lottemartdream, * { font-family: 'LotteMartDream', sans-serif; }
+.lottemartdream,  * { font-family: 'LotteMartDream', sans-serif; }
 
 
 
@@ -255,7 +255,7 @@ $(function(){
 </div>
 </div>
 	<!-- modal -->
-	<div class="ui mini modal">
+	<div class="ui mini modal" id="loginModalOpen">
 		<div class="header">
 			<p style="font-weight: bold; text-align: center">
 				<font color="#95d6f3">여길잡아</font> 로그인하기

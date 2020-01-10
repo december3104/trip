@@ -170,7 +170,7 @@ $(function(){
 		</div>
 	</div>
 	<div style="float:left; margin-left: 3%; width: 75%">
-		<h2 style="font-family: Lato; font-weight: 900">내 정보 수정</h2>
+		<h2 style="font-family: LotteMartDream">내 정보 수정</h2>
 		<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
 		<div>
 			<form action="updateMember.do" method="POST" onsubmit="return updateMemberChk();"  enctype="multipart/form-data">

@@ -451,7 +451,7 @@ $(function(){
 <body>
 <div class="bodyCss" style="margin-left: 10%; margin-right: 10%; margin-top: 3%">
 	<div class="bodyContentCss">
-		<h2 style="font-family: Lato; font-weight: 900"><font color="#95d6f3">여길잡아</font> 회원가입</h2>
+		<h2 style="font-family: LotteMartDream"><font color="#95d6f3">여길잡아</font> 회원가입</h2>
 		<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
 		<div class="ui form">
 			<form onsubmit="return checkForm()" action="insertMember.do" method="POST" enctype="multipart/form-data">
@@ -460,7 +460,7 @@ $(function(){
 						<th><i class="fas fa-check"></i>&nbsp;이름</th>
 							<td>
 								<div class="eight wide field">
-									<input type="text" placeholder="이름을 입력해주세요." name="member_name" id="member_name" style="font-family:Lato" />
+									<input type="text" placeholder="이름을 입력해주세요." name="member_name" id="member_name" />
 								</div>
 							</td>
 					</tr>
@@ -468,8 +468,8 @@ $(function(){
 						<th><i class="fas fa-check"></i>&nbsp;아이디</th>
 							<td>
 								<div class="eight wide field">
-									<input type="text" placeholder="아이디를 입력해주세요." name="member_id" id="member_id" style="font-family:Lato" /> 	
-									<span id="memberIdExplan"><font color="#aaaaaa">아이디는 4~12자 영소문자와 숫자로만 입력해주세요.</font></span>
+									<input type="text" placeholder="아이디를 입력해주세요." name="member_id" id="member_id" /> 	
+									<span id="memberIdExplan" style="font-weight: 300;"><font color="#aaaaaa">아이디는 4~12자 영소문자와 숫자로만 입력해주세요.</font></span>
 								</div>
 							</td>
 					</tr>
@@ -477,8 +477,8 @@ $(function(){
 						<th><i class="fas fa-check"></i>&nbsp;비밀번호</th>
 							<td>
 								<div class="eight wide field">
-									<input type="password" placeholder="비밀번호를 입력해주세요." name="member_pwd" id="member_pwd" style="font-family:Lato" />
-									<span id="memberPwdExplan"><font color="#aaaaaa">비밀번호는 최소 하나의 문자 + 하나의 숫자 + 하나의 특수 문자 포함, 최소 6자리로 입력해주세요.</font></span>
+									<input type="password" placeholder="비밀번호를 입력해주세요." name="member_pwd" id="member_pwd" />
+									<span id="memberPwdExplan" style="font-weight: 300;"><font color="#aaaaaa">비밀번호는 최소 하나의 문자 + 하나의 숫자 + 하나의 특수 문자 포함, 최소 6자리로 입력해주세요.</font></span>
 								</div>
 							</td>
 					</tr>
@@ -486,7 +486,7 @@ $(function(){
 						<th><i class="fas fa-check"></i>&nbsp;비밀번호 확인</th>
 							<td>
 								<div class="eight wide field">
-									<input type="password" placeholder="비밀번호를 한번 더 입력해주세요." id="member_pwd2" style="font-family:Lato" />
+									<input type="password" placeholder="비밀번호를 한번 더 입력해주세요." id="member_pwd2" />
 								</div>
 							</td>
 					</tr>
@@ -494,8 +494,8 @@ $(function(){
 						<th><i class="fas fa-check"></i>&nbsp;이메일 주소</th>
 							<td>
 								<div class="eight wide field">
-									<input type="email" placeholder="이메일 주소를 입력해주세요." name="member_email" id="member_email" style="font-family:Lato" />
-									<span id="memberEmailExplan"><font color="#aaaaaa">이메일 주소 형식에 맞게 입력해주세요.</font></span>
+									<input type="email" placeholder="이메일 주소를 입력해주세요." name="member_email" id="member_email" />
+									<span id="memberEmailExplan" style="font-weight: 300"><font color="#aaaaaa">이메일 주소 형식에 맞게 입력해주세요.</font></span>
 								</div>
 							</td>
 					</tr>
@@ -516,8 +516,8 @@ $(function(){
 						<th><i class="fas fa-check"></i>&nbsp;생년월일</th>
 							<td>
 								<div class="eight wide field">
-									<input class="form-control" type="text" placeholder="ex) 19901224" name="member_birth" id="member_birth" style="font-family:Lato" />
-									<span id="memberBirthExplan"><font color="#aaaaaa">생년월일을 숫자 8자리로 입력하세요.</font></span>
+									<input class="form-control" type="text" placeholder="ex) 19901224" name="member_birth" id="member_birth" />
+									<span id="memberBirthExplan" style="font-weight: 300"><font color="#aaaaaa">생년월일을 숫자 8자리로 입력하세요.</font></span>
 								</div>
 							</td>
 					</tr>
@@ -525,8 +525,8 @@ $(function(){
 						<th><i class="fas fa-check"></i>&nbsp;전화번호</th>
 							<td>
 								<div class="eight wide field">
-									<input type="text" placeholder="ex) 03180000000" name="member_phone" id="member_phone" style="font-family:Lato" />
-									<span id="memberPhoneExplan"><font color="#aaaaaa">- 없이 숫자만 입력하세요.</font></span>
+									<input type="text" placeholder="ex) 03180000000" name="member_phone" id="member_phone" />
+									<span id="memberPhoneExplan" style="font-weight: 300"><font color="#aaaaaa">- 없이 숫자만 입력하세요.</font></span>
 								</div>
 							</td>
 					</tr>
@@ -534,7 +534,7 @@ $(function(){
 						<th>프로필 사진</th>
 							<td>
 								<div class="ui action input seven wide field">
-									<input type="text" readonly style="cursor: pointer; font-family:Lato" placeholder="파일을 선택해주세요." />
+									<input type="text" readonly style="cursor: pointer" placeholder="파일을 선택해주세요." />
 									<input type="file" id="profileUpload" accept="image/*" name="upProfile" readonly />
 									<div class="ui icon button" style="width: auto">
 										<i class="attach icon"></i>

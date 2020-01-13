@@ -198,4 +198,50 @@ public class FellowBoardController {
 		return pageName;
 	}
 	
+	// 동행찾기 내 글 수정
+	@RequestMapping(value="updateFellowBoard.do", method=RequestMethod.POST)
+	public String updateFellowBoard(FellowBoard fb, Page page, Model model) {
+		// 페이지 이름 정해 줄 String
+		String pageName = "";
+		
+		int result = fellowBoardService.updateFellowBoard(fb);
+		
+		if(result>0) {
+			int totalCount = fellowBoardService.selectTotal();	//	게시물 총 갯수(현제 db에 저장된 값)
+			int currentPage = page.getCurrentPage();
+			page.setTotalCount(totalCount);	//	전체 게시물 갯수 (db에서 조회해 와서 Page 클레스에 저장)
+			page.calcRow(currentPage, page.getContentNum());	//	db에서 조회할 ROWNUM 시작과 끝 계산
+			page.saveCurrentBlock(currentPage);	//	페이지 	
+			page.saveLastBlock(totalCount);
+			page.calcPage(totalCount, page.getContentNum());	//	맨 마지막 페이지 계산
+			
+			page.prevnext(currentPage);
+			page.saveStartPage(page.getCurrentBlock());
+			page.saveEndPage(page.getLastBlock(), page.getCurrentBlock());
+			
+			ArrayList<FellowBoard> fellowBoardList = fellowBoardService.selectAllFellowBoard(page);
+			
+			model.addAttribute("fellowBoardList", fellowBoardList);
+			model.addAttribute("page", page);
+			
+			pageName = "redirect:selectOneFellowBoard.do?fb_no="+fb.getFb_no();
+		}else {
+			System.out.println("에러페이지로");
+		}
+		
+		return pageName;
+	}
+	
+	@RequestMapping("deleteFellowBoard.do")
+	public String deleteFellowBoard(@RequestParam("fb_no")int fb_no) {
+		int result = fellowBoardService.deleteFellowBoard(fb_no);
+
+		if (result > 0) {
+			System.out.println("성공");
+		}else {
+			System.out.println("실패");
+		}
+			return "redirect:selectAllFellowBoard.do";
+	}
+	
 }

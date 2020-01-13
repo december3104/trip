@@ -50,7 +50,7 @@
 	</select>
 	
 	<select id="selectOneFellowBoard" parameterType="_int" resultType="FellowBoard">
-		SELECT * FROM FELLOWBOARD WHERE FB_NO = #{ fb_no }
+		SELECT * FROM FELLOWBOARD LEFT JOIN MEMBER ON MEMBER_ID = FB_ID WHERE FB_NO = #{ fb_no }
 	</select>
 	
 	<select id="selectAllLocation" resultType="Location">
@@ -58,7 +58,7 @@
 	</select>
 	
 	<select id="selectAllFellowMatching" parameterType="_int" resultType="FellowMatching">
-		SELECT * FROM FELLOWMATCHING WHERE FB_NO = #{ fb_no }
+		SELECT * FROM FELLOWMATCHING LEFT JOIN MEMBER ON MEMBER_ID = FM_ID WHERE FB_NO = #{ fb_no }
 	</select>
 	
 	<insert id="insertFellowBoard" parameterType="FellowBoard">
@@ -82,5 +82,14 @@
 		(SELECT * FROM FELLOWBOARD WHERE FB_CONTRY LIKE '%' || #{ search } || '%' OR FB_CITY LIKE '%' || #{ search } || '%' ORDER BY FB_NO DESC)) WHERE RNUM >= #{ startRow } AND RNUM <= #{ endRow }
 		]]>
 	</select>
+	
+	<update id="updateFellowBoard" parameterType="FellowBoard">
+		UPDATE FELLOWBOARD SET FB_TITLE = #{ fb_title }, FB_CONTENT = #{ fb_content }, FB_START_DATE = #{ fb_start_date }, FB_END_DATE = #{ fb_end_date }, 
+		FB_CONTRY = #{ fb_contry }, FB_CITY = #{ fb_city } WHERE FB_NO = #{ fb_no }
+	</update>
+	
+	<delete id="deleteFellowBoard" parameterType="_int">
+		DELETE FROM FELLOWBOARD WHERE FB_NO = #{ fb_no }
+	</delete>
 	
 </mapper>

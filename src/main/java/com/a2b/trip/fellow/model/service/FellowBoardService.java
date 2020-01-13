@@ -23,4 +23,6 @@ public interface FellowBoardService {
 	ArrayList<FellowBoard> selectListMyFellowBoard(Page page);
 	int selectSearchTotal(String search);
 	ArrayList<FellowBoard> selectListFellowBoard(Page page);
+	int updateFellowBoard(FellowBoard fb);
+	int deleteFellowBoard(int fb_no);
 }

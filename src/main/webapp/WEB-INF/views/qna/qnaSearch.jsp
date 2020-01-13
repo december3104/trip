@@ -86,62 +86,71 @@
 					  				</div>
 					  				<div class="three wide column right aligned">
 						  				<c:if test="${ sessionScope.loginMember ne null }">
-											<button class="ui button" style="font-family : GodoM;height:45px; width:130px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
+											<button class="ui button" style="font-family : GodoM;height:45px; width:140px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
 										</c:if>
 					  				</div>
 					  			</div>
 							</th>
 						</tr>
-						<c:forEach var="list" items="${ qnaList }">
+						<c:if test="${ !empty qnaList }">
+							<c:forEach var="list" items="${ qnaList }">
+								<tr>
+						      		<td style="padding-left:15px;width : 70%" colspan="2">
+						      			<c:url var="goToDetailView" value="selectDetailViewQna.do">
+						      				<c:param name="qna_no" value="${ list.qna_no }"></c:param>
+						      			</c:url>
+						      			<div id="t${ list.qna_no }" class="qnaTitle">
+						      				<a href="${ goToDetailView }">
+					      						${ list.qna_title }
+					      					</a>
+						      			</div>
+						      			
+						      			<br>
+						      			<div class="qnaContent" id="c${ list.qna_no }">${ list.qna_content }</div>
+						      			<!-- 검색어가 글 내용에 있는경우 -->
+	<%-- 					      			<c:if test="${ list.qna_content.indexOf(page.search, 1) ne -1 }">  --%>
+	<!-- 					      				검색어 부터 끝까지가 30글자를 넘는 경우 -->
+	<%-- 					      				<c:if test="${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.length()).length() >= 30 }"> --%>
+	<%-- 					      					<strong>${fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.indexOf(page.search)+page.search.length()) }</strong>${fn:substring(fn:substring(list.qna_content, list.qna_content.indexOf(page.search)+page.search.length(), list.qna_content.indexOf(page.search)+page.search.length()+list.qna_content.indexOf("</p>")), 0, 30) } ... --%>
+	<%-- 					      				</c:if> --%>
+	<%-- 					      				<c:if test="${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.length()).length() < 30 }"> --%>
+	<%-- 					      					<strong>${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.indexOf(page.search)+page.search.length()) }</strong> --%>
+	<%-- 					      					${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search)+page.search.length(), list.qna_content.indexOf(page.search)+page.search.length()+list.qna_content.indexOf("</p>")) } --%>
+	<%-- 					      				</c:if> --%>
+	<%-- 					      			</c:if> --%>
+	<%-- 					      			<c:if test="${ list.qna_content.indexOf(page.search, 1) eq -1 }"> --%>
+	<%-- 					      				<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() >= 30 }"> --%>
+	<%-- 					      					${ fn:substring(fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")), 0, 30) } ... --%>
+	<%-- 					      				</c:if> --%>
+	<%-- 					      				<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() < 30 }"> --%>
+	<%-- 							      			<c:if test="${ list.qna_content.indexOf('</p>', 2) eq -1}"> --%>
+	<%-- 							      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) }	 --%>
+	<%-- 							      			</c:if> --%>
+	<%-- 						      				<c:if test="${ list.qna_content.indexOf('</p>', 2) ne -1}"> --%>
+	<%-- 							      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) } ...	 --%>
+	<%-- 							      			</c:if> --%>
+	<%-- 					      				</c:if> --%>
+	<%-- 					      			</c:if> --%>
+						      			<small><font color="gray">${ list.qna_id }님이 ${ list.qna_date }에 작성</font></small>
+						      		</td>
+						      		<td>
+						      			<c:if test="${ list.qna_comment eq 'N' }">
+											답변 대기중
+										</c:if>
+										<c:if test="${ list.qna_comment ne 'N' }">
+											답변 완료
+										</c:if>
+						      		</td>
+								</tr>
+							</c:forEach>
+						</c:if>
+						<c:if test="${ empty qnaList }">
 							<tr>
 					      		<td style="padding-left:15px;width : 70%" colspan="2">
-					      			<c:url var="goToDetailView" value="selectDetailViewQna.do">
-					      				<c:param name="qna_no" value="${ list.qna_no }"></c:param>
-					      			</c:url>
-					      			<div id="t${ list.qna_no }" class="qnaTitle">
-					      				<a href="${ goToDetailView }">
-				      						${ list.qna_title }
-				      					</a>
-					      			</div>
-					      			
-					      			<br>
-					      			<div class="qnaContent" id="c${ list.qna_no }">${ list.qna_content }</div>
-					      			<!-- 검색어가 글 내용에 있는경우 -->
-<%-- 					      			<c:if test="${ list.qna_content.indexOf(page.search, 1) ne -1 }">  --%>
-<!-- 					      				검색어 부터 끝까지가 30글자를 넘는 경우 -->
-<%-- 					      				<c:if test="${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.length()).length() >= 30 }"> --%>
-<%-- 					      					<strong>${fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.indexOf(page.search)+page.search.length()) }</strong>${fn:substring(fn:substring(list.qna_content, list.qna_content.indexOf(page.search)+page.search.length(), list.qna_content.indexOf(page.search)+page.search.length()+list.qna_content.indexOf("</p>")), 0, 30) } ... --%>
-<%-- 					      				</c:if> --%>
-<%-- 					      				<c:if test="${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.length()).length() < 30 }"> --%>
-<%-- 					      					<strong>${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search), list.qna_content.indexOf(page.search)+page.search.length()) }</strong> --%>
-<%-- 					      					${ fn:substring(list.qna_content, list.qna_content.indexOf(page.search)+page.search.length(), list.qna_content.indexOf(page.search)+page.search.length()+list.qna_content.indexOf("</p>")) } --%>
-<%-- 					      				</c:if> --%>
-<%-- 					      			</c:if> --%>
-<%-- 					      			<c:if test="${ list.qna_content.indexOf(page.search, 1) eq -1 }"> --%>
-<%-- 					      				<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() >= 30 }"> --%>
-<%-- 					      					${ fn:substring(fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")), 0, 30) } ... --%>
-<%-- 					      				</c:if> --%>
-<%-- 					      				<c:if test="${ fn:substring(list.qna_content, 0, list.qna_content.indexOf('</p>')).length() < 30 }"> --%>
-<%-- 							      			<c:if test="${ list.qna_content.indexOf('</p>', 2) eq -1}"> --%>
-<%-- 							      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) }	 --%>
-<%-- 							      			</c:if> --%>
-<%-- 						      				<c:if test="${ list.qna_content.indexOf('</p>', 2) ne -1}"> --%>
-<%-- 							      				${ fn:substring(list.qna_content, 0, list.qna_content.indexOf("</p>")) } ...	 --%>
-<%-- 							      			</c:if> --%>
-<%-- 					      				</c:if> --%>
-<%-- 					      			</c:if> --%>
-					      			<small><font color="gray">${ list.qna_id }님이 ${ list.qna_date }에 작성</font></small>
-					      		</td>
-					      		<td>
-					      			<c:if test="${ list.qna_comment eq 'N' }">
-										답변 대기중
-									</c:if>
-									<c:if test="${ list.qna_comment ne 'N' }">
-										답변 완료
-									</c:if>
+					      			<div class="center aligned" style="padding:30px;"><font size="5">검색어가 존재하지 않아요~</font></div>
 					      		</td>
 							</tr>
-						</c:forEach>
+						</c:if>
 					</tbody>
 				</table>
 			</div>

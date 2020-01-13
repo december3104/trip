@@ -82,4 +82,12 @@ public class FellowBoardDao {
 		List<FellowBoard> list = sqlSession.selectList("fellowMapper.selectListFellowBoard", page);
 		return (ArrayList<FellowBoard>)list;
 	}
+
+	public int updateFellowBoard(FellowBoard fb) {
+		return sqlSession.update("fellowMapper.updateFellowBoard", fb);
+	}
+
+	public int deleteFellowBoard(int fb_no) {
+		return sqlSession.delete("fellowMapper.deleteFellowBoard", fb_no);
+	}
 }

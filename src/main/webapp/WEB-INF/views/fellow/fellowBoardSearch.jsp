@@ -57,6 +57,7 @@
 												<input type="text" placeholder="국가/도시 명을 입력하세요." style="width:300px;" name="search">
 				  								<i class="circular search link icon"></i>								
 											</div>
+											<div style="margin-left : 10px"><small>${ page.search } 로 검색한 항목입니다.</small></div>
 										</form>
 					  				</div>
 					  				<div class="eight wide column">
@@ -90,54 +91,63 @@
 					  			</div>
 							</th>
 						</tr>
-						<c:forEach var="list" items="${ fellowBoardList }">
+						<c:if test="${ !empty fellowBoardList }">
+							<c:forEach var="list" items="${ fellowBoardList }">
+								<tr>
+									<td style="width : 20%; padding-left:20px;">
+										<div class="ui horizontal list">
+											<div class="item">
+												<c:if test="${ list.member_profile_rename ne null }">
+													<img class="ui mini circular image" src="resources/images/member_profile/${ list.member_profile_rename }">
+												</c:if>
+												<c:if test="${ list.member_profile_rename eq null }">
+													<img class="ui mini circular image" src="resources/images/molly.png">
+												</c:if>
+												<div class="content">
+													<div class="header">${ list.fb_id }</div>
+													<c:if test="${ list.fb_gender eq 'M' }">
+														<i class="mars icon blue"></i>
+													</c:if>
+													<c:if test="${ list.fb_gender eq 'F' }">
+														<i class="venus icon red"></i>
+													</c:if>
+												</div>
+											</div>
+										</div>
+									</td>
+						      		<td style="width : 60%">
+						      			<div class="ui horizontal list">
+											<div class="item">
+												<div class="content">
+													<c:url var="goToDetailView" value="selectOneFellowBoard.do">
+						      							<c:param name="fb_no" value="${ list.fb_no }"></c:param>
+						      						</c:url>
+													<div style="margin-top:8px;"><a href="${ goToDetailView }">${ list.fb_title }</a></div>
+													<div style="margin-top:5px;"><small>동행일 : ${ list.fb_start_date } 부터 ${ list.fb_end_date } 까지</small></div>
+												</div>
+											</div>
+										</div>
+						      		</td>
+						      		<td>
+						      			<div class="ui horizontal list">
+											<div class="item">
+												<div class="content">
+													<div>국가 : ${ list.fb_contry }</div>
+													<div>도시 : ${ list.fb_city }</div>
+												</div>
+											</div>
+										</div>
+						      		</td>
+								</tr>
+							</c:forEach>
+						</c:if>
+						<c:if test="${ empty fellowBoardList }">
 							<tr>
-								<td style="width : 20%; padding-left:20px;">
-									<div class="ui horizontal list">
-										<div class="item">
-											<c:if test="${ list.member_profile_rename ne null }">
-												<img class="ui mini circular image" src="resources/images/member_profile/${ list.member_profile_rename }">
-											</c:if>
-											<c:if test="${ list.member_profile_rename eq null }">
-												<img class="ui mini circular image" src="resources/images/molly.png">
-											</c:if>
-											<div class="content">
-												<div class="header">${ list.fb_id }</div>
-												<c:if test="${ list.fb_gender eq 'M' }">
-													<i class="mars icon blue"></i>
-												</c:if>
-												<c:if test="${ list.fb_gender eq 'F' }">
-													<i class="venus icon red"></i>
-												</c:if>
-											</div>
-										</div>
-									</div>
-								</td>
-					      		<td style="width : 60%">
-					      			<div class="ui horizontal list">
-										<div class="item">
-											<div class="content">
-												<c:url var="goToDetailView" value="selectOneFellowBoard.do">
-					      							<c:param name="fb_no" value="${ list.fb_no }"></c:param>
-					      						</c:url>
-												<div style="margin-top:8px;"><a href="${ goToDetailView }">${ list.fb_title }</a></div>
-												<div style="margin-top:5px;"><small>동행일 : ${ list.fb_start_date } 부터 ${ list.fb_end_date } 까지</small></div>
-											</div>
-										</div>
-									</div>
-					      		</td>
-					      		<td>
-					      			<div class="ui horizontal list">
-										<div class="item">
-											<div class="content">
-												<div>국가 : ${ list.fb_contry }</div>
-												<div>도시 : ${ list.fb_city }</div>
-											</div>
-										</div>
-									</div>
+					      		<td style="padding-left:15px;width : 70%" colspan="2">
+					      			<div class="center aligned" style="padding:30px;"><font size="5">검색어가 존재하지 않아요~</font></div>
 					      		</td>
 							</tr>
-						</c:forEach>
+						</c:if>
 					</tbody>
 				</table>
 			</div>

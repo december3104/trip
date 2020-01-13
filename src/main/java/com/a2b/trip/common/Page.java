@@ -225,9 +225,13 @@ public class Page implements java.io.Serializable {
 	}
 	
 	public void saveLastBlock(int totalCount) {
-		this.lastBlock = totalCount / (10 * this.contentNum);
-		if(totalCount % (10 * this.contentNum) > 0)
-			this.lastBlock++;
+		if(totalCount == 0)
+			this.lastBlock = 1;
+		else {
+			this.lastBlock = totalCount / (10 * this.contentNum);
+			if(totalCount % (10 * this.contentNum) > 0)
+				this.lastBlock++;
+		}
 	}
 	
 }

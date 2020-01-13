@@ -33,8 +33,6 @@
 							<input type="hidden" id="fb_id" name="fb_id" value="${ loginMember.member_id }">
 							<input type="hidden" id="fb_gender" name="fb_gender" value="${ loginMember.member_gender }">
 							<input type="hidden" id="fb_deadline_check" name="fb_deadline_check" value="N">
-							<input type="hidden" id="fb_number" name="fb_number" value="2">
-							<input type="hidden" id="fb_comp_number" name="fb_comp_number" value="2">
 								<div style="margin : 30px">
 									<div class="two fields">
 										<div class="field">

@@ -38,7 +38,7 @@
 											<tr>
 												<td>
 													<c:if test="${ fb.member_profile_rename ne null }">
-														<img class="ui tiny circular image" src="resources/images/member_profile/${qna.member_profile_rename }">
+														<img class="ui tiny circular image" src="resources/images/member_profile/${fb.member_profile_rename }">
 													</c:if>
 													<c:if test="${ fb.member_profile_rename eq null }">
 														<img class="ui tiny circular image" src="resources/images/molly.png">
@@ -75,7 +75,7 @@
 								<c:if test="${ fb.fb_id eq loginMember.member_id }">
 									<div class="sixteen wide column">
 										<div class="center aligned" style="margin:2%">
-											<button onclick="location.href='goPageUpdateFellowBoard.do?fb_no=${ fb.fb_no }'" class="ui button" style="width : 120px">수정하기</button>
+											<button onclick="goPageUpdateFellowBoard();" class="ui button" style="width : 120px">수정하기</button>
 											&nbsp;&nbsp;&nbsp;
 											<button onclick="location.href='deleteFellowBoard.do?fb_no=${ fb.fb_no }'" class="ui button" style="width : 120px">삭제하기</button>
 										</div>
@@ -123,10 +123,10 @@
 												<tr>
 													<div class="ui horizontal list" style="margin-left:30px;">
 														<div class="item">
-															<c:if test="${ loginMember.member_profile_rename ne null }">
-																<img class="ui mini circular image" src="resources/images/member_profile/${ loginMember.member_profile_rename }">
+															<c:if test="${ list.member_profile_rename ne null }">
+																<img class="ui mini circular image" src="resources/images/member_profile/${ list.member_profile_rename }">
 															</c:if>
-															<c:if test="${ loginMember.member_profile_rename eq null }">
+															<c:if test="${ list.member_profile_rename eq null }">
 																<img class="ui mini circular image" src="resources/images/molly.png">
 															</c:if>
 															<div class="content">
@@ -198,5 +198,17 @@
 <footer>
 	<jsp:include page="/WEB-INF/views/footer.jsp" />
 </footer>
+<script type="text/javascript">
+function goPageUpdateFellowBoard(){
+	var listSize = ${ fmList.size() };
+	var fbNo = ${ fb.fb_no };
+	if(listSize >0){
+		alert("댓글이 달린 글은 수정할 수 없습니다.");
+	}else{
+		location.href='goPageUpdateFellowBoard.do?fb_no='+fbNo;
+	}
+}
+
+</script>
 </body>
 </html>

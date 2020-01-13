@@ -29,12 +29,11 @@
 				<div class="ui card" style="width:auto;">
 					<div class="card"> 
 						<div class="content">
-							<form class="ui form" action="insertFellowBoard.do" method="post">
+							<form class="ui form" action="updateFellowBoard.do" method="post">
 							<input type="hidden" id="fb_id" name="fb_id" value="${ loginMember.member_id }">
 							<input type="hidden" id="fb_gender" name="fb_gender" value="${ loginMember.member_gender }">
 							<input type="hidden" id="fb_deadline_check" name="fb_deadline_check" value="N">
-							<input type="hidden" id="fb_number" name="fb_number" value="2">
-							<input type="hidden" id="fb_comp_number" name="fb_comp_number" value="2">
+							<input type="hidden" id="fb_no" name="fb_no" value="${ fb.fb_no }">
 								<div style="margin : 30px">
 									<div class="two fields">
 										<div class="field">
@@ -76,7 +75,7 @@
 									</div>
 									<div style="text-align:center">
 									<button class="ui primary button" id="submitButton">수정</button>&nbsp;&nbsp;&nbsp;
-									<button class="ui button" onclick="location.href='selectAllFellowBoard.do?currentPage=1&contentNum=10'; return false">취소</button>
+									<button class="ui button" onclick="location.href='selectOneFellowBoard.do?fb_no=${fb.fb_no}'; return false">취소</button>
 									</div>
 								</div>
 							</form>

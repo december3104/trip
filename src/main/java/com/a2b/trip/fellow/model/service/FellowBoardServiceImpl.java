@@ -87,4 +87,14 @@ public class FellowBoardServiceImpl implements FellowBoardService {
 	public ArrayList<FellowBoard> selectListFellowBoard(Page page) {
 		return fellowBoardDao.selectListFellowBoard(page);
 	}
+
+	@Override
+	public int updateFellowBoard(FellowBoard fb) {
+		return fellowBoardDao.updateFellowBoard(fb);
+	}
+
+	@Override
+	public int deleteFellowBoard(int fb_no) {
+		return fellowBoardDao.deleteFellowBoard(fb_no);
+	}
 }

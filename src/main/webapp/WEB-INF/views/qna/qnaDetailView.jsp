@@ -90,14 +90,22 @@
 									</div>
 								</div>
 								<div class="column"	style="width: 75%; text-align: left; padding: 1rem 1rem 1rem 1rem; margin-top: 2%;font-size:4;">
-									<p><font size="4">${QC.qc_content }</font></p>
-									<c:if test="${loginMember.member_level eq '3' }">
-										<button class="ui button" 
-										style="font-family:GodoM;background:#c0e7f8;float:right;padding: 0px 20px 0px 20px;
-										text-align: right;height: 35px;margin-top: 4.2%;margin-right: 5.8%;" 
-										onclick="location.href='updateReplyQnAPage.ad?qna_no=${qna.qna_no}'">수정</button>
-									</c:if>
-									<p style="margin-top: 8%;">${QC.qc_date }에 작성</p>
+									<p>
+										<font size="4">${QC.qc_content }</font>
+									</p>
+									<p style="margin-top: 8%;">${QC.qc_date }에 작성
+										<c:if test="${loginMember.member_level eq '3' }">
+											<button class="ui button" 
+											style="font-family:GodoM;background:#c0e7f8;float:right;padding: 0px 20px 0px 20px;
+											text-align: right;height: 35px;" 
+											onclick="location.href='updateReplyQnAPage.ad?qna_no=${qna.qna_no}'">수정</button>
+											
+											<button class="ui button" 
+											style="font-family:GodoM;background:#c0e7f8;float:right;padding: 0px 20px 0px 20px;
+											text-align: right;height: 35px; margin-right: 2%;"
+											onclick="location.href='deleteReplyQnA.ad?qna_no=${qna.qna_no}'">삭제</button>
+										</c:if>
+									</p>
 								</div>
 							</div>
 						</div>

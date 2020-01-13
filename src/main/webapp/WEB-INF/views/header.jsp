@@ -152,7 +152,7 @@ $(function(){
 		<div class="menu">
 			<div class="item" onclick="location.href='selectListAllNotice.do'">공지사항</div>
 			<div class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">Q&A</div>
-			<div class="item">가이드 신청</div>
+			<div class="item" onclick="location.href='guideApplyPage.do'">가이드 신청</div>
 		</div>
 	</a>
 	<!-- 우측 상단 사용자정보&아이콘들 -->

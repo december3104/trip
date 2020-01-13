@@ -32,6 +32,10 @@
 		SELECT COUNT(*) FROM FELLOWBOARD
 	</select>
 	
+	<select id="selectMyTotal" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM FELLOWBOARD WHERE FB_ID = #{ value }
+	</select>
+	
 	<select id="selectAllFellowBoard" parameterType="Page" resultType="FellowBoard">
 		<![CDATA[
 			SELECT * FROM (SELECT ROWNUM RNUM, FB_NO, FB_ID, FB_TITLE, FB_CONTENT, FB_START_DATE, FB_END_DATE, FB_CONTRY, FB_CITY, FB_GENDER, FB_WRITE_DATE, FB_DEADLINE_CHECK FROM 
@@ -54,5 +58,23 @@
 	<insert id="insertFellowBoard" parameterType="FellowBoard">
 		INSERT INTO FELLOWBOARD VALUES (FELLOWBOARD_SEQ.NEXTVAL, #{ fb_id }, #{ fb_title }, #{ fb_content }, #{ fb_start_date }, #{ fb_end_date }, #{ fb_contry }, #{ fb_city }, #{ fb_gender }, sysdate, #{ fb_deadline_check })
 	</insert>
+	
+	<select id="selectListMyFellowBoard" parameterType="Page" resultType="FellowBoard">
+		<![CDATA[
+		SELECT * FROM (SELECT ROWNUM RNUM, FB_NO, FB_ID, FB_TITLE, FB_CONTENT, FB_START_DATE, FB_END_DATE, FB_CONTRY, FB_CITY, FB_GENDER, FB_WRITE_DATE, FB_DEADLINE_CHECK FROM
+		(SELECT * FROM FELLOWBOARD WHERE FB_ID=#{qna_id} ORDER BY FB_NO DESC)) WHERE RNUM >= #{startRow} AND RNUM <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="selectSearchTotal" parameterType="Page" resultType="_int">
+		SELECT COUNT(*) FROM FELLOWBOARD WHERE FB_CONTRY LIKE '%' || #{ search } || '%' OR FB_CITY LIKE '%' || #{ search } || '%'
+	</select>
+	
+	<select id="selectListFellowBoard" parameterType="Page" resultType="FellowBoard">
+		<![CDATA[
+		SELECT * FROM (SELECT ROWNUM RNUM, FB_NO, FB_ID, FB_TITLE, FB_CONTENT, FB_START_DATE, FB_END_DATE, FB_CONTRY, FB_CITY, FB_GENDER, FB_WRITE_DATE, FB_DEADLINE_CHECK FROM 
+		(SELECT * FROM FELLOWBOARD WHERE FB_CONTRY LIKE '%' || #{ search } || '%' OR FB_CITY LIKE '%' || #{ search } || '%' ORDER BY FB_NO DESC)) WHERE RNUM >= #{ startRow } AND RNUM <= #{ endRow }
+		]]>
+	</select>
 	
 </mapper>

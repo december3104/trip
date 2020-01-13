@@ -52,10 +52,10 @@
 					  		<th colspan="3">
 					  			<div class="ui grid">
 					  				<div class="five wide column">
-					  					<form class="ui form" style="margin-left : 2%">				    		
+					  					<form class="ui form" action="selectListFellowBoard.do" method="get" style="margin-left : 2%">				    		
 								    		<div class="ui icon input">
-												<input type="text" placeholder="검색할 내용이나 제목을 입력하세요." style="width:300px;">
-				  								<i class="circular search link icon"></i>								
+												<input type="text" placeholder="국가/도시 명을 입력하세요." style="width:300px;" name="search">
+				  								<i class="circular search link icon"></i>					
 											</div>
 										</form>
 					  				</div>
@@ -84,7 +84,7 @@
 					  				</div>
 					  				<div class="three wide column right aligned">
 						  				<c:if test="${ sessionScope.loginMember ne null }">
-											<button class="ui button" style="font-family : GodoM;height:45px; width:130px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
+											<button class="ui button" style="font-family : GodoM;height:45px; width:140px; background:#c0e7f8;" onclick="location.href='selectListMyFellowBoard.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
 										</c:if>
 					  				</div>
 					  			</div>

@@ -491,10 +491,10 @@ public class MemberController {
 	@RequestMapping("deleteDetailForcedExitMember.ad")
 	public String deleteDetailForcedExitMember(@RequestParam("member_id") String member_id) {
 		int result = memberService.deleteDetailForcedExitMember(member_id);
+		logger.info(result + "개 행 처리!");
+		String viewFileName = " ";
 		
-		String viewFileName = "redirect:/moveMainPage.do";
-		
-		if (result <= 0) {		// 회원 가입 실패 했을 경우
+		if (result == 1) {		// 회원 가입 실패 했을 경우
 			viewFileName = "redirect:/selectListAllMember.ad?currentPage=1&contentNum=10";
 		} else {
 			viewFileName = "common/error";

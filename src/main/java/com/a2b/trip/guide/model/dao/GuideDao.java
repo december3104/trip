@@ -37,4 +37,8 @@ public class GuideDao {
 	public int updateDetailAcceptGuide2(String guide_id) {
 		return sqlSession.update("memberMapper.updateDetailAcceptGuide2", guide_id);
 	}
+
+	public int updateDetailForcedExitGuide(String guide_id) {
+		return sqlSession.delete("guideMapper.updateDetailForcedExitGuide", guide_id);
+	}
 }

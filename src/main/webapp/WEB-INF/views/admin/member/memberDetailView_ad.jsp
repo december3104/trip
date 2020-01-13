@@ -84,7 +84,8 @@
 				</tr>	
 			</table>
 			<div style="text-align: center;">
-				<input class="ui button" style="background:#c0e7f8;" type="submit" value="강제탈퇴"> &emsp;&emsp;
+				member delete 수정 후 추가 href="deleteDetailForcedExitMember.ad?member_id=${member.member_id }"
+				<a><input class="ui button" style="background:#c0e7f8;" type="submit" value="강제탈퇴"></a> &emsp;&emsp;
 				<a href="selectListAllMember.ad"><input class="ui button" style="" type="button" value="뒤로"></a>
 			</div>
 		</div>

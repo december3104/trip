@@ -3,7 +3,6 @@ package com.a2b.trip.guide.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.jaas.LoginExceptionResolver;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,12 +10,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.a2b.trip.guide.model.service.GuideService;
 import com.a2b.trip.guide.model.vo.GuideDetail;
+import com.a2b.trip.member.model.service.MemberService;
 
 @Controller
 public class GuideController {
 
 	@Autowired
 	private GuideService guideService;
+	@Autowired
+	private MemberService memberService;
 	
 	//로그 처리용 객체 의존성 주입 처리함(종속 객체 주입)
 	private static final Logger logger = LoggerFactory.getLogger(GuideController.class);
@@ -79,4 +81,22 @@ public class GuideController {
 		return viewFileName;
 	}
 	
+	//가이드 자격박탈
+	@RequestMapping("updateDetailForcedExitGuide.ad")
+	public String updateDetailForcedExitGuide(@RequestParam("guide_id") String guide_id) {
+		logger.info(guide_id);
+		
+		int result1 = memberService.updateDetailForcedExitGuide(guide_id);
+		int result2 = guideService.updateDetailForcedExitGuide(guide_id);
+		
+		String viewFileName = "";
+				
+		if(result1 == 1 && result2 == 1 ) {
+			viewFileName = "redirect:/selectListAllGuide.ad?currentPage=1&contentNum=10";
+		}else {
+			viewFileName = "common/error";
+		}
+		
+		return viewFileName;
+	}
 }

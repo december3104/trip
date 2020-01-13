@@ -43,6 +43,11 @@ public class GuideServiceImpl implements GuideService {
 	public int updateDetailAcceptGuide2(String guide_id) {
 		return guideDao.updateDetailAcceptGuide2(guide_id);
 	}
+
+	@Override
+	public int updateDetailForcedExitGuide(String guide_id) {
+		return guideDao.updateDetailForcedExitGuide(guide_id);
+	}
 	
 	
 }

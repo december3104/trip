@@ -16,4 +16,6 @@ public interface GuideService {
 
 	int updateDetailAcceptGuide2(String guide_id);
 
+	int updateDetailForcedExitGuide(String guide_id);
+
 }

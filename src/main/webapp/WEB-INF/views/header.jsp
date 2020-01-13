@@ -145,10 +145,10 @@ $(function(){
 			<div class="item">공유 게시판</div>
 		</div>
 	</a> 
-	<a class="item godom">현지 가이드 매칭</a> 
-	<a class="item godom" href="selectAllFellowBoard.do?currentPage=1&contentNum=10">동행 찾기</a> 
-	<a class="item godom">이용방법</a> 
-	<a class="ui simple dropdown item godom">고객센터
+	<a class="item">현지 가이드 매칭</a> 
+	<a class="item" href="selectAllFellowBoard.do?currentPage=1&contentNum=10">동행 찾기</a> 
+	<a class="item">이용방법</a> 
+	<a class="ui simple dropdown item">고객센터
 		<div class="menu">
 			<div class="item" onclick="location.href='selectListAllNotice.do'">공지사항</div>
 			<div class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">Q&A</div>
@@ -180,10 +180,10 @@ $(function(){
 		<c:if test="${loginMember != null }">
 			<c:if test="${loginMember.member_level ne 3 }">
 			<div class="ui simple dropdown item" id="userDiv">
-				<c:if test="${loginMember.member_profile_rename != null }">
+				<c:if test="${loginMember.member_profile_rename ne null }">
 				<img class="ui mini circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }">
 				</c:if>
-				<c:if test="${loginMember.member_profile_rename == null }">
+				<c:if test="${loginMember.member_profile_rename eq null }">
 				<img class="ui mini circular image" src="resources/images/molly.png">
 				</c:if>
 				<div class="content">
@@ -201,21 +201,21 @@ $(function(){
 		
 		  	 <!-- 관리자 메뉴 -->
 		  	 <c:if test="${loginMember.member_level eq 3}">
-		      <a class="ui simple dropdown item godom">회원 관리
+		      <a class="ui simple dropdown item">회원 관리
 		            <div class="menu">
 		               <div class="item" onclick="location.href='selectListAllMember.ad?currentPage=1&contentNum=10'">일반회원</div><!-- 0 -->
 		               <div class="item" onclick="location.href='selectListAllGuide.ad?currentPage=1&contentNum=10'">가이드</div><!-- 0 -->
 		               <div class="item" onclick="location.href='selectListApplyGuide.ad?currentPage=1&contentNum=10'">가이드 신청</div> <!--?currentPage=1&contentNum=10 -->
 		            </div>
 		      </a>
-		      <a class="ui simple dropdown item godom">신고 처리
+		      <a class="ui simple dropdown item">신고 처리
 		            <div class="menu">
 		               <div class="item" onclick="location.href='selectListNormalReport.ad?currentPage=1&contentNum=10'">일반회원</div><!-- 0 -->
 		               <div class="item" onclick="location.href='selectListGuideReport.ad?currentPage=1&contentNum=10'">가이드</div><!-- 0 -->
 		            </div>
 		      </a>
-		      <a class="item godom" onclick="location.href='selectListAllNotice.ad?currentPage=1&contentNum=10'">공지사항 관리</a><!-- 0 -->
-		      <a class="item godom" onclick="location.href='qna.do?currentPage=1&contentNum=10'">QnA 관리</a>
+		      <a class="item" onclick="location.href='selectListAllNotice.ad?currentPage=1&contentNum=10'">공지사항 관리</a><!-- 0 -->
+		      <a class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">QnA 관리</a>
       			<!-- 우측 상단 사용자정보&아이콘들 -->
 				<div class="item right menu" align="right" style="margin-right: 0;">
 					<i class="snowflake large icon" style="margin-right: 10px;"></i> 

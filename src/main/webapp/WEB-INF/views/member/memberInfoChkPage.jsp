@@ -78,10 +78,11 @@ $(function(){
 			<table class="ui  celled table" style="text-align:center; font-size: 15pt; background: #D3F0FE">
 				<tr><td class="sidebarTd">내 가이드북 보기</td></tr>
 				<tr><td class="sidebarTd">가이드 매칭 기록</td></tr>
-				<tr><td class="sidebarTd" onclick="location.href='selectMyFellowMatching.do'">동행 찾기 기록</td></tr>
+				<tr><td class="sidebarTd" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</td></tr>
 			</table>
 		</div>
+
 	</div>
 	<div style="float:left; margin-left: 3%; width: 75%">
 		<h2 style="font-family: LotteMartDream">내 정보 수정</h2>

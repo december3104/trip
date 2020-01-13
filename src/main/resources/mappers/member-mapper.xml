@@ -56,7 +56,7 @@
 			  (select rownum mnum, MEMBER_ID, MEMBER_NAME, MEMBER_PWD, MEMBER_EMAIL, MEMBER_GENDER, MEMBER_PHONE, MEMBER_BIRTH, MEMBER_PROFILE_ORIGINAL, 
 			  						MEMBER_PROFILE_RENAME, MEMBER_REPORT_COUNT, GUIDE_QUALIFICATION, MEMBER_LEVEL, ENROLL_DATE, GUIDE_APPLY_ALARM
 				from (select * from member order by ENROLL_DATE desc)
-				where member_secession = 'N')
+				where member_secession = 'N' and member_level = 1)
 		where mnum >= #{startRow} and mnum <= #{endRow} 
 		]]>
 	</select>
@@ -114,7 +114,7 @@
 	</update>
 	
 	<select id="selectTotal" resultType="_int">
-		select count(*) from member where member_secession = 'N'
+		select count(*) from member where member_secession = 'N' and member_level = 1
 	</select>
 	
 	<select id="selectTotalGuide" resultType="_int">

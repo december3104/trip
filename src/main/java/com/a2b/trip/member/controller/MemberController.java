@@ -46,15 +46,18 @@ public class MemberController {
 	@RequestMapping(value="loginMember.do", method=RequestMethod.POST)
 	public String loginMember(Member member, HttpSession session, Model model) {
 		
-		Member loginMember = memberService.loginChkMember(member);
-		
+		Member loginMember = null;
 		String viewFileName = "main";
+		if (member != null) {
+			loginMember = memberService.loginChkMember(member);
 			if (bcryptPasswordEncoder.matches(member.getMember_pwd(), loginMember.getMember_pwd())) {
 				session.setAttribute("loginMember", loginMember);
-			} else {
-				model.addAttribute("message", "일치하는 회원 정보가 없습니다.");
-				viewFileName = "common/error";
+			}
+		} else {
+			model.addAttribute("message", "일치하는 회원 정보가 없습니다.");
+			viewFileName = "common/error";
 		}
+		
 		return viewFileName;
 	}
 	

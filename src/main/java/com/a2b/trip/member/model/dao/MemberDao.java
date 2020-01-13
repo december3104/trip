@@ -95,11 +95,11 @@ public class MemberDao {
 	public int selectTotalApplyGuide() {
 		return sqlSession.selectOne("memberMapper.selectTotalApplyGuide");
 	}
-
+	//일반 회원 강제 탈퇴
 	public int deleteDetailForcedExitMember(String member_id) {
 		return sqlSession.delete("memberMapper.deleteDetailForcedExitMember", member_id);
 	}
-
+	//가이드 회원 자격박탈
 	public int updateDetailForcedExitGuide(String guide_id) {
 		return sqlSession.update("memberMapper.updateDetailForcedExitGuide", guide_id);
 	}

@@ -76,4 +76,8 @@ public class QnaDao {
 
 	}
 
+	public int deleteReplyQnA(int qna_no) {
+		return sqlSession.delete("qnaMapper.deleteReplyQnA", qna_no);
+	}
+
 }

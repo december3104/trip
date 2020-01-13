@@ -71,4 +71,7 @@
 		update qnacomment set qc_content = #{qc_content}, qc_date = sysdate where qna_no = #{qna_no} 
 	</update>
 
+	<delete id="deleteReplyQnA" parameterType="_int">
+		delete qnacomment where qna_no = #{value}
+	</delete>
 </mapper>

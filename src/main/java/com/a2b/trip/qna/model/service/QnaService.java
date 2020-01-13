@@ -21,5 +21,6 @@ public interface QnaService {
 	QnaComment selectQnaComment(int qna_no);
 	int insertReplyQnA(QnaComment qc);
 	int updateReplyQnA(QnaComment qc);
+	int deleteReplyQnA(int qna_no);
 
 }

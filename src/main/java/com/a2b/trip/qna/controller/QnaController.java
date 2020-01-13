@@ -248,6 +248,20 @@ public class QnaController {
 			return viewFileName;
 	}
 	
+	//qna 답글 삭제
+	@RequestMapping("deleteReplyQnA.ad")
+	public String deleteReplyQnA(@RequestParam("qna_no") int qna_no) {
+		int result = qnaService.deleteReplyQnA(qna_no);
+		
+		logger.info(result + "개 행 처리");
+		String viewFileName = "";
+		if (result == 1) {
+			viewFileName = "redirect:selectDetailViewQna.do?qna_no="+qna_no;
+		}else {
+			viewFileName = "common/error";
+		}
+			return viewFileName;
+	}
 	
 	//end
 

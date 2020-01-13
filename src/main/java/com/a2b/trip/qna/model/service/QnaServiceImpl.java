@@ -85,6 +85,11 @@ public class QnaServiceImpl implements QnaService {
 	public int updateReplyQnA(QnaComment qc) {
 		return qnaDao.updateReplyQnA(qc);
 	}
+	//qnacomment 삭제
+	@Override
+	public int deleteReplyQnA(int qna_no) {
+		return qnaDao.deleteReplyQnA(qna_no);
+	}
 	
 	
 	

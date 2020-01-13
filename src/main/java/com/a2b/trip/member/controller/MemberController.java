@@ -46,10 +46,9 @@ public class MemberController {
 	@RequestMapping(value="loginMember.do", method=RequestMethod.POST)
 	public String loginMember(Member member, HttpSession session, Model model) {
 		
-		Member loginMember = null;
 		String viewFileName = "main";
-		if (member != null) {
-			loginMember = memberService.loginChkMember(member);
+		Member loginMember = memberService.loginChkMember(member);
+		if (loginMember != null) {
 			if (bcryptPasswordEncoder.matches(member.getMember_pwd(), loginMember.getMember_pwd())) {
 				session.setAttribute("loginMember", loginMember);
 			}

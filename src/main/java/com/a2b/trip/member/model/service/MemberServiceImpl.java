@@ -107,7 +107,17 @@ public class MemberServiceImpl implements MemberService {
 	public int selectTotalApplyGuide() {
 		return memberDao.selectTotalApplyGuide();
 	}
-
+	//일반 회원 강제 탈퇴
+	@Override
+	public int deleteDetailForcedExitMember(String member_id) {
+		return memberDao.deleteDetailForcedExitMember(member_id);
+	}
+	//가이드 자격 박탈
+	@Override
+	public int updateDetailForcedExitGuide(String guide_id) {
+		return memberDao.updateDetailForcedExitGuide(guide_id);
+	}
+	
 
 	
 	

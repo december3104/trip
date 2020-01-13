@@ -96,6 +96,14 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectTotalApplyGuide");
 	}
 
+	public int deleteDetailForcedExitMember(String member_id) {
+		return sqlSession.delete("memberMapper.deleteDetailForcedExitMember", member_id);
+	}
+
+	public int updateDetailForcedExitGuide(String guide_id) {
+		return sqlSession.update("memberMapper.updateDetailForcedExitGuide", guide_id);
+	}
+
 
 
 

@@ -484,6 +484,21 @@ public class MemberController {
 		return viewFileName;
 	}
 	
+	//일반 회원 강제 탈퇴
+	@RequestMapping("deleteDetailForcedExitMember.ad")
+	public String deleteDetailForcedExitMember(@RequestParam("member_id") String member_id) {
+		int result = memberService.deleteDetailForcedExitMember(member_id);
+		
+		String viewFileName = "redirect:/moveMainPage.do";
+		
+		if (result <= 0) {		// 회원 가입 실패 했을 경우
+			viewFileName = "redirect:/selectListAllMember.ad?currentPage=1&contentNum=10";
+		} else {
+			viewFileName = "common/error";
+		}
+		
+		return viewFileName;
+	}
 	
 	
 	//end

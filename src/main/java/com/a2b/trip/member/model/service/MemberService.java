@@ -24,5 +24,7 @@ public interface MemberService {
 	int selectTotal();
 	int selectTotalGuide();
 	int selectTotalApplyGuide();
+	int deleteDetailForcedExitMember(String member_id);
+	int updateDetailForcedExitGuide(String guide_id);
 	
 }

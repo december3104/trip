@@ -127,4 +127,12 @@
 		select count(*) from member where guide_qualification='WAIT'
 	</select>
 	
+	<update id="updateDetailForcedExitGuide" parameterType="String">
+		update member set guide_qualification = 'NONE' , member_level = 1 where member_id = #{value}
+	</update>
+	
+	<update id="updateDetailForcedExitGuide" parameterType="String">
+		update member set member_secession = 'Y' where member_id = #{value}
+	</update>
+	
 </mapper>

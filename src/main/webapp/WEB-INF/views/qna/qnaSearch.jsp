@@ -130,8 +130,6 @@
 <%-- 							      			</c:if> --%>
 <%-- 					      				</c:if> --%>
 <%-- 					      			</c:if> --%>
-					      			
-					      			<br>
 					      			<small><font color="gray">${ list.qna_id }님이 ${ list.qna_date }에 작성</font></small>
 					      		</td>
 					      		<td>
@@ -232,8 +230,8 @@ function changeContent2(value){
 	var ct = content.indexOf(sech);
 	var text = content.replace(/[<][^>]*[>]/gi, "");
 	
-	var aaa = new RegExp("^<p>*"+sech+"*</p>$", 'gi');
-	console.log("뭐니 = " + aaa);
+	var aaa = new RegExp("*"+sech+"*", 'gi');
+// 	console.log("뭐니 = " + aaa);
 // 	var a = "개발asdfasdfasdf개발"; 
 // 	var results = a.match(/개발/g); 
 // 	if(results != null) {

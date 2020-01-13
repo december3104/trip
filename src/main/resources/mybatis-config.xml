@@ -22,7 +22,9 @@
 		<typeAlias type="com.a2b.trip.guidebook.model.vo.Guidebook" alias="Guidebook" />
 		<typeAlias type="com.a2b.trip.place.model.vo.Place" alias="Place" />
 		<typeAlias type="com.a2b.trip.qna.model.vo.QnaComment" alias="QnaComment"/>
-		<typeAlias type="com.a2b.trip.location.model.vo.Location" alias="Location"/>
+		<typeAlias type="com.a2b.trip.guidematching.model.vo.GuideBoard" alias="GuideBoard" />
+		<typeAlias type="com.a2b.trip.guidematching.model.vo.GuideMatching" alias="GuideMatching" />
+		<typeAlias type="com.a2b.trip.guidematching.model.vo.MyGuideMatching" alias="MyGuideMatching" />
 	</typeAliases>
 	
 	<mappers>
@@ -33,8 +35,7 @@
 		<mapper resource="mappers/notice-mapper.xml"/>
 		<mapper resource="mappers/fellow-mapper.xml" />
 		<mapper resource="mappers/guidebook-mapper.xml" />
-    	<mapper resource="mappers/place-mapper.xml" />
-    	<mapper resource="mappers/location-mapper.xml"/>
-		
+    <mapper resource="mappers/place-mapper.xml" />
+		<mapper resource="mappers/guidematching-mapper.xml" />
 	</mappers>
 </configuration>

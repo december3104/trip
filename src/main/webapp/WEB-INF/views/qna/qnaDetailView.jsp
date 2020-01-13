@@ -23,66 +23,53 @@
 						<h1>${ qna.qna_title }</h1>
 					</div>
 				</div>
-				<div class="ui grid">
-					<div class="sixteen wide column">
-						<div class="ui card" style="width: auto;">
-							<div class="card">
-								<div class="content">
-									<div class="ui grid">
-										<div class="three wide column">
-											<div style="margin: 30px 30px 30px 10px;">
-												<table style="width: 200px; text-align: center;">
-													<tr>
-														<td><h1>${ qna.qna_id }</h1></td>
-													</tr>
-													<tr>
-														<td><c:if
-																test="${ qna.member_profile_rename ne null }">
-																<img class="ui tiny circular image"
-																	src="resources/images/member_profile/${qna.member_profile_rename }">
-															</c:if> <c:if test="${ qna.member_profile_rename eq null }">
-																<img class="ui tiny circular image"
-																	src="resources/images/molly.png">
-															</c:if></td>
-													</tr>
-												</table>
-											</div>
-										</div>
-										<div class="thirteen wide column">
-											<div style="margin: 5%">
-
-												<font size="4">${ qna.qna_content }</font>
-
-											</div>
-											<div style="margin: 5%;">
-												<font size="2" color="#747373">${ qna.qna_date }에 작성</font>
-											</div>
-										</div>
-										<!-- 13칸 -->
-									</div>
-									<!-- grid -->
-									<c:if test="${ qna.qna_id eq loginMember.member_id }">
-										<div class="ui grid">
-											<div class="sixteen wide column">
-												<div class="center aligned" style="margin: 2%">
-													<button
-														onclick="location.href='goPageUpdateQna.do?qna_no=${ qna.qna_no }'"
-														class="ui button" style="width: 120px">수정하기</button>
-													&nbsp;&nbsp;&nbsp;
-													<button
-														onclick="location.href='deleteQna.do?qna_no=${ qna.qna_no }'"
-														class="ui button" style="width: 120px">삭제하기</button>
-												</div>
-											</div>
-										</div>
+				<div class="ui card" style="width: 100%;">
+					<div class="ui two column grid">
+						<div class="row" style="height: 200px;">
+							<div class="column"	style="width: 22%; text-align: center; padding: 1rem 1rem 1rem 1rem;">
+								<p style="font-size: 2rem; margin: 10px 0px 0px 0px;">${ qna.qna_id }</p>
+								<div>
+									<c:if test="${ qna.member_profile_rename ne null }">
+										<img class="ui tiny circular image"
+											src="resources/images/member_profile/${qna.member_profile_rename }"
+											style="display: block; margin: 0px auto;">
+									</c:if>
+									<c:if test="${ qna.member_profile_rename eq null }">
+										<img class="ui tiny circular image"
+											src="resources/images/molly.png"
+											style="display: block; margin: 0px auto;">
 									</c:if>
 								</div>
 							</div>
+							<div class="column"	style="width: 75%; text-align: left; padding: 1rem 1rem 1rem 1rem; margin-top: 2%;font-size:4;">
+								<p><font size="4">${ qna.qna_content }</font></p>
+								<p style="margin-top: 8%;">${ qna.qna_date }에 작성</p>
+							</div>
 						</div>
 					</div>
-				</div>
+					<c:if test="${ qna.qna_id eq loginMember.member_id }">
+						<div class="ui grid">
+							<div class="sixteen wide column">
+								<div class="center aligned" style="margin: 2%">
+									<button
+										onclick="location.href='goPageUpdateQna.do?qna_no=${ qna.qna_no }'"
+										class="ui button" style="width: 120px">수정하기</button>
+									&nbsp;&nbsp;&nbsp;
+									<button
+										onclick="location.href='deleteQna.do?qna_no=${ qna.qna_no }'"
+										class="ui button" style="width: 120px">삭제하기</button>
+								</div>
+							</div>
+						</div>
+					</c:if>
+				</div><!-- card 끝 -->
 				<!-- qna 답글 -->
 				<!-- 답글이 있는 경우 -->
+				<div class="ui grid" style="margin-top:50px">
+					<div class="sixteen wide column">
+						<div><h3>운영자 댓글</h3></div>
+					</div>
+				</div>
 				<c:if test="${!empty QC }">
 					<div class="ui card" style="width: 100%;">
 						<div class="ui three column grid">
@@ -153,6 +140,20 @@
 									</form>
 								</div>
 							</div>
+						</div>
+					</c:if>
+				</c:if>
+				<c:if test="${loginMember.member_level ne '3' }">
+					<!-- 답글이 없는 경우 -->
+					<c:if test="${empty QC }">
+						<div class="ui card" style="width: 100%;">
+							<div class="card"> 
+							<div class="content">
+								<div class="center aligned middle aligned" style="margin : 5%">
+									<h2>운영자 댓글 대기중~</h2>
+								</div>
+							</div>
+						</div>
 						</div>
 					</c:if>
 				</c:if>

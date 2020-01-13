@@ -164,11 +164,11 @@ $(function(){
 			<!-- 알람 있을 경우 갯수만큼 -->
 			<div class="ui circular yellow mini floating label">2</div>
 		</i> 
-		<i class="chat icons" style="margin-right: 30px;"> 
+		<a href="selectAllChatRoom.do"><i class="chat icons" style="margin-right: 30px;">
 			<i class="comments large icon"></i> 
 			<!-- 알람 있을 경우 갯수만큼 -->
 			<div class="ui circular blue mini floating label">2</div>
-		</i>
+		</i></a>
 		</c:if>
 		
 		<!-- 로그인버튼 -->

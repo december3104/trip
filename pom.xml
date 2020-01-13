@@ -259,7 +259,16 @@
 			<artifactId>junit</artifactId>
 			<version>4.7</version>
 			<scope>test</scope>
-		</dependency>        
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
+		<!-- 웹소켓 -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		       
 	</dependencies>
     <build>
         <plugins>

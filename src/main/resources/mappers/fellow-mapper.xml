@@ -34,7 +34,7 @@
 	
 	<select id="selectAllFellowBoard" parameterType="Page" resultType="FellowBoard">
 		<![CDATA[
-			SELECT * FROM (SELECT ROWNUM RNUM, FB_NO, FB_ID, FB_TITLE, FB_CONTENT, FB_START_DATE, FB_END_DATE, FB_CONTRY, FB_CITY, FB_GENDER, FB_WRITE_DATE, FB_DEADLINE_CHECK, FB_NUMBER, FB_COMP_NUMBER FROM 
+			SELECT * FROM (SELECT ROWNUM RNUM, FB_NO, FB_ID, FB_TITLE, FB_CONTENT, FB_START_DATE, FB_END_DATE, FB_CONTRY, FB_CITY, FB_GENDER, FB_WRITE_DATE, FB_DEADLINE_CHECK FROM 
 			(SELECT * FROM FELLOWBOARD ORDER BY FB_NO DESC)) LEFT JOIN MEMBER ON MEMBER_ID = FB_ID WHERE RNUM >= #{ startRow } AND RNUM <= #{ endRow }
 		]]>
 	</select>
@@ -52,7 +52,7 @@
 	</select>
 	
 	<insert id="insertFellowBoard" parameterType="FellowBoard">
-		INSERT INTO FELLOWBOARD VALUES (FELLOWBOARD_SEQ.NEXTVAL, #{ fb_id }, #{ fb_title }, #{ fb_content }, #{ fb_start_date }, #{ fb_end_date }, #{ fb_contry }, #{ fb_city }, #{ fb_gender }, sysdate, #{ fb_deadline_check }, #{ fb_number }, #{ fb_comp_number })
+		INSERT INTO FELLOWBOARD VALUES (FELLOWBOARD_SEQ.NEXTVAL, #{ fb_id }, #{ fb_title }, #{ fb_content }, #{ fb_start_date }, #{ fb_end_date }, #{ fb_contry }, #{ fb_city }, #{ fb_gender }, sysdate, #{ fb_deadline_check })
 	</insert>
 	
 </mapper>

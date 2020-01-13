@@ -67,4 +67,24 @@ public class FellowBoardServiceImpl implements FellowBoardService {
 	public int updateFellowBoardReport(int fb_no) {
 		return fellowBoardDao.updateFellowBoardReport(fb_no);
 	}
+
+	@Override
+	public int selectMyTotal(String qna_id) {
+		return fellowBoardDao.selectMyTotal(qna_id);
+	}
+
+	@Override
+	public ArrayList<FellowBoard> selectListMyFellowBoard(Page page) {
+		return fellowBoardDao.selectListMyFellowBoard(page);
+	}
+
+	@Override
+	public int selectSearchTotal(String search) {
+		return fellowBoardDao.selectSearchTotal(search);
+	}
+
+	@Override
+	public ArrayList<FellowBoard> selectListFellowBoard(Page page) {
+		return fellowBoardDao.selectListFellowBoard(page);
+	}
 }

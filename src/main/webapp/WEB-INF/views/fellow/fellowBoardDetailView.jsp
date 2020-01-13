@@ -82,20 +82,22 @@
 									</div>
 								</c:if>
 							</div>
-							<c:if test="${ loginMember.member_id ne fb.fb_id }">
-								<div class="ui grid">
-									<div class="sixteen wide column">
-										<form class="ui form" style="padding : 40px;">
-										 	<div class="field">
-										 		<label>동행 신청</label>
-										 		<input type="text" placeholder="신청 시 간단하게 하고 싶은 말을 입력하세요.(100자 이내)">
-										 	</div>
-										 	<div class="center aligned">
-										 		<button class="ui primary button" id="submitButton">신청하기</button>
-										 	</div>
-										</form>
+							<c:if test="${ !empty loginMember }">
+								<c:if test="${ loginMember.member_id ne fb.fb_id }">
+									<div class="ui grid">
+										<div class="sixteen wide column">
+											<form class="ui form" style="padding : 40px;">
+											 	<div class="field">
+											 		<label>동행 신청</label>
+											 		<input type="text" placeholder="신청 시 간단하게 하고 싶은 말을 입력하세요.(100자 이내)">
+											 	</div>
+											 	<div class="center aligned">
+											 		<button class="ui primary button" id="submitButton">신청하기</button>
+											 	</div>
+											</form>
+										</div>
 									</div>
-								</div>
+								</c:if>
 							</c:if>
 						</div>	
 					</div>

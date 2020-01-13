@@ -27,34 +27,34 @@
 <div class="bodyCss" style="margin-top: 0; margin-left: 10%; margin-right: 10%">
 	<div class="bodyContentCss">
 	<div class="ui container" style="margin:120px 0 120px 0;">
-		<div class="ui grid">		
+		<div class="ui grid">
 			<div class="fourteen wide column">
 				<table>
-						<tr>
-							<td><h1>QnA</h1></td>
-						</tr>
-						<tr>
-							<td><p>궁금한 점이 있으면 무엇이든 물어보세요!</p></td>
-						</tr>
-					</table>
+					<tr>
+						<td><h1>동행찾기</h1></td>
+					</tr>
+					<tr>
+						<td><p>해외에서 외로워 하지 마세요~</p></td>
+					</tr>
+				</table>
 			</div>
 			<div class="two wide column">
 				<c:if test="${!empty loginMember.member_id }">
-					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='goPageInsertQna.do'">글 쓰기</button>
+					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='goPageInsertFellowBoard.do'">글 쓰기</button>
 				</c:if>	
-			</div>		
+			</div>
 		</div>
 		<div class="ui grid">
 			<div class="sixteen wide column">
 				<table class="ui striped table">			
 					<tbody>			
-				  		<tr style="height:60px; background: #c8edfe;">
+				  		<tr style="height:60px;">
 					  		<th colspan="3">
 					  			<div class="ui grid">
 					  				<div class="five wide column">
-					  					<form class="ui form" action="selectListQna.do" method="get" style="margin-left : 2%">				    		
+					  					<form class="ui form" action="selectListFellowBoard.do" method="get" style="margin-left : 2%">				    		
 								    		<div class="ui icon input">
-												<input type="text" placeholder="검색할 내용이나 제목을 입력하세요." style="width:300px;" name="search">
+												<input type="text" placeholder="국가/도시 명을 입력하세요." style="width:300px;" name="search">
 				  								<i class="circular search link icon"></i>							
 											</div>
 										</form>
@@ -84,28 +84,57 @@
 					  				</div>
 					  				<div class="three wide column right aligned">
 						  				<c:if test="${ sessionScope.loginMember ne null }">
-											<button class="ui button" style="font-family : GodoM;height:45px; width:140px; background:#c0e7f8;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
+											<button class="ui button" style="font-family : GodoM;height:45px; width:140px; background:#c0e7f8;" onclick="location.href='selectListMyFellowBoard.do?fb_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
 										</c:if>
 					  				</div>
 					  			</div>
 							</th>
 						</tr>
-						<c:forEach var="list" items="${ qnaList }">
+						<c:forEach var="list" items="${ fbList }">
 							<tr>
-					      		<td style="padding-left:15px;width : 70%" colspan="2">
-					      			<c:url var="goToDetailView" value="selectDetailViewQna.do">
-					      				<c:param name="qna_no" value="${ list.qna_no }"></c:param>
-					      			</c:url>
-					      			<a href="${ goToDetailView }"><font size="3">${ list.qna_title }</font></a><br>
-					      			<small><font color="gray">${ list.qna_id }님이 ${ list.qna_date }에 작성</font></small>
+								<td style="width : 20%; padding-left:20px;">
+									<div class="ui horizontal list">
+										<div class="item">
+											<c:if test="${ list.member_profile_rename ne null }">
+												<img class="ui mini circular image" src="resources/images/member_profile/${ list.member_profile_rename }">
+											</c:if>
+											<c:if test="${ list.member_profile_rename eq null }">
+												<img class="ui mini circular image" src="resources/images/molly.png">
+											</c:if>
+											<div class="content">
+												<div class="header">${ list.fb_id }</div>
+												<c:if test="${ list.fb_gender eq 'M' }">
+													<i class="mars icon blue"></i>
+												</c:if>
+												<c:if test="${ list.fb_gender eq 'F' }">
+													<i class="venus icon red"></i>
+												</c:if>
+											</div>
+										</div>
+									</div>
+								</td>
+					      		<td style="width : 60%">
+					      			<div class="ui horizontal list">
+										<div class="item">
+											<div class="content">
+												<c:url var="goToDetailView" value="selectOneFellowBoard.do">
+					      							<c:param name="fb_no" value="${ list.fb_no }"></c:param>
+					      						</c:url>
+												<div style="margin-top:8px;"><a href="${ goToDetailView }">${ list.fb_title }</a></div>
+												<div style="margin-top:5px;"><small>동행일 : ${ list.fb_start_date } 부터 ${ list.fb_end_date } 까지</small></div>
+											</div>
+										</div>
+									</div>
 					      		</td>
 					      		<td>
-					      			<c:if test="${ list.qna_comment eq 'N' }">
-										답변 대기중
-									</c:if>
-									<c:if test="${ list.qna_comment ne 'N' }">
-										답변 완료
-									</c:if>
+					      			<div class="ui horizontal list">
+										<div class="item">
+											<div class="content">
+												<div>국가 : ${ list.fb_contry }</div>
+												<div>도시 : ${ list.fb_city }</div>
+											</div>
+										</div>
+									</div>
 					      		</td>
 							</tr>
 						</c:forEach>
@@ -143,22 +172,21 @@
 <footer>
 	<jsp:include page="/WEB-INF/views/footer.jsp" />
 </footer>
-
 <script type="text/javascript">
 /* 페이징 처리 함수 시작 */
 function page(idx){
 	var pagenum = idx;
 	var contentnum = $("#contentnum option:selected").val();
-	location.href="qna.do?currentPage=" + pagenum + "&contentNum=" + contentnum;
+	location.href="selectAllFellowBoard.do?currentPage=" + pagenum + "&contentNum=" + contentnum;
 }
 /* 페이징 처리 함수 끝 */
 
 //한페이지에 보여줄 리스트 갯수 함수
 function changeContentNum(){
 	var contentnum = $("#contentnum option:selected").val();
-	location.href="qna.do?contentNum=" + contentnum;
+	var qna_id = "${ loginMember.member_id }";
+	location.href="selectListMyFellowBoard.do?contentNum=" + contentnum + "&qna_id="+qna_id;
 };
-
 
 </script>
 </body>

@@ -14,16 +14,21 @@ public class GuideMatching implements Serializable {
 	private Date gm_date;
 	private int gm_number;
 	private String gb_alarm;
+	private String gb_report;
+	private String gm_report;
 
 	public GuideMatching() {}
 
-	public GuideMatching(int gb_no, String gm_id, Date gm_date, int gm_number, String gb_alarm) {
+	public GuideMatching(int gb_no, String gm_id, Date gm_date, int gm_number, String gb_alarm, String gb_report,
+			String gm_report) {
 		super();
 		this.gb_no = gb_no;
 		this.gm_id = gm_id;
 		this.gm_date = gm_date;
 		this.gm_number = gm_number;
 		this.gb_alarm = gb_alarm;
+		this.gb_report = gb_report;
+		this.gm_report = gm_report;
 	}
 
 	public int getGb_no() {
@@ -66,10 +71,27 @@ public class GuideMatching implements Serializable {
 		this.gb_alarm = gb_alarm;
 	}
 
+	public String getGb_report() {
+		return gb_report;
+	}
+
+	public void setGb_report(String gb_report) {
+		this.gb_report = gb_report;
+	}
+
+	public String getGm_report() {
+		return gm_report;
+	}
+
+	public void setGm_report(String gm_report) {
+		this.gm_report = gm_report;
+	}
+
 	@Override
 	public String toString() {
 		return "GuideMatching [gb_no=" + gb_no + ", gm_id=" + gm_id + ", gm_date=" + gm_date + ", gm_number="
-				+ gm_number + ", gb_alarm=" + gb_alarm + "]";
+				+ gm_number + ", gb_alarm=" + gb_alarm + ", gb_report=" + gb_report + ", gm_report=" + gm_report + "]";
 	}
+
 	
 }

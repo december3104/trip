@@ -57,4 +57,9 @@ public class PlaceDao {
 	public int deleteDaylist(int daylist_no) {
 		return sqlSession.delete("placeMapper.deleteDaylist", daylist_no);
 	}
+
+	//일정 전체 수정(이름,날짜)
+	public int updateDaylist(PlaceDaylist daylist) {
+		return sqlSession.update("placeMapper.updateDaylist", daylist);
+	}
 }

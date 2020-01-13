@@ -59,4 +59,10 @@ public class PlaceServiceImpl implements PlaceService {
 	public int deleteDaylist(int daylist_no) {
 		return placeDao.deleteDaylist(daylist_no);
 	}
+
+	//일정 전체 수정(이름,날짜)
+	@Override
+	public int updateDaylist(PlaceDaylist daylist) {
+		return placeDao.updateDaylist(daylist);
+	}
 }

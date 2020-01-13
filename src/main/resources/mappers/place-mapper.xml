@@ -44,4 +44,10 @@
 		delete from placedaylist where daylist_no=#{value}
 	</delete>
 	
+	<!-- 일정 전체 수정(이름,날짜) -->
+	<update id="updateDaylist" parameterType="PlaceDaylist">
+		update placedaylist set daylist_name = #{daylist_name}, daylist_start = #{daylist_start}, daylist_end = #{daylist_end} 
+		where daylist_no = #{daylist_no}	
+	</update>
+	
 </mapper>

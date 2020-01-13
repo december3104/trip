@@ -19,4 +19,8 @@ public interface FellowBoardService {
 	Fellow selectMyFellowBoardOne(String fm_id);
 	int insertFellowBoard(FellowBoard fb);
 	int updateFellowBoardReport(int fb_no);
+	int selectMyTotal(String qna_id);
+	ArrayList<FellowBoard> selectListMyFellowBoard(Page page);
+	int selectSearchTotal(String search);
+	ArrayList<FellowBoard> selectListFellowBoard(Page page);
 }

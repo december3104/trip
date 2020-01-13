@@ -139,6 +139,7 @@ public class QnaController {
 		return pageName;
 	}
 
+	//내가 쓴글 보기
 	@RequestMapping("selectListMyQna.do")
 	public String selectListMyQna(Page page, Model model) {
 

@@ -64,4 +64,22 @@ public class FellowBoardDao {
 	public int updateFellowBoardReport(int fb_no) {
 		return sqlSession.update("fellowMapper.updateFellowBoardReport", fb_no);
 	}
+
+	public int selectMyTotal(String qna_id) {
+		return sqlSession.selectOne("fellowMapper.selectMyTotal", qna_id);
+	}
+
+	public ArrayList<FellowBoard> selectListMyFellowBoard(Page page) {
+		List<FellowBoard> list = sqlSession.selectList("fellowMapper.selectListMyFellowBoard", page); 
+		return (ArrayList<FellowBoard>)list;
+	}
+
+	public int selectSearchTotal(String search) {
+		return sqlSession.selectOne("fellowMapper.selectSearchTotal", search);
+	}
+
+	public ArrayList<FellowBoard> selectListFellowBoard(Page page) {
+		List<FellowBoard> list = sqlSession.selectList("fellowMapper.selectListFellowBoard", page);
+		return (ArrayList<FellowBoard>)list;
+	}
 }

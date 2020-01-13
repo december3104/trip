@@ -203,7 +203,7 @@ function changeTitle(){
 		changeTitle2(qnaId);
 	}
 }
-
+ 
 function changeTitle2(value){
 	var title = $("#"+value).html();
 	var sech = '${ page.search }';
@@ -211,8 +211,8 @@ function changeTitle2(value){
 	var cTitle = title.replace(aaa, "<strong><u>"+ sech +"</u></strong>");
 
 	document.getElementById(value).innerHTML = cTitle;
-}
-
+} 
+/* 
 function changeContent(){
 	var qnaContentName = document.getElementsByClassName("qnaContent");
 	var contentnum = $("#contentnum option:selected").val();
@@ -221,9 +221,9 @@ function changeContent(){
 		var qnaId = qnaContentName[i].getAttribute('id');
 		changeContent2(qnaId);
 	}
-}
+} */
 
-function changeContent2(value){
+/* function changeContent2(value){
 	var content = $("#"+value).html();
 	var content2 = $("#"+value).text();
 	var sech = '${ page.search }';
@@ -244,10 +244,10 @@ function changeContent2(value){
 	console.log("text = " + content2);
 	console.log("태그 제거 = " + text);
 }
-
+ */
 $(function(){
 	changeTitle();
-	changeContent();
+	/* changeContent(); */
 })
 
 

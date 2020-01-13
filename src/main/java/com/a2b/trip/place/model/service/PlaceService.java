@@ -14,4 +14,5 @@ public interface PlaceService {
 	ArrayList<Place> selectDailyPlaceList(Place place);
 	int deletePlace(String place_code);
 	int deleteDaylist(int daylist_no);
+	int updateDaylist(PlaceDaylist daylist);
 }

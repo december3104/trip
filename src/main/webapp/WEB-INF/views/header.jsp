@@ -164,7 +164,7 @@ $(function(){
 			<!-- 알람 있을 경우 갯수만큼 -->
 			<div class="ui circular yellow mini floating label">2</div>
 		</i> 
-		<a href="selectAllChatRoom.do"><i class="chat icons" style="margin-right: 30px;">
+		<a href="selectAllChatRoom.do" style="color: black"><i class="chat icons" style="margin-right: 30px;">
 			<i class="comments large icon"></i> 
 			<!-- 알람 있을 경우 갯수만큼 -->
 			<div class="ui circular blue mini floating label">2</div>
@@ -180,10 +180,10 @@ $(function(){
 		<c:if test="${loginMember != null }">
 			<c:if test="${loginMember.member_level ne 3 }">
 			<div class="ui simple dropdown item" id="userDiv">
-				<c:if test="${loginMember.member_profile_rename ne null }">
+				<c:if test="${loginMember.member_profile_rename != null }">
 				<img class="ui mini circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }">
 				</c:if>
-				<c:if test="${loginMember.member_profile_rename eq null }">
+				<c:if test="${loginMember.member_profile_rename == null }">
 				<img class="ui mini circular image" src="resources/images/molly.png">
 				</c:if>
 				<div class="content">

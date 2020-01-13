@@ -5,11 +5,17 @@
 <mapper namespace="fellowMapper">
 	
 	<select id="selectMyFellowMatching" parameterType="string" resultType="Fellow">
-		select * from fellowmatching join fellowboard on fellowmatching.fb_no = fellowboard.fb_no join member on fellowboard.fb_id = member.member_id where fm_id = #{value} and fm_accept_check in ('DONE', 'WAIT')
+		select * from (select rownum rnum, fb_no, fb_id, fb_contry, fb_city, fb_start_date, fb_end_date, fb_title, fb_content, fm_id, fm_accept_check, fm_accept_date, fb_report, fm_report, member_name
+        from (select fellowmatching.fb_no, fb_id, fb_contry, fb_city, fb_start_date, fb_end_date, fb_title, fb_content, fm_id, fm_accept_check, fm_accept_date, fb_report, fm_report, member_name 
+        from fellowmatching join fellowboard on fellowmatching.fb_no = fellowboard.fb_no join member on fellowboard.fb_id = member.member_id where fm_id = #{value} and fm_accept_check != 'RJCT' 
+       	order by fb_start_date desc, fm_accept_check desc)) 
 	</select>
 	
 	<select id="selectMyFellowBoard" parameterType="string" resultType="Fellow">
-		select * from fellowboard join fellowmatching on fellowboard.fb_no = fellowmatching.fb_no join member on fellowmatching.fm_id = member.member_id where fb_id = #{value} and fm_accept_check = 'DONE'
+		select * from (select rownum rnum, fb_no, fm_id, fb_contry, fb_city, fb_start_date, fb_end_date, fm_content, fb_id, fm_accept_check, fm_accept_date, fm_date, fb_report, fm_report, member_name
+        from (select fellowboard.fb_no, fm_id, fb_contry, fb_city, fb_start_date, fb_end_date, fm_content, fb_id, fm_accept_check, fm_accept_date, fm_date, fb_report, fm_report, member_name 
+        from fellowboard join fellowmatching on fellowboard.fb_no = fellowmatching.fb_no join member on fellowmatching.fm_id = member.member_id where fb_id = #{value} and fm_accept_check = 'DONE' 
+        order by fb_start_date desc)) 
 	</select>
 	
 	<select id="selectMyFellowMatchingOne" parameterType="string" resultType="Fellow">

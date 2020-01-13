@@ -91,7 +91,10 @@ public class MemberController {
 		// 프로필 사진 저장 처리
 		String savePath = request.getSession().getServletContext().getRealPath("/resources/images/member_profile");
 		
-		String memberProfileOriginal = file.getOriginalFilename();
+		String memberProfileOriginal = null;
+		if (file.isEmpty() == false) {
+			memberProfileOriginal = file.getOriginalFilename();
+		}
 
 		if (memberProfileOriginal != null) {
 			member.setMember_profile_original(memberProfileOriginal);
@@ -172,9 +175,7 @@ public class MemberController {
 		if (!(member.getMember_phone().equals(sessionMember.getMember_phone()))) {
 			sessionMember.setMember_phone(member.getMember_phone());
 		} 
-		
-		System.out.println(file.isEmpty());
-		
+				
 		// 비밀번호 암호화 처리
 		sessionMember.setMember_pwd(bcryptPasswordEncoder.encode(member.getMember_pwd()));
 			

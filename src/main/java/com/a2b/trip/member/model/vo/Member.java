@@ -23,13 +23,14 @@ public class Member implements Serializable {
 	private int member_level;
 	private Date enroll_date;
 	private String guide_apply_alarm;
+	private String member_secession;
 
 	public Member() {}
 
 	public Member(String member_id, String member_name, String member_pwd, String member_email, String member_gender,
 			String member_phone, String member_birth, String member_profile_original, String member_profile_rename,
 			int member_report_count, String guide_qualification, int member_level, Date enroll_date,
-			String guide_apply_alarm) {
+			String guide_apply_alarm, String member_secession) {
 		super();
 		this.member_id = member_id;
 		this.member_name = member_name;
@@ -45,6 +46,7 @@ public class Member implements Serializable {
 		this.member_level = member_level;
 		this.enroll_date = enroll_date;
 		this.guide_apply_alarm = guide_apply_alarm;
+		this.member_secession = member_secession;
 	}
 
 	public String getMember_id() {
@@ -159,6 +161,14 @@ public class Member implements Serializable {
 		this.guide_apply_alarm = guide_apply_alarm;
 	}
 
+	public String getMember_secession() {
+		return member_secession;
+	}
+
+	public void setMember_secession(String member_secession) {
+		this.member_secession = member_secession;
+	}
+
 	@Override
 	public String toString() {
 		return "Member [member_id=" + member_id + ", member_name=" + member_name + ", member_pwd=" + member_pwd
@@ -167,8 +177,8 @@ public class Member implements Serializable {
 				+ member_profile_original + ", member_profile_rename=" + member_profile_rename
 				+ ", member_report_count=" + member_report_count + ", guide_qualification=" + guide_qualification
 				+ ", member_level=" + member_level + ", enroll_date=" + enroll_date + ", guide_apply_alarm="
-				+ guide_apply_alarm + "]";
+				+ guide_apply_alarm + ", member_secession=" + member_secession + "]";
 	}
-	
+
 	
 }

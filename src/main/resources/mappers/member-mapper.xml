@@ -5,13 +5,16 @@
 <mapper namespace="memberMapper">
 	
 	<select id="loginChkMember" parameterType="Member" resultType="Member">
-		select * from member where member_id = #{member_id}
+		select * from member where member_id = #{member_id} and member_secession = 'N'
 	</select>
 	
 	<insert id="insertMember" parameterType="Member">
 		insert into member values (#{member_id}, #{member_name}, #{member_pwd}, #{member_email}, 
-		#{member_gender}, #{member_phone}, to_date(#{member_birth}, 'YYYY/MM/DD'), #{member_profile_original}, 
-		#{member_profile_rename}, default, default, default, default, null)
+		#{member_gender}, #{member_phone}, to_date(#{member_birth}, 'YYYY/MM/DD'), 
+		<if test="member_profile_original != null">
+			#{member_profile_original}, #{member_profile_rename},
+		</if>
+			null, null, default, default, default, default, null, default)
 	</insert>
 	
 	<select id="selectOneMember" parameterType="string" resultType="Member">

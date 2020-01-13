@@ -112,13 +112,33 @@ function writeResponse(text){
 }
 
 $(function(){
-	$("#chatG").onclick(function(){
-	$("#chatFellow").attr("class", "item");
-	$("#chatG").attr("class", "item active");
-		
-		/* $("#chatGList").css("display", "block"); */
+	$('#chatG').on('click', function(){
+		$('#chatFellow').attr('class', 'item');
+		$('#chatG').attr('class', 'item active');
+		$('#chatFree').attr('class', 'item');
+		$('#chatFellowList').css('display', 'none');
+		$('#chatGList').css('display', 'block');
+		$('#chatFreeList').css('display', 'none');
 	});
-})
+	
+	$('#chatFree').on('click', function(){
+		$('#chatG').attr('class', 'item');
+		$('#chatFree').attr('class', 'item active');
+		$('#chatFellow').attr('class', 'item');
+		$('#chatGList').css('display', 'none');
+		$('#chatFreeList').css('display', 'block');
+		$('#chatFellowList').css('display', 'none');
+	});
+	
+	$('#chatFellow').on('click', function(){
+		$('#chatFree').attr('class', 'item');
+		$('#chatFellow').attr('class', 'item active');
+		$('#chatG').attr('class', 'item');
+		$('#chatFreeList').css('display', 'none');
+		$('#chatFellowList').css('display', 'block');
+		$('#chatGList').css('display', 'none');
+	});
+});
 </script>
   
 </body>

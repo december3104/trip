@@ -15,6 +15,8 @@
 
 <script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 <script type = "text/javascript" src = "resources/js/jspdf.min.js"></script>
+<script type = "text/javascript" src = "http://code.jquery.com/ui/1.8.17/jquery-ui.min.js"></script>
+
     <script type = "text/javascript" src = "https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     
 <style type="text/css">
@@ -69,7 +71,7 @@ $(function(){
 		  });
 		});  //pdf저장하기
     
-   function fillBackgroundColor(canvas, context){//배경색 설정
+/*    function fillBackgroundColor(canvas, context){//배경색 설정
 	    var selectObj=document.getElementById("backgroundColor");
 	    var index=selectObj.selectedIndex;
 	    var bgColor=selectObj.options[index].value;
@@ -77,7 +79,8 @@ $(function(){
 	    context.fillStyle=bgColor;
 	    context.fillRect(0,0,canvas.width,canvas.height);
 	} 
-    
+     */
+   $( '.color-item img' ).draggable();
     
 });   // document ready...
 
@@ -127,6 +130,64 @@ $(function(){
 	
 	
 });
+
+	/* 	function drag_handler(event) {
+		//  ondrag =  드래그할때 동작 
+		    console.log("Drag");
+		}
+		function dragover_handler(event) {
+		  //ondragover = draggable 엘리먼트가 drop영역위에 올라가면 
+		   console.log("dragOver");
+		   event.preventDefault();
+		}
+		        
+		function drop_handler(event) {
+		  //ondrop = draggable 엘리먼트를 drop영역위에 떨어트리면
+		   console.log("droooop!");
+		   document.getElementsByClassName("tbpe_skin")[0].style.top=event.layerY+"px";
+		   document.getElementsByClassName("tbpe_skin")[0].style.left=event.layerX+"px";
+		    event.preventDefault();
+		}
+		
+
+		function allowDrop(e)
+
+		  {
+
+		    e.preventDefault();
+
+		  }
+
+		     
+
+		  function dragstart(e)
+
+		  {
+
+		    e.dataTransfer.setData("Text",e.target.id);
+
+		  }
+
+		     
+
+		  function drop(e)
+
+		  {
+
+		    var id = e.target.getAttribute('id');
+
+		    var data=e.dataTransfer.getData("Text");
+
+		       
+
+		    e.target.appendChild(document.getElementById(data));
+
+		   
+
+		    e.preventDefault();
+
+		}   	 */	
+		
 </script>
 
 <!-- <script>
@@ -244,103 +305,23 @@ $(function(){
 					<input type="hidden" id="travelStartDate" name="travel_start_date">
 					<input type="hidden" id="travelEndDate" name="travel_end_date">
 				</form>
+				<br>
+				<div>예산 설정</div>
+				전체예산 : <input type="number" id="budgetTot">
+
 			
 		  </div>
 		</div>
 
 		<div class="ui bottom attached tab" data-tab="second">
 			<div class="innerTab">
-				<div id="palette">
-					<div class="color_chip" style="background-color: #000000"></div>
-				</div>
-						<!-- <div class="palette">
-							
-						</div> -->
+				sdf
 					</div>
 		</div>
 		
 		
 		
-		<!-- <div class="ui bottom attached tab" data-tab="third">
-			<div class="innerTab">
-				<div class="list_wrap">
-							<div id="background_color" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
-							컬러칩</div>
-							<ul class="tbpe_skin">
-								<li class="color-item" draggable="true" style="background-color: #000000">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #595959">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #787878">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #9E9E9E">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #C2C2C2">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #EEEEEE">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FFFFFF">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FECCBE">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FEEBB6">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #DDECCA">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #B8E6E1">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #B8E9FF">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #CCD2F0">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #E0BFE6">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FD8A69">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FFCD4A">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #AFD485">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #82CBC4">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #58CCFF">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #9FA9D8">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #B96BC6">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FC5230">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FD9F28">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #7DB249">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #2FA599">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #18A8F1">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #5D6DBE">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #9A30AE">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #D94925">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FD6F22">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #568A35">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #12887A">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #1187CF">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #3A4CA8">
-								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #692498">
-								<img style="display: none;"></li>								
-							</ul>
-						</div>
-					</div>
-		</div> -->
+		
 		
 		<div class="ui bottom attached tab" data-tab="third">
 			<div class="innerTab">
@@ -349,76 +330,76 @@ $(function(){
 				<div class="list_wrap" >
 							<div id="background_color" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
 							컬러칩</div>
-							<ul class="tbpe_skin">
-								<li class="color-item" draggable="true" style="background-color: #000000">
+							<ul class="tbpe_skin" ondrop="drop(event)" ondragover="allowDrop(event)">
+								<li class="color-item" id="color1" draggable="true" style="background-color: #000000" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #595959">
+								<li class="color-item" id="color2" draggable="true" style="background-color: #595959" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #787878">
+								<li class="color-item" id="color3" draggable="true" style="background-color: #787878" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #9E9E9E">
+								<li class="color-item" id="color4" draggable="true" style="background-color: #9E9E9E" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #C2C2C2">
+								<li class="color-item" id="color5" draggable="true" style="background-color: #C2C2C2" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #EEEEEE">
+								<li class="color-item" id="color6" draggable="true" style="background-color: #EEEEEE" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FFFFFF">
+								<li class="color-item" id="color7" draggable="true" style="background-color: #FFFFFF" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FECCBE">
+								<li class="color-item" id="color8" draggable="true" style="background-color: #FECCBE" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FEEBB6">
+								<li class="color-item" id="color9" draggable="true" style="background-color: #FEEBB6" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #DDECCA">
+								<li class="color-item" id="color10" draggable="true" style="background-color: #DDECCA" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #B8E6E1">
+								<li class="color-item" id="color11" draggable="true" style="background-color: #B8E6E1" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #B8E9FF">
+								<li class="color-item" id="color12" draggable="true" style="background-color: #B8E9FF" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #CCD2F0">
+								<li class="color-item" id="color13" draggable="true" style="background-color: #CCD2F0" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #E0BFE6">
+								<li class="color-item" id="color14" draggable="true" style="background-color: #E0BFE6" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FD8A69">
+								<li class="color-item" id="color15" draggable="true" style="background-color: #FD8A69" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FFCD4A">
+								<li class="color-item" id="color16" draggable="true" style="background-color: #FFCD4A" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #AFD485">
+								<li class="color-item" id="color17" draggable="true" style="background-color: #AFD485" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #82CBC4">
+								<li class="color-item" id="color18" draggable="true" style="background-color: #82CBC4" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #58CCFF">
+								<li class="color-item" id="color19" draggable="true" style="background-color: #58CCFF" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #9FA9D8">
+								<li class="color-item" id="color20" draggable="true" style="background-color: #9FA9D8" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #B96BC6">
+								<li class="color-item" id="color21" draggable="true" style="background-color: #B96BC6" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FC5230">
+								<li class="color-item" id="color22" draggable="true" style="background-color: #FC5230" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FD9F28">
+								<li class="color-item" id="color23" draggable="true" style="background-color: #FD9F28" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #7DB249">
+								<li class="color-item" id="color24" draggable="true" style="background-color: #7DB249" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #2FA599">
+								<li class="color-item" id="color25" draggable="true" style="background-color: #2FA599" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #18A8F1">
+								<li class="color-item" id="color26" draggable="true" style="background-color: #18A8F1" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #5D6DBE">
+								<li class="color-item" id="color27" draggable="true" style="background-color: #5D6DBE" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #9A30AE">
+								<li class="color-item" id="color28" draggable="true" style="background-color: #9A30AE" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #D94925">
+								<li class="color-item" id="color29" draggable="true" style="background-color: #D94925" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #FD6F22">
+								<li class="color-item" id="color30" draggable="true" style="background-color: #FD6F22" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #568A35">
+								<li class="color-item" id="color31" draggable="true" style="background-color: #568A35" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #12887A">
+								<li class="color-item" id="color32" draggable="true" style="background-color: #12887A" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #1187CF">
+								<li class="color-item" id="color33" draggable="true" style="background-color: #1187CF" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #3A4CA8">
+								<li class="color-item" id="color34" draggable="true" style="background-color: #3A4CA8" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>
-								<li class="color-item" draggable="true" style="background-color: #692498">
+								<li class="color-item" id="color35" draggable="true" style="background-color: #692498" ondragstart="dragstart(event)">
 								<img style="display: none;"></li>								
 							</ul>
 						</div>
@@ -431,35 +412,110 @@ $(function(){
 					</div>
 		</div>
 		
+		
+   
+		</div>
 		<div class="ui bottom attached tab" data-tab="fourth">
 			<div class="innerTab">
-				<div class="lists">
-			<div class="list">
-				<div class="list-item" draggable="true">List item 1</div>
-				<div class="list-item" draggable="true">List item 2</div>
-				<div class="list-item" draggable="true">List item 3</div>
-			</div>
-			<div class="list"></div>
-			<div class="list"></div>
-		</div>
-		<script src="resources/js/main.js"></script>
+				<div class="scroll_element scroll_ver" style="height: 100%;">
+			<div class="scroll_contents" >
+				<div class="list_wrap" >
+							<div id="background_color" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
+							컬러칩</div>
+							<ul class="tbpe_skin" ondrop="drop(event)" ondragover="allowDrop(event)">
+								<li class="color-item" id="color1" draggable="true" style="background-color: #000000" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color2" draggable="true" style="background-color: #595959" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color3" draggable="true" style="background-color: #787878" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color4" draggable="true" style="background-color: #9E9E9E" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color5" draggable="true" style="background-color: #C2C2C2" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color6" draggable="true" style="background-color: #EEEEEE" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color7" draggable="true" style="background-color: #FFFFFF" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color8" draggable="true" style="background-color: #FECCBE" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color9" draggable="true" style="background-color: #FEEBB6" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color10" draggable="true" style="background-color: #DDECCA" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color11" draggable="true" style="background-color: #B8E6E1" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color12" draggable="true" style="background-color: #B8E9FF" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color13" draggable="true" style="background-color: #CCD2F0" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color14" draggable="true" style="background-color: #E0BFE6" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color15" draggable="true" style="background-color: #FD8A69" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color16" draggable="true" style="background-color: #FFCD4A" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color17" draggable="true" style="background-color: #AFD485" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color18" draggable="true" style="background-color: #82CBC4" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color19" draggable="true" style="background-color: #58CCFF" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color20" draggable="true" style="background-color: #9FA9D8" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color21" draggable="true" style="background-color: #B96BC6" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color22" draggable="true" style="background-color: #FC5230" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color23" draggable="true" style="background-color: #FD9F28" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color24" draggable="true" style="background-color: #7DB249" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color25" draggable="true" style="background-color: #2FA599" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color26" draggable="true" style="background-color: #18A8F1" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color27" draggable="true" style="background-color: #5D6DBE" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color28" draggable="true" style="background-color: #9A30AE" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color29" draggable="true" style="background-color: #D94925" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color30" draggable="true" style="background-color: #FD6F22" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color31" draggable="true" style="background-color: #568A35" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color32" draggable="true" style="background-color: #12887A" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color33" draggable="true" style="background-color: #1187CF" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color34" draggable="true" style="background-color: #3A4CA8" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>
+								<li class="color-item" id="color35" draggable="true" style="background-color: #692498" ondragstart="dragstart(event)">
+								<img style="display: none;"></li>								
+							</ul>
+						</div>
+						</div>
+	<div class="scroll_track_ver">
+	<div class="scroll_track_ver_bar" style="height: 49.2657%;">
+	<div class="scroll_track_ver_inner"></div>
+	</div>
+</div>
+					</div>
 		
 						
 					</div>
 		</div>
-   
-		</div>
-	
+	</div>
 	</section>
 
 		<section id="editorSection" data-preload="2">
-			<div id="playground">
 				<div id="canvas">
-					<div class="tbpe_skin"	style="position: relative; background-color: rgb(0, 0, 0); 
-					width: 800px; height: 800px; transform: scale(0.7);">
+					<div class="tbpe_skin"	style="position: relative; background-color: white; 
+					width: 800px; height: 800px; transform: scale(0.8);"  ondrop="drop(event)" ondragover="allowDrop(event)">
 					</div>
 				</div>
-			</div>
+			
 			
 		</section>
 	</section>

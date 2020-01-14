@@ -12,10 +12,10 @@ public class FellowMatching implements Serializable {
 	private int fb_no;
 	private String fm_id;
 	private String fm_gender;
-	private Date fm_date;
+	private String fm_date;
 	private int fm_number;
 	private String fm_accept_check;
-	private Date fm_accept_date;
+	private String fm_accept_date;
 	private String fm_content;
 	private String fb_alarm;
 	private String fm_alarm;
@@ -25,8 +25,8 @@ public class FellowMatching implements Serializable {
 
 	public FellowMatching() {}
 
-	public FellowMatching(int fb_no, String fm_id, String fm_gender, Date fm_date, int fm_number,
-			String fm_accept_check, Date fm_accept_date, String fm_content, String fb_alarm, String fm_alarm,
+	public FellowMatching(int fb_no, String fm_id, String fm_gender, String fm_date, int fm_number,
+			String fm_accept_check, String fm_accept_date, String fm_content, String fb_alarm, String fm_alarm,
 			String fb_report, String fm_report, String member_profile_rename) {
 		super();
 		this.fb_no = fb_no;
@@ -68,11 +68,11 @@ public class FellowMatching implements Serializable {
 		this.fm_gender = fm_gender;
 	}
 
-	public Date getFm_date() {
+	public String getFm_date() {
 		return fm_date;
 	}
 
-	public void setFm_date(Date fm_date) {
+	public void setFm_date(String fm_date) {
 		this.fm_date = fm_date;
 	}
 
@@ -92,11 +92,11 @@ public class FellowMatching implements Serializable {
 		this.fm_accept_check = fm_accept_check;
 	}
 
-	public Date getFm_accept_date() {
+	public String getFm_accept_date() {
 		return fm_accept_date;
 	}
 
-	public void setFm_accept_date(Date fm_accept_date) {
+	public void setFm_accept_date(String fm_accept_date) {
 		this.fm_accept_date = fm_accept_date;
 	}
 

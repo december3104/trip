@@ -60,6 +60,7 @@ function checkForm(){
 	var guide_telephone = $("#guide_telephone").val();
 	var proFileSize = $("#proFileSize").val();
 	var licenseFileSize = $("#LicenseFileSize").val();
+	var allSize = eval(eval(proFileSize) + eval(licenseFileSize));
 	
 	if(loc_code.length == 0 || loc_code == "" ){
 		alert("활동 국가를 선택해주세요.");
@@ -84,14 +85,20 @@ function checkForm(){
 	if(guide_telephone.length == 0 || guide_telephone == "") {
 		$("#guide_telephone").val("null");
 	}
- 	if(proFileSize >= 10 || proFileSize == "" ){
- 		alert("프로필 사진을 등록해주세요.");
+	if(allSize > 15 ) {
+		alert("프로필 사진 크기 와 자격증 파일 크기의 합이 15MB를 초과합니다.");
+		return false;
+	}
+	
+	if(proFileSize >= 5 || proFileSize == "" ){
+ 		alert("프로필 사진을 추가하지 않으셨거나 5MB를 초과합니다.");
 		return false;
 	}
 	if(licenseFileSize > 10 || licenseFileSize == "" ){
-		alert("자격증파일을 추가하세요.");
+		alert("자격증 파일을 추가하지 않으셨거나 10MB를 초과하였습니다.");
 		return false;
 	}
+	
     // 이용약관 체크했는지 검사
 	if(!$(':input:checkbox[id=useCheck]:checked').val()) {   
 		alert("이용약관 동의는 필수입니다.");
@@ -110,7 +117,6 @@ function checkForm(){
 		$(':input:checkbox[id=ageCheck]').focus();
 		return false;
 	} 
-	
 	return true;
 }
 //jquery
@@ -200,7 +206,7 @@ $(function(){
 		$("#glfile", $(e.target).parent()).val(name);
 	 });
 });
- 
+
 	function makeFileList() {
 		var fp = $("#licensefileUpload");
 	    var lg = fp[0].files.length; 		//get length
@@ -250,6 +256,7 @@ $(function(){
 		<hr style="border: 3px solid #95d6f3; margin-bottom: 0px">
 		<input type="hidden" id="proFileSize">
 		<input type="hidden" id="LicenseFileSize">
+		<input type="hidden" id="allSize">
 		<form onsubmit="return checkForm()" action="insertWordGuide.do" method="POST" enctype="multipart/form-data">
 			<input type="hidden" name="guide_id" value="${loginMember.member_id }">
 			<table class="ui table" id="memberEnrollTable" style="border: none;">
@@ -435,7 +442,7 @@ $(function(){
 										<i class="attach icon"></i>
 									</div>
 								</div>
-								<br><span id="memberPhoneExplan" style="font-weight: 300"><font color="#aaaaaa" id="proFile">파일을 업로드 해주세요.</font></span>
+								<br><span id="memberPhoneExplan" style="font-weight: 300"><font color="#aaaaaa" id="proFile">최대 5MB 까지 가능합니다.</font></span>
 							</td>
 					</tr>
 					<tr id="inputLicense1">

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여길잡아 내 정보 보기</title>
+<title>내 정보 수정 | 여길잡아</title>
 <!-- favicon -->
 <link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
 <!-- jquery -->
@@ -163,7 +163,7 @@ $(function(){
 		<div>
 			<table class="ui celled table" style="text-align:center; font-size: 15pt; background: #D3F0FE">
 				<tr><td class="sidebarTd">내 가이드북 보기</td></tr>
-				<tr><td class="sidebarTd">가이드 매칭 기록</td></tr>
+				<tr><td class="sidebarTd" onclick="location.href='selectMyGuideMatching.do'">가이드 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</td></tr>
 			</table>

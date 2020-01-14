@@ -86,10 +86,19 @@
 								<c:if test="${ loginMember.member_id ne fb.fb_id }">
 									<div class="ui grid">
 										<div class="sixteen wide column">
-											<form class="ui form" style="padding : 40px;">
+											<form class="ui form" action="insertFellowMatching.do" method="post" style="padding : 40px;">
+												<input type="hidden" value="${ fb.fb_no }" name="fb_no">
+												<input type="hidden" value="${ loginMember.member_id }" name="fm_id">
+												<input type="hidden" value="${ loginMember.member_gender }" name="fm_gender">
+												<input type="hidden" value="1" name="fm_number">
+												<input type="hidden" value="WAIT" name="fm_accept_check">
+												<input type="hidden" value="N" name="fb_alarm">
+												<input type="hidden" value="N" name="fm_alarm">
+												<input type="hidden" value="N" name="fb_report">
+												<input type="hidden" value="N" name="fm_report">
 											 	<div class="field">
 											 		<label>동행 신청</label>
-											 		<input type="text" placeholder="신청 시 간단하게 하고 싶은 말을 입력하세요.(100자 이내)">
+											 		<input type="text" placeholder="신청 시 간단하게 하고 싶은 말을 입력하세요.(100자 이내)" name="fm_content">
 											 	</div>
 											 	<div class="center aligned">
 											 		<button class="ui primary button" id="submitButton">신청하기</button>
@@ -153,10 +162,11 @@
 									<div class="three wide column center aligned middle aligned">
 										<c:if test="${ loginMember.member_id eq fb.fb_id }">
 											<c:if test="${ list.fm_accept_check eq 'WAIT'}">
-												<div class="ui button">수락</div>&nbsp;<div class="ui button">거절</div>
+												<div class="ui button" onclick="updateFellowMatching('DONE', ${fb.fb_no}, '${ list.fm_id }')">수락</div>&nbsp;
+												<div class="ui button" onclick="updateFellowMatching('RJCT', ${fb.fb_no}, '${ list.fm_id }')">거절</div>
 											</c:if>
 											<c:if test="${ list.fm_accept_check eq 'DONE'}">
-												수락완료
+												채팅방을 확인하세요!
 											</c:if>
 											<c:if test="${ list.fm_accept_check eq 'RJCT'}">
 												거절함
@@ -208,7 +218,12 @@ function goPageUpdateFellowBoard(){
 		location.href='goPageUpdateFellowBoard.do?fb_no='+fbNo;
 	}
 }
-
+function updateFellowMatching(check, fb_no, fm_id){
+	var check = check;
+	var fb_no = fb_no;
+	var fm_id = fm_id;
+	location.href="updateFellowMatching.do?fm_accept_check="+ check+"&fb_no="+fb_no+"&fm_id="+fm_id;
+}
 </script>
 </body>
 </html>

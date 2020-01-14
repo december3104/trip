@@ -58,7 +58,7 @@
 	</select>
 	
 	<select id="selectAllFellowMatching" parameterType="_int" resultType="FellowMatching">
-		SELECT * FROM FELLOWMATCHING LEFT JOIN MEMBER ON MEMBER_ID = FM_ID WHERE FB_NO = #{ fb_no }
+		SELECT FB_NO, FM_ID, FM_GENDER, TO_CHAR(FM_DATE, 'YYYY"년" FMMM"월" DD"일" HH24:MI') FM_DATE, FM_NUMBER, FM_ACCEPT_CHECK, TO_CHAR(FM_ACCEPT_DATE, 'YYYY"년" FMMM"월" DD"일" HH24:MI') FM_ACCEPT_DATE, FM_CONTENT, FB_ALARM, FM_ALARM, FB_REPORT, FM_REPORT, MEMBER_PROFILE_RENAME FROM FELLOWMATCHING LEFT JOIN MEMBER ON MEMBER_ID = FM_ID WHERE FB_NO = #{ fb_no }
 	</select>
 	
 	<insert id="insertFellowBoard" parameterType="FellowBoard">
@@ -92,4 +92,11 @@
 		DELETE FROM FELLOWBOARD WHERE FB_NO = #{ fb_no }
 	</delete>
 	
+	<insert id="insertFellowMatching" parameterType="FellowMatching">
+		INSERT INTO FELLOWMATCHING VALUES(#{ fb_no }, #{ fm_id }, #{ fm_gender }, sysdate, #{ fm_number }, #{ fm_accept_check }, null, #{ fm_content }, #{ fb_alarm }, #{ fm_alarm }, #{ fb_report }, #{ fm_report })
+	</insert>
+	
+	<update id="updateFellowMatching" parameterType="FellowMatching">
+		UPDATE FELLOWMATCHING SET FM_ACCEPT_CHECK = #{ fm_accept_check } WHERE FB_NO = #{ fb_no } AND FM_ID = #{ fm_id }
+	</update>
 </mapper>

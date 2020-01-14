@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <title>Insert title here</title>
+
 <!-- favicon -->
 <link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
 <!-- jquery -->
@@ -36,12 +38,15 @@
   </div>
 </div>
 <div class="ui segment" id="chatFellowList" style="display:block;">
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>  
+	<c:if test="${ !empty chatList }">
+		<c:forEach var="list" items="${ chatList }">
+	  	${ list.cr_no }<br>
+	  	${ list.cm_id }
+	    </c:forEach>
+    </c:if>
+    <c:if test="${ empty chatList }">
+		참여중인 채팅방이 없습니다.
+    </c:if>
 </div>
 <div class="ui segment" id="chatGList" style="display:none;">
   <p>두번째거</p>

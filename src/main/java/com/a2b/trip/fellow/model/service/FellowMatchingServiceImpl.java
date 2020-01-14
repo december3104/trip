@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.a2b.trip.fellow.model.dao.FellowMatchingDao;
 import com.a2b.trip.fellow.model.vo.Fellow;
+import com.a2b.trip.fellow.model.vo.FellowMatching;
 
 @Service("fellowMatchingService")
 public class FellowMatchingServiceImpl implements FellowMatchingService {
@@ -30,5 +31,15 @@ public class FellowMatchingServiceImpl implements FellowMatchingService {
 	@Override
 	public int updateFellowMatchingReport(int fb_no) {
 		return fellowMatchingDao.updateFellowMatchingReport(fb_no);
+	}
+
+	@Override
+	public int insertFellowMatching(FellowMatching fm) {
+		return fellowMatchingDao.insertFellowMatching(fm);
+	}
+
+	@Override
+	public int updateFellowMatching(FellowMatching fm) {
+		return fellowMatchingDao.updateFellowMatching(fm);
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.a2b.trip.fellow.model.vo.Fellow;
+import com.a2b.trip.fellow.model.vo.FellowMatching;
 
 @Repository("fellowMatchingDao")
 public class FellowMatchingDao {
@@ -29,5 +30,13 @@ public class FellowMatchingDao {
 	// 신고 처리 후 컬럼값 변경
 	public int updateFellowMatchingReport(int fb_no) {
 		return sqlSession.update("fellowMapper.updateFellowMatchingReport", fb_no);
+	}
+
+	public int insertFellowMatching(FellowMatching fm) {
+		return sqlSession.insert("fellowMapper.insertFellowMatching", fm);
+	}
+
+	public int updateFellowMatching(FellowMatching fm) {
+		return sqlSession.update("fellowMapper.updateFellowMatching", fm);
 	}
 }

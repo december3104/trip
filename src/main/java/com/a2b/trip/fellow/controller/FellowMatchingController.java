@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.a2b.trip.chat.model.service.ChatService;
 import com.a2b.trip.fellow.model.service.FellowBoardService;
 import com.a2b.trip.fellow.model.service.FellowMatchingService;
 import com.a2b.trip.fellow.model.vo.Fellow;
+import com.a2b.trip.fellow.model.vo.FellowMatching;
 import com.a2b.trip.member.model.vo.Member;
 
 @Controller
@@ -29,6 +31,9 @@ public class FellowMatchingController {
 
 	@Autowired
 	private FellowMatchingService fellowMatchingService;
+	
+	@Autowired
+	private ChatService chatService;
 	
 	@Autowired
 	private FellowBoardService fellowBoardService;
@@ -85,5 +90,38 @@ public class FellowMatchingController {
 
 		
 		return job.toJSONString();
+	}
+	
+	@RequestMapping(value="insertFellowMatching.do", method=RequestMethod.POST)
+	public String insertFellowMatching(FellowMatching fm) {
+		String viewName="";
+		
+		int result = fellowMatchingService.insertFellowMatching(fm);
+		if(result > 0) {
+			viewName = "redirect:selectOneFellowBoard.do?fb_no="+fm.getFb_no();
+		}else {
+			System.out.println("실패");
+		}
+		return viewName;
+	}
+	
+	@RequestMapping("updateFellowMatching.do")
+	public String updateFellowMatching(FellowMatching fm) {
+		String viewName = "";
+
+		int result = fellowMatchingService.updateFellowMatching(fm);
+		
+				
+		if(result > 0) {
+			//수락버튼 눌렀을시에 채팅방 만들기
+			/*if(fm.getFm_accept_check().equals("DONE")) {
+				fellow
+				int result = chatService.insertChatRoom();
+			}*/
+			viewName = "redirect:selectOneFellowBoard.do?fb_no="+fm.getFb_no();
+		}else {
+			System.out.println("실패");
+		}
+		return viewName;
 	}
 }

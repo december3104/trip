@@ -164,7 +164,8 @@ $(function(){
 			<!-- 알람 있을 경우 갯수만큼 -->
 			<div class="ui circular yellow mini floating label">2</div>
 		</i> 
-		<a href="selectAllChatRoom.do" style="color: black"><i class="chat icons" style="margin-right: 30px;">
+		<!-- <a href="selectAllChatRoom.do" style="color: black"><i class="chat icons" style="margin-right: 30px;"> -->
+		<a href="javascript:chatMain('${ loginMember.member_id }');" style="color: black"><i class="chat icons" style="margin-right: 30px;">
 			<i class="comments large icon"></i> 
 			<!-- 알람 있을 경우 갯수만큼 -->
 			<div class="ui circular blue mini floating label">2</div>
@@ -307,6 +308,10 @@ function loginWithKakao() {
     });
   };
 //]]>
+
+function chatMain(id){
+      window.open("selectAllChatRoom.do?member_id="+id,"ChatMain","width=810px, height=600px, menubar=no, status=no, toolbar=no");
+}
 </script>
 </header>
 </body>

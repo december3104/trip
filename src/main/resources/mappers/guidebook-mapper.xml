@@ -15,6 +15,17 @@
 		#{travel_start_date}, #{travel_end_date}, #{travel_theme}, #{book_name}, default, null)
 	</insert>
 	
+	<update id="updateGuidebook" parameterType="Guidebook">
+		update guidebook set travel_detail = #{travel_detail}, travel_start_date = #{travel_start_date}, travel_end_date = #{travel_end_date},
+		 travel_theme = #{travel_theme}, book_name = #{book_name}, share_check = #{share_check}  where book_no = #{book_no}
+	</update>
+	
+	
+	
+	
+	
+	
+	
 	<select id="loginCheck" parameterType="Member" resultType="Member">
 		select * from member where userid = #{userid} and userpwd = #{userpwd}
 	</select>
@@ -25,9 +36,7 @@
 	
 	
 	
-	<update id="updateMember" parameterType="Member">
-		update member set userpwd = #{userpwd}, email = #{email}, phone = #{phone}, etc = #{etc}, hobby = #{hobby},  lastmodified = sysdate where userid = #{userid}
-	</update>
+	
 	
 	<delete id="deleteMember" parameterType="string">
 		delete from member where userid = #{value}

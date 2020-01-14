@@ -19,4 +19,12 @@ public class GuidebookServiceImpl implements GuidebookService {
 			public int insertGuidebook(Guidebook guidebook) {
 				return guidebookDao.insertGuidebook(guidebook);
 			}
+
+			@Override
+			public int updateGuidebook(Guidebook guidebook) {
+				return guidebookDao.updateGuidebook(guidebook);
+			}
+			
+
+			
 }

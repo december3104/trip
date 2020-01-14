@@ -176,7 +176,7 @@ public class GuideController {
 			}
 		}
 		
-		
+		//자격증 다중 업로드 처리 
 		List<MultipartFile> fileList = mtfRequest.getFiles("upLicensefile");
 		String src = mtfRequest.getParameter("src");
 		logger.info(src);

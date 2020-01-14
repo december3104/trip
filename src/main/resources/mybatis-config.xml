@@ -35,7 +35,8 @@
 		<mapper resource="mappers/notice-mapper.xml"/>
 		<mapper resource="mappers/fellow-mapper.xml" />
 		<mapper resource="mappers/guidebook-mapper.xml" />
-    <mapper resource="mappers/place-mapper.xml" />
+    	<mapper resource="mappers/place-mapper.xml" />
 		<mapper resource="mappers/guidematching-mapper.xml" />
+		<mapper resource="mappers/location-mapper.xml"/>
 	</mappers>
 </configuration>

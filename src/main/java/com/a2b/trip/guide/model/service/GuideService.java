@@ -1,5 +1,6 @@
 package com.a2b.trip.guide.model.service;
 
+import com.a2b.trip.guide.model.vo.Guide;
 import com.a2b.trip.guide.model.vo.GuideDetail;
 
 public interface GuideService {
@@ -17,5 +18,7 @@ public interface GuideService {
 	int updateDetailAcceptGuide2(String guide_id);
 
 	int updateDetailForcedExitGuide(String guide_id);
+
+	int insertWordGuide(Guide guide);
 
 }

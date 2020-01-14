@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.a2b.trip.guide.model.vo.Guide;
 import com.a2b.trip.guide.model.vo.GuideDetail;
 
 @Repository("guideDao")
@@ -40,5 +41,9 @@ public class GuideDao {
 
 	public int updateDetailForcedExitGuide(String guide_id) {
 		return sqlSession.delete("guideMapper.updateDetailForcedExitGuide", guide_id);
+	}
+
+	public int insertWordGuide(Guide guide) {
+		return sqlSession.insert("guideMapper.insertWordGuide", guide);
 	}
 }

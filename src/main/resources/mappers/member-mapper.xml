@@ -14,7 +14,10 @@
 		<if test="member_profile_original != null">
 			#{member_profile_original}, #{member_profile_rename},
 		</if>
-			null, null, default, default, default, default, null, default)
+		<if test="member_profile_original == null">
+			null, null, 
+		</if>
+			default, default, default, default, null, default)
 	</insert>
 	
 	<select id="selectOneMember" parameterType="string" resultType="Member">
@@ -136,4 +139,7 @@
 		update member set member_secession = 'Y' where member_id = #{value}
 	</update>
 	
+	<update id="updateWordGuide" parameterType="String">
+		update member set guide_qualification = 'WAIT' where member_id = #{value}
+	</update>
 </mapper>

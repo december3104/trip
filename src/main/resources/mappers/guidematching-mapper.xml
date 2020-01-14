@@ -5,18 +5,18 @@
 <mapper namespace="guideMatchingMapper">
 	
 	<select id="selectMyGuideMatching" parameterType="string" resultType="MyGuideMatching">
+		select * from (select rownum rnum, gb_no, gb_id, guide_id, member_name, member_gender, guide_profile_rename, guide_lang, gb_start_date, gb_end_date, gm_date, gb_report, gm_report, 
+		grade_check, guide_service, loc_name, gb_route, gb_price, gb_open_date, gb_close_date, gb_title, guide_count, guide_grade from (select guideboard.gb_no, gb_id, guide_id, member_name,
+		member_gender, guide_profile_rename, guide_lang, gb_start_date, gb_end_date, gm_date, gb_report, gm_report, grade_check, guide_service, loc_name, gb_route, gb_price, gb_open_date, gb_close_date,
+		gb_title, guide_count, guide_grade from guideboard join guidematching on guideboard.gb_no = guidematching.gb_no join guide on guideboard.gb_id = guide.guide_id 
+		join location on guide.loc_code = location.loc_code join member on guide.guide_id = member.member_id where gm_id = #{value} order by gb_start_date desc, gb_end_date desc))
+	</select>
+	
+	<select id="selectMyGuideBoard" parameterType="string" resultType="MyGuideMatching">
 		select * from (select rownum rnum, gb_no, gm_id, gb_id, member_name, member_gender, member_profile_rename, gm_date, gb_start_date, gb_end_date, gb_report, gm_report, grade_check, gm_number, loc_name 
 		from (select guidematching.gb_no, gm_id, gb_id, member_name, member_gender, member_profile_rename, gm_date, gb_start_date, gb_end_date, gb_report, gm_report, grade_check, gm_number, loc_name
 		from guidematching join guideboard on guidematching.gb_no = guideboard.gb_no join guide on guideboard.gb_id = guide.guide_id join location on guide.loc_code = location.loc_code 
 		join member on guidematching.gm_id = member.member_id where gb_id = #{value} order by gb_start_date desc, gb_end_date desc))
-	</select>
-	
-	<select id="selectMyGuideBoard" parameterType="string" resultType="MyGuideMatching">
-		select * from (select rownum rnum, gb_no, guide_id, member_name, member_gender, guide_profile_rename, guide_lang, gb_start_date, gb_end_date, gm_date, gb_report, gm_report, 
-		grade_check, guide_service, loc_name, gb_route, gb_price, gb_open_date, gb_close_date, gb_title, guide_count, guide_grade from (select guideboard.gb_no, guide_id, member_name,
-		member_gender, guide_profile_rename, guide_lang, gb_start_date, gb_end_date, gm_date, gb_report, gm_report, grade_check, guide_service, loc_name, gb_route, gb_price, gb_open_date, gb_close_date,
-		gb_title, guide_count, guide_grade from guideboard join guidematching on guideboard.gb_no = guidematching.gb_no join guide on guideboard.gb_id = guide.guide_id 
-		join location on guide.loc_code = location.loc_code join member on guide.guide_id = member.member_id where gm_id = #{value} order by gb_start_date desc, gb_end_date desc))
 	</select>
 	
 	<select id="selectMyGuideMatchingOne" parameterType="string" resultType="MyGuideMatching">

@@ -198,9 +198,4 @@ public class PlaceController {
 		}
 	}
 	
-	//지도 연습 페이지로 넘기기
-	@RequestMapping("mapPractice.do")
-	public String mapPractice() {
-		return "place/mapPractice";
-	}
 }

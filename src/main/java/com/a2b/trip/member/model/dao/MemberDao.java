@@ -104,6 +104,10 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateDetailForcedExitGuide", guide_id);
 	}
 
+	public int updateWordGuide(String guide_id) {
+		return sqlSession.update("memberMapper.updateWordGuide", guide_id);
+	}
+
 
 
 

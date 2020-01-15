@@ -31,4 +31,11 @@
 	<delete id="updateDetailForcedExitGuide" parameterType="string">
 		delete guide where guide_id = #{value}
 	</delete>
+	
+	<insert id="insertWordGuide" parameterType="Guide">
+		insert into guide values(#{guide_id}, #{loc_code}, #{guide_profile_original}, #{guide_profile_rename}, 
+		#{guide_lang}, #{guide_introduce}, #{guide_say}, default, default, #{guide_address}, #{guide_contry}, 
+		#{guide_service}, #{guide_phone}, #{car_check}, #{car_number}, #{guide_recommend}, #{qualification_original}, #{qualification_rename}, 
+		default, 'WAIT', #{city_name}, #{guide_telephone}, #{price} )
+	</insert>
 </mapper>

@@ -117,6 +117,12 @@ public class MemberServiceImpl implements MemberService {
 	public int updateDetailForcedExitGuide(String guide_id) {
 		return memberDao.updateDetailForcedExitGuide(guide_id);
 	}
+	//가이드 신청 시 member GUIDE_QUALIFICATION 업데이트
+	@Override
+	public int updateWordGuide(String guide_id) {
+		return memberDao.updateWordGuide(guide_id);
+	}
+	
 	
 
 	

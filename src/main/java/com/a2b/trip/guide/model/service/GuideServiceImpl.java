@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.a2b.trip.guide.model.dao.GuideDao;
+import com.a2b.trip.guide.model.vo.Guide;
 import com.a2b.trip.guide.model.vo.GuideDetail;
 
 @Service("guideService")
@@ -43,10 +44,15 @@ public class GuideServiceImpl implements GuideService {
 	public int updateDetailAcceptGuide2(String guide_id) {
 		return guideDao.updateDetailAcceptGuide2(guide_id);
 	}
-
+	//가이드 자격박탈 처리
 	@Override
 	public int updateDetailForcedExitGuide(String guide_id) {
 		return guideDao.updateDetailForcedExitGuide(guide_id);
+	}
+	//가이드 신청 입력
+	@Override
+	public int insertWordGuide(Guide guide) {
+		return guideDao.insertWordGuide(guide);
 	}
 	
 	

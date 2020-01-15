@@ -92,7 +92,7 @@ public class MemberController {
 		
 		// 프로필 사진 저장 처리
 		String savePath = request.getSession().getServletContext().getRealPath("/resources/images/member_profile");
-		
+		logger.info(savePath);
 		String memberProfileOriginal = null;
 		if (file.isEmpty() == false) {
 			memberProfileOriginal = file.getOriginalFilename();

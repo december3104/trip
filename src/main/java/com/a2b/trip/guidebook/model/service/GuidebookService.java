@@ -6,4 +6,6 @@ public interface GuidebookService {
 
 	int insertGuidebook(Guidebook guidebook);
 
+	int updateGuidebook(Guidebook guidebook);
+
 }

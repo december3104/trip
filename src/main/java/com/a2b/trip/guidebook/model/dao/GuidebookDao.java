@@ -17,4 +17,8 @@ public class GuidebookDao {
 	public int insertGuidebook(Guidebook guidebook) {
 		return sqlSession.insert("guidebookMapper.insertGuidebook", guidebook);
 	}
+	
+	public int updateGuidebook(Guidebook guidebook) {
+		return sqlSession.update("guidebookMapper.updateGuidebook", guidebook);
+	}
 }

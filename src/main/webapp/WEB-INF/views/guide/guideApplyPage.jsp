@@ -743,11 +743,15 @@ $(function(){
 							</td>
 					</tr>
 					<tr>
+						<th></th>
+						<td style="color: red; padding-top: 2%; padding-bottom: 2%; font-size: 15pt;"><font>위 내용은 가이드 신청 후 수정이 불가능힙니다.</font></td>
+					</tr>
+					<tr>
 						<th colspan="2" style="text-align: center">
 							<input class="ui button" type="submit" id="submitBtn" value="신청하기" style="margin-bottom: 5%;background: #95d6f3;" />&emsp;&emsp;
 							<button class="ui button" type="reset" id="cancelBtn" onclick="window.history.back();" style="margin-bottom: 5%">취소</button>
 						</th>
-					</tr>										
+					</tr>							
 				</table>
 		</form>
 	</div>
@@ -756,8 +760,9 @@ $(function(){
 <c:if test="${loginMember.guide_qualification ne 'NONE' }">
 <div class="bodyCss" style="margin-left: 23%; margin-right: 23%; min-height:50%;">
 	<div class="bodyContentCss" style="margin-top: 40%; text-align: center;">
-		<h1>가입 심사중입니다.</h1>
-		<h3>잠시 기다려주시기 바랍니다.</h3>
+		<i class="attach icon"></i>
+		<h1>심사 중입니다.</h1>
+		<h3>조금만 더 기다려주세요.</h3>
 		<button class="ui button" type="reset" id="cancelBtn" onclick="window.history.back();" style="margin-bottom: 5%; background: #95d6f3;">뒤로가기</button>
 	</div>
 </div>

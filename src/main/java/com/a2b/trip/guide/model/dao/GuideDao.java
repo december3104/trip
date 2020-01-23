@@ -46,4 +46,8 @@ public class GuideDao {
 	public int insertWordGuide(Guide guide) {
 		return sqlSession.insert("guideMapper.insertWordGuide", guide);
 	}
+
+	public Guide selectOne(String member_id) {
+		return sqlSession.selectOne("guideMapper.selectOne", member_id);
+	}
 }

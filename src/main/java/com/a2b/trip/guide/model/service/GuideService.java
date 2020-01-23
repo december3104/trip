@@ -21,4 +21,6 @@ public interface GuideService {
 
 	int insertWordGuide(Guide guide);
 
+	Guide selectOne(String member_id);
+
 }

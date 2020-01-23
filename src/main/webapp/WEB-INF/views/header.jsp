@@ -143,7 +143,7 @@ $(function(){
 			<div class="item">공유 게시판</div>
 		</div>
 	</a> 
-	<a class="item">현지 가이드 매칭</a> 
+	<a class="item" onclick="location.href='guideMatchingPage.do'">현지 가이드 매칭</a> 
 	<a class="item" href="selectAllFellowBoard.do?currentPage=1&contentNum=10">동행 찾기</a> 
 	<a class="item">이용방법</a> 
 	<a class="ui simple dropdown item">고객센터

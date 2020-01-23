@@ -27,6 +27,70 @@
 		select * from fellowboard join fellowmatching on fellowboard.fb_no = fellowmatching.fb_no join member on fellowmatching.fm_id = member.member_id where fm_id = #{value}
 	</select>
 	
+	<select id="selectListGuideBoard" parameterType="GuideSearch" resultType="GuideBoard">
+		select gb_no, gb_id, gb_start_date, gb_end_date, gb_route,gb_price,gb_min_number, 
+		gb_max_number, gb_open_date, gb_close_date, gb_title, gb_number, gb_deadline_check,
+		loc_code, member_gender, guide_lang, guide_grade, guide_profile_original, guide_profile_rename, member_name
+		from guideboard
+		left join guide on guideboard.gb_id = guide.guide_id
+		left join member on guideboard.gb_id = member.member_id 
+		where gb_deadline_check = 'N'
+		<if test="trip_city != 'null'">
+			and loc_code like #{trip_city}
+		</if>
+		
+		<if test="befor_day != null">
+		<![CDATA[
+		
+			and gb_start_date <= #{befor_day}
+		]]>
+		</if>
+		<if test="after_day != null">
+		<![CDATA[
+			and gb_end_date >= #{after_day}
+		]]>
+		</if>
+		<if test="gender != 'none'">
+			and member_gender = #{gender}
+		</if>
+		<if test="lang != 'none'">
+			and regexp_like(guide_lang, #{lang})
+		</if>
+		<if test="average_score != 0">
+		<![CDATA[
+		
+			and guide_grade >= ${average_score}
+		]]>
+		</if>
+		
+	</select>
 	
+	<select id="selectGB" parameterType="string" resultType="GuideBoard">
+		select gb_no, gb_id, gb_start_date, gb_end_date, gb_route,gb_price,gb_min_number, 
+		gb_max_number, gb_open_date, gb_close_date, gb_title, gb_number, gb_deadline_check,
+		loc_code, member_gender, guide_lang, guide_grade, guide_profile_original, guide_profile_rename, member_name, guide_say
+		from guideboard
+		left join guide on guideboard.gb_id = guide.guide_id
+		left join member on guideboard.gb_id = member.member_id 
+		where gb_no = #{value}
+	</select>
+	
+	
+	<update id="updateDetailAcceptGM" parameterType="GuideBoard">
+		update guideboard set gb_number = #{gb_number} where gb_no = #{gb_no}
+	</update>
+	
+	<update id="updateDetailAcceptGM_cut" parameterType="GuideBoard">
+		update guideboard set gb_number = #{gb_number}, gb_deadline_check = 'Y' where gb_no = #{gb_no}
+	</update>
+	
+	<insert id="insertGuideMatching" parameterType="GuideMatching">
+		insert into guidematching values(#{gb_no}, #{gm_id}, SYSDATE, #{gm_number}, 'Y', default, default, default )
+	</insert>
+	
+	<insert id="insertWordGuideBoard" parameterType="GuideBoard">
+		insert into guideboard values(GUIDEBOARD_SEQ.NEXTVAL, #{gb_id}, #{gb_start_date}, #{gb_end_date}, #{gb_route}, #{gb_price}, #{gb_min_number}, 
+		#{gb_max_number}, SYSDATE, #{gb_close_date}, #{gb_title}, default, default)
+	</insert>
 	
 </mapper>

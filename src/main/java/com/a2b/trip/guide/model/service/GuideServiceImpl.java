@@ -54,6 +54,12 @@ public class GuideServiceImpl implements GuideService {
 	public int insertWordGuide(Guide guide) {
 		return guideDao.insertWordGuide(guide);
 	}
+
+	@Override
+	public Guide selectOne(String member_id) {
+		return guideDao.selectOne(member_id);
+	}
+	
 	
 	
 }

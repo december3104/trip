@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.a2b.trip.guidematching.model.vo.GuideMatching;
 import com.a2b.trip.guidematching.model.vo.MyGuideMatching;
 
 @Repository("guideMatchingDao")
@@ -21,5 +22,9 @@ public class GuideMatchingDao {
 	public ArrayList<MyGuideMatching> selectMyGuideMatching(String gm_id) {
 		List<MyGuideMatching> list = sqlSession.selectList("guideMatchingMapper.selectMyGuideMatching", gm_id);
 		return (ArrayList<MyGuideMatching>)list;
+	}
+
+	public int insertGuideMatching(GuideMatching gm) {
+		return sqlSession.insert("guideMatchingMapper.insertGuideMatching", gm);
 	}
 }

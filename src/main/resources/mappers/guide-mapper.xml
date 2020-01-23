@@ -38,4 +38,8 @@
 		#{guide_service}, #{guide_phone}, #{car_check}, #{car_number}, #{guide_recommend}, #{qualification_original}, #{qualification_rename}, 
 		default, 'WAIT', #{city_name}, #{guide_telephone}, #{price} )
 	</insert>
+	
+	<select id="selectOne" parameterType="String" resultType="Guide">
+		select * from guide where guide_id = #{value}
+	</select>
 </mapper>

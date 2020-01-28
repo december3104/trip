@@ -249,8 +249,8 @@ $(function(){
 				   
 			</div>
       
-  		 </c:if>
-   	</c:if>
+  		 	</c:if>
+   		</c:if>
 	</div>
 </div>
 </div>

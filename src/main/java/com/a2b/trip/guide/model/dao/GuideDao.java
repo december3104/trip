@@ -49,7 +49,8 @@ public class GuideDao {
 
 	public Guide selectOne(String member_id) {
 		return sqlSession.selectOne("guideMapper.selectOne", member_id);
-    
+	}
+	
 	// 가이드 한명 조회
 	public Guide selectGuideOne(String guide_id) {
 		return sqlSession.selectOne("guideMapper.selectGuideOne", guide_id);

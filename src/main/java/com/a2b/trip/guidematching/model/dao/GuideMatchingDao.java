@@ -26,7 +26,8 @@ public class GuideMatchingDao {
 
 	public int insertGuideMatching(GuideMatching gm) {
 		return sqlSession.insert("guideMatchingMapper.insertGuideMatching", gm);
-
+	}
+	
 	// 가이드 평점 남기기 여부
 	public int updateGradeCheck(GuideMatching gm) {
 		return sqlSession.update("guideMatchingMapper.updateGradeCheck", gm);

@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
 html,body{height:100%}
-body{margin:0}
+body{margin:0;}
 .bodyCss{min-height:100%; margin-top: 7%; }
 .bodyContentCss{padding-bottom:1.9em}

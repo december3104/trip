@@ -116,12 +116,12 @@ $(function(){
 					} else {
 						if (memberPhoneValue == ""){
 							$('#updateChkContent').html('<font size="3pt">전화번호 형식에 맞게 입력해주세요.</font><br><font size="3pt">- 없이 숫자만 입력하세요. ex) 01011112222</font>');
-							$('#updateChkBtn').css('background', '#c0e7f8').css('color', '000');
+							$('#updateChkBtn').css('background', '#c0e7f8').css('color', '#000');
 							$('#updateChkModal').modal('show');
 							memberPhoneDupChk = 1;
 						} else {
 							$('#updateChkContent').html('<font size="3pt">사용할 수 있는 전화번호입니다.</font>');
-							$('#updateChkBtn').css('background', '#28D542').css('color', '000');
+							$('#updateChkBtn').css('background', '#28D542').css('color', '#000');
 							$('#updateChkModal').modal('show');
 							memberPhoneDupChk = 0;
 						}
@@ -151,7 +151,67 @@ $(function(){
 	 	var name = e.target.files[0].name;
 		$('input:text', $(e.target).parent()).val(name);
 	 });
+	
+
 });
+// ajax 처리용 변수
+var memberPwdChk = 0;
+var returnChk = 0; // 0 : false, 1 : true
+
+// 탈퇴하기 유효성 검사
+function memberSecessionModal(){
+	$(function(){
+		var memberPwd = $('#memberSecessionPwd').val();
+
+		// 비밀번호 입력칸 비어있는지 검사
+		if (memberPwd.length == 0 || memberPwd == ""){
+			$('#memberSecessionPwd').focus();
+			alert('비밀번호를 입력해주세요.');
+			returnChk = 0;
+		}
+		
+		$.ajax({
+			url: "selectMemberPwdChk.do",
+			data: {member_pwd: memberPwd},
+			type: "post",
+			success: function(result){
+				if (result == "OK"){
+					memberPwdChk = 0;
+				} else {
+					memberPwdChk = 1;
+				}
+			},
+			error : function(request, status, errorData){
+				console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+			}
+		});
+		
+		// 비밀번호 일치하는지 검사
+		if (memberPwdChk == 1){
+			returnChk = 0;
+		}
+	  
+		// 안내사항 체크했는지 검사
+	   if(!$(':input:checkbox[id=secessionChk]:checked').val()) {   
+			alert("안내사항 동의는 필수입니다.");
+			$(':input:checkbox[id=secessionChk]').focus();
+			returnChk = 0;
+		}
+	   returnChk = 1;
+	   
+	   if (returnChk == 1){
+		   $('#deleteMemberModal').submit();
+	   }
+		
+	});
+}
+
+$(function(){
+	$('#memberSecessionModalBtn').on('click', function(){
+		memberSecessionModal();
+	});
+});
+
 </script>
 </head>
 <body>
@@ -257,31 +317,38 @@ $(function(){
 		<div class="header">
 			<h3 style="font-family: Lato">회원 탈퇴</h3>
 		</div>
-		<div class="description" style="padding: 5%">
-			<p>사용하고 계신 계정을 탈퇴할 경우 복구가 불가능합니다.</p>
-			<p>탈퇴 후 회원 정보 및 서비스 이용 기록은 모두 삭제되오니 신중하게 선택하여 주시기 바랍니다.</p>
-			<p>회원 탈퇴를 위해 비밀번호를 입력해주세요.</p>
-			<div class="fluid ui left icon input">
-				<input type="password" placeholder="비밀번호를 입력하세요.">
-				<i class="lock icon"></i>
+		<form class="ui form" action="deleteMember.do" method="post" id="deleteMemberModal">
+			<div class="description" style="padding: 5%">
+				<p>사용하고 계신 계정을 탈퇴할 경우 복구가 불가능합니다.</p>
+				<p>탈퇴 후 회원 정보 및 서비스 이용 기록은 모두 삭제되오니 신중하게 선택하여 주시기 바랍니다.</p>
+				<p>회원 탈퇴를 위해 비밀번호를 입력해주세요.</p>
+				<div class="fluid ui left icon input">
+					<input type="password" placeholder="비밀번호를 입력하세요." name="member_pwd" id="memberSecessionPwd">
+					<i class="lock icon"></i>
+				</div>
+				<c:if test="${loginMember.member_level eq 2 }">
+				<div class="ui radio checkbox" style="margin-top: 15px">
+					<input type="radio" value="guide" id="guideSecession" name="secession" required="required">
+					<label for="guideSecession" style="cursor: pointer">&nbsp;가이드 탈퇴</label>
+				</div>
+				&emsp;
+				<div class="ui radio checkbox">
+					<input type="radio" value="all" id="allSecession" name="secession" required="required">
+					<label for="allSecession" style="cursor: pointer">&nbsp;전체 탈퇴</label>
+				</div>
+				</c:if>
+				<c:if test="${loginMember.member_level eq 1 }">
+					<input type="hidden" name="secession" value="all">
+				</c:if>
+				<br>
+				<div class="ui checkbox" style="margin-top: 15px">
+					<input type="checkbox" id="secessionChk">
+					<label for="secessionChk" style="cursor: pointer">&nbsp;안내사항을 모두 확인하였으며, 탈퇴시 계정의 데이터 복구가 불가능함에 동의합니다.</label>
+				</div>
 			</div>
-			<div class="ui radio checkbox" style="margin-top: 15px">
-				<input type="radio" value="guide" id="guideSecession" name="secession">
-				<label for="guideSecession" style="cursor: pointer">&nbsp;가이드 탈퇴</label>
-			</div>
-			&emsp;
-			<div class="ui radio checkbox">
-				<input type="radio" value="all" id="allSecession" name="secession">
-				<label for="allSecession" style="cursor: pointer">&nbsp;전체 탈퇴</label>
-			</div>
-			<br>
-			<div class="ui checkbox" style="margin-top: 15px">
-				<input type="checkbox" id="secessionChk">
-				<label for="secessionChk" style="cursor: pointer">&nbsp;안내사항을 모두 확인하였으며, 탈퇴시 계정의 데이터 복구가 불가능함에 동의합니다.</label>
-			</div>
-		</div>
+		</form>
 		<div class="actions">
-			<div class="fluid ui ok button" style="margin: 0; background: #c0e8f7; font-family: Lato">확인</div>
+			<button class="fluid ui ok button" type="submit" style="margin: 0; background: #c0e8f7;" id="memberSecessionModalBtn">확인</button>
 		</div>
 	</div>
 </div>

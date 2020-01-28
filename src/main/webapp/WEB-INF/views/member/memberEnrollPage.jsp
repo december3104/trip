@@ -141,6 +141,20 @@ function closeUserInfoAllContext(){
 	$('#userInfoContext').css('display', 'none');
 }
 
+$(function(){
+	// 파일 input
+	$("input:text").click(function() {
+		$(this).parent().find("input:file").click();
+	});
+
+	$('input:file', '.ui.action.input').on('change', function(e) {
+	 	var name = e.target.files[0].name;
+		$('input:text', $(e.target).parent()).val(name);
+	 });
+	
+	
+});
+
 // ajax 리턴 처리용 변수 준비
 var memberIdDupChk = 0;
 var memberEmailDupChk = 0;
@@ -159,20 +173,14 @@ $(function(){
 			success: function(result){
 				
 				if (result == "DUP" || memberIdValue == "a2b" || memberIdValue == "admin") {
-					$('#enrollChkContent').html('<font size="3pt">사용할 수 없는 아이디입니다.</font>');
-					$('#enrollChkBtn').css('background', '#D52828').css('color', '#fff');
-					$('#enrollChkModal').modal('show');
+					$('#memberIdExplan').html('<font color="red">사용할 수 없는 아이디입니다.</font>');
 					memberIdDupChk = 1;
 				} else {
 					if (memberIdValue == ""){
-						$('#enrollChkContent').html('<font size="3pt">아이디는 4~12자 영소문자와 숫자로만 입력해주세요.</font>');
-						$('#enrollChkBtn').css('background', '#c0e7f8').css('color', '000');
-						$('#enrollChkModal').modal('show');
+						$('#memberIdExplan').html('<font color="#cecece">아이디는 4~12자 영소문자와 숫자로만 입력해주세요.</font>');
 						memberIdDupChk = 1;
 					} else {
-						$('#enrollChkContent').html('<font size="3pt">사용할 수 있는 아이디입니다.</font>');
-						$('#enrollChkBtn').css('background', '#28D542').css('color', '000');
-						$('#enrollChkModal').modal('show');
+						$('#memberIdExplan').html('<font color="green">사용할 수 있는 아이디입니다.</font>');
 						memberIdDupChk = 0;
 					}
 				}
@@ -203,7 +211,22 @@ $(function(){
 						memberEmailDupChk = 1;
 					} else {
 						$('#memberEmailExplan').html('<font color="green">사용할 수 있는 이메일 주소입니다.</font>');
-						memberEmailDupChk = 0;
+						memberEmailDupChk = 1;
+						$('#emailChkBtn').attr('class', 'ui button');
+						// 이메일 인증하기
+						$('#emailChkBtn').on('click', function(){
+							$.ajax({
+								type: "get",
+								url: "createEmailCheck.do",
+								data: {member_email: $('#member_email').val(), random: $('#random').val()},
+								success: function(){
+									$('#emailChkModal').modal('show');
+								},
+								error : function(request, status, errorData){
+									console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+								}
+						});
+					});
 					}
 				}
 			},
@@ -244,6 +267,37 @@ $(function(){
 	});	
 });
 
+// 이메일 인증 번호 확인 검사
+$(function(){
+	$('#emailChkModalBtn').on('click', function(){
+		$.ajax({
+			url: "emailAuth.do",
+			type: "get",
+			data: {authCode: $('#authCode').val(), random: $('#random').val()},
+			success: function(data){
+				console.log(data);
+				if (data == "complete"){
+					$('#emailChkModal').modal('hide');
+					$('#enrollChkContent').html('이메일 인증이 완료되었습니다.');
+					$('#enrollChkBtn').css('background', '#c0e7f8').css('color', '#000');
+					$('#emailChkBtn').css('display', 'none');
+					$('#enrollChkModal').modal('show');
+					memberEmailDupChk = 0;
+				}else if (data == "false"){
+					$('#emailChkModal').modal('hide');
+					$('#enrollChkContent').html('인증번호가 일치하지 않습니다. 인증을 다시 진행해주세요.');
+					$('#enrollChkBtn').css('background', '#D52828').css('color', '#fff');
+					$('#enrollChkModal').modal('show');
+					memberEmailDupChk = 1;
+				}
+			},
+			error : function(request, status, errorData){
+				console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+			}
+		});
+	});
+});
+
 // 회원가입 유효성 검사
 function checkForm(){
 
@@ -260,7 +314,8 @@ function checkForm(){
 	
 	// 이름 입력칸 비어있는지 검사
 	if (memberName.length == 0 || memberName == ""){
-		alert("이름을 입력해주세요.");
+		$('#enrollChkContent').html('이름을 입력해주세요');
+		$('#enrollChkModal').modal('show');
 		$('#member_name').focus();
 		return false;
 	}
@@ -270,14 +325,16 @@ function checkForm(){
 	
 	// 이름 정규식에 맞는지 검사
 	if (!memberNameChk.test(memberName)){
-		alert("이름을 확인해주세요.");
+		$('#enrollChkContent').html('이름을 한글 2~13자에 맞게 입력해주세요.');
+		$('#enrollChkModal').modal('show');
 		$('#member_name').focus();
 		return false;
 	}
 	
 	// 아이디 입력칸 비어있는지 검사
 	if (memberId.length == 0 || memberId == ""){
-		alert("아이디를 입력해주세요.");
+		$('#enrollChkContent').html('아이디를 입력해주세요.');
+		$('#enrollChkModal').modal('show');
 		$('#member_id').focus();
 		return false;
 	}
@@ -288,20 +345,23 @@ function checkForm(){
 	
 	// 아이디 정규식에 맞는지 검사
 	if (!memberIdChk.test(memberId)){
-		$('#memberIdExplan').html('');
+		$('#enrollChkContent').html('아이디를 영어 소문자, 숫자를 섞어 4~12자로 입력해주세요.');
+		$('#enrollChkModal').modal('show');
 		$('#member_id').focus();
 		return false;
 	} 
 	
 	if (memberIdDupChk == 1){
-		alert("사용할 수 없는 아이디입니다.");
+		$('#enrollChkContent').html('사용할 수 없는 아이디입니다.');
+		$('#enrollChkModal').modal('show');
 		$('#member_id').focus();
 		return false;
 	}
 
 	// 비밀번호 입력칸 비어있는지 검사
 	if (memberPwd.length == 0 || memberPwd == ""){
-		alert("비밀번호를 입력해주세요.");
+		$('#enrollChkContent').html('비밀번호를 입력해주세요.');
+		$('#enrollChkModal').modal('show');
 		$('#member_pwd').focus();
 		return false;
 	}
@@ -312,21 +372,24 @@ function checkForm(){
 	
 	// 비밀번호 정규식에 맞는지 검사
 	if (!memberPwdChk.test(memberPwd)){
-		alert("비밀번호 정규식에 맞게");
+		$('#enrollChkContent').html('비밀번호는 최소 하나의 문자 + 하나의 숫자 + 하나의 특수 문자 포함, 최소 6자리로 입력해주세요.');
+		$('#enrollChkModal').modal('show');
 		$('#member_pwd').focus();
 		return false;
 	}
 		
 	// 비밀번호와 비밀번호 확인이 일치하는지 검사
 	if (memberPwd != memberPwd2){
-		alert("비밀번호가 일치하지 않습니다.");
+		$('#enrollChkContent').html('비밀번호가 일치하지 않습니다.');
+		$('#enrollChkModal').modal('show');
 		$('#member_pwd2').focus();
 		return false;
 	}
 	
 	// 이메일 주소 입력칸 비어있는지 검사
 	if (memberEmail.length == 0 || memberEmail == ""){
-		alert("이메일 주소를 입력해주세요.");
+		$('#enrollChkContent').html('이메일 주소를 입력해주세요.');
+		$('#enrollChkModal').modal('show');
 		$('#member_email').focus();
 		return false;
 	}
@@ -336,16 +399,18 @@ function checkForm(){
 	
 	// 이메일 주소 정규식에 맞는지 검사
 	if (!memberEmailChk.test(memberEmail)){
-		alert("이메일 주소 정규식에 맞게");
+		$('#enrollChkContent').html('이메일 주소를 정확히 입력해주세요.');
+		$('#enrollChkModal').modal('show');
 		$('#member_email').focus();
 		return false;
 	}
 	
 	// 성별을 선택했는지 검사
 	if(!$(':input:radio[name=member_gender]:checked').val()) {   
-		   alert("성별을 선택해주세요.");
-		   $(':input:radio[name=member_gender]').focus();
-		   return false;
+		$('#enrollChkContent').html('성별을 선택해주세요.');
+		$('#enrollChkModal').modal('show');
+		$(':input:radio[name=member_gender]').focus();
+		return false;
 	}
 	
 	// 생년월일 유효성검사
@@ -358,25 +423,30 @@ function checkForm(){
     if (memberBirth.length <=8) {
 		// 연도의 경우 1900 보다 작거나 yearNow 보다 크다면 false를 반환합니다.
 	    if (1900 > year || year > yearNow){
-	    	alert('태어난 년도를 확인해주세요 :)');
+	    	$('#enrollChkContent').html('태어난 년도를 확인해주세요.');
+			$('#enrollChkModal').modal('show');
 			$('#member_birth').focus();
 	    	return false;
 	    } else if (month < 1 || month > 12) {
-	    	alert('태어난 월을 확인해주세요 :)');
+	    	$('#enrollChkContent').html('태어난 월을 확인해주세요.');
+			$('#enrollChkModal').modal('show');
 			$('#member_birth').focus();
 	    	return false;
 	    } else if (day < 1 || day > 31) {
-	    	alert('태어난 일을 확인해주세요 :)');
+	    	$('#enrollChkContent').html('태어난 일을 확인해주세요.');
+			$('#enrollChkModal').modal('show');
 			$('#member_birth').focus();
 	    	return false;
 	    } else if ((month==4 || month==6 || month==9 || month==11) && day==31) {
-	    	alert('태어난 월과 일을 확인해주세요 :)');
+	    	$('#enrollChkContent').html('태어난 월과 일을 확인해주세요.');
+			$('#enrollChkModal').modal('show');
 			$('#member_birth').focus();
 	    	 return false;
 	    } else if (month == 2) {
 	       	var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
 	     	if (day>29 || (day==29 && !isleap)) {
-	     		alert('생년월일을 확인해주세요 :)');
+	     		$('#enrollChkContent').html('생년월일을 확인해주세요.');
+				$('#enrollChkModal').modal('show');
 				$('#member_birth').focus();
 	    		return false;
 			} else {
@@ -388,45 +458,53 @@ function checkForm(){
 		
 	}else{
 		//1.입력된 생년월일이 8자 초과할때 :  auth:false
-		alert('생년월일 자릿수을 확인해주세요');
+		$('#enrollChkContent').html('생년월일 자릿수를 확인해주세요.');
+		$('#enrollChkModal').modal('show');
 		$('#member_birth').focus();
 		return false;
 	}
 	
     // 전화번호 입력칸 비어있는지 검사
     if (memberPhone.length == 0 || memberPhone == ""){
-    	alert("전화번호를 입력해주세요.");
+		$('#enrollChkContent').html('전화번호를 입력해주세요.');
+		$('#enrollChkModal').modal('show');
     	$('#member_phone').focus();
     	return false;
-    }
+    } 
     
     // 전화번호 유효성검사 정규식
     var memberPhoneChk = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/
 
     // 전화번호 정규식에 맞는지 검사
     if (!memberPhoneChk.test(memberPhone)){
-    	alert("전화번호 형식을 맞춰주세요");
+		$('#enrollChkContent').html('전화번호를 올바르게 입력해주세요.');
+		$('#enrollChkModal').modal('show');
     	$('#member_phone').focus();
     	return false;
+    } else {
+    	$('#memberPhoneExplan').empty();
     }
     
     // 이용약관 체크했는지 검사
    if(!$(':input:checkbox[id=useCheck]:checked').val()) {   
-		alert("이용약관 동의는 필수입니다.");
+		$('#enrollChkContent').html('이용약관 동의는 필수입니다.');
+		$('#enrollChkModal').modal('show');
 		$(':input:checkbox[id=useCheck]').focus();
 		return false;
 	}
     
     // 개인정보 수집 및 이용 동의 체크했는지 검사
    if(!$(':input:checkbox[id=userInfoCheck]:checked').val()) {   
-		alert("개인정보 수집 및 이용 동의는 필수입니다.");
+		$('#enrollChkContent').html('개인정보 수집 및 이용 동의는 필수입니다.');
+		$('#enrollChkModal').modal('show');
 		$(':input:checkbox[id=userInfoCheck]').focus();
 		return false;
 	}
     
     // 만 14세 이상인지 확인 체크했는지 검사
    if(!$(':input:checkbox[id=ageCheck]:checked').val()) {   
-		alert("만 14세 이상인지 확인해주세요.");
+		$('#enrollChkContent').html('만 14세 이상인지 확인해주세요.');
+		$('#enrollChkModal').modal('show');	   
 		$(':input:checkbox[id=ageCheck]').focus();
 		return false;
 	}    
@@ -434,18 +512,7 @@ function checkForm(){
 	return true;
 }
 
-$(function(){
-	// 파일 input
-	$("input:text").click(function() {
-		$(this).parent().find("input:file").click();
-	});
 
-	$('input:file', '.ui.action.input').on('change', function(e) {
-	 	var name = e.target.files[0].name;
-		$('input:text', $(e.target).parent()).val(name);
-	 });
-	
-});
 </script>
 </head>
 <body>
@@ -461,6 +528,7 @@ $(function(){
 							<td>
 								<div class="eight wide field">
 									<input type="text" placeholder="이름을 입력해주세요." name="member_name" id="member_name" />
+									<span id="memberNameExplan" style="font-weight: 300;"></span>
 								</div>
 							</td>
 					</tr>
@@ -493,9 +561,13 @@ $(function(){
 					<tr>
 						<th><i class="fas fa-check"></i>&nbsp;이메일 주소</th>
 							<td>
-								<div class="eight wide field">
+								<div class="eight wide field" style="float: left; margin-bottom: 0">
 									<input type="email" placeholder="이메일 주소를 입력해주세요." name="member_email" id="member_email" />
 									<span id="memberEmailExplan" style="font-weight: 300"><font color="#aaaaaa">이메일 주소 형식에 맞게 입력해주세요.</font></span>
+								</div>
+								
+								<div style="float: left; margin: 0">
+									&emsp;<button class="ui disabled button" type="button" style="width: auto; margin-top: auto;" id="emailChkBtn">이메일 인증</button>
 								</div>
 							</td>
 					</tr>
@@ -798,18 +870,36 @@ $(function(){
 			</form>	
 		</div>
 	</div>
-	
-	<!-- 안내창 모달 -->
-	<div class="ui mini modal" id="enrollChkModal">
-		
-		<div class="description" style="padding: 5%">
-			<p id="enrollChkContent"></p>
-		</div>
-		<div class="actions">
-			<div class="fluid ui ok button" style="font-family: Lato; margin: 0; background: #c0e7f8" id="enrollChkBtn">확인</div>
-		</div>
+</div>
+
+<!-- 이메일 인증 모달 -->
+<div class="ui mini modal" id="emailChkModal">
+	<div class="header" style="font-size: 11pt">
+		인증번호를 아래칸에 입력 후 확인 버튼을 눌러주세요.
+	</div>
+	<div class="description" style="padding: 5%">
+		<form class="ui form" action="emailAuth.do" method="get" id="emailChkModalForm">
+			<div class="fields" style="margin: 0">
+				<input type="text" id="authCode" name="authCode" placeholder="인증번호를 정확하게 입력해주세요." />
+			</div>
+			<input type="hidden" name="random" id="random" value="${random }" />
+		</form>
+	</div>
+	<div class="actions">
+		<div class="fluid ui ok button" style="font-family: LotteMartDream; margin: 0; background: #c0e7f8" id="emailChkModalBtn">확인</div>
 	</div>
 </div>
+
+<!-- 안내창 모달 -->
+<div class="ui mini modal" id="enrollChkModal">
+	<div class="description" style="padding: 5%">
+		<p id="enrollChkContent"></p>
+	</div>
+	<div class="actions">
+		<div class="fluid ui ok button" style="font-family: LotteMartDream; margin: 0; background: #c0e7f8" id="enrollChkBtn">확인</div>
+	</div>
+</div>
+
 <!-- 푸터 -->
 <footer><jsp:include page="/WEB-INF/views/footer.jsp" /></footer>
 </body>

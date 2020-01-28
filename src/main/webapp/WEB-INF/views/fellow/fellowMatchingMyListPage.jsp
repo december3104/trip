@@ -147,14 +147,14 @@ $(function(){
 		$('#fellowBoardRecode').attr('class', 'item active');
 		$('#fellowMatchingRecode').attr('class', 'item');
 		$('#fellowMatchingRecodeTable').css('display', 'none');
-		$('#fellowBoardRecodeTable').css('display', 'block');
+		$('#fellowBoardRecodeTable').css('display', 'inline-table');
 	});
 	
 	$('#fellowMatchingRecode').on('click', function(){
 		$('#fellowMatchingRecode').attr('class', 'item active');
 		$('#fellowBoardRecode').attr('class', 'item');
 		$('#fellowBoardRecodeTable').css('display', 'none');
-		$('#fellowMatchingRecodeTable').css('display', 'block');
+		$('#fellowMatchingRecodeTable').css('display', 'inline-table');
 	});
 });
 </script>
@@ -167,7 +167,7 @@ $(function(){
 		<div>
 			<table class="ui celled table" style="text-align:center; font-size: 15pt; background: #D3F0FE">
 				<tr><td class="sidebarTd">내 가이드북 보기</td></tr>
-				<tr><td class="sidebarTd" onclick="location.href='selectMyGuideMatching.do'">가이드 매칭 기록</td></tr>
+				<tr><td class="sidebarTd" onclick="location.href='/login/selectMyGuideMatching.do'">가이드 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</td></tr>
 			</table>
@@ -183,8 +183,9 @@ $(function(){
 			</div>
 			
 			<!-- 동행 매칭 기록 -->
-			<table class="ui striped table" style="text-align:center; margin-left: 0" id="fellowMatchingRecodeTable">
-				<tr style="background: #C8EDFE"><th style="width: 10%">동행자</th><th style="width: 15%">매칭일</th><th style="width: 10%">여행 국가</th><th style="width: 10%">여행 도시</th><th style="width: 10%"></th></tr>
+			<table class="ui striped table" style="text-align:center; margin-left: 0; display: inline-table" id="fellowMatchingRecodeTable">
+				<tr style="background: #C8EDFE"><th style="width: 20%">동행자</th><th style="width: 25%">매칭일</th><th style="width: 20%">여행 국가</th><th style="width: 20%">여행 도시</th><th style="width: 15%"></th></tr>
+				<c:if test="${!empty fellowMatchingMyList }">
 				<c:forEach var="fellowMatchingOne" items="${fellowMatchingMyList }">
 				<tr>
 					<td style="font-size: 12pt"><a href="javascript:void(0);" onclick="fellowModalOpen('${fellowMatchingOne.fb_id}');" class="fellowInfo"  style="cursor: pointer">${fellowMatchingOne.member_name }(${fellowMatchingOne.fb_id })</a></td>
@@ -211,11 +212,16 @@ $(function(){
 					</c:choose>
 				</tr>
 				</c:forEach>
+				</c:if>
+				<c:if test="${empty fellowMatchingMyList }">
+				<tr><td colspan="5">매칭된 기록이 존재하지 않습니다.</td></tr>
+				</c:if>
 			</table>
 			
 			<!-- 동행 찾기 기록 -->
 			<table class="ui striped table" style="text-align: center; display: none; margin-left: 0" id="fellowBoardRecodeTable">
-				<tr style="background: #C8EDFE"><th style="width: 10%">동행자</th><th style="width: 15%">매칭일</th><th style="width: 10%">여행 국가</th><th style="width: 10%">여행 도시</th><th style="width: 10%"></th></tr>
+				<tr style="background: #C8EDFE"><th style="width: 20%">동행자</th><th style="width: 25%">매칭일</th><th style="width: 20%">여행 국가</th><th style="width: 20%">여행 도시</th><th style="width: 15%"></th></tr>
+				<c:if test="${!empty fellowBoardMyList }">
 				<c:forEach var="fellowBoardOne" items="${fellowBoardMyList }">
 				<tr>
 					<td style="font-size: 12pt"><a href="javascript:void(0);" onclick="fellowModalOpen2('${fellowBoardOne.fm_id}');" class="fellowInfo" style="cursor: pointer">${fellowBoardOne.member_name }(${fellowBoardOne.fm_id })</a></td>
@@ -237,6 +243,10 @@ $(function(){
 					</c:choose>
 				</tr>
 				</c:forEach>
+				</c:if>
+				<c:if test="${empty fellowBoardMyList }">
+				<tr><td colspan="5">매칭된 기록이 존재하지 않습니다.</td></tr>
+				</c:if>
 			</table>
 		</div>
 			

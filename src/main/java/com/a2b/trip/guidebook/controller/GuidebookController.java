@@ -35,7 +35,7 @@ public class GuidebookController {
 	//가이드북 제작하기 페이지
 	@RequestMapping("makeGuidebook.do")
 	   public String makeGuidebook() {
-		   return "guidebook/makeGuidebook";
+		   return "guidebook/makeGuidebook2";
 	   }
 	
 	//가이드북 생성하기
@@ -54,7 +54,7 @@ public class GuidebookController {
 		
 		 int result = guidebookService.insertGuidebook(guidebook);
 		   
-		   String viewFileName = "guidebook/makeGuidebook";
+		   String viewFileName = "guidebook/makeGuidebook2";
 		   
 		 if(result <= 0) { //제작 실패시
 			model.addAttribute("message", "가이드북 제작실패!");

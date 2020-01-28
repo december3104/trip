@@ -26,5 +26,20 @@ public class GuideMatchingDao {
 
 	public int insertGuideMatching(GuideMatching gm) {
 		return sqlSession.insert("guideMatchingMapper.insertGuideMatching", gm);
+
+	// 가이드 평점 남기기 여부
+	public int updateGradeCheck(GuideMatching gm) {
+		return sqlSession.update("guideMatchingMapper.updateGradeCheck", gm);
+	}
+
+	// 가이드 매칭 신고 처리
+	public int updateGuideMatchingReport(int gb_no) {
+		return sqlSession.update("guideMatchingMapper.updateGuideMatchingReport", gb_no);
+	}
+
+	// 가이드 상세 보기
+	public MyGuideMatching selectMyGuideMatchingOne(String gb_id) {
+		return sqlSession.selectOne("guideMatchingMapper.selectMyGuideMatchingOne", gb_id);
+
 	}
 }

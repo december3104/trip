@@ -14,7 +14,7 @@
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 <!-- 헤더푸터 css -->
-<link href="resources/css/headerFooter.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/headerFooter.css" rel="stylesheet">
 <style type="text/css">
 a,p {
 	text-decoration : none;

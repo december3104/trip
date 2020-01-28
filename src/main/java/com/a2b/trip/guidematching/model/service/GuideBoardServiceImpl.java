@@ -50,6 +50,17 @@ public class GuideBoardServiceImpl implements GuideBoardService {
 	}
 	
 	
-	
-	
+
+	// 가이드 신고 처리
+	@Override
+	public int updateGuideBoardReport(int gb_no) {
+		return guideBoardDao.updateGuideBoardReport(gb_no);
+	}
+
+	// 신청자 상세 보기
+	@Override
+	public MyGuideMatching selectMyGuideBoardOne(String gm_id) {
+		return guideBoardDao.selectMyGuideBoardOne(gm_id);
+	}
+
 }

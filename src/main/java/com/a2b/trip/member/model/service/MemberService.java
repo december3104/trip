@@ -12,7 +12,6 @@ public interface MemberService {
 	Member loginChkMember(Member member);
 	int insertMember(Member member);
 	int updateMember(Member member);
-	int updateGuideMember(String member_id);
 	int deleteMember(String member_id);
 	int selectSearchMemberId(String member_id);
 	int selectSearchMemberEmail(String member_email);
@@ -27,5 +26,6 @@ public interface MemberService {
 	int deleteDetailForcedExitMember(String member_id);
 	int updateDetailForcedExitGuide(String guide_id);
 	int updateWordGuide(String guide_id);
+	int updateGuideQualification(String member_id);
 	
 }

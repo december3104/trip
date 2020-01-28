@@ -21,7 +21,7 @@ function memberPwdChk(){
 	console.log("함수 실행됨");
 	
 	var memberPwd = $('#memberPwdChk').val();
-	console.log(memberPwd);
+
 	$.ajax({
 		url: "selectMemberPwdChk.do",
 		data: {member_pwd: memberPwd},
@@ -31,7 +31,7 @@ function memberPwdChk(){
 				location.href="moveMemberUpdatePage.do";
 			} else {
 				$('#passwordChkModal').modal('show');
-				$('#memberPwdChk').select();
+				$('#memberPwdChk').select(); 
 			}
 		},
 		error : function(request, status, errorData){
@@ -46,6 +46,7 @@ $(function(){
 			memberPwdChk();
 		}
 	});
+	
 });
 </script>
 <style type="text/css">

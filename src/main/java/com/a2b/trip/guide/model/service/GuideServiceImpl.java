@@ -60,6 +60,15 @@ public class GuideServiceImpl implements GuideService {
 		return guideDao.selectOne(member_id);
 	}
 	
-	
+	// 가이드 한명 조회
+	@Override
+	public Guide selectGuideOne(String guide_id) {
+		return guideDao.selectGuideOne(guide_id);
+	}
+
+	@Override
+	public int updateGuideGrade(Guide guide) {
+		return guideDao.updateGuideGrade(guide);
+	}
 	
 }

@@ -18,4 +18,8 @@ public interface GuideBoardService {
 	int updateDetailAcceptGM_cut(GuideBoard gb);
 
 	int insertWordGuideBoard(GuideBoard gb);
+
+	int updateGuideBoardReport(int gb_no);
+	MyGuideMatching selectMyGuideBoardOne(String gm_id);
+
 }

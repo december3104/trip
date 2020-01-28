@@ -10,4 +10,9 @@ public interface GuideMatchingService {
 	ArrayList<MyGuideMatching> selectMyGuideMatching(String gm_id);
 
 	int insertGuideMatching(GuideMatching gm);
+
+	int updateGradeCheck(GuideMatching gm);
+	int updateGuideMatchingReport(int gb_no);
+	MyGuideMatching selectMyGuideMatchingOne(String gb_id);
+
 }

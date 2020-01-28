@@ -44,5 +44,15 @@ public class GuideBoardDao {
 
 	public int insertWordGuideBoard(GuideBoard gb) {
 		return sqlSession.insert("guideMatchingMapper.insertWordGuideBoard", gb);
+
+	// 가이드 신고 처리
+	public int updateGuideBoardReport(int gb_no) {
+		return sqlSession.update("guideMatchingMapper.updateGuideBoardReport", gb_no);
+	}
+
+	// 신청자 정보 조회
+	public MyGuideMatching selectMyGuideBoardOne(String gm_id) {
+		return sqlSession.selectOne("guideMatchingMapper.selectMyGuideBoardOne", gm_id);
+
 	}
 }

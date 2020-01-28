@@ -25,6 +25,8 @@ $(function(){
 	//일정 입력 아이콘 마우스오버시 팝업
 	$('#setDate').popup();
 	
+	$('#mapSearchInfo').popup();
+	
 	//날짜 목록 드롭다운
 	$('.dropdown').dropdown({
 		// you can use any ui transition
@@ -216,6 +218,7 @@ function chkDateVal2(){
 		return true;
 }
 
+
 //목록 제목에 날짜와 함께 표시할 요일 계산용
 /* function getDayLabel(){
 	var elem = document.getElementById("dayLabel");
@@ -236,6 +239,74 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 #map {
   height: 100%;
 }
+
+#description {
+ 	font-family: Roboto;
+	font-size: 15px;
+	font-weight: 300;
+}
+
+#infowindow-content .title {
+	font-weight: bold;
+}
+
+#infowindow-content {
+	display: none;
+}
+
+#map #infowindow-content {
+	display: inline;
+}
+
+.pac-card {
+	margin: 10px 10px 0 0;
+	border-radius: 2px 0 0 2px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	background-color: #fff;
+	font-family: Roboto;
+}
+
+#pac-container {
+	padding-bottom: 12px;
+	margin-right: 12px;
+}
+
+.pac-controls {
+	display: inline-block;
+	padding: 5px 5px;
+}
+
+.pac-controls label {
+	font-family: LotteMartDream;
+	font-size: 13px;
+	font-weight: 300;
+}
+
+#pac-input {
+	background-color: #fff;
+	font-family: LotteMartDream;
+	font-size: 15px;
+	font-weight: 300;
+	margin-left: 12px;
+	padding: 0 11px 0 13px;
+	text-overflow: ellipsis;
+	width: 400px;
+}
+
+#pac-input:focus {
+	border-color: #4d90fe;
+}
+
+#title {
+	color: #fff;
+	background-color: #4d90fe;
+	font-size: 25px;
+	font-weight: 500;
+	padding: 6px 12px;
+}
 </style>
 </head>
 <body oncontextmenu="return false">
@@ -244,11 +315,6 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 <!-- 헤더 끝 -->
 <!-- 본문영역 시작 -->
 <div class="hycontainer">
-<!-- <br><br><br><br><br><br>
-<div id="area22" style="background-color:grey; vertical-align:bottom;">
-	innerH : <span id="areaH"></span>
-	innerW : <span id="areaW"></span>
-</div> -->
 	<div>
 	<h2 class="ui header">
 		<i class="disabled cart plus blue massive icon"></i>
@@ -257,22 +323,137 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 		</c:url>
 		<div class="content" onclick="location.href='${goplace}'" style="cursor: pointer">계획하기</div>
 	</h2> &emsp;
-	<i class="pencil alternate large blue icon" id="setDate" data-content="일정을 만드시려면 아이콘을 클릭하세요."></i>
+	<i class="pencil alternate large blue icon" id="setDate" data-content="일정을 만드시려면 아이콘을 클릭하세요."></i> &emsp;
+	<i class="question circle outline icon" id="mapSearchInfo" data-content="장소 이름 입력시 결과가 조회되지 않는다면, 영어로 검색어를 입력해주세요."></i>
+	&emsp;&emsp;&emsp;
+	<%-- <c:url var="insertPlace" value="insertPlace.do">
+		<c:param name="member_id" value="${sessionScope.loginMember.member_id }"/>
+	</c:url> --%>
+	<button class="mini ui blue button" onclick="insertPlace()">
+		<i class="plus icon"></i>
+		장소 담기
+	</button>
 	</div>
-	
-	<div id="map" style="background-color:#FFD700;height:100%;width:80%;float:left;">
+	<div style="display: none">
+		<input id="pac-input"
+		       class="pac-controls"
+		       type="text"
+		       placeholder="Search Here ... ">
+	</div>
+	<div id="map" style="height:100%;width:80%;float:left;"></div>
+	<!-- 
+		PLACE_CODE IS '장소 코드';
+		PLACE_ID IS '장소 고유 ID';
+		PLACE_USER IS '작성자';
+		PLACE_NAME IS '장소명';
+		PLACE_ADDRESS IS '상세 주소';
+		PLACE_PHONE IS '전화번호';
+		OPENING_TIME IS '영업시간';
+		PLACE_DATE IS '방문 예정 날짜';
+		PLACE_GEO IS '장소 좌표';
+	 -->
+	<div id="infowindow-content">
+		<span id="place-name" class="title"></span><br>
+		<strong>Place ID:</strong> <span id="place-id"></span><br>
+		<span id="place-address"></span><br>
+		<span id="geometry"></span><br>
+		<span id="opening-hours"></span><br>
+		<span id="international_phone_number"></span><br>
+		<span id="address_components"></span><br>
 	</div>
 	<script>
-      var map;
+      // This sample uses the Place Autocomplete widget to allow the user to search
+      // for and select a place. The sample then displays an info window containing
+      // the place ID and other information about the place that the user has
+      // selected.
+
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
       function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 37.566535, lng:  126.9779692},
+          zoom: 12
+        });
+
+        var input = document.getElementById('pac-input');
+
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+
+        // 내가 쓸 요소들 여기에서 담아줘야 밑에서 출력 할 수 있음.
+        // Specify just the place data fields that you need.
+        autocomplete.setFields(['place_id', 'geometry', 'name', 'international_phone_number', 'opening_hours', 
+        	'formatted_phone_number', 'address_components', 'formatted_address']);	
+
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+        var infowindow = new google.maps.InfoWindow();
+        var infowindowContent = document.getElementById('infowindow-content');
+        infowindow.setContent(infowindowContent);
+
+        var marker = new google.maps.Marker({map: map});
+
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+
+        autocomplete.addListener('place_changed', function() {
+          infowindow.close();
+
+          var place = autocomplete.getPlace();
+
+          if (!place.geometry) {
+            return;
+          }
+
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+          }
+
+          // Set the position of the marker using the place ID and location.
+          marker.setPlace({
+            placeId: place.place_id,
+            location: place.geometry.location
+          });
+          
+          marker.setVisible(true);
+          
+          if(place.opening_hours != null){		//영업시간 정보가 있을경우에만 계산해줌
+	          var openStr = place.opening_hours.periods[0].open.time;		//####
+			  var closeStr = place.opening_hours.periods[0].close.time;		//####
+			  	
+			  var len = openStr.length;
+			  var openTime = "";		//오픈시간(##:##)
+			  var closeTime = "";		//종료시간(##:##)
+			  for(var i=0, j=len; i<len ; i++, j--){
+			  	if(j == 2 && j != len){
+			  		openTime += ":";
+			  		closeTime += ":";
+			  	}
+			  	openTime += openStr.charAt(i);
+			  	closeTime += closeStr.charAt(i);
+			  }
+			  infowindowContent.children['opening-hours'].textContent = openTime +"~"+ closeTime;
+         }
+          infowindowContent.children['place-name'].textContent = place.name;
+          infowindowContent.children['place-id'].textContent = place.place_id;
+          infowindowContent.children['place-address'].textContent = place.formatted_address;
+          infowindowContent.children['geometry'].textContent = place.geometry.location;	//좌표 
+          //infowindowContent.children['opening-hours'].textContent = place.opening_hours.periods[3].open.time;	//periods[#] 요일마다 오픈시간
+          infowindowContent.children['international_phone_number'].textContent = place.international_phone_number;
+          infowindowContent.children['address_components'].textContent = place.address_components.short_name;
+          infowindow.open(map, marker);
         });
       }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSn81vNlroM03vqotaV0LrRze1QsX9dsU&callback=initMap"
-    async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSn81vNlroM03vqotaV0LrRze1QsX9dsU&libraries=places&callback=initMap"
+        async defer></script>
+
 	<div id="list" style="background-color:#EEEEEE;height:100%;width:20%;float:left;">
 	<!-- 오른쪽 리스트 영역 -->
 	<div class="ui segment" id="rightArea">

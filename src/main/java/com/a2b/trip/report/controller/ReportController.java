@@ -18,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.a2b.trip.common.Page;
 import com.a2b.trip.fellow.model.service.FellowBoardService;
 import com.a2b.trip.fellow.model.service.FellowMatchingService;
+import com.a2b.trip.guidematching.model.service.GuideBoardService;
+import com.a2b.trip.guidematching.model.service.GuideMatchingService;
 import com.a2b.trip.member.model.vo.Member;
 import com.a2b.trip.report.model.service.ReportService;
 import com.a2b.trip.report.model.vo.GuideReport;
@@ -35,6 +37,12 @@ public class ReportController {
 	
 	@Autowired
 	private FellowBoardService fellowBoardService;
+	
+	@Autowired
+	private GuideMatchingService guideMatchingService;
+	
+	@Autowired
+	private GuideBoardService guideBoardService;
 	
 	
 	//로그 처리용 객체 의존성 주입 처리함(종속 객체 주입)
@@ -201,20 +209,53 @@ public class ReportController {
 		
 		int result = reportService.insertReport(report);
 		int updateResult = 0;
-		if (reportType.equals("fm")) {
-			updateResult = fellowMatchingService.updateFellowMatchingReport(fb_no);
-		}
-		if (reportType.equals("fb")) {
-			updateResult = fellowBoardService.updateFellowBoardReport(fb_no);
-		}
 		
-		
+		if (result >= 0) {
+			if (reportType.equals("fm")) {
+				updateResult = fellowMatchingService.updateFellowMatchingReport(fb_no);
+			}
+			if (reportType.equals("fb")) {
+				updateResult = fellowBoardService.updateFellowBoardReport(fb_no);
+			}
+		}
+	
 		String viewFileName = "redirect:/selectMyFellowMatching.do";
 	
 		if (result <= 0 || updateResult <= 0) {
 			viewFileName = "common/error";
 		}
 	
+		return viewFileName;
+	}
+	
+	// 가이드 신고하기
+	@RequestMapping(value="insertGuideReport.do", method=RequestMethod.POST)
+	public String insertGuideReport(Report report, @RequestParam("reportType") String reportType, @RequestParam("gb_no") int gb_no, HttpServletRequest request, Model model) {
+		// 세션에서 정보 꺼내기
+		HttpSession session = request.getSession(false);
+		Member member = (Member)session.getAttribute("loginMember");
+		String clame_id = member.getMember_id();
+		
+		report.setClame_id(clame_id);
+		
+		int result = reportService.insertReport(report);
+		int updateResult = 0;
+		
+		if (result >= 0) {
+			if (reportType.equals("gm")) {
+				updateResult = guideMatchingService.updateGuideMatchingReport(gb_no);
+			}
+			if (reportType.equals("gb")) {
+				updateResult = guideBoardService.updateGuideBoardReport(gb_no);
+			}
+		}
+
+		String viewFileName = "redirect:/selectMyGuideMatching.do";
+		
+		if (result <= 0 || updateResult <= 0) {
+			viewFileName = "common/error";
+		}
+		
 		return viewFileName;
 	}
 	

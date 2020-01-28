@@ -32,13 +32,13 @@
 		where member_id = #{member_id}
 	</update>
 	
-	<update id ="updateGuideMember" parameterType="string">
-		update member set guide_qualification = 'NONE' where member_id = #{value}
+	<update id ="updateGuideQualification" parameterType="string">
+		update member set guide_qualification = 'NONE', member_level = 1 where member_id = #{value}
 	</update>
 	
-	<delete id="deleteMember" parameterType="string">
-		delete member where member_id = #{value}
-	</delete>
+	<update id="deleteMember" parameterType="string">
+		update member set member_secession = 'Y' where member_id = #{value}
+	</update>
 	
 	<select id="selectSearchMemberId" parameterType="string" resultType="_int">
 		select count(member_id) from member where member_id = #{value}

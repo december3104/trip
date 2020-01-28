@@ -48,7 +48,8 @@
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
-	</servlet-mapping>	
+	</servlet-mapping>
 
+	<session-timeout>1</session-timeout>
 </web-app>
 

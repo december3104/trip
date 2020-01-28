@@ -30,6 +30,7 @@ public class Guide implements Serializable {
 	private String city_name;
 	private String guide_telephone;
 	private int price;
+	private int grade_number;
 	
 	public Guide() {}
 
@@ -37,7 +38,7 @@ public class Guide implements Serializable {
 			String guide_lang, String guide_introduce, String guide_say, int guide_count, double guide_grade,
 			String guide_address, String guide_contry, String guide_service, String guide_phone, String car_check,
 			int car_number, String guide_recommend, String qualification_original, String qualification_rename,
-			int guide_report_count, String city_name, String guide_telephone, int price) {
+			int guide_report_count, String city_name, String guide_telephone, int price, int grade_number) {
 		super();
 		this.guide_id = guide_id;
 		this.loc_code = loc_code;
@@ -61,6 +62,7 @@ public class Guide implements Serializable {
 		this.city_name = city_name;
 		this.guide_telephone = guide_telephone;
 		this.price = price;
+		this.grade_number = grade_number;
 	}
 
 	public String getGuide_id() {
@@ -239,6 +241,14 @@ public class Guide implements Serializable {
 		this.price = price;
 	}
 
+	public int getGrade_number() {
+		return grade_number;
+	}
+
+	public void setGrade_number(int grade_number) {
+		this.grade_number = grade_number;
+	}
+
 	@Override
 	public String toString() {
 		return "Guide [guide_id=" + guide_id + ", loc_code=" + loc_code + ", guide_profile_original="
@@ -249,16 +259,8 @@ public class Guide implements Serializable {
 				+ car_check + ", car_number=" + car_number + ", guide_recommend=" + guide_recommend
 				+ ", qualification_original=" + qualification_original + ", qualification_rename="
 				+ qualification_rename + ", guide_report_count=" + guide_report_count + ", city_name=" + city_name
-				+ ", guide_telephone=" + guide_telephone + ", price=" + price + "]";
+				+ ", guide_telephone=" + guide_telephone + ", price=" + price + ", grade_number=" + grade_number + "]";
 	}
-
-	
-	
-
-	
-	
-	
-	
 
 	
 }

@@ -65,4 +65,18 @@ public class PlaceServiceImpl implements PlaceService {
 	public int updateDaylist(PlaceDaylist daylist) {
 		return placeDao.updateDaylist(daylist);
 	}
+
+	//일정불러오기_sh
+	@Override
+	public ArrayList<PlaceDaylist> guideDaylist(String member_id) {
+		return placeDao.guideDaylist(member_id);
+	}
+
+	//일정하나불러오기_sh
+	@Override
+	public PlaceDaylist guideDaylistOne(int daylist_no) {
+		return placeDao.guideDaylistOne(daylist_no);
+	}
+	
+	
 }

@@ -32,6 +32,11 @@ public class PlaceController {
 	
 	public PlaceController() {}
 	
+	@RequestMapping("searchMap.do")
+	public String searchMap() {
+		return "place/searchMap";		
+	}
+	
 	//계획하기 페이지 메소드
 	@RequestMapping("goplace.do")
 	public String placeViewPage(Model model, Date place_date, HttpServletRequest request) {

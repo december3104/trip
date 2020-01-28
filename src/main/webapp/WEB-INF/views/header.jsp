@@ -14,17 +14,7 @@
 <!-- 시맨틱유아이 -->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-<script type="text/javascript">
 
-
-$(function(){
-	
-	$('#logoutTag').on('click', function(){
-		location.href = 'logout.do';
-	});
-	
-});
-</script>
 <style type="text/css">
 @font-face { 
 	font-family: 'LotteMartDream'; 
@@ -215,7 +205,7 @@ $(function(){
 				<div class="item" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</div>
 				<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
 				<div class="item" onclick="location.href='moveErrorPage.do'">에러페이지로 이동</div>
-				<div class="item" id="logoutTag">로그아웃</div>
+				<div class="item" onclick="location.href='logout.do'">로그아웃</div>
 			</div>
 		</div>
 		</c:if>
@@ -267,7 +257,7 @@ $(function(){
 		
 				<div class="menu" style="text-align: center">
 					<div class="item" onclick="location.href='moveAdminInfo.ad'">내 정보 수정</div>
-					<div class="item" id="logoutTag">로그아웃</div>
+					<div class="item" onclick="location.href='logout.do'">로그아웃</div>
 				</div>
 			</div>
 		 </c:if>

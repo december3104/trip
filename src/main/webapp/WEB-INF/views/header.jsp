@@ -18,9 +18,6 @@
 
 
 $(function(){
-	$('#loginTag').on('click', function(){
-		$('#loginModalOpen').modal('show');
-	});
 	
 	$('#logoutTag').on('click', function(){
 		location.href = 'logout.do';
@@ -54,8 +51,6 @@ $(function(){
 } 
 
 .lottemartdream,  * { font-family: 'LotteMartDream', sans-serif; }
-
-
 
 .ui.menu .ui.dropdown .menu>.item{
 	font-weight: 400!important;
@@ -140,7 +135,6 @@ $(function(){
 		<div class="menu">
 			<div class="item" onclick="location.href='moveLoginPage.do'">계획하기</div>
 			<div class="item" onclick="location.href='moveLoginPage.do'">제작하기</div>
-			<div class="item">공유 게시판</div>
 		</div>
 	</a> 
 	<a class="item" href="moveLoginPage.do">현지 가이드 매칭</a> 
@@ -172,7 +166,6 @@ $(function(){
 			<div class="menu">
 				<div class="item" onclick="location.href='goplace.do'">계획하기</div>
 				<div class="item" onclick="location.href='makeGuidebook.do'">제작하기</div>
-				<div class="item">공유 게시판</div>
 			</div>
 		</a> 
 		<a class="item" onclick="location.href='guideMatchingPage.do'">현지 가이드 매칭</a> 

@@ -61,6 +61,7 @@ public class MyGuideMatching implements Serializable {
 	private String qualification_rename;
 	private int guide_report_count;
 	private String loc_name;
+	private int grade_number;
 	
 	public MyGuideMatching() {}
 
@@ -75,7 +76,7 @@ public class MyGuideMatching implements Serializable {
 			String guide_profile_rename, String guide_lang, String guide_introduce, String guide_say, int guide_count,
 			double guide_grade, String guide_address, String guide_contry, String guide_service, String guide_phone,
 			String car_check, int car_number, String guide_recommend, String qualification_original,
-			String qualification_rename, int guide_report_count, String loc_name) {
+			String qualification_rename, int guide_report_count, String loc_name, int grade_number) {
 		super();
 		this.gb_no = gb_no;
 		this.gb_id = gb_id;
@@ -132,6 +133,7 @@ public class MyGuideMatching implements Serializable {
 		this.qualification_rename = qualification_rename;
 		this.guide_report_count = guide_report_count;
 		this.loc_name = loc_name;
+		this.grade_number = grade_number;
 	}
 
 	public int getGb_no() {
@@ -574,6 +576,14 @@ public class MyGuideMatching implements Serializable {
 		this.loc_name = loc_name;
 	}
 
+	public int getGrade_number() {
+		return grade_number;
+	}
+
+	public void setGrade_number(int grade_number) {
+		this.grade_number = grade_number;
+	}
+
 	@Override
 	public String toString() {
 		return "MyGuideMatching [gb_no=" + gb_no + ", gb_id=" + gb_id + ", gb_start_date=" + gb_start_date
@@ -596,7 +606,7 @@ public class MyGuideMatching implements Serializable {
 				+ ", guide_service=" + guide_service + ", guide_phone=" + guide_phone + ", car_check=" + car_check
 				+ ", car_number=" + car_number + ", guide_recommend=" + guide_recommend + ", qualification_original="
 				+ qualification_original + ", qualification_rename=" + qualification_rename + ", guide_report_count="
-				+ guide_report_count + ", loc_name=" + loc_name + "]";
+				+ guide_report_count + ", loc_name=" + loc_name + ", grade_number=" + grade_number + "]";
 	}
 
 	

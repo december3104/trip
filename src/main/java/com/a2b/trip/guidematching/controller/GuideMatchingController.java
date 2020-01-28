@@ -1,17 +1,24 @@
 package com.a2b.trip.guidematching.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.a2b.trip.fellow.model.vo.Fellow;
 import com.a2b.trip.guidematching.model.service.GuideBoardService;
 import com.a2b.trip.guidematching.model.service.GuideMatchingService;
 import com.a2b.trip.guidematching.model.vo.MyGuideMatching;
@@ -58,5 +65,29 @@ public class GuideMatchingController {
 		
 		return "guidematching/guideMatchingMyListPage";
 	
+	}
+	
+	// 가이드 정보 보기
+	@RequestMapping("selectMyGuideMatchingOne.do")
+	@ResponseBody
+	public String selectMyGuideMatchingOne(@RequestParam ("gb_id") String gb_id, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		MyGuideMatching guideMatchingOne = guideMatchingService.selectMyGuideMatchingOne(gb_id);
+
+		response.setContentType("application/json; charset=utf-8");
+		
+		JSONObject job = new JSONObject();
+
+		job.put("guideName", URLEncoder.encode(guideMatchingOne.getMember_name(), "utf-8"));
+		job.put("guideGender", guideMatchingOne.getMember_gender());
+		job.put("guideStartDate", guideMatchingOne.getGb_start_date().toString());
+		job.put("guideEndDate", guideMatchingOne.getGb_end_date().toString());
+		job.put("guideRoute", URLEncoder.encode(guideMatchingOne.getGb_route(), "utf-8"));
+		job.put("guideIntro", URLEncoder.encode(guideMatchingOne.getGuide_say(), "utf-8"));
+		job.put("guideTitle", URLEncoder.encode(guideMatchingOne.getGb_title(), "utf-8"));
+		job.put("guideLang", URLEncoder.encode(guideMatchingOne.getGuide_lang(), "utf-8"));
+		job.put("guideProfile", URLEncoder.encode("guide_profile/" + guideMatchingOne.getGuide_profile_rename(), "utf-8"));
+		
+		return job.toJSONString();
 	}
 }

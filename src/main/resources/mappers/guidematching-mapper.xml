@@ -9,7 +9,7 @@
 		grade_check, guide_service, loc_name, gb_route, gb_price, gb_open_date, gb_close_date, gb_title, guide_count, guide_grade from (select guideboard.gb_no, gb_id, guide_id, member_name,
 		member_gender, guide_profile_rename, guide_lang, gb_start_date, gb_end_date, gm_date, gb_report, gm_report, grade_check, guide_service, loc_name, gb_route, gb_price, gb_open_date, gb_close_date,
 		gb_title, guide_count, guide_grade from guideboard join guidematching on guideboard.gb_no = guidematching.gb_no join guide on guideboard.gb_id = guide.guide_id 
-		join location on guide.loc_code = location.loc_code join member on guide.guide_id = member.member_id where gm_id = #{value} order by gb_start_date desc, gb_end_date desc))
+		join location on guide.loc_code = location.loc_code join member on guide.guide_id = member.member_id where gm_id = #{value} order by gb_start_date desc, gb_end_date desc)) 
 	</select>
 	
 	<select id="selectMyGuideBoard" parameterType="string" resultType="MyGuideMatching">
@@ -20,13 +20,24 @@
 	</select>
 	
 	<select id="selectMyGuideMatchingOne" parameterType="string" resultType="MyGuideMatching">
-		select * from fellowmatching join fellowboard on fellowmatching.fb_no = fellowboard.fb_no join member on fellowboard.fb_id = member.member_id where fb_id = #{value}
+		select * from guidematching join guideboard on guidematching.gb_no = guideboard.gb_no join member on guideboard.gb_id = member.member_id join guide on member.member_id = guide.guide_id where gb_id = #{value}
 	</select>
 	
 	<select id="selectMyGuideBoardOne" parameterType="string" resultType="MyGuideMatching">
-		select * from fellowboard join fellowmatching on fellowboard.fb_no = fellowmatching.fb_no join member on fellowmatching.fm_id = member.member_id where fm_id = #{value}
+		select * from guideboard join guidematching on guideboard.gb_no = guidematching.gb_no join member on guidematching.gm_id = member.member_id join guide on guideboard.gb_id = guide.guide_id where gm_id = #{value}
 	</select>
 	
+	<update id="updateGradeCheck" parameterType="GuideMatching">
+		update guidematching set grade_check = 'Y' where gb_no = #{gb_no} and gm_id = #{gm_id}
+	</update>
+	
+	<update id="updateGuideMatchingReport" parameterType="_int">
+		update guidematching set gm_report = 'Y' where gb_no = #{value}
+	</update>
+	
+	<update id="updateGuideBoardReport" parameterType="_int">
+		update guidematching set gb_report = 'Y' where gb_no = #{value}
+	</update>
 	
 	
 </mapper>

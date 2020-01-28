@@ -48,6 +48,7 @@ public class GuidebookController {
 	
 	//가이드북 제작하기 페이지
 	@RequestMapping("makeGuidebook.do")
+
 	   public String makeGuidebook(Model model, HttpServletRequest request) {
 		//일정 불러오기
 			HttpSession session = request.getSession(false);
@@ -64,6 +65,7 @@ public class GuidebookController {
 
 		}
 		
+
 
 	
 	//가이드북 생성하기
@@ -82,6 +84,7 @@ public class GuidebookController {
 		
 		 int result = guidebookService.insertGuidebook(guidebook);
 		   
+
 		   String viewFileName = "guidebook/updateGuidebook";
 		   
 		 if(result <= 0) { //제작 실패시

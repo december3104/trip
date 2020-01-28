@@ -23,6 +23,9 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 
 input {font-family:LotteMartDream; }
 
-#map {
-        height: 100%;
-      }
+.hycontainer {
+	height:100vh;
+	margin-left:10%;
+	margin-right:10%;
+	margin-top:5%;
+}

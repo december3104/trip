@@ -96,5 +96,4 @@
 		insert into report values (report_seq.nextval, #{clame_id}, #{report_id}, #{report_content}, default, default, null, null, #{report_type})
 	</insert>
 
-	
 </mapper>

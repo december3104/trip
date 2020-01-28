@@ -760,10 +760,18 @@ $(function(){
 <c:if test="${loginMember.guide_qualification ne 'NONE' }">
 <div class="bodyCss" style="margin-left: 23%; margin-right: 23%; min-height:50%;">
 	<div class="bodyContentCss" style="margin-top: 40%; text-align: center;">
-		<i class="attach icon"></i>
-		<h1>심사 중입니다.</h1>
-		<h3>조금만 더 기다려주세요.</h3>
-		<button class="ui button" type="reset" id="cancelBtn" onclick="window.history.back();" style="margin-bottom: 5%; background: #95d6f3;">뒤로가기</button>
+		<table style="text-align: center;margin-left: 27.5%;">
+			<tr>
+				<th style="padding: 0px 30px 55px 30px;">
+					<i class="fas fa-exclamation-circle" style="font-size: 70pt; color: #95d6f3; "></i>
+				</th>
+				<td style="">
+					<h1 style="">심사 중입니다.</h1>
+					<h3 style="">조금만 더 기다려주세요.</h3>
+					<button class="ui button" type="reset" id="cancelBtn" onclick="window.history.back();" style="margin-bottom: 5%; background: #95d6f3;">뒤로가기</button>
+				</td>
+			</tr>
+		</table>
 	</div>
 </div>
 </c:if>

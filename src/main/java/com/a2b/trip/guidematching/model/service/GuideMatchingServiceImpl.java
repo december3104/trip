@@ -23,6 +23,11 @@ public class GuideMatchingServiceImpl implements GuideMatchingService {
 		return guideMatchingDao.selectMyGuideMatching(gm_id);
 	}
 
+	@Override
+	public int insertGuideMatching(GuideMatching gm) {
+		return guideMatchingDao.insertGuideMatching(gm);
+	}
+	
 	// 가이드 평점 남기기 여부 수정
 	@Override
 	public int updateGradeCheck(GuideMatching gm) {
@@ -40,4 +45,5 @@ public class GuideMatchingServiceImpl implements GuideMatchingService {
 	public MyGuideMatching selectMyGuideMatchingOne(String gb_id) {
 		return guideMatchingDao.selectMyGuideMatchingOne(gb_id);
 	}
+
 }

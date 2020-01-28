@@ -14,14 +14,29 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.a2b.trip.guide.model.service.GuideService;
+import com.a2b.trip.guide.model.vo.Guide;
+import com.a2b.trip.guide.model.vo.GuideDetail;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a2b.trip.fellow.model.vo.Fellow;
 import com.a2b.trip.guidematching.model.service.GuideBoardService;
 import com.a2b.trip.guidematching.model.service.GuideMatchingService;
+import com.a2b.trip.guidematching.model.vo.GuideBoard;
+import com.a2b.trip.guidematching.model.vo.GuideBoardInsert;
+import com.a2b.trip.guidematching.model.vo.GuideMatching;
+import com.a2b.trip.guidematching.model.vo.GuideSearch;
 import com.a2b.trip.guidematching.model.vo.MyGuideMatching;
+import com.a2b.trip.location.model.service.LocationService;
+import com.a2b.trip.location.model.vo.Location;
 import com.a2b.trip.member.model.vo.Member;
 
 @Controller
@@ -32,6 +47,13 @@ public class GuideMatchingController {
 	
 	@Autowired
 	private GuideBoardService guideBoardService;
+	
+	@Autowired
+	private GuideService guideService;
+	
+	@Autowired
+	private LocationService locationService;
+	
 	
 	public GuideMatchingController() {}
 	
@@ -67,6 +89,142 @@ public class GuideMatchingController {
 	
 	}
 	
+//	ssm 2020.01.15
+//	페이지 이동 처리
+	@RequestMapping("guideMatchingPage.do")
+	public ModelAndView guideMatchingPage(ModelAndView mv,HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		Member member = (Member)session.getAttribute("loginMember");
+		if(member != null) {
+			ArrayList<Location> list = locationService.selectAll();
+			
+			mv.addObject("loc", list);
+			mv.setViewName("guidematching/guideMatchingPage");
+		}else {
+			String text = "로그인 후 이용가능합니다.";
+			mv.addObject("text",text);
+			mv.setViewName("common/error");
+		}
+		
+		
+		return mv;
+	}
+	
+//	현지 가이드 매칭 리스트 조회 ajax requestBody = 클라이언트에서 json 보내면 컨트롤러에서도 json으로 받게해주는 어노테이션
+	@RequestMapping(value="/selectListGM.do", method=RequestMethod.POST)
+	@ResponseBody 
+	public Object selectListGM(@RequestBody GuideSearch guideSearch) {
+		logger.info(guideSearch.toString());
+		ArrayList<GuideBoard> list = guideBoardService.selectListGuideBoard(guideSearch);
+		logger.info(list.toString());
+		
+		return list;
+	}
+	
+//	가이드 보드 상세보기
+	@RequestMapping(value="/selectGB.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Object selectGB(@RequestParam("gb_no")String gb_no) {
+		logger.info(gb_no);
+		GuideBoard gb = guideBoardService.selectGB(gb_no);
+		return gb;
+	}
+	
+//	가이드 상세보기 신청 버튼
+	@RequestMapping(value="updateDetailAcceptGM.do", method=RequestMethod.POST)
+	public String updateDetailAcceptGM(@RequestParam("no") String gb_no,@RequestParam("chk_number") int chk_number ,GuideBoard gb,GuideMatching gm,HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		Member member = (Member)session.getAttribute("loginMember");
+		
+		gb = guideBoardService.selectGB(gb_no);
+		int gb_number_update = gb.getGb_number()+chk_number;
+		gb.setGb_number(gb_number_update);
+		logger.info(gb.toString());
+		
+		int result1 = 0;
+		int result2 = 0;
+		if(gb.getGb_max_number() == gb.getGb_number()) {
+			result1 = guideBoardService.updateDetailAcceptGM_cut(gb);
+			gm.setGb_no(Integer.parseInt(gb_no));
+			gm.setGm_id(member.getMember_id());
+			gm.setGm_number(chk_number);
+			logger.info(gm.toString());
+			result2 = guideMatchingService.insertGuideMatching(gm);
+		}else {
+			result1 = guideBoardService.updateDetailAcceptGM(gb);
+			gm.setGb_no(Integer.parseInt(gb_no));
+			gm.setGm_id(member.getMember_id());
+			gm.setGm_number(chk_number);
+			logger.info(gm.toString());
+			result2 = guideMatchingService.insertGuideMatching(gm);
+		}
+		
+		String viewFileName = "";
+		if(result1 == 1) {
+			viewFileName = "guidematching/guideMatchingPage";
+		}else {
+			viewFileName = "comment/error";
+		}
+		return viewFileName;
+	}
+	
+	
+	@RequestMapping("insertWordGuideBoardPage.do")
+	public String insertWordGuideBoardPage(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		Member member = (Member)session.getAttribute("loginMember");
+		String viewFileName = "";
+		if(member != null) {
+			viewFileName = "guidematching/guideMatchingBoardInsertPage";
+		}else {
+			viewFileName = "common/error";
+		}
+		
+		return viewFileName;
+	}
+	
+	@RequestMapping(value="insertWordGuideBoard.do", method=RequestMethod.POST)
+	public String insertWordGuideBoard(GuideBoardInsert gbi,GuideBoard gb,HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		Member member = (Member)session.getAttribute("loginMember");
+		Guide guide = guideService.selectOne(member.getMember_id());
+		logger.info(guide.toString());
+		
+		gb.setLoc_code(guide.getLoc_code());
+		gb.setMember_gender(member.getMember_gender());
+		gb.setGuide_lang(guide.getGuide_lang());
+		gb.setGuide_grade(guide.getGuide_grade());
+		gb.setGuide_profile_original(guide.getGuide_profile_original());
+		gb.setGuide_profile_rename(guide.getGuide_profile_rename());
+		gb.setMember_name(member.getMember_name());
+		gb.setGuide_say(guide.getGuide_say());
+		gb.setGb_id(member.getMember_id());
+		gb.setGb_start_date(gbi.getGb_start_date());
+		gb.setGb_end_date(gbi.getGb_end_date());
+		gb.setGb_route(gbi.getGb_route());
+		gb.setGb_price(gbi.getGb_price());
+		gb.setGb_min_number(gbi.getGb_min_number());
+		gb.setGb_max_number(gbi.getGb_max_number());
+		gb.setGb_close_date(gbi.getGb_close_date());
+		gb.setGb_title(gbi.getGb_title());
+		logger.info(gb.toString());
+		
+		int result = guideBoardService.insertWordGuideBoard(gb);
+		
+		String viewFileName = "";
+		
+		if(result == 1 ) {
+			viewFileName = "redirect:/guideMatchingPage.do";
+		}else {
+			viewFileName = "common/error";
+		}
+		
+		return viewFileName;
+	}
+	
+	
+//	end
+
 	// 가이드 정보 보기
 	@RequestMapping("selectMyGuideMatchingOne.do")
 	@ResponseBody
@@ -90,4 +248,5 @@ public class GuideMatchingController {
 		
 		return job.toJSONString();
 	}
+
 }

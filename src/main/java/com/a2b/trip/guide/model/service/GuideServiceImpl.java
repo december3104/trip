@@ -55,17 +55,20 @@ public class GuideServiceImpl implements GuideService {
 		return guideDao.insertWordGuide(guide);
 	}
 
+	@Override
+	public Guide selectOne(String member_id) {
+		return guideDao.selectOne(member_id);
+	}
+	
 	// 가이드 한명 조회
 	@Override
 	public Guide selectGuideOne(String guide_id) {
 		return guideDao.selectGuideOne(guide_id);
 	}
 
-	// 가이드 평점 남기기 처리
 	@Override
 	public int updateGuideGrade(Guide guide) {
 		return guideDao.updateGuideGrade(guide);
 	}
-	
 	
 }

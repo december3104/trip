@@ -24,4 +24,6 @@ public interface GuideService {
 	Guide selectGuideOne(String guide_id);
 	int updateGuideGrade(Guide guide);
 
+	Guide selectOne(String member_id);
+
 }

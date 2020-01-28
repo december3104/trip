@@ -4,6 +4,54 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chatMapper">
 	<select id="selectAllChatRoom" parameterType="string" resultType="Chat">
-		SELECT * FROM CHATMEMBER WHERE CM_ID = #{ value }
+		SELECT CHATMEMBER.CR_NO CR_NO, CM_ID, CM_DATE, CM_LOGIN, CM_NEW, CR_TITLE, CR_CONTRY, CR_CITY, CR_NUMBER, CR_DATE, CR_TYPE, CR_MASTER FROM CHATMEMBER JOIN CHATROOM ON CHATMEMBER.CR_NO = CHATROOM.CR_NO WHERE CM_ID = #{ value }
+	</select>
+	
+	<select id="selectChatRoom" parameterType="string" resultType="Chat">
+		SELECT * FROM CHATROOM WHERE CR_NO = #{ value }
+	</select>
+	
+	<insert id="insertChatRoom" parameterType="Chat">
+		INSERT INTO CHATROOM VALUES(#{ cr_no }, #{ cr_title }, #{ cr_contry }, #{ cr_city }, #{ cr_number }, #{ cr_date }, #{ cr_type }, #{ cr_master })
+	</insert>
+	
+	<insert id="insertChatMember" parameterType="Chat">
+		INSERT INTO CHATMEMBER VALUES(#{ cr_no }, #{ cm_id }, sysdate, 'N', 0)
+	</insert>
+	
+	<select id="selectRoomNoContent" parameterType="Chat" resultType="Chat">
+		SELECT * FROM CHATCONTENT WHERE CC_CR_NO = #{ cr_no }
+	</select>
+	
+	<select id="selectOneRoom" parameterType="Chat" resultType="Chat">
+		SELECT * FROM CHATROOM WHERE CR_NO = #{ cr_no }
+	</select>
+	
+	<select id="selectMember" parameterType="string" resultType="Chat">
+		SELECT * FROM CHATMEMBER WHERE CR_NO = #{ value }
+	</select>
+	
+	<insert id="insertChatContent" parameterType="Chat">
+		INSERT INTO CHATCONTENT VALUES(CHATCONTENT_SEQ.NEXTVAL, #{ cc_cr_no }, #{ cc_id }, sysdate, #{ cc_content }, 1)
+	</insert>
+	
+	<select id="selectLastContent" parameterType="string" resultType="Chat">
+		SELECT CC_CR_NO, CC_CONTENT FROM CHATCONTENT WHERE (CC_CR_NO, CC_NO) IN (SELECT CC_CR_NO, MAX(CC_NO) FROM CHATCONTENT WHERE CC_CR_NO IN (SELECT CR_NO FROM CHATMEMBER WHERE CM_ID = #{ value }) GROUP BY CC_CR_NO)
+	</select>
+	
+	<update id="updateNewContent" parameterType="Chat">
+		UPDATE CHATMEMBER SET CM_NEW = (SELECT CM_NEW FROM CHATMEMBER WHERE CM_ID = #{ cm_id } AND CR_NO = #{ cr_no })+1 WHERE CM_ID = #{ cm_id } AND CR_NO = #{ cr_no }
+	</update>
+	
+	<update id="updateNewContent2" parameterType="Chat">
+		UPDATE CHATMEMBER SET CM_NEW = 0, CM_LOGIN = 'Y' WHERE CM_ID = #{ cm_id } AND CR_NO = #{ cr_no }
+	</update>
+	
+	<update id="updateCLogin" parameterType="Chat">
+		UPDATE CHATMEMBER SET CM_LOGIN = 'N' WHERE CM_ID = #{ cm_id } AND CR_NO = #{ cr_no }
+	</update>
+	
+	<select id="selectCNew" parameterType="Chat" resultType="Chat">
+		SELECT * FROM CHATMEMBER WHERE CM_ID = #{ cm_id } AND CR_NO = #{ cr_no }
 	</select>
 </mapper>

@@ -162,8 +162,8 @@
 									<div class="three wide column center aligned middle aligned">
 										<c:if test="${ loginMember.member_id eq fb.fb_id }">
 											<c:if test="${ list.fm_accept_check eq 'WAIT'}">
-												<div class="ui button" onclick="updateFellowMatching('DONE', ${fb.fb_no}, '${ list.fm_id }')">수락</div>&nbsp;
-												<div class="ui button" onclick="updateFellowMatching('RJCT', ${fb.fb_no}, '${ list.fm_id }')">거절</div>
+												<div class="ui button" onclick="updateFellowMatching('DONE', ${fb.fb_no}, '${ list.fm_id }', '${ fb.fb_id }')">수락</div>&nbsp;
+												<div class="ui button" onclick="updateFellowMatching('RJCT', ${fb.fb_no}, '${ list.fm_id }', '${ fb.fb_id }')">거절</div>
 											</c:if>
 											<c:if test="${ list.fm_accept_check eq 'DONE'}">
 												채팅방을 확인하세요!
@@ -218,11 +218,12 @@ function goPageUpdateFellowBoard(){
 		location.href='goPageUpdateFellowBoard.do?fb_no='+fbNo;
 	}
 }
-function updateFellowMatching(check, fb_no, fm_id){
+function updateFellowMatching(check, fb_no, fm_id, fb_id){
 	var check = check;
 	var fb_no = fb_no;
 	var fm_id = fm_id;
-	location.href="updateFellowMatching.do?fm_accept_check="+ check+"&fb_no="+fb_no+"&fm_id="+fm_id;
+	var fb_id = fb_id;
+	location.href="updateFellowMatching.do?fm_accept_check="+ check+"&fb_no="+fb_no+"&fm_id="+fm_id +"&fb_id="+fb_id;
 }
 </script>
 </body>

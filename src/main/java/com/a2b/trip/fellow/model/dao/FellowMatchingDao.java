@@ -36,7 +36,7 @@ public class FellowMatchingDao {
 		return sqlSession.insert("fellowMapper.insertFellowMatching", fm);
 	}
 
-	public int updateFellowMatching(FellowMatching fm) {
-		return sqlSession.update("fellowMapper.updateFellowMatching", fm);
+	public int updateFellowMatching(Fellow fellow) {
+		return sqlSession.update("fellowMapper.updateFellowMatching", fellow);
 	}
 }

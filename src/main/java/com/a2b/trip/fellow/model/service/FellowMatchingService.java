@@ -11,5 +11,5 @@ public interface FellowMatchingService {
 	Fellow selectMyFellowMatchingOne(String fb_id);
 	int updateFellowMatchingReport(int fb_no);
 	int insertFellowMatching(FellowMatching fm);
-	int updateFellowMatching(FellowMatching fm);
+	int updateFellowMatching(Fellow fellow);
 }

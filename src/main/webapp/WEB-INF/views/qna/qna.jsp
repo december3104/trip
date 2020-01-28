@@ -159,7 +159,6 @@ function changeContentNum(){
 	location.href="qna.do?contentNum=" + contentnum;
 };
 
-
 </script>
 </body>
 </html>

@@ -39,7 +39,7 @@ public class FellowMatchingServiceImpl implements FellowMatchingService {
 	}
 
 	@Override
-	public int updateFellowMatching(FellowMatching fm) {
-		return fellowMatchingDao.updateFellowMatching(fm);
+	public int updateFellowMatching(Fellow fellow) {
+		return fellowMatchingDao.updateFellowMatching(fellow);
 	}
 }

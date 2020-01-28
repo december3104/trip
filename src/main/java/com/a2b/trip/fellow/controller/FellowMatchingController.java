@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.a2b.trip.chat.model.service.ChatService;
+import com.a2b.trip.chat.model.vo.Chat;
 import com.a2b.trip.fellow.model.service.FellowBoardService;
 import com.a2b.trip.fellow.model.service.FellowMatchingService;
 import com.a2b.trip.fellow.model.vo.Fellow;
+import com.a2b.trip.fellow.model.vo.FellowBoard;
 import com.a2b.trip.fellow.model.vo.FellowMatching;
 import com.a2b.trip.member.model.vo.Member;
 
@@ -75,7 +77,7 @@ public class FellowMatchingController {
 		JSONObject job = new JSONObject();
 		if (fellow.getMember_profile_rename() != null) {
 			job.put("fellowProfile", URLEncoder.encode("member_profile/" + fellow.getMember_profile_rename(), "utf-8"));
-		} 
+		}
 		if (fellow.getMember_profile_rename() == null) {
 			job.put("fellowProfile", URLEncoder.encode("molly.png", "utf-8"));
 		}
@@ -106,19 +108,55 @@ public class FellowMatchingController {
 	}
 	
 	@RequestMapping("updateFellowMatching.do")
-	public String updateFellowMatching(FellowMatching fm) {
+	public String updateFellowMatching(Fellow fellow) {
 		String viewName = "";
 
-		int result = fellowMatchingService.updateFellowMatching(fm);
+		int result = fellowMatchingService.updateFellowMatching(fellow);
 		
-				
 		if(result > 0) {
 			//수락버튼 눌렀을시에 채팅방 만들기
-			/*if(fm.getFm_accept_check().equals("DONE")) {
-				fellow
-				int result = chatService.insertChatRoom();
-			}*/
-			viewName = "redirect:selectOneFellowBoard.do?fb_no="+fm.getFb_no();
+			if(fellow.getFm_accept_check().equals("DONE")) {
+				//방번호로 채팅방 번호가 있는지 확인
+				String chatNo = fellow.getFb_no() + fellow.getFb_id();
+				
+				Chat chat = chatService.selectChatRoom(chatNo);
+				if(chat == null) {
+					//채팅방이 없으면 만들어주기
+					//먼저 db에서 fellowBoard 조회해서 정보 가지고 오기
+					FellowBoard fb = new FellowBoard();
+					fb = fellowBoardService.selectOneFellowBoard(fellow.getFb_no());
+					chat = new Chat();
+					
+					//조회해온값 chat 객체에 넣어주기
+					chat.setCr_no(chatNo);
+					chat.setCr_title(fb.getFb_title());
+					chat.setCr_contry(fb.getFb_contry());
+					chat.setCr_city(fb.getFb_city());
+					chat.setCr_number(2);
+					chat.setCr_date(fb.getFb_end_date());
+					chat.setCr_type("동행찾기");
+					chat.setCr_master(fb.getFb_id());
+					
+					int result2 = chatService.insertChatRoom(chat);
+					
+					if(result2 > 0 ) {
+						//방 만들기 성공
+						//방 참여자 넣어주기
+						chat.setCm_id(fellow.getFb_id());
+						chatService.insertChatMember(chat);
+
+						chat.setCm_id(fellow.getFm_id());
+						chatService.insertChatMember(chat);
+					}
+				}else {
+					//방이 있으면 그 방에 인원만 추가
+					chat = new Chat();
+					chat.setCr_no(chatNo);
+					chat.setCm_id(fellow.getFm_id());
+					chatService.insertChatMember(chat);
+				}
+			}
+			viewName = "redirect:selectOneFellowBoard.do?fb_no="+fellow.getFb_no();
 		}else {
 			System.out.println("실패");
 		}

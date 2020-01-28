@@ -308,7 +308,8 @@ function loginWithKakao() {
 //]]>
 
 function chatMain(id){
-      window.open("selectAllChatRoom.do?member_id="+id,"ChatMain","width=810px, height=600px, menubar=no, status=no, toolbar=no");
+	
+      window.open("selectAllChatRoom.do?member_id="+id, "ChatMain", "width=810px, height=600px, menubar=no, status=no, toolbar=no");
 }
 </script>
 </header>

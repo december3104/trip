@@ -15,106 +15,159 @@
 <!-- 시맨틱유아이 -->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-
+<style type="text/css">
+.jun:hover{
+	background-color : #dcf2fb;
+}
+</style>
 </head>
 <body>	
 <div class="ui pointing menu">
-  <a class="item active" id="chatFellow">
-    동행찾기 채팅 리스트
-  </a>
-  <a class="item" id="chatG">
-    가이드 채팅 리스트
-  </a>
-  <a class="item" id="chatFree">
-    자유채팅
-  </a>
-  <div class="right menu">
-    <div class="item">
-      <div class="ui transparent icon input">
-        <input type="text" placeholder="검색어를 입력하세요...">
-        <i class="search link icon"></i>
-      </div>
-    </div>
-  </div>
+	<a class="item active" id="chatFellow">
+	  동행찾기 채팅 리스트
+	</a>
+	<a class="item" id="chatG">
+	  가이드 채팅 리스트
+	</a>
+	<a class="item" id="chatFree">
+	  자유채팅
+	</a>
+	<div class="right menu">
+		<div class="item">
+			<div class="ui transparent icon input">
+				<input type="text" placeholder="검색어를 입력하세요...">
+				<i class="search link icon"></i>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="ui segment" id="chatFellowList" style="display:block;">
-	<c:if test="${ !empty chatList }">
+    <c:if test="${ !empty chatList }">
 		<c:forEach var="list" items="${ chatList }">
-	  	${ list.cr_no }<br>
-	  	${ list.cm_id }
-	    </c:forEach>
-    </c:if>
-    <c:if test="${ empty chatList }">
+			<div class="ui relaxed divided list jun"  id="c${ list.cr_no }" ondblclick="openChat('${ list.cr_no }');">
+				<div class="ui grid">
+					<div class="three wide column">
+						<table>
+							<tr>
+								<td>국가 : ${ list.cr_contry }</td>
+							</tr>
+							<tr>
+								<td>도시 : ${ list.cr_city }</td>
+							</tr>
+						</table>
+					</div>
+					<div class="thirteen wide column">
+						<table style="width:100%">
+							<tr>
+								<th style="width:80%; text-align:left;">${ list.cr_title }</th><td style="text-align:right; width:20%"><small>${ list.cr_date }</small></td>
+							</tr>
+							<tr>
+								<c:forEach var="cList" items="${ lastContent }">
+									<c:if test="${ cList.cc_cr_no eq list.cr_no }">
+										<c:if test="${ cList.cc_content eq null }">
+											<td>메세지가 없습니다.</td>
+										</c:if>
+										<c:if test="${ cList.cc_content ne null }">
+											<td>${ cList.cc_content }</td>
+											<c:if test="${ list.cm_new ne 0 }">
+												<td style="float:right;"><div style="text-align:center;width:20px;background:red; color:white;" id="b${ list.cr_no }">${ list.cm_new }</div></td>
+											</c:if>
+										</c:if>
+									</c:if>
+								</c:forEach>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+	</c:if>
+	<c:if test="${ empty chatList }">
 		참여중인 채팅방이 없습니다.
     </c:if>
 </div>
 <div class="ui segment" id="chatGList" style="display:none;">
-  <p>두번째거</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>  
+    <c:if test="${ !empty chatList }">
+		<c:forEach var="list" items="${ chatList }">
+			<div class="ui relaxed divided list"  id="c${ list.cr_no }" ondblclick="openChat('${ list.cr_no }');">
+				<div class="ui grid">
+					<div class="three wide column">
+						<table>
+							<tr>
+								<td>국가 : ${ list.cr_contry }</td>
+							</tr>
+							<tr>
+								<td>도시 : ${ list.cr_city }</td>
+							</tr>
+						</table>
+					</div>
+					<div class="thirteen wide column">
+						<table style="width:100%">
+							<tr>
+								<th style="width:80%; text-align:left;">${ list.cr_title }</th><td style="text-align:right; width:20%"><small>${ list.cr_date }</small></td>
+							</tr>
+							<tr>
+								<c:forEach var="cList" items="${ lastContent }">
+									<c:if test="${ cList.cc_cr_no eq list.cr_no }">
+										<c:if test="${ cList.cc_content eq null }">
+											<td>메세지가 없습니다.</td>
+										</c:if>
+										<c:if test="${ cList.cc_content ne null }">
+											<td>${ cList.cc_content }</td>
+											<c:if test="${ list.cm_new ne 0 }">
+												<td style="text-align:right" id="b${ list.cr_no }">${ list.cm_new }</td>
+											</c:if>
+										</c:if>
+									</c:if>
+								</c:forEach>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+	</c:if>
+	<c:if test="${ empty chatList }">
+		참여중인 채팅방이 없습니다.
+    </c:if>
 </div>
+	
 <div class="ui segment" id="chatFreeList" style="display:none;">
-  <p>세번째꺼</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>
-  <p>여기에 리스트 띄어줄거야</p>  
+	<div class="ui middle aligned divided list">
+		<div class="item">
+			<div class="content">
+				<a class="header">Daniel Louise</a>
+			</div>
+		</div>
+		<div class="item">
+			<div class="content">
+				<a class="header">Daniel Louise</a>
+			</div>
+		</div>
+	</div>
 </div>
-    <div>
-        <input type="text" id="sender" value="${sessionScope.loginMember.member_id }" style="display: none;">
-        <input type="text" id="messageinput">
-    </div>
-    <div>
-        <button type="button" onclick="openSocket();">Open</button>
-        <button type="button" onclick="send();">Send</button>
-        <button type="button" onclick="closeSocket();">Close</button>
-    </div>
-    <!-- Server responses get written here -->
-    <div id="messages"></div>
 
-
-<!-- websocket javascript -->
 <script type="text/javascript">
 var ws;
-var messages=document.getElementById("messages");
 
-function openSocket(){
-    if(ws!==undefined && ws.readyState!==WebSocket.CLOSED){
-        writeResponse("WebSocket is already opened.");
-        return;
-    }
-    //웹소켓 객체 만드는 코드
-    ws=new WebSocket("ws://localhost:8800/trip/echo.do");
-    
-    ws.onopen=function(event){
-        if(event.data===undefined) return;
-        
-        writeResponse(event.data);
-    };
-    ws.onmessage=function(event){
-        writeResponse(event.data);
-    };
-    ws.onclose=function(event){
-        writeResponse("Connection closed");
-    }
-}
+//페이지 열리면 웹소켓 자동 생성
+openSocket();
 
-function send(){
-    var text=document.getElementById("messageinput").value+","+document.getElementById("sender").value;
-    ws.send(text);
-    text="";
-}
-
-function closeSocket(){
-    ws.close();
-}
-function writeResponse(text){
-    messages.innerHTML+="<br/>"+text;
-}
+	function openSocket(){
+		
+	    //웹소켓 객체 만드는 코드
+	    ws=new WebSocket("ws://127.0.0.1:8800/trip/echo.do");
+	    
+	    ws.onopen=function(){
+	    };
+	    
+	    ws.onmessage=function(event){
+	    	onMessage(event);
+	    };
+	    
+	    ws.onclose=function(event){
+	    };
+	}
 
 $(function(){
 	$('#chatG').on('click', function(){
@@ -144,6 +197,38 @@ $(function(){
 		$('#chatGList').css('display', 'none');
 	});
 });
+
+function onMessage(event){
+	var full = event.data;
+	var fullText = full.split(":");
+	var roomNo = fullText[0];
+	if(roomNo == "clear"){
+		console.log("작동");
+		var roomNo1 = fullText[1];
+		$("#b"+roomNo1).text("");
+	}else{
+		var roomNo_1 = '"'+fullText[0]+'"';
+		var title = fullText[1];
+		var contry = fullText[2];
+		var city = fullText[3];
+		var cm_new = fullText[4].split("=")[0];
+		if(cm_new == 0){
+			cm_new = "";
+		}
+		var text = full.substring(full.indexOf("=")+1, full.length);
+		
+		if($("#c"+roomNo).length > 0){
+			$("#c"+roomNo).remove();
+		}
+		
+		$("#chatFellowList").prepend("<div class='ui relaxed divided list' id='c"+roomNo+"' ondblclick='openChat("+roomNo_1+");'><div class='ui grid'><div class='three wide column'><table><tr><td>국가 : "+contry+"</td></tr><tr><td>도시 : "+city+"</td></tr></table></div><div class='thirteen wide column'><table style='width:100%'><tr><th style='width:80%; text-align:left;'>"+title+"</th><td style='text-align:right; width:20%'><small>날짜</small></td></tr><tr><td>"+text+"</td><td style='float:right;'><div style='text-align:center;width:20px;background:red; color:white;' id='b"+roomNo+"'>"+cm_new+"</td></tr></table></div></div></div>");
+	}
+}
+
+//채팅 리스트 더블클릭시 이벤트
+function openChat(cr_no){
+	window.open("openChat.do?cr_no="+cr_no, cr_no, "width=420px, height=660px, menubar=no, status=no, toolbar=no");
+}
 </script>
   
 </body>

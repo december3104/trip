@@ -7,12 +7,12 @@ public class Chat implements Serializable{
 	private static final long serialVersionUID = 16020L;
 	
 	private int cc_no;
-	private int cc_cr_no;
+	private String cc_cr_no;
 	private String cc_id;
 	private Date cc_date;
 	private String cc_content;
 	private int cc_count;
-	private int cr_no;
+	private String cr_no;
 	private String cm_id;
 	private Date cm_date;
 	private String cm_login;
@@ -27,7 +27,7 @@ public class Chat implements Serializable{
 	
 	public Chat() {}
 	
-	public Chat(int cc_no, int cc_cr_no, String cc_id, Date cc_date, String cc_content, int cc_count, int cr_no,
+	public Chat(int cc_no, String cc_cr_no, String cc_id, Date cc_date, String cc_content, int cc_count, String cr_no,
 			String cm_id, Date cm_date, String cm_login, int cm_new, String cr_title, String cr_contry, String cr_city,
 			int cr_number, Date cr_date, String cr_type, String cr_master) {
 		super();
@@ -59,11 +59,11 @@ public class Chat implements Serializable{
 		this.cc_no = cc_no;
 	}
 
-	public int getCc_cr_no() {
+	public String getCc_cr_no() {
 		return cc_cr_no;
 	}
 
-	public void setCc_cr_no(int cc_cr_no) {
+	public void setCc_cr_no(String cc_cr_no) {
 		this.cc_cr_no = cc_cr_no;
 	}
 
@@ -99,11 +99,11 @@ public class Chat implements Serializable{
 		this.cc_count = cc_count;
 	}
 
-	public int getCr_no() {
+	public String getCr_no() {
 		return cr_no;
 	}
 
-	public void setCr_no(int cr_no) {
+	public void setCr_no(String cr_no) {
 		this.cr_no = cr_no;
 	}
 
@@ -193,10 +193,6 @@ public class Chat implements Serializable{
 
 	public void setCr_master(String cr_master) {
 		this.cr_master = cr_master;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	@Override

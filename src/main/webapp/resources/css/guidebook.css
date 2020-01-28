@@ -164,7 +164,7 @@ button {
 	transition: width .3s;
 }
 
-#editorWrap button {
+ #editorWrap button {
 	position: relative;
     margin-right: 2px;
     color: rgba(37, 40, 47, 0.65);
@@ -195,10 +195,6 @@ button {
 	background: /* #F1F1F2 */red;
 }
 
-#canvas .tbpe_skin {
-	width: 100% !important;
-	/* height: 100% !important; */
-}
 
 
 ul {
@@ -249,9 +245,22 @@ ul {
     object-fit: contain;
 }
 
+/* #canvas .btn_add_page {
+    visibility: visible;
+    position: relative;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    z-index: 900;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(158, 158, 158, 0.5);
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0);
+    visibility: visible;
+} */
 
-
- .scroll_element {
+ /* .scroll_element {
   position: relative;
   margin: 0;
   padding: 0;
@@ -271,7 +280,7 @@ ul {
     right: -18px;
     padding-right: 18px; }
    .scroll_element .scroll_contents {
-   /* position: absolute;  */
+   position: absolute; 
   	top: 0;
     left: 0;
     right: 0;
@@ -282,7 +291,7 @@ ul {
     -webkit-overflow-scrolling: touch; }
   .scroll_element .scroll_contents > ul,
     .scroll_element .scroll_contents > div {
-     /*  position: absolute; */
+      position: absolute;
       width: 100%; }
   .scroll_element .scroll_track_ver {
     position: absolute;
@@ -317,7 +326,7 @@ ul {
       width: 20px;
       height: 100%;
       background-color: rgba(157, 158, 163, 0.6);
-      border-radius: 2px; } 
+      border-radius: 2px; }  */
       
       
       

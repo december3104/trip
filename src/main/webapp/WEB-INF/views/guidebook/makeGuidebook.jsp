@@ -147,21 +147,22 @@ $(function(){
 		} */
 		
 
-	function allowDrop(e) {
+	 function allowDrop(e) {
 	    e.preventDefault();
 	  }
 	function dragstart(e){
 	    e.dataTransfer.setData("Text",e.target.id);
 	  }
+
 	function drop(e) {
 	    var id = e.target.getAttribute('id');
 	    var data=e.dataTransfer.getData("Text");
 
 	    e.target.appendChild(document.getElementById(data));
 	    e.preventDefault();
-	}   
-	
-	function Drops(e) {
+	}  
+	 
+	/*  function Drops(e) {
 		    e.preventDefault();
 		  }
 		function drags(e){
@@ -174,7 +175,7 @@ $(function(){
 		    e.target.appendChild(document.getElementById(data));
 		    e.preventDefault();
 		}  
-	
+	 */
 	$(".art-item").draggable({
 		cursor:"move",
 		stack:".post",
@@ -188,6 +189,46 @@ $(function(){
 		$(this).removeClass("color")	//bgi 체인지
 	});
 		
+	/* $(function(){
+		$('.btn_add_page').on('click', function(){
+			$("#canvas").html($("#canvas").html()+"<br>"+$(".tbpe_skin").html());
+			
+		}); 
+		
+	});*/
+	
+	
+	/* $(function(){
+		$('.btn_add_page').on('click', function(){
+			$('#canvas' ).append($(".tbpe_skin").html() );
+			
+		}); 
+		
+	}); */
+/* 	$(function(){
+		$('.btn_add_page').on('click', function(){
+	var plus="<div class='tbpe_skin'	style='position: relative; background-color: gray; cursor: move; width: 800px; height: 800px; transform: scale(0.8);'  ondrop='drop(event)' ondragover='allowDrop(event)'></div>";
+	
+	$(".tbpe_skin").append(plus); 
+	
+	
+	
+
+}); 
+		
+	});
+	 */
+	$(function(){
+		$('.btn_add_page').on('click', function(){
+			$('#canvas').append("<br> <div class='tbpe_skin' style=' position:static; clear: both; background-color: gray; cursor: move; width: 800px; height: 800px; transform: scale(0.8);'  ondrop='drop(event)' ondragover='allowDrop(event)'></div>");
+
+		
+	
+	
+
+}); 
+		
+	});
 </script>
 
 <!-- <script>
@@ -326,10 +367,8 @@ $(function(){
 		</div>
 		
 		<div class="ui bottom attached tab" data-tab="third">
-			<div class="innerTab">
-				<div class="scroll_element scroll_ver" style="height: 100%;">
-			<div class="scroll_contents" >
-				<div class="list_wrap" >
+			<div class="innerTab">			
+				<div class="list_wrap" style="height:300px; overflow:auto;">
 					<div id="background_color" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
 					컬러칩</div>
 					<ul class="color_skin" ondrop="drop(event)" ondragover="allowDrop(event)">
@@ -405,13 +444,13 @@ $(function(){
 						<img style="display: none;"></li>								
 					</ul>
 						</div>
-						</div>
+						
 	<div class="scroll_track_ver">
 	<div class="scroll_track_ver_bar" style="height: 49.2657%;">
 	<div class="scroll_track_ver_inner"></div>
 	</div>
 </div>
-					</div>
+					
 		</div>
 		
 		
@@ -420,93 +459,87 @@ $(function(){
 		
 		<div class="ui bottom attached tab" data-tab="fourth">
 			<div class="innerTab">
-				<div class="scroll_element scroll_ver" style="height: 100%;">
-			<div class="scroll_contents" >
-				<div class="list_wrap" >
+				
+			
+				<div class="list_wrap" style="height:300px; overflow:auto;">
 					<div id="background_color" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
 					클립아트</div>
-					<ul class="clip_art" ondrop="drop(event)" ondragover="Drops(event)">
-						<li class="art-item" id="art1" draggable="true" ondragstart="drags(event)">
-						<img src="resources/images/guidebook_clipart/001-advertising.png"></li>
-						<li class="art-item" id="art2" draggable="true" ondragstart="drags(event)">
-						<img src="resources/images/guidebook_clipart/002-airplane.png" ></li>
-						<li class="art-item" id="art3" draggable="true" ondragstart="drags(event)">
-						<img src="resources/images/guidebook_clipart/003-backpack.png"></li>
-						<li class="art-item" id="art4" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/004-calendar.png"></li>
-						<li class="art-item" id="art5" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/005-rent-a-car.png"></li>
-						<li class="art-item" id="art6" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/006-catalog.png"></li>
-						<li class="art-item" id="art7" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/007-smile.png"></li>
-						<li class="art-item" id="art8" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/008-forum.png"></li>
-						<li class="art-item" id="art9" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/009-guide-book.png"></li>
-						<li class="art-item" id="art10" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/010-hotel.png"></li>
-						<li class="art-item" id="art11" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/011-hotel-1.png"></li>
-						<li class="art-item" id="art12" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/012-hotels.png"></li>
-						<li class="art-item" id="art13" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/013-location.png"></li>
-						<li class="art-item" id="art14" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/014-luggage.png"></li>
-						<li class="art-item" id="art15" draggable="true" ondragstart="dragstart(event)">
-						<img src="resources/images/guidebook_clipart/015-manual.png"></li>
-						<li class="art-item" id="art16" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art17" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art18" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art19" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art20" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art21" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art22" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art23" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art24" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art25" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art26" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art27" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art28" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art29" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art30" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art31" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art32" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art33" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art34" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="art-item" id="art35" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>	
-						<li class="art-item" id="art36" draggable="true" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>							
+					<ul class="clip_art" ondrop="drop(event)" ondragover="allowDrop(event)">
+						<li class="art-item"  draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/001-advertising.png" id="art1"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/002-airplane.png" id="art2" ></li>
+						<li class="art-item"  draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/003-backpack.png" id="art3"></li>
+						<li class="art-item"  draggable="true" ondragstart="dragstart(event)" >
+						<img src="resources/images/guidebook_clipart/004-calendar.png"id="art4"></li>
+						<li class="art-item"  draggable="true" ondragstart="drags(event)" >
+						<img src="resources/images/guidebook_clipart/005-rent-a-car.png"id="art5"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/006-catalog.png"  id="art6"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/007-smile.png" id="art7"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/008-forum.png"  id="art8"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/009-guide-book.png" id="art9"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/010-hotel.png" id="art10"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/011-hotel-1.png" id="art11"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/012-hotels.png" id="art12"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/013-location.png" id="art13"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/014-luggage.png" id="art14"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/015-manual.png" id="art15"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/016-vacation.png" id="art16"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)" id="art17">
+						<img src="resources/images/guidebook_clipart/017-information.png"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/018-passport.png" id="art18"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/019-photo.png" id="art19"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/020-review.png" id="art20"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/021-compass.png" id="art21"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/022-baggage.png" id="art22"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/023-binoculars.png" id="art23"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/024-column.png" id="art24"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/025-story.png" id="art25"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/026-taxi.png" id="art26"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/027-thumb-up.png" id="art27"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/028-suitcase.png" id="art28"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/029-tourist.png" id="art29"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/030-train.png" id="art30"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/031-loupe.png" id="art31"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/032-video.png" id="art32"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/033-village.png" id="art33"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/034-visa.png" id="art34"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/035-weather.png" id="art35"></li>
+						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
+						<img src="resources/images/guidebook_clipart/036-world.png" id="art36"></li>			
 					</ul>
 						</div>
-						</div>
-	<div class="scroll_track_ver">
-	<div class="scroll_track_ver_bar" style="height: 49.2657%;">
-	<div class="scroll_track_ver_inner"></div>
-	</div>
-</div>
-					</div>
+					
 		</div>
 		
 		
@@ -516,11 +549,15 @@ $(function(){
 	</section>
 
 		<section id="editorSection" data-preload="2">
-				<div id="canvas">
-					<div class="tbpe_skin"	style="position: relative; background-color: gray; 
-					width: 800px; height: 800px; transform: scale(0.8);"  ondrop="drop(event)" ondragover="allowDrop(event)">
+				<div id="canvas" style="height:100%; overflow:auto;">
+				<div><button class="btn_add_page"><div><i class="plus icon"></i></div></button></div>
+					<div class="tbpe_skin"	style="background-color: gray; cursor: move;
+					width: 800px; height: 800px; transform: scale(0.8); clear:both;"  ondrop="drop(event)" ondragover="allowDrop(event)">
 					</div>
+					
+					
 				</div>
+				
 				
 		</section>
 		

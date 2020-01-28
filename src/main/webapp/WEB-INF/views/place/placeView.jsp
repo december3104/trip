@@ -326,10 +326,7 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 	<i class="pencil alternate large blue icon" id="setDate" data-content="일정을 만드시려면 아이콘을 클릭하세요."></i> &emsp;
 	<i class="question circle outline icon" id="mapSearchInfo" data-content="장소 이름 입력시 결과가 조회되지 않는다면, 영어로 검색어를 입력해주세요."></i>
 	&emsp;&emsp;&emsp;
-	<%-- <c:url var="insertPlace" value="insertPlace.do">
-		<c:param name="member_id" value="${sessionScope.loginMember.member_id }"/>
-	</c:url> --%>
-	<button class="mini ui blue button" onclick="insertPlace()">
+	<button class="mini ui blue button">
 		<i class="plus icon"></i>
 		장소 담기
 	</button>
@@ -519,18 +516,16 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 				<div class="item title trashClass">
 					<div class="ui raised segment">
 						<i class="large map marker alternate icon"></i>
-						${placeList.place_kr }
+						${placeList.place_name }
 						<i class="trash alternate icon delPlace" id="${placeList.place_code }" style="float:right;display:none;"></i>
 					</div>
 				</div>
 				<div class="content" style="background-color:#DCF2FB;">
 					<table class="transition hidden" width="100%" style="text-align:center;">
-						<tr><td>${placeList.place_en }</td></tr>
-						<tr><td>${placeList.place_loc }</td></tr>
+						<tr><td>${placeList.place_name }</td></tr>
 						<tr><td>${placeList.place_address }</td></tr>
 						<tr><td>${placeList.place_phone }</td></tr>
-						<tr><td>${placeList.open_time }</td></tr>
-						<tr><td>${placeList.close_time }</td></tr>
+						<tr><td>${placeList.opening_time }</td></tr>
 						<tr><td>방문예정날짜<br>${placeList.place_date }</td></tr>
 					</table>
 				</div>
@@ -559,18 +554,16 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 				<div class="item title trashClass">
 					<div class="ui raised segment">
 						<i class="large map marker alternate icon"></i>
-						${dailyPlaces.place_kr }
+						${dailyPlaces.place_name }
 						<i class="trash alternate icon delPlace" id="${dailyPlaces.place_code }" style="float:right;display:none;"></i>
 					</div>
 				</div>
 				<div class="content" style="background-color:#DCF2FB;">
-					<table class="transition hidden" width="100%" style="text-align:center;">
-						<tr><td>${dailyPlaces.place_en }</td></tr>
-						<tr><td>${dailyPlaces.place_loc }</td></tr>
+					<table class="transition hidden" width="100%" style="text-align:center;">						
+						<tr><td>${dailyPlaces.place_name }</td></tr>
 						<tr><td>${dailyPlaces.place_address }</td></tr>
 						<tr><td>${dailyPlaces.place_phone }</td></tr>
-						<tr><td>${dailyPlaces.open_time }</td></tr>
-						<tr><td>${dailyPlaces.close_time }</td></tr>
+						<tr><td>${dailyPlaces.opening_time }</td></tr>
 						<tr><td>방문예정날짜<br>${dailyPlaces.place_date }</td></tr>
 					</table>
 				</div>

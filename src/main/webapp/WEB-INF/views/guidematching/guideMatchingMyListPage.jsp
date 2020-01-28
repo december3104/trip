@@ -8,16 +8,16 @@
 <meta charset="UTF-8">
 <title>가이드 매칭 기록 | 여길잡아</title>
 <!-- favicon -->
-<link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico">
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- 시맨틱유아이 -->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 <!-- icon -->
-<link href="resources/css/all.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/all.css" rel="stylesheet">
 <!-- 헤더푸터 css -->
-<link href="resources/css/headerFooter.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/headerFooter.css" rel="stylesheet">
 <style type="text/css">
 .ui.striped.table th {
 	height: 60px;
@@ -39,6 +39,7 @@
 }
 </style>
 <script type="text/javascript">
+// 가이드 정보 보기 모달 오픈
 function guideModalOpen(gb_id){
 	$(function(){
 		$.ajax({
@@ -47,28 +48,34 @@ function guideModalOpen(gb_id){
 			type: "post",
 			dataType: "json",
 			success: function(data){
+				var guideName = decodeURIComponent(data.guideName.replace(/\+/gi, " "));
+				var guideGender = data.guideGender;
+				var guideGenderRe = "";
+				if (guideGender == "F"){
+					guideGenderRe = "여";
+				} else if (guideGender == "M"){
+					guideGenderRe = "남";
+				}
+				var guideStartDate = data.guideStartDate;
+				var guideEndDate = data.guideEndDate;
+				var guideRoute = decodeURIComponent(data.guideRoute.replace(/\+/gi, " "));
+				var guideIntro = decodeURIComponent(data.guideIntro.replace(/\+/gi, " "));
+				var guideTitle = decodeURIComponent(data.guideTitle.replace(/\+/gi, " "));
+				var guideLang = decodeURIComponent(data.guideLang.replace(/\+/gi, " "));
+				var guideProfile = decodeURIComponent(data.guideProfile.replace(/\+/gi, " "));
 				
-				var fellowProfile = decodeURIComponent(data.fellowProfile.replace(/\+/gi, " "));
-				var fellowName = decodeURIComponent(data.fellowName.replace(/\+/gi, " "));
-				var fellowId = decodeURIComponent(data.fellowId.replace(/\+/gi, " "));
-				var fellowContry = decodeURIComponent(data.fellowContry.replace(/\+/gi, " "));
-				var fellowCity = decodeURIComponent(data.fellowCity.replace(/\+/gi, " "));
-				var fellowStartDate = data.fellowStartDate;
-				var fellowEndDate = data.fellowEndDate;
-				var fellowTitle = decodeURIComponent(data.fellowTitle.replace(/\+/gi, " "));
-				var fellowContent = decodeURIComponent(data.fellowContent.replace(/\+/gi, " "));
+				$('#guideModalTitle').html(guideTitle);
+				$('#guideModalImage').html('<img src="resources/images/' + guideProfile + '">');
 				
-				var tableContent = '<tr><td style="height: 30px;"><img class="ui medium circular image" src="resources/images/' + fellowProfile + '" style="width: 100px"></td>' + 
-				'<td><ul style="list-style: none"><li style="font-size: 15pt;">' + fellowName + '</li><li style="font-size: 13pt;">(' + fellowId + ')</li></td></tr>' +
-				'<tr><th style="padding-left: 5%;">방문 국가</th><td style="border-top: none; font-size: 12pt">' + fellowContry + '</td></tr>' + 
-				'<tr><th style="padding-left: 5%;">방문 도시</th><td style="border-top: none; font-size: 12pt">' + fellowCity + '</td></tr>' +
-				'<tr><th style="padding-left: 5%;">동행일</th><td style="border-top: none; font-size: 12pt">' + fellowStartDate + ' ~ ' + fellowEndDate + '</td></tr>' +
-				'<tr><th style="padding-left: 5%;">제목</th><td style="border-top: none; font-size: 12pt">' + fellowTitle + '</td></tr>' +
-				'<tr><th style="padding-left: 5%;">내용</th><td style="border-top: none; font-size: 12pt">' + fellowContent + '</td></tr>' +
-				'<tr><th></th><td style="border-top: none;"></td></tr>';
-			 	$('#fellowModalTable').html(tableContent); 
-			 	$('#fellowModal').modal('show'); 
-
+				var tableContent = 
+				'<tr><th style="width: 30%; font-size: 14pt">가이드 명</th><td style="border-top: none; font-size: 12pt">' + guideName + ' ( ' + guideGenderRe + ' ) </td></tr>' + 
+				'<tr><th style="font-size: 14pt">여행일</th><td style="border-top: none; font-size: 12pt">' + guideStartDate + ' ~ ' + guideEndDate + '</td></tr>' +
+				'<tr><th style="font-size: 14pt">일정</th><td style="border-top: none; font-size: 12pt">' + guideRoute + '</td></tr>' + 
+				'<tr><th style="font-size: 14pt">자기소개</th><td style="border-top: none; font-size: 12pt">' + guideIntro + '</td></tr>' +
+				'<tr><th style="font-size: 14pt">가능 언어</th><td style="border-top: none; font-size: 12pt">' + guideLang + '</td></tr>';
+				
+			 	$('#guideModalTable').html(tableContent);
+				$('#guideModal').modal('show');
 			},
 			error : function(request, status, errorData){
 				console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
@@ -77,6 +84,7 @@ function guideModalOpen(gb_id){
 	});
 }
 
+// 신고자 정보 보기 모달 오픈
 function guideModalOpen2(gm_id){
 	$(function(){
 		$.ajax({
@@ -85,30 +93,34 @@ function guideModalOpen2(gm_id){
 			type: "post",
 			dataType: "json",
 			success: function(data){
-				var fellowProfile = decodeURIComponent(data.fellowProfile.replace(/\+/gi, " "));
-				var fellowName = decodeURIComponent(data.fellowName.replace(/\+/gi, " "));
-				var fellowId = decodeURIComponent(data.fellowId.replace(/\+/gi, " "));
-				var fellowNumber = data.fellowNumber;
-				var fellowContry = decodeURIComponent(data.fellowContry.replace(/\+/gi, " "));
-				var fellowCity = decodeURIComponent(data.fellowCity.replace(/\+/gi, " "));
-				var fellowStartDate = data.fellowStartDate;
-				var fellowEndDate = data.fellowEndDate;
-				var fellowDate = data.fellowDate;
-				var fellowContent = decodeURIComponent(data.fellowContent.replace(/\+/gi, " "));
+				var guideMatchingName = decodeURIComponent(data.guideMatchingName.replace(/\+/gi, " "));
+				var guideMatchingGender = data.guideMatchingGender;
+				var guideMatchingGenderRe = "";
+				if (guideMatchingGender == "M"){
+					guideMatchingGenderRe = "남";
+				} else if (guideMatchingGender == "F"){
+					guideMatchingGenderRe = "여";
+				}
+				var guideMatchingProfile = decodeURIComponent(data.guideMatchingProfile.replace(/\+/gi, " "));
+				var guideMatchingDate = data.guideMatchingDate;
+				var guideMatchingNumber = data.guideMatchingNumber;
+				var guideMatchingId = decodeURIComponent(data.guideMatchingId.replace(/\+/gi, " "));
+				var guideStartDate = data.guideStartDate;
+				var guideEndDate = data.guideEndDate;
 				
-				console.log(fellowProfile + ", " + fellowName + ", " + fellowId + ", " + fellowNumber + ", " + fellowContry + ", " + fellowCity + ", " + fellowStartDate + ", " + fellowEndDate + ", " + fellowDate + ", " + fellowContent);
+				console.log(guideMatchingName + ", " + guideMatchingGenderRe + ", " + guideMatchingDate + ", " + guideMatchingNumber + ", " + guideMatchingId + ", " + guideStartDate + ", " + guideEndDate);
 				
-				var tableContent = '<tr><td style="height: 30px;"><img class="ui medium circular image" src="resources/images/' + fellowProfile + '" style="width: 100px"></td>' + 
-				'<td><ul style="list-style: none"><li style="font-size: 15pt;">' + fellowName + '</li><li style="font-size: 13pt;">(' + fellowId + ')</li></td></tr>' +
-				'<tr><th style="padding-left: 5%;">방문 국가</th><td style="border-top: none; font-size: 12pt">' + fellowContry + '</td></tr>' + 
-				'<tr><th style="padding-left: 5%;">방문 도시</th><td style="border-top: none; font-size: 12pt">' + fellowCity + '</td></tr>' +
-				'<tr><th style="padding-left: 5%;">동행일</th><td style="border-top: none; font-size: 12pt">' + fellowStartDate + ' ~ ' + fellowEndDate + '</td></tr>' +
-				'<tr><th style="padding-left: 5%;">동행 신청일</th><td style="border-top: none; font-size: 12pt">' + fellowDate + '</td></tr>' +
-				'<tr><th style="padding-left: 5%;">신청 인원</th><td style="border-top: none; font-size: 12pt">' + fellowNumber + '명</td></tr>' +
-				'<tr><th style="padding-left: 5%;">내용</th><td style="border-top: none; font-size: 12pt">' + fellowContent + '</td></tr>' +
-				'<tr><th></th><td style="border-top: none;"></td></tr>';
-			 	$('#fellowModalTable').html(tableContent); 
-			 	$('#fellowModal').modal('show'); 
+				$('#guideModalTitle').html('신청자 정보 보기');
+				$('#guideModalImage').html('<img src="resources/images/' + guideMatchingProfile + '">');
+				
+				var tableContent = 
+				'<tr><th style="width: 30%; font-size: 14pt">신청자</th><td style="width: 70%; border-top: none; font-size: 12pt">' + guideMatchingName + ' ( ' + guideMatchingId + ', ' + guideMatchingGenderRe + ' ) </td></tr>' + 
+				'<tr><th style="font-size: 14pt">여행일</th><td style="border-top: none; font-size: 12pt">' + guideStartDate + ' ~ ' + guideEndDate + '</td></tr>' +
+				'<tr><th style="font-size: 14pt">신청인원</th><td style="border-top: none; font-size: 12pt">' + guideMatchingNumber + '명</td></tr>' + 
+				'<tr><th style="font-size: 14pt">신청일</th><td style="border-top: none; font-size: 12pt">' + guideMatchingDate + '</td></tr>';
+				
+			 	$('#guideModalTable').html(tableContent);
+				$('#guideModal').modal('show');
 			},
 			error : function(request, status, errorData){
 				console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
@@ -117,14 +129,40 @@ function guideModalOpen2(gm_id){
 	});
 }
 
-function fellowReportModalOpen(fb_id, report, fb_no){
+// 매칭 신고 모달 오픈, 정보 기록
+function guideReportModalOpen(gb_id, report, gb_no){
 	$(function(){
-		console.log(fb_no);
-		$('#myPageFellowReportId').attr('value', fb_id);
-		$('#myPageFellowReportType').attr('value', report);
-		$('#myPageFellowNo').attr('value', fb_no);
-		console.log($('#myPageFellowReportId').val());
-		$('#fellowReportModal').modal('show');
+		if (report == 'gm'){
+			$('#guideReportModalHeader').html('가이드 신청자와 함께한 여행에서 불편한 점이 있으셨나요?');
+		}
+		$('#myPageGuideReportId').attr('value', gb_id);
+		$('#myPageGuideReportType').attr('value', report);
+		$('#myPageGuideNo').attr('value', gb_no);
+
+		$('#guideReportModal').modal('show');
+	});
+}
+
+// 가이드 평점 남기기 모달 오픈, 필요한 정보 기록
+function guideGradeModalOpen(gb_id, gb_no){
+	$(function(){
+		$('.rating').rating({
+			initialRating: 0,
+		    maxRating: 5
+		  }); 
+		$('#guideGradeModal').modal('show');
+		$('#myPageGradeGuideId').attr('value', gb_id);
+		$('#myPageGuideMatchingNo').attr('value', gb_no);
+	
+	});
+}
+
+// 가이드 평점 남기기 submit 처리
+function guideGradeModalSubmit(){
+	$(function(){
+		var grade = $('.rating').rating('get rating');
+		$('#myPageGradeGuidePoint').attr('value', grade);
+		$('#guideGradeModalSubmit').submit();
 	});
 }
 
@@ -137,14 +175,14 @@ $(function(){
 		$('#guideBoardRecode').attr('class', 'item active');
 		$('#guideMatchingRecode').attr('class', 'item');
 		$('#guideMatchingRecodeTable').css('display', 'none');
-		$('#guideBoardRecodeTable').css('display', 'block');
+		$('#guideBoardRecodeTable').css('display', 'inline-table');
 	});
 	
 	$('#guideMatchingRecode').on('click', function(){
 		$('#guideMatchingRecode').attr('class', 'item active');
 		$('#guideBoardRecode').attr('class', 'item');
 		$('#guideBoardRecodeTable').css('display', 'none');
-		$('#guideMatchingRecodeTable').css('display', 'block');
+		$('#guideMatchingRecodeTable').css('display', 'inline-table');
 	});
 });
 </script>
@@ -157,7 +195,7 @@ $(function(){
 		<div>
 			<table class="ui celled table" style="text-align:center; font-size: 15pt; background: #D3F0FE">
 				<tr><td class="sidebarTd">내 가이드북 보기</td></tr>
-				<tr><td class="sidebarTd" onclick="location.href='selectMyGuideMatching.do'">가이드 매칭 기록</td></tr>
+				<tr><td class="sidebarTd" onclick="location.href='/login/selectMyGuideMatching.do'">가이드 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</td></tr>
 			</table>
@@ -174,8 +212,9 @@ $(function(){
 			</div>
 			</c:if>
 			<!-- 가이드 매칭 기록 -->
-			<table class="ui striped table" style="text-align:center; margin-left: 0" id="guideMatchingRecodeTable">
-				<tr style="background: #C8EDFE"><th style="width: 10%">가이드 명</th><th style="width: 10%">신청일</th><th style="width: 20%">여행일</th><th style="width: 10%"></th><th style="width: 5%"></th></tr>
+			<table class="ui striped table" style="text-align:center; margin-left: 0; display: inline-table;" id="guideMatchingRecodeTable">
+				<tr style="background: #C8EDFE"><th style="width: 20%">가이드 명</th><th style="width: 20%">신청일</th><th style="width: 30%">여행일</th><th style="width: 20%"></th><th style="width: 15%"></th></tr>
+				<c:if test="${!empty guideMatchingMyList}">
 				<c:forEach var="guideMatchingOne" items="${guideMatchingMyList }">
 				<tr>
 					<td style="font-size: 12pt"><a href="javascript:void(0);" onclick="guideModalOpen('${guideMatchingOne.gb_id}');" class="guideInfo"  style="cursor: pointer">${guideMatchingOne.member_name } 가이드님</a></td>
@@ -190,7 +229,7 @@ $(function(){
 					<fmt:formatDate var="end" value="${end_date}" pattern="yyyy.MM.dd"/>
 					<c:choose>
 						<c:when test="${now > end && guideMatchingOne.grade_check eq 'N' }">
-						<td><a>평점 남기기</a></td>
+						<td><a href="javascript:void(0);" onclick="guideGradeModalOpen('${guideMatchingOne.gb_id}', ${guideMatchingOne.gb_no })" style="cursor: pointer; text-decoration: none; font-size: 12pt">평점 남기기</a></td>
 						</c:when>
 						<c:otherwise>
 						<td></td>
@@ -206,18 +245,26 @@ $(function(){
 					</c:choose>  
 				</tr> 
 				</c:forEach>
+				</c:if>
+				<c:if test="${empty guideMatchingMyList }">
+				<tr><td colspan="5">매칭된 기록이 존재하지 않습니다.</td></tr>
+				</c:if>
 			</table>
 			
 			<!-- 가이드 찾기 기록 -->
 			<c:if test="${loginMember.member_level eq 2 }">
 			<table class="ui striped table" style="text-align: center; display: none; margin-left: 0" id="guideBoardRecodeTable">
-				<tr style="background: #C8EDFE"><th style="width: 10%">신청자</th><th style="width: 15%">신청일</th><th style="width: 10%">신청 인원</th><th style="width: 10%"></th></tr>
+				<tr style="background: #C8EDFE"><th style="width: 20%">신청자</th><th style="width: 20%">신청일</th><th style="width: 10%">신청 인원</th><th style="width: 30%">여행일</th><th style="width: 15%"></th></tr>
+				<c:if test="${!empty guideBoardMyList }">
 				<c:forEach var="guideBoardOne" items="${guideBoardMyList }">
 				<tr>
-					<td style="font-size: 12pt"><a href="javascript:void(0);" onclick="guideModalOpen2('${guideBoardOne.gm_id}');" class="guideInfo" style="cursor: pointer">${guideBoardOne.member_name }(${guideBoardOne.gm_id })</a></td>
+					<td style="font-size: 12pt"><a href="javascript:void(0);" onclick="guideModalOpen2('${guideBoardOne.gm_id}');" class="guideInfo" style="cursor: pointer">${guideBoardOne.member_name } (${guideBoardOne.gm_id })</a></td>
 					<fmt:parseDate value="${guideBoardOne.gm_date}" var="gm_date" pattern="yyyy-MM-dd"/>					
 					<td style="font-size: 12pt"><fmt:formatDate value="${gm_date }" pattern="yyyy년 MM월 dd일" /></td>
 					<td style="font-size: 12pt">${guideBoardOne.gm_number }</td>
+					<fmt:parseDate value="${guideBoardOne.gb_start_date }" var="gb_start_date" pattern="yyyy-MM-dd" />
+					<fmt:parseDate value="${guideBoardOne.gb_end_date }" var="gb_end_date" pattern="yyyy-MM-dd" />
+					<td style="font-size: 12pt"><fmt:formatDate value="${gb_start_date }" pattern="yyyy년 MM월 dd일" /> ~ <fmt:formatDate value="${gb_end_date }" pattern="yyyy년 MM월 dd일" /></td>
 					<c:set var="today" value="<%=new java.util.Date()%>"/>
 					<fmt:formatDate var="now" type="date" value="${today}" pattern="yyyy.MM.dd"/>
 					<fmt:parseDate value="${guideBoardOne.gb_end_date}" var="end_date" pattern="yyyy-MM-dd"/>
@@ -232,6 +279,10 @@ $(function(){
 					</c:choose>
 				</tr>
 				</c:forEach>
+				</c:if>
+				<c:if test="${empty guideBoardMyList }">
+				<tr><td colspan="4">매칭된 기록이 존재하지 않습니다.</td></tr>
+				</c:if>
 			</table>
 			</c:if>
 		</div>
@@ -239,15 +290,44 @@ $(function(){
 	</div>
 	
 	
-		<!-- 동행자 정보 모달 -->
-		<div class="ui tiny modal" id="guideModal">
-			<div class="description" style="padding: 5%">
-				<table class="ui table" id="guideModalTable">
-					
+		<!-- 가이드 정보 모달 -->
+		<div class="ui small modal" id="guideModal">
+		  <div class="header" id="guideModalTitle">
+		    
+		  </div>
+		  <div class="image content">
+			<div class="ui small image" id="guideModalImage">
+			
+			</div>
+		    <div class="description" style="width: 80%; margin-left: 5%">
+				<table class="ui table" id="guideModalTable" style="border: none">
+				
 				</table>
 			</div>
-			<div class="actions">
-				<div class="fluid ui ok button" style="margin: 0; background: #c0e8f7">확인</div>
+		  </div>
+		  <div class="actions">
+		    <div class="fluid ui ok button" style="margin: 0; background: #c0e8f7">확인</div>
+		  </div>
+		</div>
+		
+		<!-- 평점 남기기 모달 -->
+		<div class="ui mini modal" id="guideGradeModal">
+			<div class="description" style="padding: 5%">
+				<table class="ui table" id="guideGradeModalTable">
+					<tr><td style="font-size: 13pt; font-weight: 700; text-align: center" id="guideGradeModalHeader">가이드와 함께한 여행은 즐거우셨나요?<br>함께한 가이드를 평가해주세요.</td></tr>
+					<tr><td style="text-align: center"><div class="ui massive star rating" data-max-rating="5"></div></td></tr>
+					<form class="ui form" action="updateGuideGrade.do" method="post" id="guideGradeModalSubmit">
+						<div class="field">
+							<input type="hidden" name="gb_id" id="myPageGradeGuideId" />
+							<input type="hidden" name="guide_grade" id="myPageGradeGuidePoint" />
+							<input type="hidden" name="gb_no" id="myPageGuideMatchingNo" />
+						</div>
+					</form>
+				</table>
+			</div>
+			<div class="actions" style="margin: 0; text-align: center;">
+				<div class="ui ok button" style="width: 120px; background: #c0e8f7" onclick="guideGradeModalSubmit();">평점 남기기</div>
+				<div class="ui cancel button" style="width: 120px;">다음에 하기</div>
 			</div>
 		</div>
 	

@@ -8,22 +8,24 @@
 <head>
 <meta charset="UTF-8">
 <title>여길잡아</title>
-<!-- 헤더 -->
-<%@ include file="/WEB-INF/views/header.jsp" %>
-<!-- 푸터 -->
-<%@ include file="/WEB-INF/views/footer.jsp" %>
+<script type="text/javascript" src="/trip/resources/se2/js/service/HuskyEZCreator.js"></script>
+<!-- favicon -->
+<link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- 시맨틱유아이 -->
-<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-<!-- 스마트 에디터 -->
-<script type="text/javascript" src="/trip/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 <!-- 폰트css -->
 <link href="resources/css/font.css" rel="stylesheet" type="text/css"/>
+<!-- icon -->
+<link href="resources/css/all.css" rel="stylesheet">
+<!-- 헤더푸터 css -->
+<link href="resources/css/headerFooter.css" rel="stylesheet">
 
 </head>
 <body>
+<!-- 헤더 -->
+<header>
+	<jsp:include page="/WEB-INF/views/header.jsp" />
+</header>
 	<c:import url="/WEB-INF/views/header.jsp" />
 	<div class="ui container" style="margin:120px 0 120px 0;">
 		<div class="ui grid">
@@ -108,5 +110,7 @@ $(function(){
 	});
 });
 </script>
+	<!-- 푸터 -->
+<footer><jsp:include page="/WEB-INF/views/footer.jsp" /></footer>
 </body>
 </html>

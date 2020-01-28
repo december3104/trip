@@ -25,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.a2b.trip.guide.model.service.GuideService;
 import com.a2b.trip.guide.model.vo.Guide;
 import com.a2b.trip.guide.model.vo.GuideDetail;
+import com.a2b.trip.guidematching.model.service.GuideMatchingService;
+import com.a2b.trip.guidematching.model.vo.GuideMatching;
 import com.a2b.trip.location.model.service.LocationService;
 import com.a2b.trip.location.model.vo.Location;
 import com.a2b.trip.member.model.service.MemberService;
@@ -41,6 +43,8 @@ public class GuideController {
 	private LocationService locationService;
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	@Autowired
+	private GuideMatchingService guideMatchingService;
 	
 	//로그 처리용 객체 의존성 주입 처리함(종속 객체 주입)
 	private static final Logger logger = LoggerFactory.getLogger(GuideController.class);
@@ -243,5 +247,37 @@ public class GuideController {
 		
 		return viewFileName;
 //		return null;
+	}
+	
+	
+	// 혜진
+	// 가이드 평점 남기기
+	@RequestMapping("updateGuideGrade.do")
+	public String updateGuideGrade(@RequestParam("gb_id") String gb_id, @RequestParam("guide_grade") double guide_grade, @RequestParam("gb_no") int gb_no, HttpServletRequest request, GuideMatching gm) {
+		// 세션에서 정보 꺼내기
+		HttpSession session = request.getSession(false);
+		Member member = (Member)session.getAttribute("loginMember");
+		String gm_id = member.getMember_id();
+		
+		Guide guide = guideService.selectGuideOne(gb_id);
+		
+		logger.info("가이드 아이디" + gb_id + "가이드 평점" + guide_grade);
+		String viewFileName = "redirect:/selectMyGuideMatching.do";
+		if (guide != null) {
+			guide.setGuide_id(gb_id);
+			guide.setGuide_grade(guide_grade);
+			
+			int result = guideService.updateGuideGrade(guide);
+			
+			gm.setGb_no(gb_no);
+			gm.setGm_id(gm_id);
+			if (result > 0) {
+				int result2 = guideMatchingService.updateGradeCheck(gm);
+				if (result2 <= 0) {
+					viewFileName = "common/error";
+				}
+			}
+		}
+		return viewFileName;
 	}
 }

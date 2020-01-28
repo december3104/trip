@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +33,6 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
-	
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -74,14 +74,39 @@ public class MemberController {
 	
 	// 일반 회원가입 페이지로 이동 처리
 	@RequestMapping("moveMemberEnrollPage.do")
-	public String moveMemberEnrollPage() {
-		return "member/memberEnrollPage";
+	public ModelAndView moveMemberEnrollPage(ModelAndView mv) {
+		int ran = new Random().nextInt(900000) + 100000;
+		mv.setViewName("member/memberEnrollPage");
+		mv.addObject("random", ran);
+		return mv;
+	}
+	
+	// 아이디 비밀번호 찾기 페이지로 이동 처리
+	@RequestMapping("moveMemberMissingPage.do")
+	public ModelAndView moveMemberMissingPage(ModelAndView mv) {
+		int ran = new Random().nextInt(900000) + 100000;
+		mv.setViewName("member/memberMissingPage");
+		mv.addObject("random", ran);
+		return mv;
 	}
 	
 	// main으로 페이지 이동 처리
 	@RequestMapping("moveMainPage.do")
 	public String moveMainPage() {
 		return "main";
+	}
+	
+	// error 페이지 이동
+	@RequestMapping("moveErrorPage.do")
+	public String moveErrorPage(Model model) {
+		model.addAttribute("message", "에러테스트");
+		return "common/error";
+	}
+	
+	// 로그인 페이지 이동 처리
+	@RequestMapping("moveLoginPage.do")
+	public String moveLoginPage() {
+		return "member/memberLoginPage";
 	}
 	
 	// 일반 회원가입 처리
@@ -215,8 +240,6 @@ public class MemberController {
 		// 서비스로 전송하고 결과 받기
 		 int result = memberService.updateMember(sessionMember);
 		 
-		 System.out.println(result);
-		
 		String viewFileName = "redirect:/moveMainPage.do";
 		
 		if (result <= 0) {		// 회원 가입 실패 했을 경우
@@ -228,17 +251,33 @@ public class MemberController {
 		
 		return viewFileName;
 	}
-	
-	// 가이드 회원 탈퇴 처리
-	public String updateGuideMember(@Param("member_id") String member_id) {
 		
-		return "main";
-	}
-	
 	// 일반 회원 탈퇴 처리
-	public String deleteMember(Member member, Model model) {
+	@RequestMapping(value="deleteMember.do", method=RequestMethod.POST)
+	public String deleteMember(Member member, @RequestParam("secession") String secession, HttpServletRequest request, Model model) {
+		// 세션에서 정보 꺼내기
+		HttpSession session = request.getSession(false);
+		Member sessionMember = (Member)session.getAttribute("loginMember");
+		String memberId = sessionMember.getMember_id();
 		
-		return "main";
+		System.out.println(secession);
+		
+		int result = 0;
+		String viewFileName = "redirect:/moveMainPage.do";
+		if (secession.equals("guide")) {
+			result = memberService.updateGuideQualification(memberId);
+			member = memberService.selectOneMember(memberId);
+			session.setAttribute("loginMember", member);
+			
+		} else if (secession.equals("all")) {
+			result = memberService.deleteMember(memberId);
+			viewFileName = "redirect:/logout.do";
+		}
+
+		if (result <= 0) {
+			viewFileName = "common/error";
+		}
+		return viewFileName;
 	}
 	
 	// 아이디 중복 확인 처리
@@ -472,8 +511,6 @@ public class MemberController {
 		// 서비스로 전송하고 결과 받기
 		 int result = memberService.updateMember(sessionMember);
 		 
-		 System.out.println(result);
-		
 		String viewFileName = "redirect:/moveMainPage.do";
 		
 		if (result <= 0) {		// 회원 가입 실패 했을 경우

@@ -46,4 +46,17 @@ public class GuideDao {
 	public int insertWordGuide(Guide guide) {
 		return sqlSession.insert("guideMapper.insertWordGuide", guide);
 	}
+
+	public Guide selectOne(String member_id) {
+		return sqlSession.selectOne("guideMapper.selectOne", member_id);
+    
+	// 가이드 한명 조회
+	public Guide selectGuideOne(String guide_id) {
+		return sqlSession.selectOne("guideMapper.selectGuideOne", guide_id);
+	}
+
+	// 가이드 평점 남기기 처리
+	public int updateGuideGrade(Guide guide) {
+		return sqlSession.update("guideMapper.updateGuideGrade", guide);
+	}
 }

@@ -42,12 +42,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.updateMember(member);
 	}
 
-	// 가이드 탈퇴
-	@Override
-	public int updateGuideMember(String member_id) {
-		return memberDao.updateGuideMember(member_id);
-	}
-
 	// 회원 탈퇴
 	@Override
 	public int deleteMember(String member_id) {
@@ -121,6 +115,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updateWordGuide(String guide_id) {
 		return memberDao.updateWordGuide(guide_id);
+	}
+
+	// 가이드 탈퇴
+	@Override
+	public int updateGuideQualification(String member_id) {
+		return memberDao.updateGuideQualification(member_id);
 	}
 	
 	

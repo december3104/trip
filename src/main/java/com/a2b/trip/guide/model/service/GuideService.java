@@ -20,5 +20,10 @@ public interface GuideService {
 	int updateDetailForcedExitGuide(String guide_id);
 
 	int insertWordGuide(Guide guide);
+	
+	Guide selectGuideOne(String guide_id);
+	int updateGuideGrade(Guide guide);
+
+	Guide selectOne(String member_id);
 
 }

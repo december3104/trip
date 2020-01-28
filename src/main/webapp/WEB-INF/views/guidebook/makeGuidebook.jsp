@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,43 +15,15 @@
 <!-- 가이드북 css -->
 <link href="resources/css/guidebook.css" rel="stylesheet" type="text/css"/>
 
-<script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 <script type = "text/javascript" src = "resources/js/jspdf.min.js"></script>
 <script type = "text/javascript" src = "http://code.jquery.com/ui/1.8.17/jquery-ui.min.js"></script>
-
-    <script type = "text/javascript" src = "https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<script type = "text/javascript" src = "https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     
-<style type="text/css">
-@font-face { 
-	font-family: 'LotteMartDream'; 
-	font-style: normal; 
-	font-weight: 300; 
-	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff2') format('woff2'), 
-			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff') format('woff'); 
-} 
 
-@font-face { 
-	font-family: 'LotteMartDream'; 
-	font-style: normal; 
-	font-weight: 400; 
-	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), 
-			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff'); 	
-} 
-
-@font-face { 
-	font-family: 'LotteMartDream'; 
-	font-style: normal; 
-	font-weight: 700; 
-	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff2') format('woff2'), 
-			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff') format('woff'); 
-} 
-
-.lottemartdream,  * { font-family: 'LotteMartDream', sans-serif; }
-</style>
     
 <script type="text/javascript">
 $(function(){
-    //Tab 메뉴
+   
    $("#BookMenu #item").on("click", function(){
       $("#BookMenu #item").removeClass('active');
       $(this).addClass("active");
@@ -57,66 +31,140 @@ $(function(){
       var tab = $(this).attr("data-tab");
      $(".tab").removeClass("active");
      $(".tab[data-tab=\"" + tab + "\"]").addClass("active");
-   }); //tab 닫기
-});    // document ready...
-    
-$(function(){
+   }); //tab 메뉴
+   
+  
+  $("#insert_date").click(function(){
+		$('#hyDateModal').modal('show');
+	}); //일정 불러오기
+   
+   
    $("#btnDownload").on("click", function() {
 		  //editorSection을 canvas객체로 변환
 		  html2canvas($(".tbpe_skin")[0]).then(function(canvas) {
-		    var doc = new jsPDF('p', 'mm'); //jspdf객체 생성
-		    var imgData = canvas.toDataURL('image/png'); //캔버스를 이미지로 변환
-		    doc.addImage(imgData, 'PNG', 0, 0); //이미지를 기반으로 pdf생성
+			// 캔버스를 이미지로 변환
+			    var imgData = canvas.toDataURL('image/png');
+			     
+			    var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+			    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+			    var imgHeight = canvas.height * imgWidth / canvas.width;
+			    var heightLeft = imgHeight;
+			     
+			        var doc = new jsPDF('p', 'mm');
+			        var position = 0;
+			         
+			        // 첫 페이지 출력
+			        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+			        heightLeft -= pageHeight;
+			         
+			        // 한 페이지 이상일 경우 루프 돌면서 출력
+			        while (heightLeft >= 20) {
+			          position = heightLeft - imgHeight;
+			          doc.addPage();
+			          doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+			          heightLeft -= pageHeight;
+			        }
+
 		    
 		    var bookName = $('#book_title').text();
-		    doc.save(bookName|| '.pdf'); //pdf저장
+		    doc.save(bookName||'.pdf'); 
 		  });
-		});  //pdf저장하기
-	});    // document ready...
-	
-	/* $('#btnDownload').click(function(){
-	var doc = new jsPDF();
-	}
-	html2canvas($("#editorSection"),{
-	userCors:ture,
-	allowTaint: true,
-	onrendered:function(canvas){
-	var imgData = canvas.toDataURL('image/jpeg');
-	var doc = new jsPDF("p", "mm");
-	console.log(imgData);
-	doc.addImage(imgData,'JPEG',0,0);
-	doc.save('test.pdf');
-	}
-	}); */
-	
-	$(function(){
-		$('#btnSaveDesign').on('click', function(){
-			var bookName = $('#book_title').text();
-			$('#bookName').attr('value', bookName);
-			console.log(bookName);
-		
-			var travelDetail = $('#TrDetail').val();
-			$('#travelDetail').attr('value', travelDetail);
-			console.log(travelDetail);
-			
-			var chkRadio = $('input[name=theme]:checked').val();
-			console.log(chkRadio);
-			$('#travelTheme').attr('value', chkRadio);
-			
-			var startDate = $('#startDate').val();
-			console.log(startDate);
-			$('#travelStartDate').attr('value', startDate);
-			
-			var endDate = $('#endDate').val();
-			console.log(endDate);
-			$('#travelEndDate').attr('value', endDate);
-			
-			
-			$('#insertGuideForm').submit();
-		});	
-	});
-		
+		});//pdf 저장
    
+   
+   $('#btnSaveDesign').on('click', function(){
+		var bookName = $('#book_title').text();
+		$('#bookName').attr('value', bookName);
+		console.log(bookName);
+	
+		var travelDetail = $('#TrDetail').val();
+		$('#travelDetail').attr('value', travelDetail);
+		console.log(travelDetail);
+		
+		var chkRadio = $('input[name=theme]:checked').val();
+		console.log(chkRadio);
+		$('#travelTheme').attr('value', chkRadio);
+		
+		var startDate = $('#startDate').val();
+		console.log(startDate);
+		$('#travelStartDate').attr('value', startDate);
+		
+		var endDate = $('#endDate').val();
+		console.log(endDate);
+		$('#travelEndDate').attr('value', endDate);
+		
+		var chkShare = $('input[name=share]:checked').val();
+		console.log(chkShare);
+		$('#travelShare').attr('value', chkShare);
+		
+		
+		$('#insertGuideForm').submit();
+		
+	});	//저장하기 버튼 클릭
+   
+	
+	$('.color-item').on('click', function(){
+	       var bgColor = $(this).css('background-color');
+	       console.log(bgColor);
+	       $('.tbpe_skin').css('background-color', bgColor);
+	    });//배경화면 변경
+	    
+  
+   $('.btn_add_page').on('click', function(){
+			$('#canvas').append("<br> <div class='tbpe_skin' style='background: #fff;width:1240px;height: 1754px;transform: scale(0.5); clear:both; position: absolute;top: -70%; left: -28%;'  ondrop='drop(event)' ondragover='allowDrop(event)'></div>");
+   });	 //페이지추가하기
+   
+   $('#droppable').on('dragenter', function(e){
+   	$(this).addClass('drag-over');
+   }).on('dragleave', function(e){
+   	$(this).removeClass('drag-over');
+   }).on('dragover', function(e){
+   	e.stopPropagation();
+   	e.preventDefault();
+   }).on('drop', function(e){
+   	var files = e.originalEvent.dataTransfer.files;
+   	var x = e.offsetX - 10;
+   	var y = e.offsetY - 30;
+   	
+   	for(var i = 0; i < files.length; i++) {
+   	var file = files[i];
+   	preview(file, size - 1, x, y); 
+   	}
+   	e.preventDefault();
+   	console.log('check');
+   	setTimeout(function(){
+   		Thumbnail();
+   	}, 500);
+   	
+   });
+   
+   $('.color-item').on('click', function(){
+       var bgColor = $(this).css('background-color');
+       console.log(bgColor);
+       $('.tbpe_skin').css('background-color', bgColor);
+    });//배경화면 변경
+    
+   $('.template').on('click', function(){
+       var bgColor = $(this).css('background-color');
+       console.log(bgColor);
+       $('#makeCanvas').css('background-color', bgColor);
+    });
+    
+   $(".plusdate").click(function(){
+		$.ajax({
+			url:"plusGbdate.do",
+			data:{daylist_no: $(this).attr("id")},
+			type:"post",
+			success:function(result){
+			  //? ㅠㅠㅠㅠ
+			}
+		});
+	});
+   
+});    // document ready...
+
+
+    
 /*    function fillBackgroundColor(canvas, context){//배경색 설정
 	    var selectObj=document.getElementById("backgroundColor");
 	    var index=selectObj.selectedIndex;
@@ -161,21 +209,12 @@ $(function(){
 	    e.target.appendChild(document.getElementById(data));
 	    e.preventDefault();
 	}  
-	 
-	/*  function Drops(e) {
-		    e.preventDefault();
-		  }
-		function drags(e){
-		    e.dataTransfer.setData("Img",e.target.id);
-		  }
-		function drop(e) {
-		    var id = e.target.getAttribute('id');
-		    var data=e.dataTransfer.getData("Img");
-
-		    e.target.appendChild(document.getElementById(data));
-		    e.preventDefault();
-		}  
-	 */
+	
+	
+	
+	$(function(){
+		
+	
 	$(".art-item").draggable({
 		cursor:"move",
 		stack:".post",
@@ -188,61 +227,60 @@ $(function(){
 	$(".art-item").bind("dragstop", function(event, ui){
 		$(this).removeClass("color")	//bgi 체인지
 	});
-		
-	/* $(function(){
-		$('.btn_add_page').on('click', function(){
-			$("#canvas").html($("#canvas").html()+"<br>"+$(".tbpe_skin").html());
-			
-		}); 
-		
-	});*/
 	
 	
-	/* $(function(){
-		$('.btn_add_page').on('click', function(){
-			$('#canvas' ).append($(".tbpe_skin").html() );
-			
-		}); 
-		
-	}); */
-/* 	$(function(){
-		$('.btn_add_page').on('click', function(){
-	var plus="<div class='tbpe_skin'	style='position: relative; background-color: gray; cursor: move; width: 800px; height: 800px; transform: scale(0.8);'  ondrop='drop(event)' ondragover='allowDrop(event)'></div>";
-	
-	$(".tbpe_skin").append(plus); 
-	
-	
-	
-
-}); 
-		
 	});
-	 */
-	$(function(){
-		$('.btn_add_page').on('click', function(){
-			$('#canvas').append("<br> <div class='tbpe_skin' style=' position:static; clear: both; background-color: gray; cursor: move; width: 800px; height: 800px; transform: scale(0.8);'  ondrop='drop(event)' ondragover='allowDrop(event)'></div>");
-
-		
 	
 	
-
-}); 
 		
-	});
+function saveChk(){
+	var bookName = $('#book_title').text();
+	var travelDetail = $('#TrDetail').val();
+	var chkRadio = $('input[name=theme]:checked').val();
+	var startDate = $('#startDate').val();
+	var endDate = $('#endDate').val();
+	
+	if (bookName.length == 0 || bookName == ""){
+		alert("가이드북제목을 입력해주세요.");
+		$('#book_title').focus();
+		return false;
+	}
+	
+	if (travelDetail.length == 0 || travelDetail == ""){
+		alert("가이드북 상세설명을 입력해주세요.");
+		$('#TrDetail').focus();
+		return false;
+	}
+	
+	if(!$(':input:radio[name=theme]:checked').val()) {   
+		alert("여행테마를 선택해주세요.");
+		$(':input:radio[name=theme]').focus();
+		return false;
+	}
+	
+	if (startDate.value == ""){
+		alert("여행시작일을 입력해주세요.");
+		$('#startDate').focus();
+		return false;
+	}
+	
+	if (endDate.value == ""){
+		alert("여행종료일을 입력해주세요.");
+		$('#endDate').focus();
+		return false;
+	}
+	
+	return true;
+}	
+
+/* window.onload=function(){
+    var button = document.getElementById("color");
+    button.onclick = previewHandler;//previewButton버튼이 눌러지면 previewHandler메소드가 실행.
+}; */
+	
 </script>
 
-<!-- <script>
-        function addScript(src) {
-            var sc = document.createElement('script');
-            sc.type = 'text/javascript';
-            sc.src = src;
-            document.head.appendChild(sc);
-        }
 
-        addScript('/js/app.js?' + new Date().getTime());
-    </script> -->
-
-<!-- 웹용 pdf 빠른 다운로드 -->
 
 
 
@@ -269,15 +307,15 @@ $(function(){
 				</div>
 			</div>
 			<div class="header_right">
-				<button type="button" id="btnSaveDesign">
+			<div id="shareChk" style="display: contents;">공유 :
+				<input type="radio" name="share" value="Y">예 &nbsp;
+				<input type="radio" name="share" value="N">아니오 </div>
+				
+				<button type="button" id="btnSaveDesign"  onclick="saveChk()">
 					<span>저장</span>
 				</button>
 				
-				<button type="button" id="btnPreview">
-					<span>미리보기</span>
-				</button>
-				
-				<button type="button" id="btnDownload" class="">
+				<button type="button" id="btnDownload">
 					<i class="file pdf icon"></i>
 					<span>다운로드</span>
 				</button>
@@ -314,7 +352,7 @@ $(function(){
 						<td></td>
 						<td>종료일</td>
 					</tr>
-					<tr >
+					<tr>
 						<td><input type="date" id="startDate"></td>
 						<td>&nbsp; ~ &nbsp;</td>
 						<td><input type="date" id="endDate"></td>
@@ -351,10 +389,50 @@ $(function(){
 					<input type="hidden" id="travelTheme" name="travel_theme">
 					<input type="hidden" id="travelStartDate" name="travel_start_date">
 					<input type="hidden" id="travelEndDate" name="travel_end_date">
+					<input type="hidden" id="travelShare" name="share_check">
 				</form>
 				<br>
-				<div>예산 설정</div>
-				전체예산 : <input type="number" id="budgetTot">
+				<table style="width:100%; border-collapse: collapse; margin-bottom:10px;" cellpadding="0" cellspacing="1" >
+			<tbody id="my-tbody">	
+			<tr>
+			<th colspan="3">예산설정</th>
+		</tr>
+			
+				<tr name="trBudget">
+					<td>전체예산 : </td>
+					<td><input type="number"></td>
+					<td><button name="addBudget" onclick="add_row()"><i class="plus icon"></i></button></td>
+					
+				</tr>	
+				</tbody>
+								
+			</table>
+			
+			<script>
+				var addCount;
+				  function add_row() {
+					  addCount=1;
+					 
+				  var addBudgetText =  '<tr name="trBudget"><td>' + 
+				  addCount + '일자 : </td>'+ 
+				  '<td><input type="number" name="day"'+addCount+' id="day"></td>' +
+				  '<td><button name="delBudget"><i class="minus icon"></i></button></td>' +
+				  '</tr>'
+				   addCount++;
+				 var trHtml = $( "tr[name=trBudget]:last" );
+				  trHtml.after(addBudgetText);
+			         
+				 
+				    }
+				  
+				  $(document).on("click","button[name=delBudget]",function(){
+				         
+				        var trHtml = $(this).parent().parent();
+				         
+				        trHtml.remove(); //tr 테그 삭제
+				         addCount--;
+				    });
+			</script>
 
 			
 		  </div>
@@ -362,95 +440,93 @@ $(function(){
 
 		<div class="ui bottom attached tab" data-tab="second">
 			<div class="innerTab">
-				sdf
+				<div id="placeList" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px; height:20px;">
+					장소불러오기 + </div>
 					</div>
 		</div>
 		
 		<div class="ui bottom attached tab" data-tab="third">
 			<div class="innerTab">			
-				<div class="list_wrap" style="height:300px; overflow:auto;">
+				<div class="list_wrap" style="height:300px; overflow:auto;" >
 					<div id="background_color" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
 					컬러칩</div>
-					<ul class="color_skin" ondrop="drop(event)" ondragover="allowDrop(event)">
-						<li class="color-item" id="color1" draggable="true" style="background-color: #000000" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color2" draggable="true" style="background-color: #595959" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color3" draggable="true" style="background-color: #787878" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color4" draggable="true" style="background-color: #9E9E9E" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color5" draggable="true" style="background-color: #C2C2C2" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color6" draggable="true" style="background-color: #EEEEEE" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color7" draggable="true" style="background-color: #FFFFFF" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color8" draggable="true" style="background-color: #FECCBE" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color9" draggable="true" style="background-color: #FEEBB6" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color10" draggable="true" style="background-color: #DDECCA" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color11" draggable="true" style="background-color: #B8E6E1" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color12" draggable="true" style="background-color: #B8E9FF" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color13" draggable="true" style="background-color: #CCD2F0" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color14" draggable="true" style="background-color: #E0BFE6" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color15" draggable="true" style="background-color: #FD8A69" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color16" draggable="true" style="background-color: #FFCD4A" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color17" draggable="true" style="background-color: #AFD485" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color18" draggable="true" style="background-color: #82CBC4" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color19" draggable="true" style="background-color: #58CCFF" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color20" draggable="true" style="background-color: #9FA9D8" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color21" draggable="true" style="background-color: #B96BC6" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color22" draggable="true" style="background-color: #FC5230" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color23" draggable="true" style="background-color: #FD9F28" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color24" draggable="true" style="background-color: #7DB249" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color25" draggable="true" style="background-color: #2FA599" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color26" draggable="true" style="background-color: #18A8F1" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color27" draggable="true" style="background-color: #5D6DBE" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color28" draggable="true" style="background-color: #9A30AE" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color29" draggable="true" style="background-color: #D94925" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color30" draggable="true" style="background-color: #FD6F22" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color31" draggable="true" style="background-color: #568A35" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color32" draggable="true" style="background-color: #12887A" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color33" draggable="true" style="background-color: #1187CF" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color34" draggable="true" style="background-color: #3A4CA8" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>
-						<li class="color-item" id="color35" draggable="true" style="background-color: #692498" ondragstart="dragstart(event)">
-						<img style="display: none;"></li>								
-					</ul>
+					<div class="color_skin" ondrop="drop(event)" ondragover="allowDrop(event)" >
+						<div class="color-item" id="color1" draggable="true" style="background-color: #000000" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color2" draggable="true" style="background-color: #595959" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color3" draggable="true" style="background-color: #787878" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color4" draggable="true" style="background-color: #9E9E9E" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color5" draggable="true" style="background-color: #C2C2C2" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color6" draggable="true" style="background-color: #EEEEEE" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color7" draggable="true" style="background-color: #FFFFFF" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color8" draggable="true" style="background-color: #FECCBE" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color9" draggable="true" style="background-color: #FEEBB6" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color10" draggable="true" style="background-color: #DDECCA" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color11" draggable="true" style="background-color: #B8E6E1" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color12" draggable="true" style="background-color: #B8E9FF" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color13" draggable="true" style="background-color: #CCD2F0" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color14" draggable="true" style="background-color: #E0BFE6" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color15" draggable="true" style="background-color: #FD8A69" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color16" draggable="true" style="background-color: #FFCD4A" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color17" draggable="true" style="background-color: #AFD485" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color18" draggable="true" style="background-color: #82CBC4" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color19" draggable="true" style="background-color: #58CCFF" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color20" draggable="true" style="background-color: #9FA9D8" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color21" draggable="true" style="background-color: #B96BC6" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color22" draggable="true" style="background-color: #FC5230" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color23" draggable="true" style="background-color: #FD9F28" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color24" draggable="true" style="background-color: #7DB249" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color25" draggable="true" style="background-color: #2FA599" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color26" draggable="true" style="background-color: #18A8F1" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color27" draggable="true" style="background-color: #5D6DBE" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color28" draggable="true" style="background-color: #9A30AE" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color29" draggable="true" style="background-color: #D94925" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color30" draggable="true" style="background-color: #FD6F22" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color31" draggable="true" style="background-color: #568A35" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color32" draggable="true" style="background-color: #12887A" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color33" draggable="true" style="background-color: #1187CF" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color34" draggable="true" style="background-color: #3A4CA8" ondragstart="dragstart(event)">
+						</div>
+						<div class="color-item" id="color35" draggable="true" style="background-color: #692498" ondragstart="dragstart(event)">
+						</div>								
+					</div>
+
+
 						</div>
 						
-	<div class="scroll_track_ver">
-	<div class="scroll_track_ver_bar" style="height: 49.2657%;">
-	<div class="scroll_track_ver_inner"></div>
-	</div>
-</div>
-					
+				
 		</div>
 		
 		
@@ -549,12 +625,38 @@ $(function(){
 	</section>
 
 		<section id="editorSection" data-preload="2">
-				<div id="canvas" style="height:100%; overflow:auto;">
-				<div><button class="btn_add_page"><div><i class="plus icon"></i></div></button></div>
-					<div class="tbpe_skin"	style="background-color: gray; cursor: move;
-					width: 800px; height: 800px; transform: scale(0.8); clear:both;"  ondrop="drop(event)" ondragover="allowDrop(event)">
-					</div>
-					
+				<div id="canvas" style="height:100%; overflow:auto; background: #DCF2FB;">
+				<button class="btn_add_page"><i class="plus icon"></i></button>
+					<div class="tbpe_skin"	style="background: #fff;width:1240px;height: 1754px;transform: scale(0.5);
+					clear:both;position: absolute;top: -70%;left: -28%;"
+					ondrop="drop(event)" ondragover="allowDrop(event)">
+						<div class="img" style=" position: relative; background-image: url(resources/images/guidebook_clipart/DSC09805.jpg);
+						 width: 100%; height: 200px; background-size: cover;">
+						<br>
+						<div style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); 
+						font-size:5rem; color: white; z-index: 2; 	text-align: center;">
+						<h1 style="text-color:white;" contenteditable="true">﻿스페인 가볼만한 곳 TOP 3</h1></div>
+						</div>
+						<div id="first_div" class="first_div">
+							<p id="text1" class="text1"	style="line-height: 1.8; font-size:20pt;">
+								<span id="SE-d5c503da-8477-445d-a8d8-9f98012221d5"
+									class="se-ff-nanumgothic se-fs16 __se-node"
+									style="color: rgb(0, 0, 0);">안녕하세요. NEW입니다.</span>
+							</p>
+							<p id="SE-36775d09-4b3a-4c24-b15c-dcce98c6c197"
+								class="se-text-paragraph se-text-paragraph-align-left"
+								style="line-height: 1.8;">
+								<span id="SE-3111a573-f5f2-4a01-a9cf-aa5c3f1dea0d"
+									class="se-ff-nanumgothic se-fs16 __se-node"
+									style="color: rgb(0, 0, 0);">지난 4월, 10박11일동안 스페인 여행을
+									갔다왔는데요. 스페인 중에서도 이곳은 꼭 가봐야한다! 라는 곳 TOP 3를 선정해 간략하게 소개해드릴께요. </span>
+							</p>
+						</div>
+				</div>
+					<!-- <canvas id="makeCanvas" style="background: #fff; width: 100%; height: 141%; transform: scale(0.8); clear:both;"  
+					ondrop="drop(event)" ondragover="allowDrop(event)" id="canvasContent"> 
+        
+  					  </canvas>-->
 					
 				</div>
 				
@@ -563,5 +665,28 @@ $(function(){
 		
 	</section>
 
+	<div class="ui mini modal" id="hyDateModal" >
+	<div class="header">여행날짜</div>
+	<!-- <div class="">
+	<table id="dayList">
+	<tr>
+		<th class="choose">선택</th>
+		<th class="startD">시작일</th>
+		<th></th>
+		<th class="endD">종료일</th>
+	</tr>
+	</table>
+	</div>
+	<div>
+	<button type="button" id="DateSelectBtn" class="datePop_save">불러오기</button>
+	</div> -->
+	
+	<c:forEach var="gbdaylist" items="${gbdaylist}" varStatus="status">
+	<div>
+	${gbdaylist.daylist_start } &nbsp; ~ &nbsp; ${gbdaylist.daylist_end } 
+	<i class="plus icon plusdate" id="${gbdaylist.daylist_no }"> </i>
+	</div>
+	</c:forEach>
+</div>
 </body>
 </html>

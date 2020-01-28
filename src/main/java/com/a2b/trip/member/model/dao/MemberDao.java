@@ -38,11 +38,6 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateMember", member);
 	}
 
-	// 가이드 탈퇴
-	public int updateGuideMember(String member_id) {
-		return sqlSession.update("memberMapper.updateGuideMember", member_id);
-	}
-
 	// 회원 탈퇴
 	public int deleteMember(String member_id) {
 		return sqlSession.delete("memberMapper.deleteMember", member_id);
@@ -106,6 +101,11 @@ public class MemberDao {
 
 	public int updateWordGuide(String guide_id) {
 		return sqlSession.update("memberMapper.updateWordGuide", guide_id);
+	}
+
+	// 가이드 탈퇴
+	public int updateGuideQualification(String member_id) {
+		return sqlSession.update("memberMapper.updateGuideQualification", member_id);
 	}
 
 

@@ -38,4 +38,18 @@
 		#{guide_service}, #{guide_phone}, #{car_check}, #{car_number}, #{guide_recommend}, #{qualification_original}, #{qualification_rename}, 
 		default, 'WAIT', #{city_name}, #{guide_telephone}, #{price} )
 	</insert>
+
+	<select id="selectOne" parameterType="String" resultType="Guide">
+		select * from guide where guide_id = #{value}
+	</select>
+
+	<select id="selectGuideOne" parameterType="string" resultType="Guide">
+		select * from guide where guide_id = #{value}
+	</select>
+	
+	<update id="updateGuideGrade" parameterType="Guide">
+		update guide set guide_grade = ((select guide_grade from guide where guide_id = #{guide_id}) * (select grade_number from guide where guide_id = #{guide_id}) + #{guide_grade}) / ((select grade_number from guide where guide_id = #{guide_id}) + 1), 
+		grade_number = ((select grade_number from guide where guide_id = #{guide_id}) + 1) where guide_id = #{guide_id}
+	</update>
+
 </mapper>

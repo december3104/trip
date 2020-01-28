@@ -8,16 +8,12 @@
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
 <title>header.jsp</title>
 <!-- favicon -->
-<link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico">
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- 시맨틱유아이 -->
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-<!-- 카카오톡 api -->
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-
-
 <script type="text/javascript">
 
 
@@ -123,190 +119,184 @@ $(function(){
 	color: #95d6f3 !important;
 }
 </style>
+<script type="text/javascript">
+
+</script>
 </head>
 <body>
 <header>
 <div class="ui container">
-<div class="ui top fixed borderless massive menu" style="width: 80%; margin: 0 10% 0 10%">
+<div class="ui top fixed borderless massive menu" style="width: 100%; padding: 0 10%">
 	<!-- 사이트 로고 -->
 	<div class="item">
-		<img src="resources/images/logo.png" onclick="location.href='${pageContext.request.contextPath}/'" style="cursor: pointer">
+		<img src="${pageContext.request.contextPath}/resources/images/logo.png" onclick="location.href='${pageContext.request.contextPath}/'" style="cursor: pointer">
 	</div>
+	
+	<!-- 비 로그인 상태일 때 -->
+	<c:if test="${empty loginMember }">
 	<!-- 메뉴 -->
-	<c:if test="${loginMember.member_level ne 3 }">
-	<a class="ui simple dropdown item godom">
+	<a class="ui simple dropdown item">
 		가이드북
 		<div class="menu">
-			
-			<div class="item" onclick="location.href='goplace.do'">계획하기</div>
-			<div class="item" onclick="location.href='makeGuidebook.do'">제작하기</div>
+			<div class="item" onclick="location.href='moveLoginPage.do'">계획하기</div>
+			<div class="item" onclick="location.href='moveLoginPage.do'">제작하기</div>
 			<div class="item">공유 게시판</div>
 		</div>
 	</a> 
-	<a class="item">현지 가이드 매칭</a> 
-	<a class="item" href="selectAllFellowBoard.do?currentPage=1&contentNum=10">동행 찾기</a> 
+	<a class="item" href="moveLoginPage.do">현지 가이드 매칭</a> 
+	<a class="item" href="moveLoginPage.do">동행 찾기</a> 
 	<a class="item">이용방법</a> 
 	<a class="ui simple dropdown item">고객센터
 		<div class="menu">
 			<div class="item" onclick="location.href='selectListAllNotice.do'">공지사항</div>
 			<div class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">Q&A</div>
-			<div class="item" onclick="location.href='guideApplyPage.do'">가이드 신청</div>
+			<div class="item" onclick="location.href='moveLoginPage.do'">가이드 신청</div>
 		</div>
 	</a>
-	<!-- 우측 상단 사용자정보&아이콘들 -->
+	
+	<!-- 우측 상단 아이콘들 -->
 	<div class="item right menu" align="right" style="margin-right: 0;">
 		<i class="snowflake large icon" style="margin-right: 10px;"></i> 
-		
-		<i class="alarm icons" style="margin-right: 10px;"> 
-			<i class="bell large icon"></i> 
-			<!-- 알람 있을 경우 갯수만큼 -->
-			<div class="ui circular yellow mini floating label">2</div>
-		</i> 
-		<!-- <a href="selectAllChatRoom.do" style="color: black"><i class="chat icons" style="margin-right: 30px;"> -->
-		<a href="javascript:chatMain('${ loginMember.member_id }');" style="color: black"><i class="chat icons" style="margin-right: 30px;">
-			<i class="comments large icon"></i> 
-			<!-- 알람 있을 경우 갯수만큼 -->
-			<div class="ui circular blue mini floating label">2</div>
-		</i></a>
-		</c:if>
-		
 		<!-- 로그인버튼 -->
-		<c:if test="${loginMember == null }">
-		<a style="background: #c0e7f8; color: #000; width: 100px; margin-right: 20px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer; border-radius: .28571429rem" id="loginTag">로그인</a>
-		</c:if>
+		<a style="background: #c0e7f8; color: #000; width: 100px; margin-right: 20px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer; border-radius: .28571429rem" href="moveLoginPage.do">로그인</a>
+	</div>
+	</c:if>
+	<!-- 비 로그인 상태 끝 -->
+	
+	<!-- 일반 회원 로그인 상태일 때 -->
+	<c:if test="${!empty loginMember }">
+		<c:if test="${loginMember.member_level ne 3 }">
+		<!-- 메뉴 -->
+		<a class="ui simple dropdown item">
+			가이드북
+			<div class="menu">
+				<div class="item" onclick="location.href='goplace.do'">계획하기</div>
+				<div class="item" onclick="location.href='makeGuidebook.do'">제작하기</div>
+				<div class="item">공유 게시판</div>
+			</div>
+		</a> 
+		<a class="item" onclick="location.href='guideMatchingPage.do'">현지 가이드 매칭</a> 
+		<a class="item" href="selectAllFellowBoard.do?currentPage=1&contentNum=10">동행 찾기</a> 
+		<a class="item">이용방법</a> 
+		<a class="ui simple dropdown item">고객센터
+			<div class="menu">
+				<div class="item" onclick="location.href='selectListAllNotice.do'">공지사항</div>
+				<div class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">Q&A</div>
+				<div class="item" onclick="location.href='guideApplyPage.do'">가이드 신청</div>
+			</div>
+		</a>
+		
+		<!-- 우측 상단 사용자정보&아이콘들 -->
+		<div class="item right menu" align="right" style="margin-right: 0;">
+			<i class="snowflake large icon" style="margin-right: 10px;"></i> 
+			
+			<i class="alarm icons" style="margin-right: 10px;"> 
+				<i class="bell large icon"></i> 
+				<!-- 알람 있을 경우 갯수만큼 -->
+				<div class="ui circular yellow mini floating label">2</div>
+			</i> 
+			<!-- <a href="selectAllChatRoom.do" style="color: black"><i class="chat icons" style="margin-right: 30px;"> -->
+			<a href="javascript:chatMain('${ loginMember.member_id }');" style="color: black"><i class="chat icons" style="margin-right: 30px;">
+				<i class="comments large icon"></i> 
+				
+					<!-- 알람 있을 경우 갯수만큼 -->
+					<div class="ui circular blue mini floating label">2</div>
+				</i>
+			</a>
+		</div>
 		
 		<!-- 로그인 했을 때 회원정보 -->
-		<c:if test="${loginMember != null }">
-			<c:if test="${loginMember.member_level ne 3 }">
+		<div class="ui simple dropdown item" id="userDiv">
+			<c:if test="${loginMember.member_profile_rename != null }">
+			<img class="ui mini circular image" src="${pageContext.request.contextPath}/resources/images/member_profile/${loginMember.member_profile_rename }">
+			</c:if>
+			<c:if test="${loginMember.member_profile_rename == null }">
+			<img class="ui mini circular image" src="${pageContext.request.contextPath}/resources/images/molly.png">
+			</c:if>
+			<div class="content">
+				<div class="ui sub header">&emsp; <font size="3pt">${loginMember.member_name }</font></div>
+			</div>
+			<div class="menu" style="text-align: center">
+				<div class="item">내 가이드북</div>
+				<div class="item" onclick="location.href='selectMyGuideMatching.do'">가이드 매칭 기록</div>
+				<div class="item" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</div>
+				<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
+				<div class="item" onclick="location.href='moveErrorPage.do'">에러페이지로 이동</div>
+				<div class="item" id="logoutTag">로그아웃</div>
+			</div>
+		</div>
+		</c:if>
+	</c:if>
+	<!-- 일반 회원 로그인 상태 끝 -->
+		
+	<!-- 관리자로 로그인 상태일 때 -->
+	<c:if test="${!empty loginMember }">
+		<!-- 관리자 메뉴 -->
+		<c:if test="${loginMember.member_level eq 3}">
+			<a class="ui simple dropdown item">회원 관리
+				<div class="menu">
+					<div class="item" onclick="location.href='selectListAllMember.ad?currentPage=1&contentNum=10'">일반회원</div><!-- 0 -->
+					<div class="item" onclick="location.href='selectListAllGuide.ad?currentPage=1&contentNum=10'">가이드</div><!-- 0 -->
+					<div class="item" onclick="location.href='selectListApplyGuide.ad?currentPage=1&contentNum=10'">가이드 신청</div> <!--?currentPage=1&contentNum=10 -->
+				</div>
+			</a>
+			<a class="ui simple dropdown item">신고 처리
+				<div class="menu">
+					<div class="item" onclick="location.href='selectListNormalReport.ad?currentPage=1&contentNum=10'">일반회원</div><!-- 0 -->
+					<div class="item" onclick="location.href='selectListGuideReport.ad?currentPage=1&contentNum=10'">가이드</div><!-- 0 -->
+				</div>
+			</a>
+			<a class="item" onclick="location.href='selectListAllNotice.ad?currentPage=1&contentNum=10'">공지사항 관리</a><!-- 0 -->
+			<a class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">QnA 관리</a>
+	
+			<!-- 우측 상단 사용자정보&아이콘들 -->
+			<div class="item right menu" align="right" style="margin-right: 0;">
+				<i class="snowflake large icon" style="margin-right: 10px;"></i> 
+	
+				<i class="alarm icons" style="margin-right: 10px;"> 
+					<i class="bell large icon"></i> 
+					<!-- 알람 있을 경우 갯수만큼 -->
+					<div class="ui circular yellow mini floating label">2</div>
+				</i>
+			</div>	
+	 
+	    	<!-- 관리자 로그인 정보 -->
 			<div class="ui simple dropdown item" id="userDiv">
 				<c:if test="${loginMember.member_profile_rename != null }">
-				<img class="ui mini circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }">
+				<img class="ui mini circular image" src="${pageContext.request.contextPath}/resources/images/member_profile/${loginMember.member_profile_rename }">
 				</c:if>
 				<c:if test="${loginMember.member_profile_rename == null }">
-				<img class="ui mini circular image" src="resources/images/molly.png">
+				<img class="ui mini circular image" src="${pageContext.request.contextPath}/resources/images/molly.png">
 				</c:if>
 				<div class="content">
 					<div class="ui sub header">&emsp; <font size="3pt">${loginMember.member_name }</font></div>
 				</div>
+		
 				<div class="menu" style="text-align: center">
-					<div class="item">내 가이드북</div>
-					<div class="item" onclick="location.href='selectMyGuideMatching.do'">가이드 매칭 기록</div>
-					<div class="item" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</div>
-					<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
+					<div class="item" onclick="location.href='moveAdminInfo.ad'">내 정보 수정</div>
 					<div class="item" id="logoutTag">로그아웃</div>
 				</div>
 			</div>
-			</c:if>
-		
-		  	 <!-- 관리자 메뉴 -->
-		  	 <c:if test="${loginMember.member_level eq 3}">
-		      <a class="ui simple dropdown item">회원 관리
-		            <div class="menu">
-		               <div class="item" onclick="location.href='selectListAllMember.ad?currentPage=1&contentNum=10'">일반회원</div><!-- 0 -->
-		               <div class="item" onclick="location.href='selectListAllGuide.ad?currentPage=1&contentNum=10'">가이드</div><!-- 0 -->
-		               <div class="item" onclick="location.href='selectListApplyGuide.ad?currentPage=1&contentNum=10'">가이드 신청</div> <!--?currentPage=1&contentNum=10 -->
-		            </div>
-		      </a>
-		      <a class="ui simple dropdown item">신고 처리
-		            <div class="menu">
-		               <div class="item" onclick="location.href='selectListNormalReport.ad?currentPage=1&contentNum=10'">일반회원</div><!-- 0 -->
-		               <div class="item" onclick="location.href='selectListGuideReport.ad?currentPage=1&contentNum=10'">가이드</div><!-- 0 -->
-		            </div>
-		      </a>
-		      <a class="item" onclick="location.href='selectListAllNotice.ad?currentPage=1&contentNum=10'">공지사항 관리</a><!-- 0 -->
-		      <a class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">QnA 관리</a>
-      			<!-- 우측 상단 사용자정보&아이콘들 -->
-				<div class="item right menu" align="right" style="margin-right: 0;">
-					<i class="snowflake large icon" style="margin-right: 10px;"></i> 
-					
-					<i class="alarm icons" style="margin-right: 10px;"> 
-						<i class="bell large icon"></i> 
-						<!-- 알람 있을 경우 갯수만큼 -->
-						<div class="ui circular yellow mini floating label">2</div>
-					</i> 
-					<i class="chat icons" style="margin-right: 30px;"> 
-						<i class="comments large icon"></i> 
-						<!-- 알람 있을 경우 갯수만큼 -->
-						<div class="ui circular blue mini floating label">2</div>
-					</i>
-      
-		       <!-- 관리자 로그인인경우 -->
-		       <div class="ui simple dropdown item" id="userDiv">
-					<c:if test="${loginMember.member_profile_rename != null }">
-						<img class="ui mini circular image" src="resources/images/member_profile/${loginMember.member_profile_rename }">
-					</c:if>
-					<c:if test="${loginMember.member_profile_rename == null }">
-						<img class="ui mini circular image" src="resources/images/molly.png">
-					</c:if>
-					<div class="content">
-						<div class="ui sub header">&emsp; <font size="3pt">${loginMember.member_name }</font></div>
-					</div>
-						
-					<div class="menu" style="text-align: center">
-						<div class="item" onclick="location.href='moveAdminInfo.ad'">내 정보 수정</div>
-						<div class="item" id="logoutTag">로그아웃</div>
-					</div>
-				   
-			</div>
-      
-  		 </c:if>
-   	</c:if>
+		 </c:if>
+	</c:if>
+	<!-- 관리자 로그인 상태 끝 -->
+	
 	</div>
 </div>
-</div>
-	<!-- modal -->
-	<div class="ui mini modal" id="loginModalOpen">
-		<div class="header">
-			<p style="font-weight: bold; text-align: center">
-				<font color="#95d6f3">여길잡아</font> 로그인하기
-			</p>
-		</div>
-		<div class="content">
-		<a id="custom-login-btn" href="javascript:loginWithKakao()">
-			<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="100%"/>
-		</a>
-		</div>
-		<div class="content">
-			<form action="loginMember.do" method="POST">
-			<div class="ui left icon input" style="width: 100%">
-				<input type="text" placeholder="아이디를 입력하세요." name="member_id" id="member_id"> <i class="user icon"></i>
-			</div>
-			<div class="ui left icon input" style="width: 100%; margin-top: 15px">
-				<input type="password" placeholder="비밀번호를 입력하세요." name="member_pwd" id="member_pwd"> <i class="lock icon"></i>
-			</div>
-			<div class="ui form">
-				<div class="inline field">
-					<div class="ui checkbox" style="margin-top: 15px; text-align: left">
-						<input type="checkbox" tabindex="0" class="hidden" style="margin-top: 3px" id="loginSave">
-						<label for="loginSave">로그인 상태 유지</label>
-					</div>
-				</div>
-			</div>
-			<button class="ui button" type="submit" style="width: 100%; margin: 0; background: #c0e7f8; margin-top: 15px">로그인</button>
-			</form>
-		</div>
-		<div class="actions" style="text-align: left">
-			
-			<p style="text-align: center">아직 회원이 아니시라면 <a href="moveMemberEnrollPage.do">회원가입</a>
-		</div>
-	</div>
-<script type="text/javascript">
-//<![CDATA[
-//사용할 앱의 JavaScript 키를 설정해 주세요.
-Kakao.init('86c5d9cb8b0032650333d8872c9e9d02');
-function loginWithKakao() {
-    // 로그인 창을 띄웁니다.
-    Kakao.Auth.login({
-      success: function(authObj) {
-        alert(JSON.stringify(authObj));
-      },
-      fail: function(err) {
-        alert(JSON.stringify(err));
-      }
-    });
-  };
-//]]>
 
+<!-- 비 로그인 상태일 때 로그인 필수 메뉴 클릭시 안내창 모달 -->
+<div class="ui mini modal" id="loginChkModal">
+	<i class="close icon"></i>
+	<div class="description" id="loginChkContent">
+		<p>로그인이 필요한 메뉴입니다.</p>
+		<p>먼저 로그인을 진행해주세요.</p>
+	</div>
+	<div class="actions">
+		<div class="fluid ui button" onclick="moveLoginPage();">확인</div>
+	</div>
+</div>
+
+<script type="text/javascript">
 function chatMain(id){
 	
       window.open("selectAllChatRoom.do?member_id="+id, "ChatMain", "width=810px, height=600px, menubar=no, status=no, toolbar=no");

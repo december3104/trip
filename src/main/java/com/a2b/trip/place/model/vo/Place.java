@@ -7,36 +7,29 @@ public class Place implements Serializable {
 	private static final long serialVersionUID = 9000L;
 	
 	private String place_code;
-	private String place_user;	//
-	private String place_kr;
-	private String place_en;
-	private String place_loc;
+	private String place_id;
+	private String place_user;	
+	private String place_name;
 	private String place_address;
 	private String place_phone;
-	private String open_time;
-	private String close_time;
+	private String opening_time;
 	private Date place_date;
-	private double place_lat;	//
-	private double place_long;	//
+	private String place_geo;	
 	
 	public Place() {}
 
-	public Place(String place_code, String place_user, String place_kr, String place_en, String place_loc,
-			String place_address, String place_phone, String open_time, String close_time, Date place_date,
-			double place_lat, double place_long) {
+	public Place(String place_code, String place_id, String place_user, String place_name, String place_address,
+			String place_phone, String opening_time, Date place_date, String place_geo) {
 		super();
 		this.place_code = place_code;
+		this.place_id = place_id;
 		this.place_user = place_user;
-		this.place_kr = place_kr;
-		this.place_en = place_en;
-		this.place_loc = place_loc;
+		this.place_name = place_name;
 		this.place_address = place_address;
 		this.place_phone = place_phone;
-		this.open_time = open_time;
-		this.close_time = close_time;
+		this.opening_time = opening_time;
 		this.place_date = place_date;
-		this.place_lat = place_lat;
-		this.place_long = place_long;
+		this.place_geo = place_geo;
 	}
 
 	public String getPlace_code() {
@@ -47,6 +40,14 @@ public class Place implements Serializable {
 		this.place_code = place_code;
 	}
 
+	public String getPlace_id() {
+		return place_id;
+	}
+
+	public void setPlace_id(String place_id) {
+		this.place_id = place_id;
+	}
+
 	public String getPlace_user() {
 		return place_user;
 	}
@@ -55,28 +56,12 @@ public class Place implements Serializable {
 		this.place_user = place_user;
 	}
 
-	public String getPlace_kr() {
-		return place_kr;
+	public String getPlace_name() {
+		return place_name;
 	}
 
-	public void setPlace_kr(String place_kr) {
-		this.place_kr = place_kr;
-	}
-
-	public String getPlace_en() {
-		return place_en;
-	}
-
-	public void setPlace_en(String place_en) {
-		this.place_en = place_en;
-	}
-
-	public String getPlace_loc() {
-		return place_loc;
-	}
-
-	public void setPlace_loc(String place_loc) {
-		this.place_loc = place_loc;
+	public void setPlace_name(String place_name) {
+		this.place_name = place_name;
 	}
 
 	public String getPlace_address() {
@@ -95,20 +80,12 @@ public class Place implements Serializable {
 		this.place_phone = place_phone;
 	}
 
-	public String getOpen_time() {
-		return open_time;
+	public String getOpening_time() {
+		return opening_time;
 	}
 
-	public void setOpen_time(String open_time) {
-		this.open_time = open_time;
-	}
-
-	public String getClose_time() {
-		return close_time;
-	}
-
-	public void setClose_time(String close_time) {
-		this.close_time = close_time;
+	public void setOpening_time(String opening_time) {
+		this.opening_time = opening_time;
 	}
 
 	public Date getPlace_date() {
@@ -119,28 +96,19 @@ public class Place implements Serializable {
 		this.place_date = place_date;
 	}
 
-	public double getPlace_lat() {
-		return place_lat;
+	public String getPlace_geo() {
+		return place_geo;
 	}
 
-	public void setPlace_lat(double place_lat) {
-		this.place_lat = place_lat;
-	}
-
-	public double getPlace_long() {
-		return place_long;
-	}
-
-	public void setPlace_long(double place_long) {
-		this.place_long = place_long;
+	public void setPlace_geo(String place_geo) {
+		this.place_geo = place_geo;
 	}
 
 	@Override
 	public String toString() {
-		return "Place [place_code=" + place_code + ", place_user=" + place_user + ", place_kr=" + place_kr
-				+ ", place_en=" + place_en + ", place_loc=" + place_loc + ", place_address=" + place_address
-				+ ", place_phone=" + place_phone + ", open_time=" + open_time + ", close_time=" + close_time
-				+ ", place_date=" + place_date + ", place_lat=" + place_lat + ", place_long=" + place_long + "]";
+		return "Place [place_code=" + place_code + ", place_id=" + place_id + ", place_user=" + place_user
+				+ ", place_name=" + place_name + ", place_address=" + place_address + ", place_phone=" + place_phone
+				+ ", opening_time=" + opening_time + ", place_date=" + place_date + ", place_geo=" + place_geo + "]";
 	}
-	
+
 }

@@ -61,4 +61,23 @@
 	<context:component-scan base-package="com.a2b.trip" />
 	
 	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<beans:bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<beans:property name="host" value="smtp.gmail.com"></beans:property>
+	<beans:property name="username" value="elcl248@gmail.com"></beans:property>
+	<beans:property name="password" value="december3104V&amp;$*#"></beans:property>
+	<beans:property name="defaultEncoding" value="utf-8"></beans:property>
+	<beans:property name="javaMailProperties">
+		<beans:props>
+			<beans:prop key="mail.smtp.auth">true</beans:prop>
+			<beans:prop key="mail.smtp.starttls.required">true</beans:prop>
+			<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+			<beans:prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</beans:prop>
+			<beans:prop key="mail.smtp.socketFactory.fallback">false</beans:prop>
+			<beans:prop key="mail.smtp.port">465</beans:prop>
+			<beans:prop key="mail.smtp.socketFactory.port">465</beans:prop>
+		</beans:props>
+	</beans:property>
+	
+	</beans:bean>
 </beans:beans>

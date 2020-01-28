@@ -50,4 +50,9 @@
 		where daylist_no = #{daylist_no}	
 	</update>
 	
+	<!-- 회원의 일정 조회_sh -->
+	<select id="selectDaylistOne" parameterType="int" resultType="PlaceDaylist">
+		select daylist_start, daylist_end from placedaylist where daylist_no = #{value}
+	</select>
+	
 </mapper>

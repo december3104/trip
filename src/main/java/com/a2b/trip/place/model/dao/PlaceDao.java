@@ -62,4 +62,15 @@ public class PlaceDao {
 	public int updateDaylist(PlaceDaylist daylist) {
 		return sqlSession.update("placeMapper.updateDaylist", daylist);
 	}
+	
+	//장소리스트 불러오기_sh
+	public ArrayList<PlaceDaylist> guideDaylist(String member_id) {
+		List<PlaceDaylist> list = sqlSession.selectList("placeMapper.selectDaylist", member_id);
+		return (ArrayList<PlaceDaylist>)list;
+	}
+
+	//날짜 불러오기_sh
+	public PlaceDaylist guideDaylistOne(int daylist_no) {
+		return sqlSession.selectOne("placeMapper.selectguideDaylistOne", daylist_no);
+	}
 }

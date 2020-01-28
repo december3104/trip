@@ -12,12 +12,14 @@
 		<if test="travel_detail == null">
 			null,
 		</if>
-		#{travel_start_date}, #{travel_end_date}, #{travel_theme}, #{book_name}, default, null)
+		#{travel_start_date}, #{travel_end_date}, #{travel_theme}, #{book_name}, #{share_check}, null)
 	</insert>
 	
 	<update id="updateGuidebook" parameterType="Guidebook">
-		update guidebook set travel_detail = #{travel_detail}, travel_start_date = #{travel_start_date}, travel_end_date = #{travel_end_date},
-		 travel_theme = #{travel_theme}, book_name = #{book_name}, share_check = #{share_check}  where book_no = #{book_no}
+		update guidebook 
+		set travel_detail = #{travel_detail}, travel_start_date = #{travel_start_date}, travel_end_date = #{travel_end_date},
+		 travel_theme = #{travel_theme}, book_name = #{book_name}, share_check = #{share_check}  
+		 where book_no = #{book_no}
 	</update>
 	
 	
@@ -26,13 +28,13 @@
 	
 	
 	
-	<select id="loginCheck" parameterType="Member" resultType="Member">
+	<!-- <select id="loginCheck" parameterType="Member" resultType="Member">
 		select * from member where userid = #{userid} and userpwd = #{userpwd}
 	</select>
 	
 	<select id="selectOne" parameterType="string" resultType="Member">
 		select * from member where userid = #{value}
-	</select>
+	</select> -->
 	
 	
 	

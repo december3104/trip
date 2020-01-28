@@ -1,5 +1,29 @@
 @charset "UTF-8";
 
+@font-face { 
+	font-family: 'LotteMartDream'; 
+	font-style: normal; 
+	font-weight: 300; 
+	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff2') format('woff2'), 
+			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamLight.woff') format('woff'); 
+} 
+
+@font-face { 
+	font-family: 'LotteMartDream'; 
+	font-style: normal; 
+	font-weight: 400; 
+	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'), 
+			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff'); 	
+} 
+
+@font-face { 
+	font-family: 'LotteMartDream'; 
+	font-style: normal; 
+	font-weight: 700; 
+	src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff2') format('woff2'), 
+			url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff') format('woff'); 
+} 
+
 button {
     background: none;
     outline: none;
@@ -87,21 +111,8 @@ button {
     box-sizing: border-box;
 }
 
-#bookHeader #btnPreview {
-    display: inline-block;
-    width: 66px;
-    height: 40px;
-    border-radius: 4px;
-    border: solid 1px rgba(157, 158, 163, 0.6);
-    background-color: #fff;
-    padding: 0;
-    margin-left: 8px;
-    box-sizing: border-box;
-}
-
 #bookHeader #btnDownload {
     display: inline-block;
-    font-family: 'Noto Sans KR', sans-serif;
     font-size: 14px;
     margin-left: 8px;
     height: 40px;
@@ -155,7 +166,6 @@ button {
 
 
 #tabSection {
-	/* overflow: visible; */
 	position: relative;
 	display: flex;
 	background: #fff;
@@ -192,52 +202,18 @@ button {
 	flex: 1;
 	display: flex;
 	min-height: 100%;
-	background: /* #F1F1F2 */red;
-}
+} 
 
 
 
-ul {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
- 	grid-auto-rows: minmax(50px, auto);
-  	grid-gap: 1px;
-    list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 5px;
-}
-
-.list_wrap ul li {
-    overflow: hidden;
-    position: relative;
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-    margin: 2px 1px;
-    text-decoration: none;
-    border-radius: 10px;
-    -webkit-transition-property: width,height,-webkit-transform;
-    transition-property: width,height,transform;
-    -webkit-transition-duration: .2s;
-    transition-duration: .2s;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-    -webkit-transform-origin: 50% 50%;
-    transform-origin: 50% 50%;
-    outline: 0!important;
-}
-
-.list_wrap ul li img{
-    max-width: 100%;
-    max-height: 100%;
+.list_wrap img{
+   width: 50px;
+    height: 50px;
     vertical-align: middle;
     position: static;
-    transform: none;
+    transform: none; 
 
-    max-width: 100%;
+   max-width: 100%;
     max-height: 100%;
     width: 100%;
     height: 100%;
@@ -260,74 +236,81 @@ ul {
     visibility: visible;
 } */
 
- /* .scroll_element {
-  position: relative;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  min-width: 120px;
-   }
- .scroll_element .scroll_track_ver.hidden,
-  .scroll_element .scroll_track_hor.hidden {
-    display: none; 
-    }
-   .scroll_element.scroll_hor .scroll_contents {
-    overflow-x: scroll;
-    bottom: -18px;
-    padding-bottom: 18px; }
-  .scroll_element.scroll_ver .scroll_contents {
-    overflow-y: scroll;
-    right: -18px;
-    padding-right: 18px; }
-   .scroll_element .scroll_contents {
-   position: absolute; 
-  	top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 0; 
-    box-sizing: border-box;
+.clip_art {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+ 	grid-auto-rows: minmax(50px, auto);
+  	grid-gap: 1px;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 5px;
+}
+
+.art-item{
     overflow: hidden;
-    -webkit-overflow-scrolling: touch; }
-  .scroll_element .scroll_contents > ul,
-    .scroll_element .scroll_contents > div {
-      position: absolute;
-      width: 100%; }
-  .scroll_element .scroll_track_ver {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    width: 8px;
-    bottom: 4px;
-    border-radius: 4px;
-    opacity: 0;
-    transition: opacity .3s ease-out; }
-    .scroll_element .scroll_track_ver > div {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 20px;
-      background-color: rgba(157, 158, 163, 0.6);
-      border-radius: 4px; }
-  .scroll_element .scroll_track_hor {
-    position: absolute;
-    bottom: 3px;
-    left: 4px;
-    right: 4px;
-    height: 4px;
-    border-radius: 2px;
-    opacity: 0;
-    transition: opacity .3s ease-out; }
-    .scroll_element .scroll_track_hor > div {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 20px;
-      height: 100%;
-      background-color: rgba(157, 158, 163, 0.6);
-      border-radius: 2px; }  */
-      
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin: 2px 1px;
+    text-decoration: none;
+    border-radius: 10px;
+    -webkit-transition-property: width,height,-webkit-transform;
+    transition-property: width,height,transform;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    outline: 0!important;
+}
+
+.lottemartdream,  * { font-family: 'LotteMartDream', sans-serif; }
+
+.color_skin {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+ 	grid-auto-rows: minmax(50px, auto);
+  	grid-gap: 1px;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 5px;
+}
+
+.color-item{
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    margin: 2px 1px;
+    text-decoration: none;
+    border-radius: 10px;
+    -webkit-transition-property: width,height,-webkit-transform;
+    transition-property: width,height,transform;
+    -webkit-transition-duration: .2s;
+    transition-duration: .2s;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    outline: 0!important;
+}
+
+.first_div {
+	font-size:25pt;
+	padding-right: 95px;
+    padding-left: 95px;
+    margin-right: -95px;
+    margin-left: -95px;
+}
       
       
       

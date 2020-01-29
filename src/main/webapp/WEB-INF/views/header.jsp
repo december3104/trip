@@ -42,6 +42,10 @@
 
 .lottemartdream,  * { font-family: 'LotteMartDream', sans-serif; }
 
+.ui.menu .ui.dropdown .menu > .item:hover{
+	background: rgba(192, 231, 248,1)!important;
+}
+
 .ui.menu .ui.dropdown .menu>.item{
 	font-weight: 400!important;
 }
@@ -53,9 +57,10 @@
 #userDiv {
 	padding : 0;
 	width: 120px;
+	margin-right: 20px;
 }
 #userDiv:hover{
-	background: #fff;
+	background: rgba(0, 0, 0, 0.03);
 }
 
 .ui.buttons>.ui.dropdown:last-child .menu, .ui.menu .right.dropdown.item .menu, .ui.menu .right.menu .dropdown:last-child .menu{
@@ -103,34 +108,60 @@
 .ui.checkbox input[type=checkbox]:checked ~ label:after{
 	color: #95d6f3 !important;
 }
+
 </style>
 <script type="text/javascript">
+$(function(){
+	$(".dropdown").dropdown({
+		transition:'drop'
+	});
+});
 
+function updateFbAlarm(fb_no, fm_id){
+	console.log(fb_no + ", " + fm_id);
+	$(function(){
+		$.ajax({
+			url: "updateFbAlarm.do",
+			type: "post",
+			data: {fb_no: fb_no, fm_id: fm_id},
+			success: function(data){
+				if (data == "OK"){
+					location.hret="loginMember.do";
+					console.log('성공');
+				}
+				
+			},
+			error : function(request, status, errorData){
+				console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+			} 
+		});
+	});
+}
 </script>
 </head>
 <body>
 <header>
 <div class="ui container">
-<div class="ui top fixed borderless massive menu" style="width: 100%; padding: 0 10%">
+<div class="ui top fixed borderless massive menu" style="width: 100%; height: 90px; background: rgba(255,255,255, 0.4)">
 	<!-- 사이트 로고 -->
-	<div class="item">
-		<img src="${pageContext.request.contextPath}/resources/images/logo.png" onclick="location.href='${pageContext.request.contextPath}/'" style="cursor: pointer">
+	<div class="item" style="margin-right: 20px">
+		<img src="${pageContext.request.contextPath}/resources/images/logo.png" onclick="location.href='${pageContext.request.contextPath}/'" style="cursor: pointer; height: 80px; width: 80px">
 	</div>
 	
 	<!-- 비 로그인 상태일 때 -->
 	<c:if test="${empty loginMember }">
 	<!-- 메뉴 -->
-	<a class="ui simple dropdown item">
+	<a class="ui simple dropdown item" style="margin-right: 20px">
 		가이드북
 		<div class="menu">
 			<div class="item" onclick="location.href='moveLoginPage.do'">계획하기</div>
 			<div class="item" onclick="location.href='moveLoginPage.do'">제작하기</div>
 		</div>
 	</a> 
-	<a class="item" href="moveLoginPage.do">현지 가이드 매칭</a> 
-	<a class="item" href="moveLoginPage.do">동행 찾기</a> 
-	<a class="item">이용방법</a> 
-	<a class="ui simple dropdown item">고객센터
+	<a class="item" href="moveLoginPage.do" style="margin-right: 20px">현지 가이드 매칭</a> 
+	<a class="item" href="moveLoginPage.do" style="margin-right: 20px">동행 찾기</a> 
+	<a class="item" style="margin-right: 20px">이용방법</a> 
+	<a class="ui simple dropdown item" style="margin-right: 20px">고객센터
 		<div class="menu">
 			<div class="item" onclick="location.href='selectListAllNotice.do'">공지사항</div>
 			<div class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">Q&A</div>
@@ -160,7 +191,7 @@
 		</select>
 		<img alt="" src="" id="weatherimg">
 		<!-- 로그인버튼 -->
-		<a style="background: #c0e7f8; color: #000; width: 100px; margin-right: 20px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer; border-radius: .28571429rem" href="moveLoginPage.do">로그인</a>
+		<a style="background: #95d6f3; color: #000; width: 100px; margin-right: 20px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer; border-radius: .28571429rem" href="moveLoginPage.do">로그인</a>
 	</div>
 	</c:if>
 	<!-- 비 로그인 상태 끝 -->
@@ -207,18 +238,52 @@
 			<option value="Ankara">터키-앙카라</option>
 			<option value="Canberra">호주-캔버라</option>
 		</select>
-		<img alt="" src="" id="weatherimg">
-			<i class="alarm icons" style="margin-right: 10px;"> 
-				<i class="bell large icon"></i> 
-				<!-- 알람 있을 경우 갯수만큼 -->
-				<div class="ui circular yellow mini floating label">2</div>
-			</i> 
+		<img alt="" src="" id="weatherimg">	
+			<div class="ui top right pointing compact scrolling dropdown">
+				<i class="alarm icons" style="margin-right: 10px;"> 
+					<i class="bell large icon"></i> 
+					<!-- 알람 있을 경우 갯수만큼 -->
+					<c:if test="${!empty totalAlarmCount }">
+						<div class="ui circular yellow mini floating label">${totalAlarmCount }</div>
+					</c:if>
+				</i> 
+				<div class="menu scrollColor" style="padding:10px;">
+					<c:if test="${!empty selectFbAlarmCount }">
+						<c:forEach var="fbAlarmContent" items="${selectFbAlarmCount }">
+							<div class="ui accordion item" onclick="location.href='updateFbAlarm.do?fb_no=${fbAlarmContent.fb_no}&fm_id=${fbAlarmContent.fm_id }'">[${fbAlarmContent.fb_title }]에 대한 동행 매칭 신청자가 있습니다.</div>
+						</c:forEach>
+					</c:if>
+					<c:if test="${!empty selectFmAlarmCount }">
+						<c:forEach var="fmAlarmContent" items="${selectFmAlarmCount }">
+							<div class="ui accordion item">[${fmAlarmContent.fb_title }]에 대한 동행 신청이 수락되었습니다.</div>
+						</c:forEach>
+					</c:if>
+					<c:if test="${!empty selectQnaAlarmCount }">
+						<c:forEach var="qnaAlarmContent" items="${selectQnaAlarmCount }">
+							<div class="ui accordion item">[${qnaAlarmContent.qna_title }]에 대한 답변이 등록되었습니다.</div>
+						</c:forEach>
+					</c:if>
+					<c:if test="${!empty selectGuideApplyCount }">
+						<div class="ui accordion item">가이드 자격 신청이 수락되었습니다.</div>
+					</c:if>
+					<c:if test="${loginMember.member_level == 2 }">
+						<c:if test="${!empty selectGbAlarmCount }">
+							<c:forEach var="gbAlarmContent" items="${selectGbAlarmCount }">
+								<div class="ui accordion item">[${ gbAlarmContent.gb_title}]에 대한 가이드 매칭 신청자가 있습니다.</div>
+							</c:forEach>
+						</c:if>
+					</c:if>
+				</div>
+			</div>
+
 			<!-- <a href="selectAllChatRoom.do" style="color: black"><i class="chat icons" style="margin-right: 30px;"> -->
 			<a href="javascript:chatMain('${ loginMember.member_id }');" style="color: black"><i class="chat icons" style="margin-right: 30px;">
 				<i class="comments large icon"></i> 
 				
 					<!-- 알람 있을 경우 갯수만큼 -->
-					<div class="ui circular blue mini floating label">2</div>
+					
+						<div class="ui circular blue mini floating label">2</div>
+					
 				</i>
 			</a>
 		</div>
@@ -234,12 +299,11 @@
 			<div class="content">
 				<div class="ui sub header">&emsp; <font size="3pt">${loginMember.member_name }</font></div>
 			</div>
-			<div class="menu" style="text-align: center">
+			<div class="menu" style="text-align: center; margin-left: -40px">
 				<div class="item">내 가이드북</div>
 				<div class="item" onclick="location.href='selectMyGuideMatching.do'">가이드 매칭 기록</div>
 				<div class="item" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</div>
 				<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
-				<div class="item" onclick="location.href='moveErrorPage.do'">에러페이지로 이동</div>
 				<div class="item" onclick="location.href='logout.do'">로그아웃</div>
 			</div>
 		</div>
@@ -294,7 +358,7 @@
 					<div class="ui circular yellow mini floating label">2</div>
 				</i>
 			</div>	
-	 
+
 	    	<!-- 관리자 로그인 정보 -->
 			<div class="ui simple dropdown item" id="userDiv">
 				<c:if test="${loginMember.member_profile_rename != null }">

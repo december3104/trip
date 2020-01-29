@@ -1,5 +1,7 @@
 package com.a2b.trip.guidebook.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,15 +24,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.a2b.trip.fellow.model.vo.Fellow;
-import com.a2b.trip.fellow.model.vo.FellowBoard;
+
 import com.a2b.trip.guidebook.model.service.GuidebookService;
 import com.a2b.trip.guidebook.model.vo.Guidebook;
-import com.a2b.trip.location.model.vo.Location;
 import com.a2b.trip.member.model.vo.Member;
-import com.a2b.trip.notice.model.vo.Notice;
 import com.a2b.trip.place.model.service.PlaceService;
 import com.a2b.trip.place.model.vo.Place;
+import com.a2b.trip.place.model.vo.PlaceAll;
 import com.a2b.trip.place.model.vo.PlaceDaylist;
 
 @Controller
@@ -50,18 +51,32 @@ public class GuidebookController {
 	@RequestMapping("makeGuidebook.do")
 
 	   public String makeGuidebook(Model model, HttpServletRequest request) {
-		//일정 불러오기
+		
 			HttpSession session = request.getSession(false);
 			Member sessionMember = (Member)session.getAttribute("loginMember");
 			String memberId = sessionMember.getMember_id();
 
-			List<PlaceDaylist> gbdaylist;		
-
+			//일정 불러오기
+			List<PlaceDaylist> gbdaylist;
+			
 			gbdaylist = placeService.guideDaylist(memberId);	
+
 			
 			model.addAttribute("gbdaylist",gbdaylist);	
+			
+			
+			//장소 불러오기
+			List<PlaceDaylist> gbplacelist;
+			
+			gbplacelist = placeService.guideDaylist(memberId);	
 
+			
+			model.addAttribute("gbplacelist",gbplacelist);	
+			
+			
 			return "guidebook/makeGuidebook";
+			
+						
 
 		}
 		
@@ -114,23 +129,90 @@ public class GuidebookController {
 		return viewFileName;
 	}
 	
-	@RequestMapping(value="plusGbdate.do", method=RequestMethod.POST)
-	@ResponseBody
-	public String selectMyFellowBoardOne(@RequestParam("member_id") int memberId, HttpServletResponse response) throws UnsupportedEncodingException {
+	//일정 불러와서 추가하기
+	@RequestMapping(value="plusGbdate.do", method=RequestMethod.GET)
+	public String guideDaylistOne(@RequestParam("placelist_no") String daylist_no, HttpServletResponse response) throws IOException {
+		logger.info(daylist_no);
 		
-		PlaceDaylist gbday = placeService.guideDaylistOne(memberId);	
+		PlaceDaylist gbday = placeService.guideDaylistOne(daylist_no);	
 
-		response.setContentType("application/json; charset=utf-8");
+		System.out.println("gbday:" + gbday);
+		
 		
 		JSONObject job = new JSONObject();
+	
 		
 		job.put("daylist_start", gbday.getDaylist_start().toString());
+		String ss = gbday.getDaylist_start().toString();
+		System.out.println("daylist_start:" + ss);
+		
+		String ee = gbday.getDaylist_end().toString();
 		job.put("daylist_end", gbday.getDaylist_end().toString());
+		System.out.println("daylist_end:"+ee);
 		
 
+		System.out.println(job);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.print(job.toJSONString()); //객체 정보를 문자열로 바꾸어 내보냄.
+		out.flush();
+		out.close();
 		
 		return job.toJSONString();
+		
 	}
 	
+	//장소 불러오기
+	/*@RequestMapping(value="Placelist.do") 
+	public ModelAndView placeNameList(@RequestParam("no") String daylist_no,ModelAndView mv) {
+
+		PlaceDaylist pdl = placeService.guideDaylistOne(daylist_no);
+		
+		ArrayList<Place> placelist = placeService.guidePlacelist(pdl);
+		
+		
+		
+	return mv;
+	}*/
+	
+	@RequestMapping(value="Placelist.do", method=RequestMethod.GET)
+	public String selectPlacelist(@RequestParam("placelist_no") int daylist_no, PlaceAll placeall, HttpServletResponse response) throws IOException {
+		logger.info("daylist_no : " + daylist_no);
+		
+		List<PlaceAll> gbplace = placeService.guidePlacelist(placeall);
+		logger.info("gbplace : " + gbplace);
+		System.out.println("gbplace:" + gbplace);
+		
+		
+		//전송용 객체 준비
+				JSONObject sendJson = new JSONObject();
+				//list 안의 객체들을 저장할 json 배열 객체 생성
+				JSONArray jarr = new JSONArray();
+	
+				for(PlaceAll pl : gbplace) {
+					
+					JSONObject job = new JSONObject();
+					job.put("place_name", URLEncoder.encode(pl.getPlace_name(), "UTF-8"));
+					
+					jarr.add(job);
+					
+					System.out.println(job);
+				}
+				
+
+		
+		
+		sendJson.put("list", jarr);
+		
+		response.setContentType("application/json");
+		PrintWriter out = response.getWriter();
+		out.print(sendJson.toJSONString());
+		out.flush();
+		out.close();
+		
+		return jarr.toJSONString();
+		
+	}
 	
 }

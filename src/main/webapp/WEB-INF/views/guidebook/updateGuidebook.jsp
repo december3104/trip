@@ -37,10 +37,6 @@ $(function(){
   $("#insert_date").click(function(){
 		$('#hyDateModal').modal('show');
 	}); //일정 불러오기
-	
-	$("#placeList").click(function(){
-		$('#hyPlaceModal').modal('show');
-	}); //장소 불러오기
    
    
    $("#btnDownload").on("click", function() {
@@ -76,67 +72,61 @@ $(function(){
 		});//pdf 저장
    
    
-   $('#btnSaveDesign').on('click', function(){
-		var bookName = $('#book_title').text();
-		$('#bookName').attr('value', bookName);
-		console.log(bookName);
-		
-		if (bookName.length == 0 || bookName == ""){
-			alert("가이드북제목을 입력해주세요.");
-			$('#book_title').focus();
-			return false;
-		}
-		
-		
-		var travelDetail = $('#TrDetail').val();
-		$('#travelDetail').attr('value', travelDetail);
-		console.log(travelDetail);
-		
-		if (travelDetail.length == 0 || travelDetail == ""){
-			alert("가이드북 상세설명을 입력해주세요.");
-			$('#TrDetail').focus();
-			return false;
-		}
-		
-		var startDate = $('#startDate').val();
-		console.log(startDate);
-		$('#travelStartDate').attr('value', startDate);
-		
-		if (startDate.length < 1 || startDate == ""){
-			alert("여행시작일을 입력해주세요.");
-			$('#startDate').focus();
-			return false;
-		}
-		
-		var endDate = $('#endDate').val();
-		console.log(endDate);
-		$('#travelEndDate').attr('value', endDate);
-		
-		if (endDate.length < 1 || endDate == ""){
-			alert("여행종료일을 입력해주세요.");
-			$('#endDate').focus();
-			return false;
-		}
-		
-		var chkRadio = $('input[name=theme]:checked').val();
-		console.log(chkRadio);
-		$('#travelTheme').attr('value', chkRadio);
-		
-		if(!$(':input:radio[name=theme]:checked').val()) {   
-			alert("여행테마를 선택해주세요.");
-			$(':input:radio[name=theme]').focus();
-			return false;
-		}
-		
-		
-		
-		
-		
-		$('#insertGuideForm').submit();
-		
-		return true;
-		
-	});	//저장하기 버튼 클릭
+		$('#btnSaveDesign').on('click', function(){
+			var bookName = $('#book_title').text();
+			$('#bookName').attr('value', bookName);
+			console.log(bookName);
+			
+			if (bookName.length == 0 || bookName == ""){
+				alert("가이드북제목을 입력해주세요.");
+				$('#book_title').focus();
+				return false;
+			}
+			
+			
+			var travelDetail = $('#TrDetail').val();
+			$('#travelDetail').attr('value', travelDetail);
+			console.log(travelDetail);
+			
+			if (travelDetail.length == 0 || travelDetail == ""){
+				alert("가이드북 상세설명을 입력해주세요.");
+				$('#TrDetail').focus();
+				return false;
+			}
+			
+			var chkRadio = $('input[name=theme]:checked').val();
+			console.log(chkRadio);
+			$('#travelTheme').attr('value', chkRadio);
+			
+			if(!$(':input:radio[name=theme]:checked').val()) {   
+				alert("여행테마를 선택해주세요.");
+				$(':input:radio[name=theme]').focus();
+				return false;
+			}
+			
+			var startDate = $('#startDate').val();
+			console.log(startDate);
+			$('#travelStartDate').attr('value', startDate);
+			
+			if (startDate.value == ""){
+				alert("여행시작일을 입력해주세요.");
+				$('#startDate').focus();
+				return false;
+			}
+			
+			var endDate = $('#endDate').val();
+			console.log(endDate);
+			$('#travelEndDate').attr('value', endDate);
+			
+			if (endDate.value == ""){
+				alert("여행종료일을 입력해주세요.");
+				$('#endDate').focus();
+				return false;
+			}
+			
+			return true;
+		$('#updateGuideForm').submit();
+	});	//수정하기 버튼 클릭
    
 	
 	$('.color-item').on('click', function(){
@@ -145,34 +135,15 @@ $(function(){
 	       $('.tbpe_skin').css('background-color', bgColor);
 	    });//배경화면 변경
 	    
-	    $('#templateButton').on('click', function(){
-	    	if($("#templateSpain").css("display") == "none"){   
-		        $('#templateSpain').css("display", "block");   
-		    } else {  
-		        $('#templateSpain').css("display", "none");   
-		    }  
-	    	
-	     });//템플릿 추가 삭제
-	     
-	     $('#templateButton2').on('click', function(){
-		    	if($("#templateJeju").css("display") == "none"){   
-			        $('#templateJeju').css("display", "block");   
-			    } else {  
-			        $('#templateJeju').css("display", "none");   
-			    }  
-		    	
-		     });//템플릿 추가 삭제
-	    
-
-	    var count = 0;
-   $('.btn_add_page').on('click', function(){
-	   
-		count+=1;
-		console.log(count);
-   var leftchange = -22 + count*37 + '%';
-   console.log(leftchange);
-			$('#canvas').append("<br> <div class='tbpe_skin' style='background: #fff; width:1240px;height: 1754px;transform: scale(0.5); clear:both; position: absolute;top: -40%; left:" + leftchange + ";' ondrop='drop(event)' ondragover='allowDrop(event)'></div>");
-   });	 //페이지추가하기
+  
+	    $('.btn_add_page').on('click', function(){
+	 	   
+			count+=1;
+			console.log(count);
+	   var leftchange = -22 + count*37 + '%';
+	   console.log(leftchange);
+				$('#canvas').append("<br> <div class='tbpe_skin' style='background: #fff; width:1240px;height: 1754px;transform: scale(0.5); clear:both; position: absolute;top: -40%; left:" + leftchange + ";' ondrop='drop(event)' ondragover='allowDrop(event)'></div>");
+	   });	 //페이지추가하기
    
    $('#droppable').on('dragenter', function(e){
    	$(this).addClass('drag-over');
@@ -198,7 +169,17 @@ $(function(){
    	
    });
    
- 
+   $('.color-item').on('click', function(){
+       var bgColor = $(this).css('background-color');
+       console.log(bgColor);
+       $('.tbpe_skin').css('background-color', bgColor);
+    });//배경화면 변경
+    
+   $('.template').on('click', function(){
+       var bgColor = $(this).css('background-color');
+       console.log(bgColor);
+       $('#makeCanvas').css('background-color', bgColor);
+    });
    
 });    // document ready...
 
@@ -232,72 +213,26 @@ $(function(){
 		   document.getElementsByClassName("tbpe_skin")[0].style.left=event.layerX+"px";
 		    event.preventDefault();
 		} */
-		let distX;
-	    let distY;
-	    let posX;
-	    let posY;
+		
 
-
-	function allowDrop(e) {
+	 function allowDrop(e) {
 	    e.preventDefault();
 	  }
 	function dragstart(e){
-	   
-	
-	posX = e.pageX;
-    posY = e.pageY;
-     distX = e.srcElement.offsetLeft - posX;
-    distY = e.srcElement.offsetTop - posY;  
-    
-     e.dataTransfer.setData("Text",e.target.id);
+	    e.dataTransfer.setData("Text",e.target.id);
 	  }
 
 	function drop(e) {
 	    var id = e.target.getAttribute('id');
-	    var data=e.dataTransfer.getData("Text", id);
+	    var data=e.dataTransfer.getData("Text");
 
 	    e.target.appendChild(document.getElementById(data));
 	    e.preventDefault();
-	
-	posX = e.pageX;
-    posY = e.pageY;
-    console.log(posX, posY, distX, distY);
-    $('#art4').css('margin-left', posX + distX + 'px')
-        .css('margin-top', posY + distY + 'px');
-	}    
-	/*  let distX;
-    let distY;
-    let posX;
-    let posY;
-
-    function dragstart(event) {
-        posX = event.pageX;
-        posY = event.pageY;
-        distX = event.srcElement.offsetLeft - posX;
-        distY = event.srcElement.offsetTop - posY;
-        
-    }
-
-    function dragover(event) {
-        event.stopPropagation();
-        event.preventDefault();
-    }
-
-    function drop(event) {
-    	
-    	   
-    	
-        event.stopPropagation();
-        event.preventDefault();
-        posX = event.pageX;
-        posY = event.pageY;
-        console.log(posX, posY, distX, distY);
-        $('.art-item').css('margin-left', posX + distX + 'px')
-            .css('margin-top', posY + distY + 'px');
-    }  */
+	}  
 	
 	
-	/* $(function(){
+	
+	$(function(){
 		
 	
 	$(".art-item").draggable({
@@ -314,7 +249,7 @@ $(function(){
 	});
 	
 	
-	}); */
+	});
 	
 	
 		
@@ -323,64 +258,6 @@ $(function(){
     var button = document.getElementById("color");
     button.onclick = previewHandler;//previewButton버튼이 눌러지면 previewHandler메소드가 실행.
 }; */
-	
-	
-	 
-	function addDate(daylist_no){
-	console.log(daylist_no);
-	var daylist_start = '${daylist_start }';
-    var daylist_end = '${daylist_end }';
-	$.ajax({
-		url:"plusGbdate.do",
-		data:{daylist_no:daylist_no},
-		dataType:"json",
-		type : "get",
-		success:function(data){
-			console.log(data);
-			
-			$('#startDate').val(data.daylist_start);
-			  console.log('#startDate');
-			   $('#endDate').val(data.daylist_end);
-			   console.log('#endDate');
-			   
-			   $("#hyDateModal").modal("hide");
-		},
-         error: function(request, status, errorData){
-             console.log("error code : "+request.status+"\nMessage : "+request.responseText+"\nError : "+errorData);
-          }
-		
-		
-	});
-	
-	
-} 
-
-function addPlace(placelist_no){
-	console.log("placelist_no : " + placelist_no);
-
-	$.ajax({
-		url:"Placelist.do",
-		data:{placelist_no : placelist_no},
-		dataType:"json",
-		type : "get",
-		success:function(data){
-			console.log(data);
-			
-			/* $('#startDate').val(data.daylist_start);
-			  console.log('#startDate');
-			   $('#endDate').val(data.daylist_end);
-			   console.log('#endDate'); */
-			   
-			   $("#hyPlaceModal").modal("hide");
-		},
-         error: function(request, status, errorData){
-             console.log("error code : "+request.status+"\nMessage : "+request.responseText+"\nError : "+errorData);
-          }
-		
-		
-	});
-	
-}
 	
 </script>
 
@@ -406,17 +283,17 @@ function addPlace(placelist_no){
 					<i class="redo icon"></i>
 				</button>
 				<div class="guidebook_name">
-					<p contenteditable="true" id="book_title">제목을 입력하세요.</p>
+					<p contenteditable="true" id="book_title">${guidebook.book_name }</p>
 					<i class="pencil alternate icon"></i>
 				</div>
 			</div>
-			<div class="header_right">
-				
+			<div class="header_right">		
+					
 				<button type="button" id="btnSaveDesign">
-					<span>저장</span>
+					<span>수정하기</span>
 				</button>
 				
-				<button type="button" id="btnDownload">
+				<button type="button" id="btnDownload" class="">
 					<i class="file pdf icon"></i>
 					<span>다운로드</span>
 				</button>
@@ -434,11 +311,11 @@ function addPlace(placelist_no){
 				<a id="item" class="item" data-tab="fourth"><i class="images outline icon"></i>제작도구</a>
 			</div>
   
-		<div class="ui bottom attached tab active" data-tab="first" style="overflow:auto;">
+		<div class="ui bottom attached tab active" data-tab="first">
 			<div class="innerTab">
 				<div>
 				여행상세설명<br>
-				<textarea rows="5" cols="45" placeholder="이번 여행에 관한 간략한 소개글이나 여행스토리를 남겨보세요!" id="TrDetail"></textarea> 
+				<textarea rows="5" cols="45" id="TrDetail">${guidebook.travel_detail }</textarea> 
 				</div><br>
 		     	<div align="center">
 			     	<table style="text-align: center;">
@@ -454,9 +331,10 @@ function addPlace(placelist_no){
 						<td>종료일</td>
 					</tr>
 					<tr>
-						<td><input type="date" id="startDate"></td>
+						<td><input type="date" id="startDate" value="${ guidebook.travel_start_date }"></td>
+						
 						<td>&nbsp; ~ &nbsp;</td>
-						<td><input type="date" id="endDate"></td>
+						<td><input type="date" id="endDate" value="${ guidebook.travel_end_date }"></td>
 					</tr>
 					
 					</table><br>
@@ -464,10 +342,11 @@ function addPlace(placelist_no){
 				<div>여행테마<br></div>
 				<div align="center">
 				<table style="text-align: center; width:300px; height :100px;">
+				<c:if test="${guidebook.travel_theme eq '나홀로' }">
 				<tr>
 					<td>
 					<i class="user icon"></i><br>
-					<input type="radio" name="theme" value="나홀로"> 나홀로
+					<input type="radio" name="theme" value="나홀로" checked> 나홀로
 					</td>
 					<td><i class="heart icon"></i><br>
 					<input type="radio" name="theme" value="커플"> 커플</td>
@@ -482,10 +361,111 @@ function addPlace(placelist_no){
 					<td><i class="briefcase icon"></i><br>
 					<input type="radio" name="theme" value="비즈니스"> 비즈니스</td>
 				</tr>
+				</c:if>
+				<c:if test="${guidebook.travel_theme eq '커플' }">
+				<tr>
+					<td>
+					<i class="user icon"></i><br>
+					<input type="radio" name="theme" value="나홀로" > 나홀로
+					</td>
+					<td><i class="heart icon"></i><br>
+					<input type="radio" name="theme" value="커플" checked> 커플</td>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="친구와"> 친구와</td>
+				</tr>
+				<tr>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="가족여행"> 가족여행</td>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="패키지">패키지</td>
+					<td><i class="briefcase icon"></i><br>
+					<input type="radio" name="theme" value="비즈니스"> 비즈니스</td>
+				</tr>
+				</c:if>
+				<c:if test="${guidebook.travel_theme eq '친구와' }">
+				<tr>
+					<td>
+					<i class="user icon"></i><br>
+					<input type="radio" name="theme" value="나홀로" > 나홀로
+					</td>
+					<td><i class="heart icon"></i><br>
+					<input type="radio" name="theme" value="커플"> 커플</td>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="친구와" checked> 친구와</td>
+				</tr>
+				<tr>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="가족여행"> 가족여행</td>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="패키지">패키지</td>
+					<td><i class="briefcase icon"></i><br>
+					<input type="radio" name="theme" value="비즈니스"> 비즈니스</td>
+				</tr>
+				</c:if>
+				<c:if test="${guidebook.travel_theme eq '가족여행' }">
+				<tr>
+					<td>
+					<i class="user icon"></i><br>
+					<input type="radio" name="theme" value="나홀로" > 나홀로
+					</td>
+					<td><i class="heart icon"></i><br>
+					<input type="radio" name="theme" value="커플"> 커플</td>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="친구와"> 친구와</td>
+				</tr>
+				<tr>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="가족여행" checked> 가족여행</td>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="패키지">패키지</td>
+					<td><i class="briefcase icon"></i><br>
+					<input type="radio" name="theme" value="비즈니스"> 비즈니스</td>
+				</tr>
+				</c:if>
+				<c:if test="${guidebook.travel_theme eq '패키지' }">
+				<tr>
+					<td>
+					<i class="user icon"></i><br>
+					<input type="radio" name="theme" value="나홀로" > 나홀로
+					</td>
+					<td><i class="heart icon"></i><br>
+					<input type="radio" name="theme" value="커플"> 커플</td>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="친구와"> 친구와</td>
+				</tr>
+				<tr>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="가족여행"> 가족여행</td>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="패키지" checked>패키지</td>
+					<td><i class="briefcase icon"></i><br>
+					<input type="radio" name="theme" value="비즈니스"> 비즈니스</td>
+				</tr>
+				</c:if>
+				<c:if test="${guidebook.travel_theme eq '비즈니스' }">
+				<tr>
+					<td>
+					<i class="user icon"></i><br>
+					<input type="radio" name="theme" value="나홀로" > 나홀로
+					</td>
+					<td><i class="heart icon"></i><br>
+					<input type="radio" name="theme" value="커플"> 커플</td>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="친구와"> 친구와</td>
+				</tr>
+				<tr>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="가족여행"> 가족여행</td>
+					<td><i class="users icon"></i><br>
+					<input type="radio" name="theme" value="패키지">패키지</td>
+					<td><i class="briefcase icon"></i><br>
+					<input type="radio" name="theme" value="비즈니스" checked> 비즈니스</td>
+				</tr>
+				</c:if>
 				</table>
 				</div>
-				<form action="insertGuidebook.do" method="post" id="insertGuideForm">
-					<input type="hidden" id="bookName" name="book_name">
+				<form action="updateGuidebook.do" method="post" id="updaateGuideForm">
+					<input type="hidden" id="bookName" name="book_name" >
 					<input type="hidden" id="travelDetail" name="travel_detail">
 					<input type="hidden" id="travelTheme" name="travel_theme">
 					<input type="hidden" id="travelStartDate" name="travel_start_date">
@@ -500,7 +480,7 @@ function addPlace(placelist_no){
 			
 				<tr name="trBudget">
 					<td>전체예산 : </td>
-					<td><input type="number"></td>
+					<td><input type="number" id=""></td>
 					<td><button name="addBudget" onclick="add_row()"><i class="plus icon"></i></button></td>
 					
 				</tr>	
@@ -509,16 +489,16 @@ function addPlace(placelist_no){
 			</table>
 			
 			<script>
-				var addCount=0;
+				var addCount;
 				  function add_row() {
-					  addCount++;
+					  addCount=1;
 					 
 				  var addBudgetText =  '<tr name="trBudget"><td>' + 
 				  addCount + '일자 : </td>'+ 
 				  '<td><input type="number" name="day"'+addCount+' id="day"></td>' +
 				  '<td><button name="delBudget"><i class="minus icon"></i></button></td>' +
 				  '</tr>'
-				  
+				   addCount++;
 				 var trHtml = $( "tr[name=trBudget]:last" );
 				  trHtml.after(addBudgetText);
 			         
@@ -540,17 +520,13 @@ function addPlace(placelist_no){
 
 		<div class="ui bottom attached tab" data-tab="second">
 			<div class="innerTab">
-				<div id="placeList" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px; height:20px;">
-					장소불러오기 + </div>
-					<c:forEach var="Place" items="${Place}" varStatus="status">
-					
-					</c:forEach>
+				sdf
 					</div>
 		</div>
 		
 		<div class="ui bottom attached tab" data-tab="third">
 			<div class="innerTab">			
-				<div class="list_wrap" style="height:500px; overflow:auto;" >
+				<div class="list_wrap" style="height:300px; overflow:auto;" >
 					<div id="background_color" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
 					컬러칩</div>
 					<div class="color_skin" ondrop="drop(event)" ondragover="allowDrop(event)" >
@@ -641,7 +617,7 @@ function addPlace(placelist_no){
 				
 			
 				<div class="list_wrap" style="height:300px; overflow:auto;">
-					<div id="background-item" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
+					<div id="background_color" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
 					클립아트</div>
 					<ul class="clip_art" ondrop="drop(event)" ondragover="allowDrop(event)">
 						<li class="art-item"  draggable="true" ondragstart="dragstart(event)">
@@ -718,17 +694,6 @@ function addPlace(placelist_no){
 						<img src="resources/images/guidebook_clipart/036-world.png" id="art36"></li>			
 					</ul>
 						</div>
-						<br>
-					<div class="list_wrap2" style="overflow:auto;">
-					<div id="background-item" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
-					템플릿</div>
-					<div id="templateButton">
-					<img src="resources/images/guidebook_clipart/sebiya.PNG" style="width: 50px;height: 100%;vertical-align: middle;">
-					<span>스페인 여행하기</span><i class="plus icon"></i></div>
-					<div id="templateButton2">
-					<img src="resources/images/guidebook_clipart/gallery.PNG" style="width: 50px;height: 100%;vertical-align: middle;">
-					<span>제주도 여행하기</span><i class="plus icon"></i></div>
-					</div>
 					
 		</div>
 		
@@ -744,95 +709,18 @@ function addPlace(placelist_no){
 					<div class="tbpe_skin"	style="background: #fff;width:1240px;height: 1754px;transform: scale(0.5);
 					clear:both;position: absolute;top: -40%;left: -15%;"
 					ondrop="drop(event)" ondragover="allowDrop(event)">
-					
-					<div id="templateSpain" style="display:none;">
 						<div class="img" style=" position: relative; background-image: url(resources/images/guidebook_clipart/DSC09805.jpg);
 						 width: 100%; height: 200px; background-size: cover;">
 						<br>
 						<div style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); 
 						font-size:5rem; color: white; z-index: 2; 	text-align: center;">
-						<h1 style="text-color:white;" contenteditable="true">﻿스페인 가볼만한 곳 TOP 3</h1></div>
+						<h3 style="text-color:white;" contenteditable="true">﻿스페인 가볼만한 곳 TOP 3</h3></div>
 						</div>
-						<div id="first_div" class="first_div">
-							<p id="text1" class="text1"	style="line-height: 1.8; font-size:20pt; 
-							padding-left: 95px; padding-right: -95px; margin-top: 20px;" contenteditable="true">
-								<span style="color: rgb(0, 0, 0);">
-								지난 12월, 10박11일동안 다녀올 스페인 여행 <br>
-								스페인 중에서도 이곳은 꼭 가봐야한다! 라는 곳 TOP 3를 선정해 꼭 방문하기 </span><br>
-							</p>
-							<p style="line-height: 1.8; text-align:center;" contenteditable="true">
-								<span style="color: rgb(0, 0, 0);"><b style="font-size:30pt;">﻿세비야의 스페인광장</b></span><br>
-								Plaza de Espana<br>
-							</p>
-							<p id="text2" class="text2"	style="line-height: 1.8; font-size:20pt; 
-							padding-left: 95px; padding-right: -95px; margin-top: 10px;" contenteditable="true">
-							<span style="color: rgb(0, 0, 0);">﻿
-							예전 CF에서 김태희가 플라멩고를 쳤던 곳으로 알려져 있는 이곳. <br>
-							우리도 멋진 사진을 남기기 위해 세비야에 도착하자마자 스페인광장으로 향했다. <br>
-							입구에 도착하자마자 나는 눈을 뗄 수 없었다. <br>
-							그만큼 이곳은 스페인이라는 나라를 각인시키게하는, 강렬한 인상을 주는 곳이다.<br>
-							광장 한 가운데에는 시원한 물줄기를 뿜는 분수대가 있고, 그 뒤로 건물이 광장을 감싸고 있었다. <br>
-							건물 곳곳엔 화려한 무늬의 타일들이 장식이, 건물 다리 밑으로는 잔잔한 물이 흐르고, <br>
-							광장사이사이로 마차들이 지나가고 이국적인 느낌이 물씬 나게하는 곳이다.<br>
-							특히 이날 햇살이 너무 뜨거웠는데, 이날 날씨가 더 스페인스러움을 느낄 수 있게 해주었던 것 같다.</span>
-							</p>
-							<img src="resources/images/guidebook_clipart/sebiya.PNG" style="width: 700px; height: 500px; margin-left: 309px;">
-						<p id="text3" class="text3"	style="line-height: 1.8; font-size:20pt; text-align:center;
-							padding-left: 95px; padding-right: -95px; margin-top: 10px;" contenteditable="true">
-							<span style="color: rgb(0, 0, 0); ">
-							광장 중앙, 시선을 사로잡는 분수대 앞에서 사진 찍는 사람들
-							</span>
-						
-						</p>
-						<p id="text4" class="text4" style="line-height: 1.8; font-size:20pt; text-align:center;
-							padding-left: 95px; padding-right: -95px; margin-top: 10px;" contenteditable="true">
-							<span>추가 텍스트를 입력하세요.</span>
-						</div>
-
-﻿
-						</div>
-						<div id="templateJeju" style="display:none;">
-						<div class="img" style=" position: relative; background-image: url(resources/images/guidebook_clipart/jeju.PNG);
-						 width: 100%; height: 200px; background-size: cover;">
-						<br>
-						<div style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); 
-						font-size:5rem; color: white; z-index: 2; 	text-align: center;">
-						<h1 style="text-color:white;" contenteditable="true">﻿﻿제주도 자유여행 2박3일 코스</h1></div>
-						</div>
-						<div id="first_div" class="first_div">
-							<p id="text1" class="text1"	style="line-height: 1.8; font-size:20pt; 
-							padding-left: 95px; padding-right: -95px; margin-top: 20px;" contenteditable="true">
-								<span style="color: rgb(0, 0, 0);">
-								혼자 다닐 제주 여행!
-								 제주도 2박 3일 여행 코스와 팁 </span><br>
-							</p>
-							<p style="line-height: 1.8; text-align:center;" contenteditable="true">
-								<span style="color: rgb(0, 0, 0);"><b style="font-size:30pt;">﻿제주도 전시 투어</b></span><br>
-								김영갑 갤러리- 월정리해변 - 헬로키티 아일랜드<br>
-							</p>
-							<p id="text2" class="text2"	style="line-height: 1.8; font-size:20pt; 
-							padding-left: 95px; padding-right: -95px; margin-top: 10px;" contenteditable="true">
-							<span style="color: rgb(0, 0, 0);">
-							<b style="font-size:30pt;">﻿01. 김영갑 갤러리 두모악</b><br>﻿
-							사진작가 김영갑씨가 제주도에 내려와 작업한 사진들을 폐교를 개조해 전시한 갤러리.<br>
-							올레길 옆에 위치.	이제는 유명한 곳이 되어 사람들이 많이 찾는 곳으로 예쁜 사진들이 가득하다.</span>
-							</p>
-							<img src="resources/images/guidebook_clipart/gallery.PNG" style="width: 700px; height: 500px; margin-left: 309px;">
-						<p id="text2" class="text2"	style="line-height: 1.8; font-size:20pt; 
-							padding-left: 95px; padding-right: -95px; margin-top: 10px;" contenteditable="true">
-							<span style="color: rgb(0, 0, 0);">
-							<b style="font-size:30pt;">﻿02. 월정리해변</b><br>﻿ 
-							월정리 해변은 제주공항에서 한시간도 안걸리는 위치!<br>
-							 바다도 너무 푸르고 투명해 사진찍기 좋은 곳!	  해안도로와 연결되있어서	드라이브 하기도 좋다.<br>
-								</span>
-							</p>
-							<img src="resources/images/guidebook_clipart/see.PNG" style="width: 700px; height: 400px; margin-left: 309px;">
-						
-						</div>
-
-﻿
-						</div>
-				</div>
+					</div>
+					<!-- <canvas id="makeCanvas" style="background: #fff; width: 100%; height: 141%; transform: scale(0.8); clear:both;"  
+					ondrop="drop(event)" ondragover="allowDrop(event)" id="canvasContent"> 
+        
+  					  </canvas>-->
 					
 				</div>
 				
@@ -841,30 +729,26 @@ function addPlace(placelist_no){
 		
 	</section>
 
-	<div class="ui modal" id="hyDateModal" style="display: block !important;margin-top: 16%;margin-left: -330px;
-	height: 150px;width: 340px;padding-left: inherit;text-align: center;/* font-size: 11pt; */line-height: 1.5;">
+	<div class="ui mini modal" id="hyDateModal" >
 	<div class="header">여행날짜</div>
-	
-	<c:forEach var="gbdaylist" items="${gbdaylist}" varStatus="status">
-	<div>
-	${gbdaylist.daylist_name} &nbsp; : &nbsp; ${gbdaylist.daylist_start } &nbsp; ~ &nbsp; ${gbdaylist.daylist_end } 
-	<i class="plus icon plusdate" id="addDate" onclick="addDate(${gbdaylist.daylist_no })"> </i><br>
-	
-	
+	<!-- <div class="">
+	<table id="dayList">
+	<tr>
+		<th class="choose">선택</th>
+		<th class="startD">시작일</th>
+		<th></th>
+		<th class="endD">종료일</th>
+	</tr>
+	</table>
 	</div>
-	</c:forEach>
-</div>
-
-	<div class="ui modal" id="hyPlaceModal" style="display: block !important;margin-top: 16%;margin-left: -330px;
-	height: 150px;width: 212px;padding-left: inherit;text-align: center; line-height: 1.5;">
-	<div class="header">여행목록</div>
-	
-	<c:forEach var="gbplacelist" items="${gbplacelist}" varStatus="status">
 	<div>
-	${gbplacelist.daylist_name}
-	<i class="plus icon plusPlace" id="addPlace" onclick="addPlace(${gbplacelist.daylist_no })"> </i><br>
+	<button type="button" id="DateSelectBtn" class="datePop_save">불러오기</button>
+	</div> -->
 	
-	
+	<c:forEach var="list" items="${list}" varStatus="status">
+	<div>
+	${list.daylist_start } &nbsp; ~ &nbsp; ${list.daylist_end } 
+	<i class="plus icon" id="${list.daylist_no }"> </i>
 	</div>
 	</c:forEach>
 </div>

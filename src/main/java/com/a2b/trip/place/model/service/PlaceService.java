@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import com.a2b.trip.place.model.vo.Place;
+import com.a2b.trip.place.model.vo.PlaceAll;
 import com.a2b.trip.place.model.vo.PlaceDaylist;
 
 public interface PlaceService {
@@ -19,5 +20,6 @@ public interface PlaceService {
 	int updatePlaceName(Place place);
 	
 	ArrayList<PlaceDaylist> guideDaylist(String member_id);
-	PlaceDaylist guideDaylistOne(int daylist_no);
+	PlaceDaylist guideDaylistOne(String daylist_no);
+	ArrayList<PlaceAll> guidePlacelist(PlaceAll placeall);
 }

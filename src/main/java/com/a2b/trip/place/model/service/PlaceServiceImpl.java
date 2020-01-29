@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.a2b.trip.place.model.dao.PlaceDao;
 import com.a2b.trip.place.model.vo.Place;
+import com.a2b.trip.place.model.vo.PlaceAll;
 import com.a2b.trip.place.model.vo.PlaceDaylist;
 
 @Service("placeService")
@@ -86,8 +87,14 @@ public class PlaceServiceImpl implements PlaceService {
 
 	//일정하나불러오기_sh
 	@Override
-	public PlaceDaylist guideDaylistOne(int daylist_no) {
+	public PlaceDaylist guideDaylistOne(String daylist_no) {
 		return placeDao.guideDaylistOne(daylist_no);
+	}
+
+	//장소불러오기_sh
+	@Override
+		public ArrayList<PlaceAll> guidePlacelist(PlaceAll placeall) {
+			return placeDao.guidePlacelist(placeall);
 	}
 
 }

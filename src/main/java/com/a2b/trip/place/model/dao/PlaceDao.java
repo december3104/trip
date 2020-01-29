@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.a2b.trip.place.model.vo.Place;
+import com.a2b.trip.place.model.vo.PlaceAll;
 import com.a2b.trip.place.model.vo.PlaceDaylist;
 
 @Repository("placeDao")
@@ -73,15 +74,21 @@ public class PlaceDao {
 		return sqlSession.update("placeMapper.updateDaylist", daylist);
 	}
 	
-	//장소리스트 불러오기_sh
+	//날짜리스트 불러오기_sh
 	public ArrayList<PlaceDaylist> guideDaylist(String member_id) {
 		List<PlaceDaylist> list = sqlSession.selectList("placeMapper.selectDaylist", member_id);
 		return (ArrayList<PlaceDaylist>)list;
 	}
 
 	//날짜 불러오기_sh
-	public PlaceDaylist guideDaylistOne(int daylist_no) {
+	public PlaceDaylist guideDaylistOne(String daylist_no) {
 		return sqlSession.selectOne("placeMapper.selectguideDaylistOne", daylist_no);
 	}
+	
+	//장소리스트 불러오기_sh
+		public ArrayList<PlaceAll> guidePlacelist(PlaceAll placeall) {
+			List<PlaceAll> list = sqlSession.selectList("placeMapper.selectPlacelist", placeall);
+			return (ArrayList<PlaceAll>)list;
+		}
 
 }

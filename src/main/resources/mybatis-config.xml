@@ -21,6 +21,7 @@
    		<typeAlias type="com.a2b.trip.place.model.vo.PlaceDaylist" alias="PlaceDaylist" />
 		<typeAlias type="com.a2b.trip.guidebook.model.vo.Guidebook" alias="Guidebook" />
 		<typeAlias type="com.a2b.trip.place.model.vo.Place" alias="Place" />
+		<typeAlias type="com.a2b.trip.place.model.vo.PlaceAll" alias="PlaceAll" />
 		<typeAlias type="com.a2b.trip.qna.model.vo.QnaComment" alias="QnaComment"/>
 		<typeAlias type="com.a2b.trip.guidematching.model.vo.GuideBoard" alias="GuideBoard" />
 		<typeAlias type="com.a2b.trip.guidematching.model.vo.GuideMatching" alias="GuideMatching" />

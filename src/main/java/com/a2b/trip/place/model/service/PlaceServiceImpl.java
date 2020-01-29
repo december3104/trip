@@ -47,6 +47,18 @@ public class PlaceServiceImpl implements PlaceService {
 	public ArrayList<Place> selectDailyPlaceList(Place place) {
 		return placeDao.selectDailyPlaceList(place);
 	}
+	
+	//장소 담기
+	@Override
+	public int insertPlace(Place place) {
+		return placeDao.insertPlace(place);
+	}
+	
+	//장소 이름 수정
+	@Override
+	public int updatePlaceName(Place place) {
+		return placeDao.updatePlaceName(place);
+	}
 
 	//장소 리스트에서 장소 삭제
 	@Override
@@ -77,6 +89,5 @@ public class PlaceServiceImpl implements PlaceService {
 	public PlaceDaylist guideDaylistOne(int daylist_no) {
 		return placeDao.guideDaylistOne(daylist_no);
 	}
-	
-	
+
 }

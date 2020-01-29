@@ -67,7 +67,9 @@
 										${ fb.fb_content }	
 									</div>
 									<div style="margin : 5%">
-										<font size="2" color="#747373">${ fb.fb_write_date } 에 작성</font>
+										<font size="2" color="#747373" id="fbDate">
+											${ fb.fb_write_date } 에 작성
+										</font>
 									</div>
 								</div>
 							</div><!-- grid -->
@@ -86,7 +88,7 @@
 								<c:if test="${ loginMember.member_id ne fb.fb_id }">
 									<div class="ui grid">
 										<div class="sixteen wide column">
-											<form class="ui form" action="insertFellowMatching.do" method="post" style="padding : 40px;">
+											<form onsubmit="return checkForm();" class="ui form" action="insertFellowMatching.do" method="post" style="padding : 40px;">
 												<input type="hidden" value="${ fb.fb_no }" name="fb_no">
 												<input type="hidden" value="${ loginMember.member_id }" name="fm_id">
 												<input type="hidden" value="${ loginMember.member_gender }" name="fm_gender">
@@ -98,7 +100,7 @@
 												<input type="hidden" value="N" name="fm_report">
 											 	<div class="field">
 											 		<label>동행 신청</label>
-											 		<input type="text" placeholder="신청 시 간단하게 하고 싶은 말을 입력하세요.(100자 이내)" name="fm_content">
+											 		<input type="text" placeholder="신청 시 간단하게 하고 싶은 말을 입력하세요.(100자 이내)" id="fm_content" name="fm_content">
 											 	</div>
 											 	<div class="center aligned">
 											 		<button class="ui primary button" id="submitButton">신청하기</button>
@@ -156,7 +158,7 @@
 									<div class="ten wide column middle aligned">
 										<div>
 											<font size="3">${ list.fm_content }</font><br>
-											<font size="2" color="#747373">${ list.fm_date } 에 작성</font>	
+											<font size="2" color="#747373" id="c${ list.fm_id }" class="chDate">${ list.fm_date } 에 작성</font>	
 										</div>
 									</div>
 									<div class="three wide column center aligned middle aligned">
@@ -205,6 +207,16 @@
 	</div>
 	</div>
 </div>
+
+<div class="ui mini modal" id="enrollChkModal">
+	<div class="description" style="padding: 5%">
+		<p id="enrollChkContent"></p>
+	</div>
+	<div class="actions">
+		<div class="fluid ui ok button" style="font-family: LotteMartDream; margin: 0; background: #c0e7f8" id="enrollChkBtn">확인</div>
+	</div>
+</div>
+
 <footer>
 	<jsp:include page="/WEB-INF/views/footer.jsp" />
 </footer>
@@ -225,6 +237,94 @@ function updateFellowMatching(check, fb_no, fm_id, fb_id){
 	var fb_id = fb_id;
 	location.href="updateFellowMatching.do?fm_accept_check="+ check+"&fb_no="+fb_no+"&fm_id="+fm_id +"&fb_id="+fb_id;
 }
+
+function checkForm(){
+	var fmContent = $("#fm_content").val();
+	
+	if (fmContent.length == 0 || fmContent == ""){
+		$('#enrollChkContent').html('내용을 입력하세요.');
+		$('#enrollChkModal').modal('show');
+		$('#fm_content').focus();
+		return false;
+	}
+	
+	if (fmContent.length == 100){
+		$('#enrollChkContent').html('100자 이내로 입력하세요.');
+		$('#enrollChkModal').modal('show');
+		$('#fm_content').focus();
+		return false;
+	}
+	
+	return true;
+}
+
+changeDateName();
+function changeDateName(){
+	
+	var fbDate = $("#fbDate").text();
+	var year = fbDate.substring(0, fbDate.indexOf("년")).trim();
+	var month = fbDate.substring(fbDate.indexOf("년")+1, fbDate.indexOf("월")).trim();
+	var day = fbDate.substring(fbDate.indexOf("월")+1, fbDate.indexOf("일")).trim();
+	var time = fbDate.substring(fbDate.indexOf("일")+1, fbDate.indexOf("에")).trim();
+	var time1 = time.split(":")[0];
+	
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+
+	if(year == yyyy && month == mm && day == dd){
+		// 다 같으면 오늘
+		console.log("같음");
+		$("#fbDate").text("오늘 " + time + " 에 작성");
+		
+	}else if(year == yyyy && month == mm && day != dd){
+		if(dd - day == 1){
+			$("#fbDate").text("어제 " + time + " 에 작성");	
+		}
+	}
+}
+
+function asdf(){
+	chDate
+}
+
+changeDate();
+
+function changeDate(){
+	var fmDate = document.getElementsByClassName("chDate");
+	
+	for(var i = 0; fmDate.length > i; i++){
+		var fmId = fmDate[i].getAttribute('id');
+		changeDate2(fmId);
+	}
+}
+ 
+function changeDate2(value){
+	var title = $("#"+value).text();
+
+	var year = title.substring(0, title.indexOf("년")).trim();
+	var month = title.substring(title.indexOf("년")+1, title.indexOf("월")).trim();
+	var day = title.substring(title.indexOf("월")+1, title.indexOf("일")).trim();
+	var time = title.substring(title.indexOf("일")+1, title.indexOf("에")).trim();
+	var time1 = time.split(":")[0];
+	
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+
+	if(year == yyyy && month == mm && day == dd){
+		// 다 같으면 오늘
+		console.log("같음");
+		$("#"+value).text("오늘 " + time + " 에 작성");
+		
+	}else if(year == yyyy && month == mm && day != dd){
+		if(dd - day == 1){
+			$("#"+value).text("어제 " + time + " 에 작성");	
+		}
+	}
+} 
 </script>
 </body>
 </html>

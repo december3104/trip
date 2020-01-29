@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="/trip/resources/css/jun.css">
 <style type="text/css">
 .jun-top {
-	background: #E9E6F5;
+	background: #D5F4FA;
 }
 .jun-style-color{
 	color	: gray;
@@ -38,10 +38,10 @@
 	<div class="jun-top">
 		<table style="border:1px solid silver; width:100%; height:50px;">
 			<tr>				
-				<td><strong id="title">${ roomInfo.cr_title }</strong></td>
+				<td colspan="2"><strong id="title">${ roomInfo.cr_title }</strong></td>
 			</tr>
 			<tr>
-				<td><small id="userNo">몰라</small></td>
+				<td><small>${ roomInfo.cr_contry }</small></td><td><small>${ roomInfo.cr_city }</small></td>
 			</tr>
 		</table>
 	</div>
@@ -59,6 +59,7 @@
 							</div>
 						</div>
 					</div>
+					<div style="text-align:right;margin-right:20px;"><small class="cate" id="ch${ cc_no }">${ list.cc_date }</small></div>
 				</c:if>
 				<c:if test="${ loginMember.member_id ne list.cc_id }">
 					<div class="ui grid">
@@ -69,6 +70,7 @@
 							</div>
 						</div>
 					</div>
+					<div style="text-align:left;margin-left:20px;"><small class="cate" id="ch${ cc_no }">${ list.cc_date }</small></div>
 				</c:if>
 			</c:forEach>
 		</c:if>
@@ -117,8 +119,22 @@ function send(){
 	if($inputMessage.val() == "") {
 		alert("전송할 메세지를 입력하세요.");
 	}else{  //메세지가 입력된 경우
-		$("#messageWindow").append("<div class='ui grid'><div class='sixteen wide column'><div class='talk-bubble tri-right round right-in'><div class='talktext'><p>"+$inputMessage.val() + "</p><div></div></div></div>");
+		//시간 출력
+		var today = new Date();
+		var time = today.getHours();
+		var time2 = "오전 " + time; 
+		var minute = today.getMinutes();
 		
+		if(time > 12){
+			time2 = "오후 "+(time - 12);
+		}
+		
+		if(minute < 10){
+			minute = "0" + minute;
+		}
+		
+		$("#messageWindow").append("<div class='ui grid'><div class='sixteen wide column'><div class='talk-bubble tri-right round right-in'><div class='talktext'><p>"+$inputMessage.val() + "</p></div></div></div></div><div style='text-align:right;margin-right:20px;'><small>"+time2+":"+minute+"</small></div>");
+	
 		// 방번호, 국가, 도시, 메시지
 		ws.send("rChat:"+ roomNo + ":" + title + ":" + contry + ":" + city + "=" + $inputMessage.val());
 		
@@ -135,15 +151,30 @@ function enterKey(){
 
 function closeSocket(){
     ws.close();
-}
+};
 
 function onMessage(event){
+	//시간 출력
+	var today2 = new Date();
+	var tim = today2.getHours();
+	var tim2 = "오전 " + tim; 
+	var minut = today2.getMinutes();
+	
+	if(tim > 12){
+		tim2 = "오후 "+(tim - 12);
+	}
+	
+	if(minut < 10){
+		minut = "0" + minut;
+	}
+	
 	var fullMessage = event.data.split(":");
 	var mId = fullMessage[0];
 	var message = fullMessage[1];
-	$("#messageWindow").append("<div class='ui grid'><div class='sixteen wide column'><div style='padding-left:24px;'>"+mId+"</div><div class='talk-bubble-left tri-left round left-in other-side' style='margin-top:0;'><div class='talktext'><p>"+message + "</p></div></div></div></div>");
+	$("#messageWindow").append("<div class='ui grid'><div class='sixteen wide column'><div style='padding-left:24px;'>"+mId+"</div><div class='talk-bubble-left tri-left round left-in other-side' style='margin-top:0;'><div class='talktext'><p>"+message + "</p></div></div></div></div><div style='text-align:left;margin-left:20px;'><small>"+tim2+":"+minut+"</small></div>");
 	$textarea.scrollTop($textarea[0].scrollHeight);
 }
+
 </script>
 </body>
 </html>

@@ -304,10 +304,10 @@ function gb_detail(gb_no){
 		type : "POST",
 		dataType : "json",
 		success : function(data){
-			var p_type = 'style="float: left; width:20%; text-align:center;margin-bottom: 0px;"';
-			var p_type_text = 'style="float: left; width:20%; text-align:center;margin-bottom: 0px;height: 20%;"';
+			var p_type = 'style="float: left; width:15%; text-align:center;margin-bottom: 0px;"';
+			var p_type_text = 'style="float: left; width:15%; text-align:center;margin-bottom: 0px;height: 20%;"';
 			var width = 'style="width: 680px;margin-bottom: 0px;"';
-			var width_taxt = 'style="width: 544px;margin-bottom: 0px;height: 15%;"';
+			var width_taxt = 'style="width: 544px;margin-bottom: 0px;height: 20%;"';
 			var money = data.gb_price.toLocaleString();
 			var gender_return = "";
 			var guide_grade = data.guide_grade.toFixed(2);

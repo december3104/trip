@@ -80,4 +80,8 @@ public class QnaDao {
 		return sqlSession.delete("qnaMapper.deleteReplyQnA", qna_no);
 	}
 
+	public int updateQnaAlarm(int qna_no) {
+		return sqlSession.update("qnaMapper.updateQnaAlarm", qna_no);
+	}
+
 }

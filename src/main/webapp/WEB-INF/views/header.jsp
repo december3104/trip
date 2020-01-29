@@ -170,8 +170,26 @@ function updateFbAlarm(fb_no, fm_id){
 	</a>
 	
 	<!-- 우측 상단 아이콘들 -->
-	<div class="item right menu" align="right" style="margin-right: 0;">
-		<i class="snowflake large icon" style="margin-right: 10px;"></i> 
+	<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-position="bottom center"data-html = "true">
+		<select class="ui dropdown" style="font-size: 10pt;" id="city_name" onchange="select_city()">
+			<option value="Seoul" selected="selected">대한민국-서울</option>
+			<option value="Paris">프랑스-파리</option>
+			<option value="Tokyo">일본-도쿄</option>
+			<option value="Bangkok">태국-방콕</option>
+			<option value="Singapore">싱가포르-싱가포르</option>
+			<option value="Manila">필리핀-마닐라</option>
+			<option value="Moscow">러시아-모스크바</option>
+			<option value="Hanoi">베트남-하노이</option>
+			<option value="Athens">그리스-아테네</option>
+			<option value="Rome">이탈리아-로마</option>
+			<option value="Madrid">스페인-마드리드</option>
+			<option value="Lodon">영국-런던</option>
+			<option value="Wellington">뉴질랜드-웰링턴</option>
+			<option value="Santiago">칠레-산티아고</option>
+			<option value="Ankara">터키-앙카라</option>
+			<option value="Canberra">호주-캔버라</option>
+		</select>
+		<img alt="" src="" id="weatherimg">
 		<!-- 로그인버튼 -->
 		<a style="background: #95d6f3; color: #000; width: 100px; margin-right: 20px; height: 35px; padding-top: 7px; text-align: center; cursor: pointer; border-radius: .28571429rem" href="moveLoginPage.do">로그인</a>
 	</div>
@@ -201,9 +219,26 @@ function updateFbAlarm(fb_no, fm_id){
 		</a>
 		
 		<!-- 우측 상단 사용자정보&아이콘들 -->
-		<div class="item right menu" align="right" style="margin-right: 0;">
-			<i class="snowflake large icon" style="margin-right: 10px;"></i> 
-			
+		<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-position="bottom center"data-html = "true">
+		<select class="ui dropdown" style="font-size: 10pt;" id="city_name" onchange="select_city()">
+			<option value="Seoul" selected="selected">대한민국-서울</option>
+			<option value="Paris">프랑스-파리</option>
+			<option value="Tokyo">일본-도쿄</option>
+			<option value="Bangkok">태국-방콕</option>
+			<option value="Singapore">싱가포르-싱가포르</option>
+			<option value="Manila">필리핀-마닐라</option>
+			<option value="Moscow">러시아-모스크바</option>
+			<option value="Hanoi">베트남-하노이</option>
+			<option value="Athens">그리스-아테네</option>
+			<option value="Rome">이탈리아-로마</option>
+			<option value="Madrid">스페인-마드리드</option>
+			<option value="Lodon">영국-런던</option>
+			<option value="Wellington">뉴질랜드-웰링턴</option>
+			<option value="Santiago">칠레-산티아고</option>
+			<option value="Ankara">터키-앙카라</option>
+			<option value="Canberra">호주-캔버라</option>
+		</select>
+		<img alt="" src="" id="weatherimg">	
 			<div class="ui top right pointing compact scrolling dropdown">
 				<i class="alarm icons" style="margin-right: 10px;"> 
 					<i class="bell large icon"></i> 
@@ -240,6 +275,7 @@ function updateFbAlarm(fb_no, fm_id){
 					</c:if>
 				</div>
 			</div>
+
 			<!-- <a href="selectAllChatRoom.do" style="color: black"><i class="chat icons" style="margin-right: 30px;"> -->
 			<a href="javascript:chatMain('${ loginMember.member_id }');" style="color: black"><i class="chat icons" style="margin-right: 30px;">
 				<i class="comments large icon"></i> 
@@ -296,9 +332,26 @@ function updateFbAlarm(fb_no, fm_id){
 			<a class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">QnA 관리</a>
 	
 			<!-- 우측 상단 사용자정보&아이콘들 -->
-			<div class="item right menu" align="right" style="margin-right: 0;">
-				<i class="snowflake large icon" style="margin-right: 10px;"></i> 
-	
+			<div class="item right menu" align="right" style="margin-right: 0;" data-content="Add users to your feed" id="weater_but" data-position="bottom center" data-html = "true">
+			<select class="ui dropdown" style="font-size: 10pt;" id="city_name" onchange="select_city()">
+				<option value="Seoul" selected="selected">대한민국-서울</option>
+				<option value="Paris">프랑스-파리</option>
+				<option value="Tokyo">일본-도쿄</option>
+				<option value="Bangkok">태국-방콕</option>
+				<option value="Singapore">싱가포르-싱가포르</option>
+				<option value="Manila">필리핀-마닐라</option>
+				<option value="Moscow">러시아-모스크바</option>
+				<option value="Hanoi">베트남-하노이</option>
+				<option value="Athens">그리스-아테네</option>
+				<option value="Rome">이탈리아-로마</option>
+				<option value="Madrid">스페인-마드리드</option>
+				<option value="Lodon">영국-런던</option>
+				<option value="Wellington">뉴질랜드-웰링턴</option>
+				<option value="Santiago">칠레-산티아고</option>
+				<option value="Ankara">터키-앙카라</option>
+				<option value="Canberra">호주-캔버라</option>
+			</select>
+			<img alt="" src="" id="weatherimg">
 				<i class="alarm icons" style="margin-right: 10px;"> 
 					<i class="bell large icon"></i> 
 					<!-- 알람 있을 경우 갯수만큼 -->
@@ -347,6 +400,69 @@ function chatMain(id){
 	
       window.open("selectAllChatRoom.do?member_id="+id, "ChatMain", "width=810px, height=600px, menubar=no, status=no, toolbar=no");
 }
+//날씨API
+function select_city(){
+	var city = $("#city_name option:selected").val();
+	var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dd4a3969a29c87cffb9f796d095333ee";
+	$.ajax({
+	    url: apiURI,
+	    dataType: "json",
+	    type: "GET",
+	    async: "false",
+	    success: function(resp) {
+	    	var values = "현재온도 : "+ (resp.main.temp- 273.15).toFixed(0)+"℃"+"<br>"+"현재습도 : "+ resp.main.humidity+"%"+"<br>"+"바람   : "+ resp.wind.speed+" m/s"+"<br>"+"구름  : "+ (resp.clouds.all) +"%";
+	    	console.log(values);
+	    	var imgURL = "http://openweathermap.org/img/w/" + resp.weather[0].icon + ".png";
+	    	 $("#weatherimg").attr("src", imgURL);
+	    	$("#weater_but").attr("data-html", values);
+	    	$("#weater_but").popup();
+	    	/* 
+	    	console.log(resp);
+	    	console.log("현재온도 : "+ (resp.main.temp- 273.15) );
+	    	console.log("현재습도 : "+ resp.main.humidity );
+	    	console.log("날씨 : "+ resp.weather[0].main );
+	    	console.log("상세날씨설명 : "+ resp.weather[0].description );
+	    	console.log("날씨 이미지 : "+ resp.weather[0].icon );
+	    	console.log("바람   : "+ resp.wind.speed );
+	    	console.log("나라   : "+ resp.sys.country );
+	    	console.log("도시이름  : "+ resp.name );
+	    	console.log("구름  : "+ (resp.clouds.all) +"%" ); 	
+	    	 */
+	    }
+	})
+}
+
+//날씨API
+$(function(){
+	var city = $("#city_name option:selected").val();
+	var apiURI = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid="+"dd4a3969a29c87cffb9f796d095333ee";
+	$.ajax({
+	    url: apiURI,
+	    dataType: "json",
+	    type: "GET",
+	    async: "false",
+	    success: function(resp) {
+	    	var values = "현재온도 : "+ (resp.main.temp- 273.15).toFixed(0)+"℃"+"<br>"+"현재습도 : "+ resp.main.humidity+"%"+"<br>"+"바람   : "+ resp.wind.speed+" m/s"+"<br>"+"구름  : "+ (resp.clouds.all) +"%";
+	    	var imgURL = "http://openweathermap.org/img/w/" + resp.weather[0].icon + ".png";
+	    	 $("#weatherimg").attr("src", imgURL);
+	    	$("#weater_but").attr("data-html", values);
+	    	$("#weater_but").popup();
+	    	/* 
+	    	console.log(resp);
+	    	console.log("현재온도 : "+ (resp.main.temp- 273.15) );
+	    	console.log("현재습도 : "+ resp.main.humidity);
+	    	console.log("날씨 : "+ resp.weather[0].main );
+	    	console.log("상세날씨설명 : "+ resp.weather[0].description );
+	    	console.log("날씨 이미지 : "+ resp.weather[0].icon );
+	    	console.log("바람   : "+ resp.wind.speed );
+	    	console.log("나라   : "+ resp.sys.country );
+	    	console.log("도시이름  : "+ resp.name );
+	    	console.log("구름  : "+ (resp.clouds.all) +"%" ); 	
+	    	 */
+	    }
+	});
+});
+
 </script>
 </header>
 </body>

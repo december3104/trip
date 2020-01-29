@@ -45,5 +45,13 @@ public class GuideMatchingServiceImpl implements GuideMatchingService {
 	public MyGuideMatching selectMyGuideMatchingOne(String gb_id) {
 		return guideMatchingDao.selectMyGuideMatchingOne(gb_id);
 	}
+//	신청여부 체크
+	@Override
+	public GuideMatching chk_GM(GuideMatching gm) {
+		return guideMatchingDao.chk_GM(gm);
+	}
+	
+
+	
 
 }

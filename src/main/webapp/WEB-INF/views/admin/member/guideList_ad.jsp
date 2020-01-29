@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
     
 <!DOCTYPE html>
 <html>
@@ -88,7 +89,7 @@ function page(idx){
 							<c:out value="${guide.member_email }" />
 						</td>
 						<td>
-							<c:out value="${guide.guide_grade }" />
+							<fmt:formatNumber value="${guide.guide_grade }" pattern=".00"/>
 						</td>
 						<td>
 							<c:out value="${guide.guide_report_count }" />

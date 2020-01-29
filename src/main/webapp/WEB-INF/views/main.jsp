@@ -27,6 +27,7 @@ p:hover {
 } */
 
 </style>
+
 </head>
 <body>
 <!-- 헤더 -->
@@ -56,7 +57,7 @@ p:hover {
 			</a>
 		</div>
 	</div>
-</div>
+ </div>
 
 <!-- 푸터 -->
 <footer><jsp:include page="/WEB-INF/views/footer.jsp" /></footer>

@@ -47,6 +47,16 @@ public class PlaceDao {
 		List<Place> list = sqlSession.selectList("placeMapper.selectDailyPlaceList", place);
 		return (ArrayList<Place>)list;
 	}
+	
+	//장소 담기 처리 메소드
+	public int insertPlace(Place place) {
+		return sqlSession.insert("placeMapper.insertPlace", place);
+	}
+
+	//장소 이름 수정 처리 메소드
+	public int updatePlaceName(Place place) {
+		return sqlSession.update("placeMapper.updatePlaceName", place);
+	}
 
 	//장소 리스트에서 장소 삭제 처리 메소드
 	public int deletePlace(String place_code) {
@@ -73,4 +83,5 @@ public class PlaceDao {
 	public PlaceDaylist guideDaylistOne(int daylist_no) {
 		return sqlSession.selectOne("placeMapper.selectguideDaylistOne", daylist_no);
 	}
+
 }

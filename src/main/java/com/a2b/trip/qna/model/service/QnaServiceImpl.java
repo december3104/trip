@@ -90,6 +90,11 @@ public class QnaServiceImpl implements QnaService {
 	public int deleteReplyQnA(int qna_no) {
 		return qnaDao.deleteReplyQnA(qna_no);
 	}
+
+	@Override
+	public int updateQnaAlarm(int qna_no) {
+		return qnaDao.updateQnaAlarm(qna_no);
+	}
 	
 	
 	

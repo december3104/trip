@@ -211,7 +211,7 @@ public class QnaController {
 		qc.setQc_content(commentInput);
 		logger.info(qc.toString());
 		int result = qnaService.insertReplyQnA(qc);
-		
+		int result1 = qnaService.updateQnaAlarm(qna_no);
 		logger.info(qc+"개 행 처리");
 		
 		String viewFileName = "";

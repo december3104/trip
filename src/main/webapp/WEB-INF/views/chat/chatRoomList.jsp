@@ -30,16 +30,16 @@
 	<a class="item" id="chatG">
 	  가이드 채팅 리스트
 	</a>
-	<a class="item" id="chatFree">
+	<!-- <a class="item" id="chatFree">
 	  자유채팅
-	</a>
-	<div class="right menu">
+	</a> -->
+	<!-- <div class="right menu">
 		<div class="item">
 			<div class="ui transparent icon input">
 				<input type="text" placeholder="검색어를 입력하세요...">
 				<i class="search link icon"></i>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </div>
 <div id="chatFellowList" style="display:block;">
@@ -136,7 +136,7 @@
 		</div>
     </c:if>
 </div>
-	
+<!-- 	
 <div class="ui segment" id="chatFreeList" style="display:none;">
 	<div class="ui middle aligned divided list">
 		<div class="item">
@@ -150,7 +150,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 
 <script type="text/javascript">
 var ws;
@@ -176,12 +176,12 @@ $(function(){
 	$('#chatG').on('click', function(){
 		$('#chatFellow').attr('class', 'item');
 		$('#chatG').attr('class', 'item active');
-		$('#chatFree').attr('class', 'item');
+		/* $('#chatFree').attr('class', 'item'); */
 		$('#chatFellowList').css('display', 'none');
 		$('#chatGList').css('display', 'block');
-		$('#chatFreeList').css('display', 'none');
+		/* $('#chatFreeList').css('display', 'none'); */
 	});
-	
+	/* 
 	$('#chatFree').on('click', function(){
 		$('#chatG').attr('class', 'item');
 		$('#chatFree').attr('class', 'item active');
@@ -190,12 +190,12 @@ $(function(){
 		$('#chatFreeList').css('display', 'block');
 		$('#chatFellowList').css('display', 'none');
 	});
-	
+	 */
 	$('#chatFellow').on('click', function(){
-		$('#chatFree').attr('class', 'item');
+		/* $('#chatFree').attr('class', 'item'); */
 		$('#chatFellow').attr('class', 'item active');
 		$('#chatG').attr('class', 'item');
-		$('#chatFreeList').css('display', 'none');
+		/* $('#chatFreeList').css('display', 'none'); */
 		$('#chatFellowList').css('display', 'block');
 		$('#chatGList').css('display', 'none');
 	});

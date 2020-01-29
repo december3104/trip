@@ -9,7 +9,7 @@ public class Chat implements Serializable{
 	private int cc_no;
 	private String cc_cr_no;
 	private String cc_id;
-	private Date cc_date;
+	private String cc_date;
 	private String cc_content;
 	private int cc_count;
 	private String cr_no;
@@ -27,7 +27,7 @@ public class Chat implements Serializable{
 	
 	public Chat() {}
 	
-	public Chat(int cc_no, String cc_cr_no, String cc_id, Date cc_date, String cc_content, int cc_count, String cr_no,
+	public Chat(int cc_no, String cc_cr_no, String cc_id, String cc_date, String cc_content, int cc_count, String cr_no,
 			String cm_id, Date cm_date, String cm_login, int cm_new, String cr_title, String cr_contry, String cr_city,
 			int cr_number, Date cr_date, String cr_type, String cr_master) {
 		super();
@@ -75,11 +75,11 @@ public class Chat implements Serializable{
 		this.cc_id = cc_id;
 	}
 
-	public Date getCc_date() {
+	public String getCc_date() {
 		return cc_date;
 	}
 
-	public void setCc_date(Date cc_date) {
+	public void setCc_date(String cc_date) {
 		this.cc_date = cc_date;
 	}
 

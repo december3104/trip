@@ -108,6 +108,18 @@
 .ui.checkbox input[type=checkbox]:checked ~ label:after{
 	color: #95d6f3 !important;
 }
+div.item right menu{
+	position: relative;
+}
+.ui.popup, .ui.bottom.popup, .ui.bottom.center.popup, ui.visible.popup{
+	/* left:90%!important; */
+	position: absolute;
+	/* transform:translate(230%,0%); */
+}
+.ui.bottom.left.popup{
+	margin-left: 270px;
+}
+
 
 </style>
 <script type="text/javascript">
@@ -115,6 +127,8 @@ $(function(){
 	$(".dropdown").dropdown({
 		transition:'drop'
 	});
+	
+	
 });
 
 function updateFbAlarm(fb_no, fm_id){
@@ -170,7 +184,7 @@ function updateFbAlarm(fb_no, fm_id){
 	</a>
 	
 	<!-- 우측 상단 아이콘들 -->
-	<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-position="bottom center"data-html = "true">
+	<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-html = "true">
 		<select class="ui dropdown" style="font-size: 10pt;" id="city_name" onchange="select_city()">
 			<option value="Seoul" selected="selected">대한민국-서울</option>
 			<option value="Paris">프랑스-파리</option>
@@ -219,7 +233,7 @@ function updateFbAlarm(fb_no, fm_id){
 		</a>
 		
 		<!-- 우측 상단 사용자정보&아이콘들 -->
-		<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-position="bottom center"data-html = "true">
+	<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-html = "true">
 		<select class="ui dropdown" style="font-size: 10pt;" id="city_name" onchange="select_city()">
 			<option value="Seoul" selected="selected">대한민국-서울</option>
 			<option value="Paris">프랑스-파리</option>
@@ -332,7 +346,7 @@ function updateFbAlarm(fb_no, fm_id){
 			<a class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">QnA 관리</a>
 	
 			<!-- 우측 상단 사용자정보&아이콘들 -->
-			<div class="item right menu" align="right" style="margin-right: 0;" data-content="Add users to your feed" id="weater_but" data-position="bottom center" data-html = "true">
+	<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-html = "true">
 			<select class="ui dropdown" style="font-size: 10pt;" id="city_name" onchange="select_city()">
 				<option value="Seoul" selected="selected">대한민국-서울</option>
 				<option value="Paris">프랑스-파리</option>
@@ -352,11 +366,6 @@ function updateFbAlarm(fb_no, fm_id){
 				<option value="Canberra">호주-캔버라</option>
 			</select>
 			<img alt="" src="" id="weatherimg">
-				<i class="alarm icons" style="margin-right: 10px;"> 
-					<i class="bell large icon"></i> 
-					<!-- 알람 있을 경우 갯수만큼 -->
-					<div class="ui circular yellow mini floating label">2</div>
-				</i>
 			</div>	
 
 	    	<!-- 관리자 로그인 정보 -->

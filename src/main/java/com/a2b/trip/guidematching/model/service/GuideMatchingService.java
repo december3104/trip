@@ -15,4 +15,6 @@ public interface GuideMatchingService {
 	int updateGuideMatchingReport(int gb_no);
 	MyGuideMatching selectMyGuideMatchingOne(String gb_id);
 
+	GuideMatching chk_GM(GuideMatching gm);
+
 }

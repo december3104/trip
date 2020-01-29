@@ -1,5 +1,7 @@
 package com.a2b.trip.guidematching.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -23,11 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.a2b.trip.guide.model.service.GuideService;
 import com.a2b.trip.guide.model.vo.Guide;
-import com.a2b.trip.guide.model.vo.GuideDetail;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.a2b.trip.fellow.model.vo.Fellow;
 import com.a2b.trip.guidematching.model.service.GuideBoardService;
 import com.a2b.trip.guidematching.model.service.GuideMatchingService;
 import com.a2b.trip.guidematching.model.vo.GuideBoard;
@@ -130,6 +127,31 @@ public class GuideMatchingController {
 		return gb;
 	}
 	
+//	이미 신청했는지 여부 확인
+	@RequestMapping(value="chk_GM.do", method=RequestMethod.POST)
+	public void chk_GM(@RequestParam("gb_no") String gb_no, @RequestParam("gm_id") String gm_id, HttpServletResponse response) throws IOException {
+		logger.info(gb_no);
+		logger.info(gm_id);
+		GuideMatching gm = new GuideMatching();
+		gm.setGb_no(Integer.parseInt(gb_no));
+		gm.setGm_id(gm_id);
+		logger.info("GM : "+gm);
+		GuideMatching guideM = guideMatchingService.chk_GM(gm);
+		String str = "";
+		if(guideM == null) {
+			logger.info("없단다~");
+			str = "OK";
+		}else {
+			logger.info("있단다~");
+			str = "NO";
+		}
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.append(str);
+		out.flush();
+		out.close();
+	}
+	
 //	가이드 상세보기 신청 버튼
 	@RequestMapping(value="updateDetailAcceptGM.do", method=RequestMethod.POST)
 	public String updateDetailAcceptGM(@RequestParam("no") String gb_no,@RequestParam("chk_number") int chk_number ,GuideBoard gb,GuideMatching gm,HttpServletRequest request) {
@@ -139,16 +161,16 @@ public class GuideMatchingController {
 		gb = guideBoardService.selectGB(gb_no);
 		int gb_number_update = gb.getGb_number()+chk_number;
 		gb.setGb_number(gb_number_update);
-		logger.info(gb.toString());
 		
 		int result1 = 0;
 		int result2 = 0;
+		
 		if(gb.getGb_max_number() == gb.getGb_number()) {
 			result1 = guideBoardService.updateDetailAcceptGM_cut(gb);
 			gm.setGb_no(Integer.parseInt(gb_no));
 			gm.setGm_id(member.getMember_id());
 			gm.setGm_number(chk_number);
-			logger.info(gm.toString());
+			logger.info("gm : "+gm.toString());
 			result2 = guideMatchingService.insertGuideMatching(gm);
 		}else {
 			result1 = guideBoardService.updateDetailAcceptGM(gb);
@@ -158,7 +180,6 @@ public class GuideMatchingController {
 			logger.info(gm.toString());
 			result2 = guideMatchingService.insertGuideMatching(gm);
 		}
-		
 		String viewFileName = "";
 		if(result1 == 1) {
 			viewFileName = "guidematching/guideMatchingPage";
@@ -222,7 +243,11 @@ public class GuideMatchingController {
 		return viewFileName;
 	}
 	
-	
+	@RequestMapping(value="close_gb.do", method=RequestMethod.POST)
+	public int close_gb(@RequestParam("gb_no")String gb_no) {
+		int result = guideBoardService.close_gb(gb_no);
+		return result;
+	}
 //	end
 
 	// 가이드 정보 보기

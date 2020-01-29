@@ -105,4 +105,22 @@
 		#{gb_max_number}, SYSDATE, #{gb_close_date}, #{gb_title}, default, default)
 	</insert>
 	
+	<update id="updateClose_gb" parameterType="String">
+		update guideboard set gb_deadline_check = 'Y' where gb_no = #{value}
+	</update>
+	
+	<select id="selectGuideBoardList" resultType="GuideBoard">
+		select gb_no, gb_id, gb_start_date, gb_end_date, gb_route,gb_price,gb_min_number, 
+		gb_max_number, gb_open_date, gb_close_date, gb_title, gb_number, gb_deadline_check,
+		loc_code, member_gender, guide_lang, guide_grade, guide_profile_original, guide_profile_rename, member_name
+		from guideboard
+		left join guide on guideboard.gb_id = guide.guide_id
+		left join member on guideboard.gb_id = member.member_id 
+		where gb_deadline_check = 'N'
+	</select>
+	
+	<select id="chk_GM" parameterType="GuideMatching" resultType="GuideMatching">
+		select * from guidematching where gb_no = #{gb_no} and gm_id = #{gm_id}
+	</select>
+	
 </mapper>

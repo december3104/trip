@@ -56,4 +56,13 @@ public class GuideBoardDao {
 		return sqlSession.selectOne("guideMatchingMapper.selectMyGuideBoardOne", gm_id);
 
 	}
+
+	public int close_gb(String gb_no) {
+		return sqlSession.update("guideMatchingMapper.updateClose_gb", gb_no);
+	}
+
+	public ArrayList<GuideBoard> selectGuideBoardList() {
+		List<GuideBoard> list = sqlSession.selectList("guideMatchingMapper.selectGuideBoardList");
+		return (ArrayList<GuideBoard>)list;
+	}
 }

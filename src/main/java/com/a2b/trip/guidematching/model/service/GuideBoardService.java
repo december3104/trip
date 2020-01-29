@@ -22,4 +22,8 @@ public interface GuideBoardService {
 	int updateGuideBoardReport(int gb_no);
 	MyGuideMatching selectMyGuideBoardOne(String gm_id);
 
+	int close_gb(String gb_no);
+
+	ArrayList<GuideBoard> selectGuideBoardList();
+
 }

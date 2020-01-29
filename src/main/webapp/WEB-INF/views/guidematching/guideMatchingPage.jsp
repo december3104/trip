@@ -65,8 +65,8 @@ $(function(){
 					var gb_route = data[i].gb_route;
 					var guide_lang = data[i].guide_lang;
 					var gender_return = "";
-					
-					
+					var guide_grade = data[i].guide_grade.toFixed(2);
+						
 					if(gender_chk_M == "M"){
 						gender_return = '<i class="mars icon blue"></i>';
 					}else{
@@ -89,6 +89,7 @@ $(function(){
 									"제목 : "+gb_title+"</a><br>"+
 									"날짜 : "+gb_start_date+" ~ "+gb_end_date+"<br> "+
 									"사용가능 언어 : "+guide_lang+"<br>"+
+									"평점 : " + guide_grade+ "<br>"+
 								"</td>"+
 							"</tr>";
 				}
@@ -256,8 +257,8 @@ function ch_function(){
 					var gb_route = data[i].gb_route;
 					var guide_lang = data[i].guide_lang;
 					var gender_return = "";
-					
-					
+					var guide_grade = data[i].guide_grade.toFixed(2);
+						
 					if(gender_chk_M == "M"){
 						gender_return = '<i class="mars icon blue"></i>';
 					}else{
@@ -280,6 +281,7 @@ function ch_function(){
 									"제목 : "+gb_title+"</a><br>"+
 									"날짜 : "+gb_start_date+" ~ "+gb_end_date+"<br> "+
 									"사용가능 언어 : "+guide_lang+"<br>"+
+									"평점 : " + guide_grade+ "<br>"+
 								"</td>"+
 							"</tr>";
 				}
@@ -295,6 +297,7 @@ function ch_function(){
 /* modal */
 function gb_detail(gb_no){
 	/* ajax */
+	var writer_id = '${loginMember.member_id}';
 	$.ajax({
 		url:"selectGB.do",
 		data : {gb_no : gb_no},
@@ -302,11 +305,15 @@ function gb_detail(gb_no){
 		dataType : "json",
 		success : function(data){
 			var p_type = 'style="float: left; width:20%; text-align:center;margin-bottom: 0px;"';
-			var p_type_text = 'style="float: left; width:20%; text-align:center;margin-bottom: 0px;height: 15%;"';
+			var p_type_text = 'style="float: left; width:20%; text-align:center;margin-bottom: 0px;height: 20%;"';
 			var width = 'style="width: 680px;margin-bottom: 0px;"';
 			var width_taxt = 'style="width: 544px;margin-bottom: 0px;height: 15%;"';
 			var money = data.gb_price.toLocaleString();
 			var gender_return = "";
+			var guide_grade = data.guide_grade.toFixed(2);
+			var gb_id = data.gb_id;
+			var gb_no = data.gb_no;
+			
 			if(data.member_gender == "M"){
 				gender_return = '<i class="mars icon blue"></i>';
 			}else{
@@ -314,7 +321,15 @@ function gb_detail(gb_no){
 			}
 			
 			$("#gb_modal_img").html("<img src=resources/images/guide_profile/"+data.guide_profile_rename+">");
-			$("#modal_title").html(data.gb_title);
+			
+ 			if( gb_id == writer_id){
+				$("#modal_title").html(data.gb_title+
+						"<input type='button' class='ui button' value='마감'style='float:right;background-color : #95d6f3;margin: 0px;padding: 7px 21px 7px 21px;'onclick='close_gb("+gb_no+")'>"	);
+				console.log("in");
+			}else{
+				$("#modal_title").html(data.gb_title);
+				console.log("in");
+			} 
 			$("#modal_content").html(
 					"<p "+p_type+">"+"이름  "+"</p>"+
 					"<p "+width+">"+data.member_name+"</p>"+
@@ -336,6 +351,8 @@ function gb_detail(gb_no){
 					"<p "+width_taxt+">"+data.gb_route+"</p>"+
 					"<p "+p_type_text+">"+"자기소개  "+"</p>"+
 					"<p "+width_taxt+">"+data.guide_say+"</p>"+
+					"<p "+p_type+">"+"평점  "+"</p>"+
+					"<p "+width+">"+guide_grade+"</p>"+
 					"<p "+p_type+">"+"신청 인원  "+"</p>"+
 					"<p "+width+">"+'<input type="number" style="width: 100px;"  id="gm_number_check">'+
 					'<span id="memberPhoneExplan"><font color="#aaaaaa">숫자만 입력하세요.</font>'+"</p></span>"
@@ -352,25 +369,55 @@ function gb_detail(gb_no){
 }
 /* modal 신청 버튼 */
 function Accept(gb_no, max_number,gb_number) {
-		var gm_number_check =$("#gm_number_check").val();
-		var chk_number = eval(max_number-gb_number);
-		
-		if(gm_number_check == 0){
-			alert("신청 인원을 입력하여주세요.");
-			$("#gm_number_check").focus();
+	var gm_id = '${loginMember.member_id}';
+	$.ajax({
+		url:"chk_GM.do",
+		type:"post",
+		data:{gb_no:gb_no,gm_id:gm_id},
+		success : function(data){
+			if(data == "OK"){
+				var gm_number_check =$("#gm_number_check").val();
+				var chk_number = eval(max_number-gb_number);
+				
+				if(gm_number_check == 0){
+					alert("신청 인원을 입력하여주세요.");
+					$("#gm_number_check").focus();
+				}
+				else if(gm_number_check > chk_number){
+					alert("최대 모집인원을 초과합니다.");
+					$("#gm_number_check").focus();
+				}else{
+					alert("신청되었습니다.");
+					$.post("updateDetailAcceptGM.do",{no:gb_no, chk_number:gm_number_check});
+					$("#modalViewDiv").modal('hide');
+					location.reload();
+				}
+			}else{
+				alert("중복신청은 불가능합니다.");
+				return false;
+			}
+			
 		}
-		else if(gm_number_check > chk_number){
-			alert("최대 모집인원을 초과합니다.");
-			$("#gm_number_check").focus();
-		}else{
-			alert("신청되었습니다.");
-			$.post("updateDetailAcceptGM.do",{no:gb_no, chk_number:gm_number_check});
-			$("#modalViewDiv").modal('hide');
-			location.reload();
-		}
+	});
+	
+	
 		
 	
 }
+//마감처리
+function close_gb(gb_no){
+	$.ajax({
+		url:"close_gb.do",
+		type:"post",
+		data:{gb_no:gb_no},
+		success:function(data){
+			alert(data+"번 글 마감되었습니다.");
+		}
+	});
+	$("#modalViewDiv").modal('hide');
+	location.reload();
+}
+//
 
 
 </script>
@@ -380,7 +427,7 @@ function Accept(gb_no, max_number,gb_number) {
 <header>
 	<jsp:include page="/WEB-INF/views/header.jsp" />
 </header>
-
+	
 	<div class="bodyCss" style="margin-left: 23%; margin-right: 23%">
 		<div class="bodyContentCss">
 		<c:if test="${loginMember.member_level eq 2 }">

@@ -74,4 +74,8 @@
 	<delete id="deleteReplyQnA" parameterType="_int">
 		delete qnacomment where qna_no = #{value}
 	</delete>
+	
+	<update id="updateQnaAlarm" parameterType="_int">
+		update qna set qna_comment = 'Y', qna_alarm='Y' where qna_no = #{value}
+	</update>
 </mapper>

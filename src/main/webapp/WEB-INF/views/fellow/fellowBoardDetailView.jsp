@@ -79,7 +79,7 @@
 										<div class="center aligned" style="margin:2%">
 											<button onclick="goPageUpdateFellowBoard();" class="ui button" style="width : 120px">수정하기</button>
 											&nbsp;&nbsp;&nbsp;
-											<button onclick="location.href='deleteFellowBoard.do?fb_no=${ fb.fb_no }'" class="ui button" style="width : 120px">삭제하기</button>
+											<button onclick="deleteFellowBoard(${ fb.fb_no });" class="ui button" style="width : 120px">삭제하기</button>
 										</div>
 									</div>
 								</c:if>
@@ -90,7 +90,7 @@
 										<div class="sixteen wide column">
 											<form onsubmit="return checkForm();" class="ui form" action="insertFellowMatching.do" method="post" style="padding : 40px;">
 												<input type="hidden" value="${ fb.fb_no }" name="fb_no">
-												<input type="hidden" value="${ loginMember.member_id }" name="fm_id">
+												<input type="hidden" value="${ loginMember.member_id }" name="fm_id" id="fm_id">
 												<input type="hidden" value="${ loginMember.member_gender }" name="fm_gender">
 												<input type="hidden" value="1" name="fm_number">
 												<input type="hidden" value="WAIT" name="fm_accept_check">
@@ -141,7 +141,7 @@
 																<img class="ui mini circular image" src="resources/images/molly.png">
 															</c:if>
 															<div class="content">
-																<div class="header">${ list.fm_id }</div>
+																<div class="header" id="${ list.fm_id }">${ list.fm_id }</div>
 																<c:if test="${ list.fm_gender eq 'M' }">
 																	<i class="mars icon blue"></i>
 																</c:if>
@@ -230,6 +230,17 @@ function goPageUpdateFellowBoard(){
 		location.href='goPageUpdateFellowBoard.do?fb_no='+fbNo;
 	}
 }
+
+function deleteFellowBoard(value){
+	var f = value;
+	var sz = ${ fmList.size() };
+	if(sz >0){
+		alert("댓글이 달린 글은 삭제할 수 없습니다.");
+	}else{
+		location.href='deleteFellowBoard.do?fb_no='+f;
+	}
+}
+
 function updateFellowMatching(check, fb_no, fm_id, fb_id){
 	var check = check;
 	var fb_no = fb_no;
@@ -240,6 +251,15 @@ function updateFellowMatching(check, fb_no, fm_id, fb_id){
 
 function checkForm(){
 	var fmContent = $("#fm_content").val();
+	var fid = $("#fm_id").val();
+	console.log(fid);
+	console.log($("#"+fid).length);
+	if($("#"+fid).length > 0){
+		$('#enrollChkContent').html('이미 신청하셨습니다.');
+		$('#enrollChkModal').modal('show');
+		$('#fm_content').focus();
+		return false;
+	}
 	
 	if (fmContent.length == 0 || fmContent == ""){
 		$('#enrollChkContent').html('내용을 입력하세요.');
@@ -272,7 +292,7 @@ function changeDateName(){
 	var dd = today.getDate();
 	var mm = today.getMonth()+1; //January is 0!
 	var yyyy = today.getFullYear();
-
+	
 	if(year == yyyy && month == mm && day == dd){
 		// 다 같으면 오늘
 		console.log("같음");

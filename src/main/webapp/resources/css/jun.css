@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 #messageWindow {
-	background: #E2F4F7;
+	background: #f0f0f0;
 	height: 500px;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -64,7 +64,7 @@
 	position: relative;
 	width: 200px;
 	height: auto;
-	background-color: #C7DAFF;
+	background-color: #c0e7f8;
 	float:right;
 	clear: both;
 }
@@ -114,7 +114,7 @@
 	top: 12px;
 	bottom: auto;
 	border: 12px solid;
-	border-color: #C7DAFF transparent transparent #C7DAFF;
+	border-color: #c0e7f8 transparent transparent #c0e7f8;
 }
 .tri-left.border.left-in:before {
 	content: ' ';

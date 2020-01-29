@@ -275,7 +275,6 @@ $(function(){
 			type: "get",
 			data: {authCode: $('#authCode').val(), random: $('#random').val()},
 			success: function(data){
-				console.log(data);
 				if (data == "complete"){
 					$('#emailChkModal').modal('hide');
 					$('#enrollChkContent').html('이메일 인증이 완료되었습니다.');

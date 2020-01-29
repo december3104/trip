@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.a2b.trip.common.Page;
+import com.a2b.trip.fellow.model.vo.Fellow;
+import com.a2b.trip.fellow.model.vo.FellowMatching;
+import com.a2b.trip.guidematching.model.vo.MyGuideMatching;
 import com.a2b.trip.member.model.vo.Member;
+import com.a2b.trip.qna.model.vo.Qna;
 
 @Repository("memberDao")
 public class MemberDao {
@@ -108,7 +112,68 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateGuideQualification", member_id);
 	}
 
+	// 아이디 찾기
+	public String selectMissingMemberId(Member member) {
+		return sqlSession.selectOne("memberMapper.selectMissingMemberId", member);
+	}
 
+	// 비밀번호 설정
+	public int updateMissingMemberPwd(Member member) {
+		return sqlSession.update("memberMapper.updateMissingMemberPwd", member);
+	}
 
+	// fellowBoard 알람
+	public ArrayList<Fellow> selectFbAlarmCount(String fb_id) {
+		List<Fellow> list = sqlSession.selectList("memberMapper.selectFbAlarmCount", fb_id);
+		return (ArrayList<Fellow>)list;
+	}
+
+	// fellowMatching 알람
+	public ArrayList<Fellow> selectFmAlarmCount(String fm_id) {
+		List<Fellow> list = sqlSession.selectList("memberMapper.selectFmAlarmCount", fm_id);
+		return (ArrayList<Fellow>)list;
+	}
+
+	// qna 알람
+	public ArrayList<Qna> selectQnaAlarmCount(String qna_id) {
+		List<Qna> list = sqlSession.selectList("memberMapper.selectQnaAlarmCount", qna_id);
+		return (ArrayList<Qna>)list;
+	}
+	
+	// guideApply 알람
+	public int selectGuideApplyAlarmCount(String member_id) {
+		return sqlSession.selectOne("memberMapper.selectGuideApplyAlarmCount",member_id);
+	}
+
+	// guideBoard 알람
+	public ArrayList<MyGuideMatching> selectGbAlarmCount(String gb_id) {
+		List<MyGuideMatching> list = sqlSession.selectList("memberMapper.selectGbAlarmCount", gb_id);
+		return (ArrayList<MyGuideMatching>)list;
+	}
+
+	// fellowBoard 알람 읽음
+	public int updateFbAlarm(Fellow fellow) {
+		return sqlSession.update("memberMapper.updateFbAlarm", fellow);
+	}
+
+	// fellowMatching 알람 읽음
+	public int updateFmAlarm(Fellow fellow) {
+		return sqlSession.update("memberMapper.updateFmAlarm", fellow);
+	}
+
+	// guideBoard 알람 읽음
+	public int updateGbAlarm(MyGuideMatching myGuideMatching) {
+		return sqlSession.update("memberMapper.updateGbAlarm", myGuideMatching);
+	}
+
+	// guideApply 알람 읽음
+	public int updateGuideApplyAlarm(String member_id) {
+		return sqlSession.update("memberMapper.updateGuideApplyAlarm", member_id);
+	}
+
+	// qna 알람 읽음
+	public int updateQnaAlarm(Qna qna) {
+		return sqlSession.update("memberMapper.updateQnaAlarm", qna);
+	}
 
 }

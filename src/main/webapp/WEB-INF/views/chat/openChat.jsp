@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="/trip/resources/css/jun.css">
 <style type="text/css">
 .jun-top {
-	background: #D5F4FA;
+	background: #fff;
 }
 .jun-style-color{
 	color	: gray;

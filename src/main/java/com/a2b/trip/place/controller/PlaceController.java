@@ -3,6 +3,8 @@ package com.a2b.trip.place.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -150,6 +152,7 @@ public class PlaceController {
 
 		if(result <=0) {
 			model.addAttribute("message", "일정 정보 수정 실패!");
+			fileName = "common/error";
 		}
 		
 		return fileName;
@@ -176,6 +179,49 @@ public class PlaceController {
 		
 		return fileName;
 	}*/
+	
+	//장소 검색 후 장소 담기 처리 메소드
+	@RequestMapping(value="insertPlace.do", method=RequestMethod.POST)
+	public String insertPlace(Place place, Model model, HttpServletRequest request) throws ParseException {
+		HttpSession session = request.getSession(false);
+		Member member = (Member)session.getAttribute("loginMember");
+		String member_id = member.getMember_id();
+		
+		place.setPlace_user(member_id);
+		
+		SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
+		java.util.Date day1 = format.parse("0001-01-01");
+		java.util.Date date1 = place.getPlace_date();
+		if(date1.compareTo(day1) == 0) {
+			place.setPlace_date(null);
+		}
+			
+		String fileName = "redirect:goplace.do";
+		
+		int result  = placeService.insertPlace(place);
+		
+		if(result <= 0) {
+			model.addAttribute("message", "장소 담기 실패!");
+			fileName = "common/error";
+		}
+			
+		return fileName;
+	}
+	
+	//장소 이름 수정 처리 메소드
+	@RequestMapping(value="updatePlaceName.do", method=RequestMethod.POST)
+	public String updatePlaceName(Place place, HttpServletResponse response, Model model) {
+		int result = placeService.updatePlaceName(place);
+		
+		String fileName = "redirect:goplace.do";
+
+		if(result <=0) {
+			model.addAttribute("message", "일정 정보 수정 실패!");
+			fileName = "common/error";
+		}
+		
+		return fileName;
+	}
 	
 	//장소 리스트에서 장소 삭제 처리 메소드
 	@RequestMapping(value="deletePlace.do", method= RequestMethod.POST)

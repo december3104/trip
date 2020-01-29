@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.a2b.trip.common.Page;
+import com.a2b.trip.fellow.model.vo.Fellow;
+import com.a2b.trip.fellow.model.vo.FellowMatching;
+import com.a2b.trip.guidematching.model.vo.MyGuideMatching;
+import com.a2b.trip.member.model.service.MailService;
 import com.a2b.trip.member.model.service.MemberService;
 import com.a2b.trip.member.model.vo.Member;
+import com.a2b.trip.qna.model.vo.Qna;
 
 @Controller
 public class MemberController {
@@ -37,24 +42,66 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	@Autowired
+	private MailService mailService;
+	
 	//로그 처리용 객체 의존성 주입 처리함(종속 객체 주입)
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	public MemberController() {}
 	
 	// 일반 회원 로그인 처리
-	@RequestMapping(value="loginMember.do", method=RequestMethod.POST)
+	@RequestMapping(value="loginMember.do", method= RequestMethod.POST)
 	public String loginMember(Member member, HttpSession session, Model model) {
 		
 		String viewFileName = "main";
 		Member loginMember = memberService.loginChkMember(member);
 		if (loginMember != null) {
+			String memberId = loginMember.getMember_id();
 			if (bcryptPasswordEncoder.matches(member.getMember_pwd(), loginMember.getMember_pwd())) {
 				session.setAttribute("loginMember", loginMember);
+				
+				ArrayList<MyGuideMatching> selectGbAlarmCount = null;
+				int totalAlarmCount = 0;
+				
+				if (loginMember.getMember_level() == 2) {
+					selectGbAlarmCount = memberService.selectGbAlarmCount(memberId);
+					if (selectGbAlarmCount.size() > 0) {
+						model.addAttribute("selectGbAlarmCount", selectGbAlarmCount);
+						totalAlarmCount += selectGbAlarmCount.size();
+					}
+				}
+				
+				ArrayList<Fellow> selectFbAlarmCount = memberService.selectFbAlarmCount(memberId);
+				if (selectFbAlarmCount.size() > 0) {
+					model.addAttribute("selectFbAlarmCount", selectFbAlarmCount);
+					totalAlarmCount += selectFbAlarmCount.size();
+				}
+				
+				ArrayList<Fellow> selectFmAlarmCount = memberService.selectFmAlarmCount(memberId);
+				if (selectFmAlarmCount.size() > 0) {
+					model.addAttribute("selectFmAlarmCount", selectFmAlarmCount);
+					totalAlarmCount += selectFmAlarmCount.size();
+				}
+				
+				ArrayList<Qna> selectQnaAlarmCount = memberService.selectQnaAlarmCount(memberId);
+				if (selectQnaAlarmCount.size() > 0) {
+					model.addAttribute("selectQnaAlarmCount", selectQnaAlarmCount);
+					totalAlarmCount += selectQnaAlarmCount.size();
+				}
+				
+				int selectGuideApplyAlarmCount = memberService.selectGuideApplyAlarmCount(memberId);
+				if (selectGuideApplyAlarmCount > 0) {
+					model.addAttribute("selectGuideApplyAlarmCount", selectGuideApplyAlarmCount);
+					totalAlarmCount += selectGuideApplyAlarmCount;
+				}
+				model.addAttribute("totalAlarmCount", totalAlarmCount);
+				
+			} else {
+				viewFileName = "redirect:/moveLoginPwdErrorPage.do";
 			}
 		} else {
-			model.addAttribute("message", "일치하는 회원 정보가 없습니다.");
-			viewFileName = "common/error";
+			viewFileName = "redirect:/moveLoginErrorPage.do";
 		}
 		
 		return viewFileName;
@@ -70,6 +117,22 @@ public class MemberController {
 			session.invalidate();
 		}
 		return "main";
+	}
+	
+	// 회원 없을시
+	@RequestMapping("moveLoginErrorPage.do")
+	public ModelAndView moveLoginErrorPage(ModelAndView mv) {
+		mv.setViewName("member/memberLoginPage");
+		mv.addObject("loginError", "일치하는 회원이 없습니다.<br>회원가입을 진행해주세요.");
+		return mv;
+	}
+	
+	// 로그인 비밀번호 에러시 
+	@RequestMapping("moveLoginPwdErrorPage.do")
+	public ModelAndView moveLoginPwdErrorPage(ModelAndView mv) {
+		mv.setViewName("member/memberLoginPage");
+		mv.addObject("loginError", "비밀번호가 일치하지 않습니다.");
+		return mv;
 	}
 	
 	// 일반 회원가입 페이지로 이동 처리
@@ -346,6 +409,84 @@ public class MemberController {
 		}
 		
 		out.close();
+	}
+	
+	// 아이디 찾기
+	@RequestMapping(value="selectMissingMemberId.do", method=RequestMethod.POST)
+	public void selectMissingMemberId(Member member, HttpServletResponse response) throws IOException {
+		String memberId = memberService.selectMissingMemberId(member);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		char[] emailArr = memberId.toCharArray();
+		String emailSend = "";
+		
+		if (memberId != null) {
+			
+			for (int i = 3; i < memberId.length(); i++) {
+				emailArr[i] = '*';
+			}
+			emailSend = new String(emailArr);
+			System.out.println(emailSend);
+			out.append(emailSend);
+			out.flush();
+			
+		} else {
+			out.append("NO");
+			out.flush();
+		}
+		
+		out.close();
+	}
+	
+	// 비밀번호 찾기
+	@RequestMapping(value="updateMissingMemberPwd.do", method=RequestMethod.POST)
+	@ResponseBody
+	public boolean createEmailCheck(Member member, @RequestParam("random") int random, HttpServletRequest request) {
+		String newPwd = String.valueOf(random);
+		
+		logger.info(member.getMember_id() + ", " + member.getMember_email() + ", " + random);
+		
+		String subject = "[여길잡아] 임시 비밀번호 발급 안내입니다.";
+		StringBuilder sb = new StringBuilder();
+		sb.append("귀하의 임시 비밀번호는 " + random + " 입니다.");
+		
+		// 비밀번호 암호화 처리
+		member.setMember_pwd(bcryptPasswordEncoder.encode(newPwd));
+		memberService.updateMissingMemberPwd(member);
+		
+		return mailService.send(subject, sb.toString(), "elcl248@gmail.com", member.getMember_email(), null);
+	}
+	
+/*	// fellowBoard 알람 읽음
+	@RequestMapping(value="updateFbAlarm.do", method= {RequestMethod.POST, RequestMethod.GET})
+	public void updateFbAlarm(Fellow fellow, HttpServletResponse response) throws IOException {
+		int result = memberService.updateFbAlarm(fellow);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (result > 0) {
+			out.append("OK");
+			out.flush();
+		} else {
+			out.append("NO");
+			out.flush();
+		}
+		
+		out.close();
+	}*/
+	
+	// fellowBoard 알람 읽음
+	@RequestMapping(value="updateFbAlarm.do", method= RequestMethod.POST)
+	public String updateFbAlarm(Fellow fellow) {
+		int result = memberService.updateFbAlarm(fellow);
+		
+		if (result <= 0) {
+			return "common/error";
+		}
+		return "redirect:/loginMember.do";
 	}
 	
 	

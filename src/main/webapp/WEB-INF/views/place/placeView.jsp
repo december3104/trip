@@ -27,6 +27,20 @@ $(function(){
 	
 	$('#mapSearchInfo').popup();
 	
+	$("#guide-tooltip").popup({
+		   popup : $("#guide"),
+	       on    : 'click',
+	       position : "bottom center",
+	       lastResort: "bottom center"
+	});
+	
+	$("#weatherimg").popup({
+		   popup : $("#weather-div"),
+	       on    : 'click',
+	       position : "bottom center",
+	       lastResort: "bottom center"
+	});
+	
 	//날짜 목록 드롭다운
 	$('.dropdown').dropdown({
 		// you can use any ui transition
@@ -63,7 +77,20 @@ $(function(){
 		$("#endDate2").val(end);
 		calcDay2();
 	});
-
+	
+	hyPlaceNameUpdateModal
+	
+	//장소 이름 수정
+	$(".updatePlaceName").click(function(){
+		$("#hyPlaceNameUpdateModal").modal('setting', 'closable', true).modal('show');
+		
+		var code = $(this).find("input[name='upplace_code']").val();
+		var name = $(this).find("input[name='upplace_name']").val();
+		
+		$("#placeCode").val(code);
+		$("#placeName").val(name);
+	});
+	
 	//일정 목록에서 일정 삭제
 	$(".delDaylist").click(function(){
 		$.ajax({
@@ -83,6 +110,16 @@ $(function(){
 	});
 	$(".trashClass").mouseout(function(){
 		$(this).find(".trash").css("display","none");
+		$(this).find(".dropIcon").css("display","inline-block");
+	});
+	
+	//영역에 마우스오버시 수정 아이콘 보이기&없애기
+	$(".trashClass").mouseover(function(){
+		$(this).find(".pencil").css("display","inline-block");
+		$(this).find(".dropIcon").css("display","none");
+	});
+	$(".trashClass").mouseout(function(){
+		$(this).find(".pencil").css("display","none");
 		$(this).find(".dropIcon").css("display","inline-block");
 	});
 	
@@ -117,7 +154,6 @@ $(function(){
 			}
 		});
 	}); */
-   
 });
 
 //콘텐츠 높이 조절
@@ -218,6 +254,40 @@ function chkDateVal2(){
 		return true;
 }
 
+//장소 검색 후 담기
+function insertPlace(){
+	var pName = document.getElementById('place-name').innerText;
+	var pId = document.getElementById('place-id').value;
+	var pAddr = document.getElementById('place-address').innerText;
+	var pGeo = document.getElementById('geometry').value;
+	var pOpen = document.getElementById('opening-hours').innerText;
+	var pPhone = document.getElementById('international_phone_number').innerText;
+	var pDate = document.getElementById('place-date').value;
+	
+	var placeForm = document.createElement("form");
+	placeForm.setAttribute("method", "post");
+	placeForm.setAttribute("action", "insertPlace.do");
+	
+	var params = {"place_name":pName,
+				"place_id":pId,
+				"place_address":pAddr,
+				"place_geo":pGeo,
+				"opening_time":pOpen,
+				"place_phone":pPhone,
+				"place_date":pDate};
+
+	for(var key in params) {
+		var hiddenField = document.createElement("input");
+		hiddenField.setAttribute("type", "hidden");
+		hiddenField.setAttribute("name", key);
+		hiddenField.setAttribute("value", params[key]);
+
+		placeForm.appendChild(hiddenField);
+	}
+
+	document.body.appendChild(placeForm);
+	placeForm.submit();
+}
 
 //목록 제목에 날짜와 함께 표시할 요일 계산용
 /* function getDayLabel(){
@@ -317,25 +387,20 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 <div class="hycontainer">
 	<div>
 	<h2 class="ui header">
-		<i class="disabled cart plus blue massive icon"></i>
+		<i class="disabled question circle outline blue massive icon" id="mapSearchInfo" data-content="장소 이름 입력시 결과가 조회되지 않는다면, 영어로 검색어를 입력해주세요."></i>
 		<c:url var="goplace" value="goplace.do">
 			<c:param name="member_id" value="${sessionScope.loginMember.member_id }"/>
 		</c:url>
 		<div class="content" onclick="location.href='${goplace}'" style="cursor: pointer">계획하기</div>
 	</h2> &emsp;
-	<i class="pencil alternate large blue icon" id="setDate" data-content="일정을 만드시려면 아이콘을 클릭하세요."></i> &emsp;
-	<i class="question circle outline icon" id="mapSearchInfo" data-content="장소 이름 입력시 결과가 조회되지 않는다면, 영어로 검색어를 입력해주세요."></i>
-	&emsp;&emsp;&emsp;
-	<button class="mini ui blue button">
-		<i class="plus icon"></i>
-		장소 담기
-	</button>
+	<!-- <div style="float:right;margin-right:17%;"><i class="calendar alternate outline big icon" id="setDate" data-content="일정을 만드시려면 아이콘을 클릭하세요."></i></div> -->
 	</div>
 	<div style="display: none">
 		<input id="pac-input"
-		       class="pac-controls"
+		       class="pac-controls ui input"
 		       type="text"
-		       placeholder="Search Here ... ">
+		       placeholder="Search Here ... "
+		       style="height:35px;border-radius:5px;">
 	</div>
 	<div id="map" style="height:100%;width:80%;float:left;"></div>
 	<!-- 
@@ -350,13 +415,19 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 		PLACE_GEO IS '장소 좌표';
 	 -->
 	<div id="infowindow-content">
-		<span id="place-name" class="title"></span><br>
-		<strong>Place ID:</strong> <span id="place-id"></span><br>
+		<h4 id="place-name" class="title"></h4><br>
+		<!-- <span id="place-name" class="title"></span> -->
+		<input type="hidden" id="place-id">
+		<!-- <strong>Place ID:</strong> <span id="place-id"></span><br> -->
 		<span id="place-address"></span><br>
-		<span id="geometry"></span><br>
+		<input type="hidden" id="geometry">
+		<!-- <span id="geometry"></span><br> -->
 		<span id="opening-hours"></span><br>
 		<span id="international_phone_number"></span><br>
-		<span id="address_components"></span><br>
+		<!-- <a id="website" target="_blank"></a><br><br> -->
+		<button class="mini ui button" onclick="insertPlace()" style="float:right;background-color:#c0e7f8;">
+			이 장소 담기
+		</button>
 	</div>
 	<script>
       // This sample uses the Place Autocomplete widget to allow the user to search
@@ -382,7 +453,7 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
         // 내가 쓸 요소들 여기에서 담아줘야 밑에서 출력 할 수 있음.
         // Specify just the place data fields that you need.
         autocomplete.setFields(['place_id', 'geometry', 'name', 'international_phone_number', 'opening_hours', 
-        	'formatted_phone_number', 'address_components', 'formatted_address']);	
+        	'formatted_phone_number', 'formatted_address', 'website']);	
 
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
@@ -438,12 +509,13 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 			  infowindowContent.children['opening-hours'].textContent = openTime +"~"+ closeTime;
          }
           infowindowContent.children['place-name'].textContent = place.name;
-          infowindowContent.children['place-id'].textContent = place.place_id;
+          infowindowContent.children['place-id'].value = place.place_id;
           infowindowContent.children['place-address'].textContent = place.formatted_address;
-          infowindowContent.children['geometry'].textContent = place.geometry.location;	//좌표 
+          infowindowContent.children['geometry'].value = place.geometry.location;	//좌표 
           //infowindowContent.children['opening-hours'].textContent = place.opening_hours.periods[3].open.time;	//periods[#] 요일마다 오픈시간
           infowindowContent.children['international_phone_number'].textContent = place.international_phone_number;
-          infowindowContent.children['address_components'].textContent = place.address_components.short_name;
+          //infowindowContent.children['website'].textContent = place.website;
+          //$('#website').prop('href', place.website);
           infowindow.open(map, marker);
         });
       }
@@ -508,25 +580,42 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 		<div id="dailyNo">
 		<div style="text-align:center;">
 			<h2 class="lottemartdream">내가 담은 장소</h2>
+			<fmt:parseDate value="00010101" var="nodateStr" pattern="yyyyMMdd"/>
+			<fmt:formatDate value="${nodateStr}" var="nodate" pattern="yyyy-MM-dd" />
+			<input type="hidden" id="place-date" value="${nodate }">
+			<div style="float:right;cursor:pointer;"><i class="calendar alternate outline big icon" id="setDate" data-content="일정을 만드시려면 아이콘을 클릭하세요."></i></div>
 		</div>
 		<hr>
 		<div class="ui relaxed divided list scrollColor rightPlaceArea" style="overflow:auto;">
+			<c:if test="${empty placeList }">
+				<center>해당 날짜에 담은 장소가 없습니다.</center>
+			</c:if>
 			<c:forEach var="placeList" items="${placeList }">
 			<div class="ui accordion" id="div_${placeList.place_code }" style="display:block;">
 				<div class="item title trashClass">
 					<div class="ui raised segment">
 						<i class="large map marker alternate icon"></i>
-						${placeList.place_name }
+						<span class="up_${placeList.place_code }">${placeList.place_name }</span>
 						<i class="trash alternate icon delPlace" id="${placeList.place_code }" style="float:right;display:none;"></i>
+						<i class="disabled pencil alternate icon updatePlaceName" id="up_${placeList.place_code }" style="float:right;display:none;">
+						<input type="hidden" name="upplace_name" value="${placeList.place_name }">
+						<input type="hidden" name="upplace_code" value="${placeList.place_code }">
+						</i>
 					</div>
 				</div>
-				<div class="content" style="background-color:#DCF2FB;">
-					<table class="transition hidden" width="100%" style="text-align:center;">
-						<tr><td>${placeList.place_name }</td></tr>
-						<tr><td>${placeList.place_address }</td></tr>
-						<tr><td>${placeList.place_phone }</td></tr>
-						<tr><td>${placeList.opening_time }</td></tr>
-						<tr><td>방문예정날짜<br>${placeList.place_date }</td></tr>
+				<div class="content" style="background-color:rgba(220, 242, 251, 0.5);padding:7px;">
+					<table class="transition hidden" width="100%" style="text-align:center;padding:0 10px;">
+						<tr align="center"><td colspan="2" style="font-size:15pt;height:40px;padding:10px;">[ ${placeList.place_name } ]</td></tr>
+						<tr align="left"><td colspan="2" style="height:30px;">${placeList.place_address }</td></tr>
+						<c:if test="${!empty placeList.place_phone }">
+						<tr align="left"><td style="height:30px;">전화번호</td><td> ${placeList.place_phone }</td></tr>
+						</c:if>
+						<c:if test="${!empty placeList.opening_time }">
+						<tr align="left"><td style="height:30px;">영업시간</td><td> ${placeList.opening_time }</td></tr>
+						</c:if>
+						<c:if test="${!empty placeList.place_date }">
+						<tr align="left"><td style="height:30px;">방문예정날짜</td><td> ${placeList.place_date }</td></tr>
+						</c:if>
 					</table>
 				</div>
 			</div>
@@ -543,6 +632,7 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 			</div>
 			<fmt:formatDate var="dailyLabel" value="${daily_date }" pattern="yyyy-MM-dd (E)" />
 			<font id="yesDailyLabel" size="1" style="margin-top:0;">&emsp;${dailyLabel }</font>
+			<input type="hidden" id="place-date" value="${daily_date }">
 		</div>
 		<hr>
 		<div class="ui relaxed divided list scrollColor rightPlaceArea" style=";overflow:auto;">
@@ -554,17 +644,27 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 				<div class="item title trashClass">
 					<div class="ui raised segment">
 						<i class="large map marker alternate icon"></i>
-						${dailyPlaces.place_name }
+						<span class="up_${dailyPlaces.place_code }">${dailyPlaces.place_name }</span>
 						<i class="trash alternate icon delPlace" id="${dailyPlaces.place_code }" style="float:right;display:none;"></i>
+						<i class="disabled pencil alternate icon updatePlaceName" id="up_${dailyPlaces.place_code }" style="float:right;display:none;">
+						<input type="hidden" name="upplace_name" value="${dailyPlaces.place_name }">
+						<input type="hidden" name="upplace_code" value="${dailyPlaces.place_code }">
+						</i>
 					</div>
 				</div>
 				<div class="content" style="background-color:#DCF2FB;">
-					<table class="transition hidden" width="100%" style="text-align:center;">						
-						<tr><td>${dailyPlaces.place_name }</td></tr>
-						<tr><td>${dailyPlaces.place_address }</td></tr>
-						<tr><td>${dailyPlaces.place_phone }</td></tr>
-						<tr><td>${dailyPlaces.opening_time }</td></tr>
-						<tr><td>방문예정날짜<br>${dailyPlaces.place_date }</td></tr>
+					<table class="transition hidden" width="100%" style="text-align:center;padding:0 10px;">						
+						<tr align="center"><td colspan="2" style="font-size:15pt;height:40px;padding:10px;">[ ${dailyPlaces.place_name } ]</td></tr>
+						<tr align="left"><td colspan="2" style="height:30px;">${dailyPlaces.place_address }</td></tr>
+						<c:if test="${!empty dailyPlaces.place_phone }">
+						<tr align="left"><td style="height:30px;">전화번호</td><td> ${dailyPlaces.place_phone }</td></tr>
+						</c:if>
+						<c:if test="${!empty dailyPlaces.opening_time }">
+						<tr align="left"><td style="height:30px;">영업시간</td><td> ${dailyPlaces.opening_time }</td></tr>
+						</c:if>
+						<c:if test="${!empty dailyPlaces.place_date }">
+						<tr align="left"><td style="height:30px;">방문예정날짜</td><td> ${dailyPlaces.place_date }</td></tr>
+						</c:if>
 					</table>
 				</div>
 			</div>
@@ -581,7 +681,10 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 	<div class="header">일정의 이름과 날짜를 입력하세요</div>
 	<div class="content">
 		<form action="insertDaylist.do" method="post" name="daylistForm" onsubmit="return chkDateVal();">
-		리스트 이름: <input type="text" id="listName" name="daylist_name"><br><br>
+		<h3>일정 이름</h3><br>
+		<div class="ui input">
+			<input type="text" id="listName" name="daylist_name"><br><br>
+		</div><br><br>
 		<input type="date" id="startDate" name="daylist_start" onchange="calcDay()"> ~ 
 		<input type="date" id="endDate" name="daylist_end" onchange="calcDay()"> <br><br>
 		총 <span id="days"></span> 일
@@ -595,11 +698,13 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 <!-- 날짜 입력화면 모달 끝 -->
 <!-- 날짜 수정화면 모달 -->
 <div class="ui mini modal" id="hyDateUpdateModal">
-	<div class="header">일정의 이름과 날짜를 입력하세요</div>
 	<div class="content">
 		<form action="updateDaylist.do" method="post" name="upDaylistForm" onsubmit="return chkDateVal2();">
 		<input type="hidden" id="listNo2" name="daylist_no">
-		리스트 이름: <input type="text" id="listName2" name="daylist_name"><br><br>
+		<h3>일정 이름</h3><br>
+		<div class="ui input">
+			<input type="text" id="listName2" name="daylist_name">
+		</div><br><br>
 		<input type="date" id="startDate2" name="daylist_start" onchange="calcDay2()"> ~ 
 		<input type="date" id="endDate2" name="daylist_end" onchange="calcDay2()"> <br><br>
 		총 <span id="days2"></span> 일
@@ -610,6 +715,24 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 	</div>
 </div>
 <!-- 날짜 수정화면 모달 끝 -->
+<!-- 장소 이름 수정 모달 -->
+<div class="ui mini modal" id="hyPlaceNameUpdateModal">
+	<div class="header">바꾸고 싶은 장소 이름을 입력해주세요.</div>
+	<div class="content">
+		<form action="updatePlaceName.do" method="post" name="upPlaceNameForm">
+		<input type="hidden" id="placeCode" name="place_code">
+		<h3>장소 이름</h3><br>
+		<div class="ui input">
+			<input type="text" id="placeName" name="place_name">
+		</div>
+		<br><br>
+		<div id="updatePlaceNameBtn" >
+			<input type="submit" class="ui fluid button" value="수정" style="background: #c0e7f8">
+		</div>
+		</form>
+	</div>
+</div>
+<!-- 장소 이름 수정 모달 끝 -->
 <!-- 푸터 -->
 <footer><jsp:include page="/WEB-INF/views/footer.jsp" /></footer>
 <!-- 푸터 끝 -->

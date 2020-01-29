@@ -28,7 +28,7 @@
 	<div class="bodyContentCss">
 	<div class="ui container" style="margin:120px 0 120px 0;">
 		<div class="ui grid">
-			<div class="fourteen wide column">
+			<div class="ten wide column">
 				<table>
 					<tr>
 						<td><h1>동행찾기</h1></td>
@@ -38,10 +38,13 @@
 					</tr>
 				</table>
 			</div>
-			<div class="two wide column">
+			<div class="six wide column right aligned">
 				<c:if test="${!empty loginMember.member_id }">
-					<button class="ui button" style="font-family : GodoM;margin-top: 15%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='goPageInsertFellowBoard.do'">글 쓰기</button>
-				</c:if>	
+					<button class="ui button" style="font-family : GodoM;margin-top: 5%; height:45px; width:100px; background:#c0e7f8;" onclick="location.href='goPageInsertFellowBoard.do'">글 쓰기</button>
+				</c:if>
+				<c:if test="${ sessionScope.loginMember ne null }">
+					<button class="ui button" style="font-family : GodoM;margin-top: 5%; height:45px; width:150px; background:#c0e7f8;" onclick="location.href='selectAllFellowBoard.do'">전체 글 보기</button>
+				</c:if>
 			</div>
 		</div>
 		<div class="ui grid">
@@ -60,7 +63,10 @@
 										</form>
 					  				</div>
 					  				<div class="eight wide column">
-					  					<c:if test="${ page.contentNum eq 10 }">
+					  					
+					  				</div>
+					  				<div class="three wide column right aligned">
+						  				<c:if test="${ page.contentNum eq 10 }">
 						  					<select class="ui fluid dropdown" name="contentnum" id="contentnum" style="width:140px;margin-right : 5%;" onchange="changeContentNum();">
 												<option value="10" selected>10개씩 보기</option>
 												<option value="20">20개씩 보기</option>
@@ -80,11 +86,6 @@
 												<option value="20">20개씩 보기</option>
 												<option value="30" selected>30개씩 보기</option>
 											</select>
-										</c:if>
-					  				</div>
-					  				<div class="three wide column right aligned">
-						  				<c:if test="${ sessionScope.loginMember ne null }">
-											<button class="ui button" style="font-family : GodoM;height:45px; width:140px; background:#c0e7f8;" onclick="location.href='selectListMyFellowBoard.do?fb_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
 										</c:if>
 					  				</div>
 					  			</div>

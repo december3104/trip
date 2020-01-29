@@ -18,14 +18,14 @@ public class FellowBoard implements Serializable {
 	private String fb_contry;
 	private String fb_city;
 	private String fb_gender;
-	private Date fb_write_date;
+	private String fb_write_date;
 	private String fb_deadline_check;
 	private String member_profile_rename;
 
 	public FellowBoard() {}
 
 	public FellowBoard(int fb_no, String fb_id, String fb_title, String fb_content, Date fb_start_date,
-			Date fb_end_date, String fb_contry, String fb_city, String fb_gender, Date fb_write_date,
+			Date fb_end_date, String fb_contry, String fb_city, String fb_gender, String fb_write_date,
 			String fb_deadline_check, String member_profile_rename) {
 		super();
 		this.fb_no = fb_no;
@@ -114,11 +114,11 @@ public class FellowBoard implements Serializable {
 		this.fb_gender = fb_gender;
 	}
 
-	public Date getFb_write_date() {
+	public String getFb_write_date() {
 		return fb_write_date;
 	}
 
-	public void setFb_write_date(Date fb_write_date) {
+	public void setFb_write_date(String fb_write_date) {
 		this.fb_write_date = fb_write_date;
 	}
 

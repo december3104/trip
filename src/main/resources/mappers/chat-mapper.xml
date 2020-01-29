@@ -20,7 +20,7 @@
 	</insert>
 	
 	<select id="selectRoomNoContent" parameterType="Chat" resultType="Chat">
-		SELECT * FROM CHATCONTENT WHERE CC_CR_NO = #{ cr_no }
+		SELECT CC_NO, CC_CR_NO, CC_ID, TO_CHAR(CC_DATE, 'YYYY"년" FMMM"월" DD"일" AM HH:MI') CC_DATE, CC_CONTENT, CC_COUNT FROM CHATCONTENT WHERE CC_CR_NO = #{ cr_no }
 	</select>
 	
 	<select id="selectOneRoom" parameterType="Chat" resultType="Chat">

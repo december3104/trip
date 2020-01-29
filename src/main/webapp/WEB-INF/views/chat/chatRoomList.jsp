@@ -18,6 +18,7 @@
 <style type="text/css">
 .jun:hover{
 	background-color : #dcf2fb;
+	cursor:pointer;
 }
 </style>
 </head>
@@ -41,10 +42,10 @@
 		</div>
 	</div>
 </div>
-<div class="ui segment" id="chatFellowList" style="display:block;">
+<div id="chatFellowList" style="display:block;">
     <c:if test="${ !empty chatList }">
 		<c:forEach var="list" items="${ chatList }">
-			<div class="ui relaxed divided list jun"  id="c${ list.cr_no }" ondblclick="openChat('${ list.cr_no }');">
+			<div class="ui relaxed divided list jun"  id="c${ list.cr_no }" ondblclick="openChat('${ list.cr_no }');" style="padding:0 10px 0 10px;">
 				<div class="ui grid">
 					<div class="three wide column">
 						<table>
@@ -83,7 +84,9 @@
 		</c:forEach>
 	</c:if>
 	<c:if test="${ empty chatList }">
-		참여중인 채팅방이 없습니다.
+		<div id="noContent">
+			참여중인 채팅방이 없습니다.
+		</div>
     </c:if>
 </div>
 <div class="ui segment" id="chatGList" style="display:none;">
@@ -128,7 +131,9 @@
 		</c:forEach>
 	</c:if>
 	<c:if test="${ empty chatList }">
-		참여중인 채팅방이 없습니다.
+		<div>
+			참여중인 채팅방이 없습니다.
+		</div>
     </c:if>
 </div>
 	
@@ -153,21 +158,19 @@ var ws;
 //페이지 열리면 웹소켓 자동 생성
 openSocket();
 
-	function openSocket(){
-		
-	    //웹소켓 객체 만드는 코드
-	    ws=new WebSocket("ws://127.0.0.1:8800/trip/echo.do");
-	    
-	    ws.onopen=function(){
-	    };
-	    
-	    ws.onmessage=function(event){
-	    	onMessage(event);
-	    };
-	    
-	    ws.onclose=function(event){
-	    };
-	}
+function openSocket(){
+    //웹소켓 객체 만드는 코드
+    ws=new WebSocket("ws://127.0.0.1:8800/trip/echo.do");
+    	ws.onopen=function(){
+    };
+    
+    ws.onmessage=function(event){
+    	onMessage(event);
+    };
+    
+    ws.onclose=function(event){
+    };
+}
 
 $(function(){
 	$('#chatG').on('click', function(){
@@ -212,6 +215,7 @@ function onMessage(event){
 		var contry = fullText[2];
 		var city = fullText[3];
 		var cm_new = fullText[4].split("=")[0];
+		
 		if(cm_new == 0){
 			cm_new = "";
 		}
@@ -220,8 +224,11 @@ function onMessage(event){
 		if($("#c"+roomNo).length > 0){
 			$("#c"+roomNo).remove();
 		}
+		if($("#noContent").length > 0){
+			$("#noContent").remove();
+		}
 		
-		$("#chatFellowList").prepend("<div class='ui relaxed divided list' id='c"+roomNo+"' ondblclick='openChat("+roomNo_1+");'><div class='ui grid'><div class='three wide column'><table><tr><td>국가 : "+contry+"</td></tr><tr><td>도시 : "+city+"</td></tr></table></div><div class='thirteen wide column'><table style='width:100%'><tr><th style='width:80%; text-align:left;'>"+title+"</th><td style='text-align:right; width:20%'><small>날짜</small></td></tr><tr><td>"+text+"</td><td style='float:right;'><div style='text-align:center;width:20px;background:red; color:white;' id='b"+roomNo+"'>"+cm_new+"</td></tr></table></div></div></div>");
+		$("#chatFellowList").prepend("<div class='ui relaxed divided list' id='c"+roomNo+"' ondblclick='openChat("+roomNo_1+");' style='padding:0 10px 0 10px;'><div class='ui grid'><div class='three wide column'><table><tr><td>국가 : "+contry+"</td></tr><tr><td>도시 : "+city+"</td></tr></table></div><div class='thirteen wide column'><table style='width:100%'><tr><th style='width:80%; text-align:left;'>"+title+"</th><td style='text-align:right; width:20%'><small>날짜</small></td></tr><tr><td>"+text+"</td><td style='float:right;'><div style='text-align:center;width:20px;background:red; color:white;' id='b"+roomNo+"'>"+cm_new+"</td></tr></table></div></div></div>");
 	}
 }
 

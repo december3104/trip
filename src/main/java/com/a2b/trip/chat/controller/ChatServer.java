@@ -1,8 +1,10 @@
 package com.a2b.trip.chat.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -137,6 +139,7 @@ public class ChatServer extends TextWebSocketHandler{
 		String member_id = member.getMember_id();
 				
 		logger.info("메시지 보내기 메소드 작동");
+		
 		Chat chatContent = new Chat();
 		
 		String roomAndText[] = message.split(":");

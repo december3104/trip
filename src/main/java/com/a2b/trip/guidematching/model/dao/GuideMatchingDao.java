@@ -43,4 +43,8 @@ public class GuideMatchingDao {
 		return sqlSession.selectOne("guideMatchingMapper.selectMyGuideMatchingOne", gb_id);
 
 	}
+
+	public GuideMatching chk_GM(GuideMatching gm) {
+		return sqlSession.selectOne("guideMatchingMapper.chk_GM",gm);
+	}
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +40,12 @@ function autoChk(){
 	return true;
 }
 
+$(function(){
+	if (${!empty loginError}){
+		$('#errorContent').html("${loginError}");
+		$('#errorModal').modal('show');
+	}
+});
 </script>
 <style type="text/css">
 #loginBox {
@@ -72,7 +79,7 @@ function autoChk(){
 							<div class="inline field" style="text-align: left">
 								<div class="ui checkbox" style="margin-top: 15px">
 									<input type="checkbox" tabindex="0" class="hidden" style="margin-top: 3px" id="loginSave" name="login_save" ${checked}>
-									<label for="loginSave">로그인 상태 유지</label>
+									<label for="loginSave">로그인 정보 저장</label>
 								</div>
 							</div>
 						</div>
@@ -93,6 +100,16 @@ function autoChk(){
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+
+<!-- 로그인 에러 모달 -->
+<div class="ui mini modal" id="errorModal">
+	<div class="description" id="errorContent" style="padding: 5%; text-align: center; font-size: 12pt">
+		
+	</div>
+	<div class="actions">
+		<div class="fluid ui ok button" style="font-family: LotteMartDream; margin: 0; background: #c0e7f8">확인</div>
 	</div>
 </div>
 

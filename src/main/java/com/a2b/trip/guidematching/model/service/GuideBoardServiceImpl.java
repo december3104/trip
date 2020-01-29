@@ -49,7 +49,14 @@ public class GuideBoardServiceImpl implements GuideBoardService {
 		return guideBoardDao.insertWordGuideBoard(gb);
 	}
 	
-	
+	@Override
+	public int close_gb(String gb_no) {
+		return guideBoardDao.close_gb(gb_no);
+	}
+	@Override
+	public ArrayList<GuideBoard> selectGuideBoardList() {
+		return guideBoardDao.selectGuideBoardList();
+	}
 
 	// 가이드 신고 처리
 	@Override
@@ -62,5 +69,6 @@ public class GuideBoardServiceImpl implements GuideBoardService {
 	public MyGuideMatching selectMyGuideBoardOne(String gm_id) {
 		return guideBoardDao.selectMyGuideBoardOne(gm_id);
 	}
+	
 
 }

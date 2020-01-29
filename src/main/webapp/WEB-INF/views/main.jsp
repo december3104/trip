@@ -27,15 +27,16 @@ p:hover {
 } */
 
 </style>
+
 </head>
 <body>
 <!-- 헤더 -->
 <header><jsp:include page="/WEB-INF/views/header.jsp" /></header>
 
-<div class="bodyCss" style="margin-top: 0; margin-left: 10%; margin-right: 10%">
+<div class="bodyCss" style="margin-top: 0;">
 	<div class="bodyContentCss">
-		<div class="container" style="margin-bottom: 5%">
-			<img src="resources/images/main-travel.jpg" style="width: 100%; opacity: 70%">
+		<div class="container" style="margin-bottom: 5%; background: #ffffff">
+			<img src="resources/images/how-to-survive-the-thanksgiving-terror-8-travel-tips-to-make-your-holiday-trip-easier.jpg" style="width: 100%; opacity: 0.75">
 		</div>
 		<div class="container" style="float: left; text-align: center; margin-left: 20%">
 			<a href="#">
@@ -56,7 +57,7 @@ p:hover {
 			</a>
 		</div>
 	</div>
-</div>
+ </div>
 
 <!-- 푸터 -->
 <footer><jsp:include page="/WEB-INF/views/footer.jsp" /></footer>

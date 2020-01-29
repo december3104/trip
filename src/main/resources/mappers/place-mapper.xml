@@ -34,6 +34,41 @@
 		select * from place where place_user = #{place_user} and place_date = #{place_date}
 	</select>
 	
+	<!-- 장소 담기 -->
+	<insert id="insertPlace" parameterType="Place">
+		insert into place values(#{place_id}||to_char(place_seq.nextval), #{place_id}, #{place_user}, #{place_name}, 
+		<if test="place_address != null">
+		#{place_address},
+		</if>
+		<if test="place_address == null">
+		null,
+		</if>
+		<if test="place_phone != null">
+		#{place_phone}, 
+		</if>
+		<if test="place_phone == null">
+		null, 
+		</if>
+		<if test="opening_time != null">
+		#{opening_time},
+		</if>
+		<if test="opening_time == null">
+		null, 
+		</if>
+		<if test="place_date != null">
+		#{place_date},
+		</if>
+		<if test="place_date == null">
+		null,
+		</if>
+		#{place_geo})
+	</insert>
+	
+	<!-- 장소 이름 수정 -->
+	<update id="updatePlaceName" parameterType="Place">
+		update place set place_name = #{place_name} where place_code = #{place_code}
+	</update>
+	
 	<!-- 장소 리스트에서 장소 삭제 -->
 	<delete id="deletePlace" parameterType="string">
 		delete from place where place_code=#{value}

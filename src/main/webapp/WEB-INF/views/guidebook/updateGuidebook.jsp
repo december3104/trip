@@ -850,7 +850,7 @@ $(function(){
 	</section>
 
 		<section id="editorSection" data-preload="2">
-				<div id="canvas" style="height:100%; overflow:auto; background: #DCF2FB;">
+				<div id="canvas" style="height:100%; overflow:auto; background: #f0f0f0;">
 				<button class="btn_add_page"><i class="plus icon"></i></button>
 					<div class="tbpe_skin"	style="background: #fff;width:1240px;height: 1754px;transform: scale(0.5);
 					clear:both;position: absolute;top: -40%;left: -15%;" id="canvas_content"

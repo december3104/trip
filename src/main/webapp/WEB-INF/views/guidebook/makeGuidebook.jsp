@@ -425,7 +425,7 @@ function addPlace(placelist_no){
 		<div class="header_wrap">
 			<div class="header_left">
 				<div class="logo">
-					<a class="default_logo" onclick="location.href='${pageContext.request.contextPath}/'"><img src="resources/images/logo.png" width="50px;" height="50px;"></a>
+					<a class="default_logo" onclick="location.href='${pageContext.request.contextPath}/'" style="cursor: pointer"><img src="resources/images/logo.png" width="50px;" height="50px;"></a>
 				</div>
 				
 				<button type="button" id="btnUndo" class="undo">
@@ -782,7 +782,7 @@ function addPlace(placelist_no){
 	</section>
 
 		<section id="editorSection" data-preload="2">
-				<div id="canvas" style="height:100%; overflow:auto; background: #DCF2FB;">
+				<div id="canvas" style="height:100%; overflow:auto; background: #f0f0f0;">
 				<button class="btn_add_page"><i class="plus icon"></i></button>
 					<div class="tbpe_skin"	style="background: #fff;width:1240px;height: 1754px;transform: scale(0.5);
 					clear:both;position: absolute;top: -40%;left: -15%;" id="canvas_content"

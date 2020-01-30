@@ -27,20 +27,6 @@ $(function(){
 	
 	$('#mapSearchInfo').popup();
 	
-	$("#guide-tooltip").popup({
-		   popup : $("#guide"),
-	       on    : 'click',
-	       position : "bottom center",
-	       lastResort: "bottom center"
-	});
-	
-	$("#weatherimg").popup({
-		   popup : $("#weather-div"),
-	       on    : 'click',
-	       position : "bottom center",
-	       lastResort: "bottom center"
-	});
-	
 	//날짜 목록 드롭다운
 	$('.dropdown').dropdown({
 		// you can use any ui transition
@@ -263,6 +249,8 @@ function insertPlace(){
 	var pOpen = document.getElementById('opening-hours').innerText;
 	var pPhone = document.getElementById('international_phone_number').innerText;
 	var pDate = document.getElementById('place-date').value;
+	var dailyDate = document.getElementById('daily_date').value;
+	var dailyName = document.getElementById('yesDailyName').innerText;
 	
 	var placeForm = document.createElement("form");
 	placeForm.setAttribute("method", "post");
@@ -274,7 +262,9 @@ function insertPlace(){
 				"place_geo":pGeo,
 				"opening_time":pOpen,
 				"place_phone":pPhone,
-				"place_date":pDate};
+				"place_date":pDate,
+				"daily_name":dailyName,
+				"daily_date":dailyDate};
 
 	for(var key in params) {
 		var hiddenField = document.createElement("input");
@@ -588,7 +578,7 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 		<hr>
 		<div class="ui relaxed divided list scrollColor rightPlaceArea" style="overflow:auto;">
 			<c:if test="${empty placeList }">
-				<center>해당 날짜에 담은 장소가 없습니다.</center>
+				<center>지난 날짜로 담은 장소는 일정을 선택해야 보여집니다.</center>
 			</c:if>
 			<c:forEach var="placeList" items="${placeList }">
 			<div class="ui accordion" id="div_${placeList.place_code }" style="display:block;">
@@ -629,9 +619,11 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 		<div style="text-align:center;">
 			<div id="beforeModi" style="display:block;">
 				<h3 class="lottemartdream" id="yesDailyName" style="margin-bottom:0;">${daily_name }</h3>&nbsp;
+				<div style="float:right;cursor:pointer;"><i class="calendar alternate outline big icon" id="setDate" data-content="일정을 만드시려면 아이콘을 클릭하세요."></i></div>
 			</div>
 			<fmt:formatDate var="dailyLabel" value="${daily_date }" pattern="yyyy-MM-dd (E)" />
-			<font id="yesDailyLabel" size="1" style="margin-top:0;">&emsp;${dailyLabel }</font>
+			<input type="hidden" id="daily_date" value="${daily_date }">
+			<font id="yesDailyLabel" size="1" style="margin-top:0;">${dailyLabel }</font>
 			<input type="hidden" id="place-date" value="${daily_date }">
 		</div>
 		<hr>

@@ -935,7 +935,7 @@ $(function(){
 							margin-left: 22%;">
 							<p id="text3" class="text3" style="line-height: 1.8; font-size:20pt; text-align:center;
 							 margin-top: 10px;" contenteditable="true">
-							<span>사그라다파밀리아 내부</span></p>
+							<span>사그라다파밀리아</span></p>
 							
 							<img src="resources/images/guidebook_clipart/gaudi2.PNG" style="width: 700px;height: 400px;
 							margin-left: 22%;">

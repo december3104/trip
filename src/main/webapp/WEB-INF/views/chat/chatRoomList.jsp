@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
-<title>Insert title here</title>
+<title>채팅목록 | 여길잡아</title>
 
 <!-- favicon -->
 <link rel="shortcut icon" href="/trip/resources/images/favicon.ico">

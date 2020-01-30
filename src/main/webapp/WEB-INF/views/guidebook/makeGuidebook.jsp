@@ -128,11 +128,21 @@ $(function(){
 			return false;
 		}
 		
+		var bookContent = $('#canvas_content').val();
+		$('#bookContent').attr('value', bookContent);
+		console.log(bookContent);
 		
-		
-		
+		var pageNo = $('#pageno').val();
+		$('#bookPage').attr('value', pageNo);
+		console.log(pageNo);
+	
+		var bookContent = $('#canvas_content').val();
+		$('#bookContent').attr('value', bookContent);
+		console.log(bookContent);
 		
 		$('#insertGuideForm').submit();
+		
+
 		
 		return true;
 		
@@ -152,29 +162,46 @@ $(function(){
 		        $('#templateSpain').css("display", "none");   
 		    }  
 	    	
+	    	if($("#tbpe_skin2").css("display") == "none"){
+	    		$('#page2').css("display", "none");
+		        $('#tbpe_skin2').css("display", "block");   
+		    } else {  
+		    	$('#page2').css("display", "none");
+		        $('#tbpe_skin2').css("display", "none");   
+		    }  
+	    	
 	     });//템플릿 추가 삭제
 	     
-	     $('#templateButton2').on('click', function(){
-		    	if($("#templateJeju").css("display") == "none"){   
-			        $('#templateJeju').css("display", "block");   
-			    } else {  
-			        $('#templateJeju').css("display", "none");   
-			    }  
-		    	
-		     });//템플릿 추가 삭제
-	    
+	     
+		     
+		     $('#templateButton2').on('click', function(){
+			    	if($("#templateJeju").css("display") == "none"){   
+				        $('#templateJeju').css("display", "block");   
+				    } else {  
+				        $('#templateJeju').css("display", "none");   
+				    }  
+			    	
+			     });//템플릿 추가 삭제
+			     $('#templateButton3').on('click', function(){
+				    	if($("#text5").css("display") == "none"){   
+					        $('#text5').css("display", "block");   
+					    } else {  
+					        $('#text5').css("display", "none");   
+					    }  
+				    	
+				     });//템플릿 추가 삭제
 
 	    var count = 0;
    $('.btn_add_page').on('click', function(){
 	   
-		count+=1;
+		count++;
 		console.log(count);
-   var leftchange = -22 + count*37 + '%';
+   var leftchange = -15 + count*44 + '%';
    console.log(leftchange);
-			$('#canvas').append("<br> <div class='tbpe_skin' style='background: #fff; width:1240px;height: 1754px;transform: scale(0.5); clear:both; position: absolute;top: -40%; left:" + leftchange + ";' ondrop='drop(event)' ondragover='allowDrop(event)'></div>");
+			$('#canvas').append("<br> <div class='tbpe_skin' id='page2' style='background: #fff; width:1240px;height: 1754px;transform: scale(0.5); clear:both; position: absolute;top: -40%; left:" + leftchange + ";' ondrop='drop(event)' ondragover='allowDrop(event)'></div>");
    });	 //페이지추가하기
    
-   $('#droppable').on('dragenter', function(e){
+   /* $('#droppable').on('dragenter', function(e){
    	$(this).addClass('drag-over');
    }).on('dragleave', function(e){
    	$(this).removeClass('drag-over');
@@ -196,23 +223,26 @@ $(function(){
    		Thumbnail();
    	}, 500);
    	
-   });
+   }); */
    
  
    
 });    // document ready...
+function allowDrop(e) {
+	    e.preventDefault();
+	  }
+	function dragstart(e){
+	    e.dataTransfer.setData("Text",e.target.id);
+	  }
 
+	function drop(e) {
+	    var id = e.target.getAttribute('id');
+	    var data=e.dataTransfer.getData("Text");
 
-    
-/*    function fillBackgroundColor(canvas, context){//배경색 설정
-	    var selectObj=document.getElementById("backgroundColor");
-	    var index=selectObj.selectedIndex;
-	    var bgColor=selectObj.options[index].value;
-	    
-	    context.fillStyle=bgColor;
-	    context.fillRect(0,0,canvas.width,canvas.height);
-	} 
-     */
+	    e.target.appendChild(document.getElementById(data));
+	    e.preventDefault();
+	}  //드래그앤 드랍
+
    /* $( '.art-item img' ).draggable(); */
 
      /* 	function drag_handler(event) {
@@ -232,7 +262,8 @@ $(function(){
 		   document.getElementsByClassName("tbpe_skin")[0].style.left=event.layerX+"px";
 		    event.preventDefault();
 		} */
-		let distX;
+		
+		/* let distX;
 	    let distY;
 	    let posX;
 	    let posY;
@@ -264,7 +295,8 @@ $(function(){
     console.log(posX, posY, distX, distY);
     $('#art4').css('margin-left', posX + distX + 'px')
         .css('margin-top', posY + distY + 'px');
-	}    
+	}     */
+	
 	/*  let distX;
     let distY;
     let posX;
@@ -284,8 +316,6 @@ $(function(){
     }
 
     function drop(event) {
-    	
-    	   
     	
         event.stopPropagation();
         event.preventDefault();
@@ -316,16 +346,6 @@ $(function(){
 	
 	}); */
 	
-	
-		
-
-/* window.onload=function(){
-    var button = document.getElementById("color");
-    button.onclick = previewHandler;//previewButton버튼이 눌러지면 previewHandler메소드가 실행.
-}; */
-	
-	
-	 
 	function addDate(daylist_no){
 	console.log(daylist_no);
 	var daylist_start = '${daylist_start }';
@@ -348,16 +368,13 @@ $(function(){
          error: function(request, status, errorData){
              console.log("error code : "+request.status+"\nMessage : "+request.responseText+"\nError : "+errorData);
           }
-		
-		
 	});
-	
-	
-} 
+} // 일정 불러오기
 
 function addPlace(placelist_no){
 	console.log("placelist_no : " + placelist_no);
-
+	var place_name = '${place_name }';
+    
 	$.ajax({
 		url:"Placelist.do",
 		data:{placelist_no : placelist_no},
@@ -365,11 +382,23 @@ function addPlace(placelist_no){
 		type : "get",
 		success:function(data){
 			console.log(data);
+			  
+			//전송 온 object 를 string 으로 바꿈
+			var jsonStr = JSON.stringify(data);
+			//string 을 json 객체로 바꿈
+			var json = JSON.parse(jsonStr);
+			//json 안에 list 가 들어있음.
 			
-			/* $('#startDate').val(data.daylist_start);
-			  console.log('#startDate');
-			   $('#endDate').val(data.daylist_end);
-			   console.log('#endDate'); */
+			var divContent = "";
+			for(var i in json.list){
+				
+				divContent += '<div class = "ui raised segment" draggable="true" ondragstart="dragstart(event)"><i class="large map marker alternate icon"></i>'
+					  + '<span class="up_ChIJV5aYKSYQljURyzPaSLnejW015" >' 
+					  + decodeURIComponent(json.list[i].place_name).replace(/\+/gi, " ") + '</span></div>'
+					  
+					  $('#nameOfplace').html(divContent);
+				  console.log('#nameOfplace : ' + divContent);
+			}
 			   
 			   $("#hyPlaceModal").modal("hide");
 		},
@@ -399,10 +428,10 @@ function addPlace(placelist_no){
 					<a class="default_logo" onclick="location.href='${pageContext.request.contextPath}/'"><img src="resources/images/logo.png" width="50px;" height="50px;"></a>
 				</div>
 				
-				<button type="button" id="btnUndo" class="">
+				<button type="button" id="btnUndo" class="undo">
 					<i class="undo icon"></i>
 				</button>
-				<button type="button" id="btnRedo" class="disabled">
+				<button type="button" id="btnRedo" class="redo">
 					<i class="redo icon"></i>
 				</button>
 				<div class="guidebook_name">
@@ -490,7 +519,11 @@ function addPlace(placelist_no){
 					<input type="hidden" id="travelTheme" name="travel_theme">
 					<input type="hidden" id="travelStartDate" name="travel_start_date">
 					<input type="hidden" id="travelEndDate" name="travel_end_date">
+					<input type="hidden" id="bookPage" name="book_page">
+					<input type="hidden" id="bookContent" name="book_content">
 				</form>
+				
+				
 				<br>
 				<table style="width:100%; border-collapse: collapse; margin-bottom:10px;" cellpadding="0" cellspacing="1" >
 			<tbody id="my-tbody">	
@@ -542,15 +575,15 @@ function addPlace(placelist_no){
 			<div class="innerTab">
 				<div id="placeList" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px; height:20px;">
 					장소불러오기 + </div>
-					<c:forEach var="Place" items="${Place}" varStatus="status">
+					<div class="item title trashClass" id="nameOfplace" ondrop="drop(event)" ondragover="allowDrop(event)">
 					
-					</c:forEach>
+				</div>
 					</div>
 		</div>
 		
 		<div class="ui bottom attached tab" data-tab="third">
 			<div class="innerTab">			
-				<div class="list_wrap" style="height:500px; overflow:auto;" >
+				<div class="list_wrap" style=" overflow:auto;" >
 					<div id="background_color" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
 					컬러칩</div>
 					<div class="color_skin" ondrop="drop(event)" ondragover="allowDrop(event)" >
@@ -640,10 +673,11 @@ function addPlace(placelist_no){
 			<div class="innerTab">
 				
 			
-				<div class="list_wrap" style="height:300px; overflow:auto;">
+				<div class="list_wrap" style="height:500px; overflow:auto;">
 					<div id="background-item" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
 					클립아트</div>
 					<ul class="clip_art" ondrop="drop(event)" ondragover="allowDrop(event)">
+					<!-- <ul class="clip_art" ondrop="drop(event)" ondragover="dragover(event)"> -->
 						<li class="art-item"  draggable="true" ondragstart="dragstart(event)">
 						<img src="resources/images/guidebook_clipart/001-advertising.png" id="art1"></li>
 						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
@@ -729,6 +763,15 @@ function addPlace(placelist_no){
 					<img src="resources/images/guidebook_clipart/gallery.PNG" style="width: 50px;height: 100%;vertical-align: middle;">
 					<span>제주도 여행하기</span><i class="plus icon"></i></div>
 					</div>
+					<br>
+					
+					<div class="list_wrap3" style="overflow:auto;">
+					<div id="background-item" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
+					텍스트 상자</div>
+					<div id="templateButton3" ><div style="padding-top: 5%;">텍스트 추가하기<i class="plus icon"></i></div>
+    </div>
+					
+					</div>
 					
 		</div>
 		
@@ -742,8 +785,9 @@ function addPlace(placelist_no){
 				<div id="canvas" style="height:100%; overflow:auto; background: #DCF2FB;">
 				<button class="btn_add_page"><i class="plus icon"></i></button>
 					<div class="tbpe_skin"	style="background: #fff;width:1240px;height: 1754px;transform: scale(0.5);
-					clear:both;position: absolute;top: -40%;left: -15%;"
+					clear:both;position: absolute;top: -40%;left: -15%;" id="canvas_content"
 					ondrop="drop(event)" ondragover="allowDrop(event)">
+					<input type="hidden" id="pageno">
 					
 					<div id="templateSpain" style="display:none;">
 						<div class="img" style=" position: relative; background-image: url(resources/images/guidebook_clipart/DSC09805.jpg);
@@ -768,25 +812,30 @@ function addPlace(placelist_no){
 							padding-left: 95px; padding-right: -95px; margin-top: 10px;" contenteditable="true">
 							<span style="color: rgb(0, 0, 0);">﻿
 							예전 CF에서 김태희가 플라멩고를 쳤던 곳으로 알려져 있는 이곳. <br>
-							우리도 멋진 사진을 남기기 위해 세비야에 도착하자마자 스페인광장으로 향했다. <br>
-							입구에 도착하자마자 나는 눈을 뗄 수 없었다. <br>
-							그만큼 이곳은 스페인이라는 나라를 각인시키게하는, 강렬한 인상을 주는 곳이다.<br>
-							광장 한 가운데에는 시원한 물줄기를 뿜는 분수대가 있고, 그 뒤로 건물이 광장을 감싸고 있었다. <br>
+							포토스팟으로 유명하니 첫 여행지로 추천 <br>
+							그만큼 이곳은 스페인이라는 나라를 각인시키게하는, 강렬한 인상을 주는 곳.<br>
+							광장 한 가운데에는 시원한 물줄기를 뿜는 분수대가 있고, 그 뒤로 건물이 광장을 감싸고 있으니 전부 관광. <br>
 							건물 곳곳엔 화려한 무늬의 타일들이 장식이, 건물 다리 밑으로는 잔잔한 물이 흐르고, <br>
-							광장사이사이로 마차들이 지나가고 이국적인 느낌이 물씬 나게하는 곳이다.<br>
-							특히 이날 햇살이 너무 뜨거웠는데, 이날 날씨가 더 스페인스러움을 느낄 수 있게 해주었던 것 같다.</span>
+							광장사이사이로 마차들이 지나가고 이국적인 느낌이 물씬 나게한다고 한다.<br></span>
 							</p>
-							<img src="resources/images/guidebook_clipart/sebiya.PNG" style="width: 700px; height: 500px; margin-left: 309px;">
-						<p id="text3" class="text3"	style="line-height: 1.8; font-size:20pt; text-align:center;
-							padding-left: 95px; padding-right: -95px; margin-top: 10px;" contenteditable="true">
+							<img src="resources/images/guidebook_clipart/sebiya.PNG" style="width: 700px;height: 400px;margin-left: 22%;">
+						<p id="text3" class="text3"	style="line-height: 1.8; font-size:20pt; text-align:center; margin-top: 10px;" 
+						contenteditable="true">
 							<span style="color: rgb(0, 0, 0); ">
 							광장 중앙, 시선을 사로잡는 분수대 앞에서 사진 찍는 사람들
 							</span>
 						
 						</p>
-						<p id="text4" class="text4" style="line-height: 1.8; font-size:20pt; text-align:center;
-							padding-left: 95px; padding-right: -95px; margin-top: 10px;" contenteditable="true">
-							<span>추가 텍스트를 입력하세요.</span>
+						
+						<img src="resources/images/guidebook_clipart/sebiya2.PNG" style="width: 700px;height: 400px;margin-left: 22%;">
+						<p id="text4" class="text4"	style="line-height: 1.8; font-size:20pt; text-align:center;
+							margin-top: 10px;" contenteditable="true">
+							<span style="color: rgb(0, 0, 0); ">
+							마차를 타고 광장주변 관광이 가능하다.
+							</span>
+						
+						</p>
+						
 						</div>
 
 ﻿
@@ -832,16 +881,67 @@ function addPlace(placelist_no){
 
 ﻿
 						</div>
+						
 				</div>
+
+				<div class="tbpe_skin" id="tbpe_skin2"
+					style="display:none; background: #fff; width: 1240px; height: 1754px; transform: scale(0.5); clear: both; 
+					position: absolute; top: -40%; left: 29%;"	ondrop="drop(event)" ondragover="allowDrop(event)">
 					
-				</div>
+					<div class="img" style="width: 100%; height: 100px;">
+						</div>
+					
+					<div id="templateSpain2">
+						<div id="second_div" class="second_div">
+							
+						
+
+						<p style="line-height: 1.8; text-align:center;" contenteditable="true">
+								<span style="color: rgb(0, 0, 0);"><b style="font-size:30pt;">﻿사그라다 파밀리아 성당</b></span><br>
+								﻿Sagrada Familia<br>
+							</p>
+							<p id="text2" class="text2"	style="line-height: 1.8; font-size:20pt; 
+							padding-left: 95px; padding-right: -95px; margin-top: 10px;" contenteditable="true">
+							<span style="color: rgb(0, 0, 0);">﻿
+							건축가 가우디가 설계한 성당으로 유명한 곳, 자전거나라에서 가우디투어를 신청해서 가능하다.<br>
+							웅장한 모습이 압도적. 크기도 크기이지만 그 정교한 조각상의 모습이 핵심.﻿ <br>
+							자연을 형상화한 가우디 건축은 확실히 다른 건축과는 다름. <br> 
+							자연속에 온 듯한 느낌과 성스러움을 받을 수 있다.<br>
+							</span>
+							</p>
+							<img src="resources/images/guidebook_clipart/gaudi.PNG" style="width: 700px;height: 400px;
+							margin-left: 22%;">
+							<p id="text3" class="text3" style="line-height: 1.8; font-size:20pt; text-align:center;
+							 margin-top: 10px;" contenteditable="true">
+							<span>사진설명을 입력하세요.</span></p>
+							
+							<img src="resources/images/guidebook_clipart/gaudi2.PNG" style="width: 700px;height: 400px;
+							margin-left: 22%;">
+							<p id="text3" class="text3" style="line-height: 1.8; font-size:20pt; text-align:center;
+							 margin-top: 10px;" contenteditable="true">
+							<span>사진설명을 입력하세요.</span></p>
+							
+							<p id="text5" class="text5" style="display:none; line-height: 1.8; font-size:20pt; text-align:center;
+							margin-top: 10px;" contenteditable="true">
+							<span>추가 텍스트를 입력하세요.</span></p>
+							
+						
+						</div>
+
+﻿
+						</div>
+					</div>
+				
+			</div>
 				
 				
 		</section>
 		
 	</section>
 
-	<div class="ui modal" id="hyDateModal" style="display: block !important;margin-top: 16%;margin-left: -330px;
+
+
+	<div class="ui modal" id="hyDateModal" style="margin-top: 16%;margin-left: -330px;
 	height: 150px;width: 340px;padding-left: inherit;text-align: center;/* font-size: 11pt; */line-height: 1.5;">
 	<div class="header">여행날짜</div>
 	
@@ -855,7 +955,7 @@ function addPlace(placelist_no){
 	</c:forEach>
 </div>
 
-	<div class="ui modal" id="hyPlaceModal" style="display: block !important;margin-top: 16%;margin-left: -330px;
+	<div class="ui modal" id="hyPlaceModal" style="margin-top: 16%;margin-left: -330px;
 	height: 150px;width: 212px;padding-left: inherit;text-align: center; line-height: 1.5;">
 	<div class="header">여행목록</div>
 	

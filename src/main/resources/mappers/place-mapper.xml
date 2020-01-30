@@ -88,15 +88,12 @@
 	</update>
 	
 	<!-- 회원의 일정 조회_sh -->
-	<select id="selectguideDaylistOne" parameterType="String" resultType="PlaceDaylist">
-		select daylist_start, daylist_end from placedaylist where daylist_no = #{value}
+	<select parameterType="String" id="selectguideDaylistOne" resultType="PlaceDaylist">
+		select daylist_start, daylist_end from placedaylist where daylist_no = #{value} 
 	</select>
-	
 	<!-- 회원의 장소 조회_sh -->
-	<select id="selectPlacelist" parameterType="PlaceAll" resultType="PlaceAll">
-		select place_name from place where place_date
-		between (select daylist_start from placedaylist where daylist_no = #{daylist_no}) 
- 			and (select daylist_end from placedaylist where daylist_no=#{daylist_no})
-	</select> 
+	<select parameterType="String" id="selectPlacelist" resultType="PlaceAll">
+		select place_name from place where place_datebetween (select daylist_start from placedaylist where daylist_no = #{value})and (select daylist_end from placedaylist where daylist_no=#{value}) 
+	</select>
 	
 </mapper>

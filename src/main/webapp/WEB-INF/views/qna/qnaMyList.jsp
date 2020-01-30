@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>trip</title>
+<title>QnA 내 글 보기 | 여길잡아</title>
 <script type="text/javascript" src="/trip/resources/js/jquery-3.4.1.min.js"></script>
 <!-- 헤더푸터 css -->
 <link href="resources/css/headerFooter.css" rel="stylesheet">

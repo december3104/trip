@@ -7,16 +7,16 @@ public class GuidebookMaking implements Serializable {
 	
 	private int book_page;
 	private String book_no;
-	private String making_id;
+	private String book_id;
 	private String book_content;
 	
 	public GuidebookMaking() {}
 
-	public GuidebookMaking(int book_page, String book_no, String making_id, String book_content) {
+	public GuidebookMaking(int book_page, String book_no, String book_id, String book_content) {
 		super();
 		this.book_page = book_page;
 		this.book_no = book_no;
-		this.making_id = making_id;
+		this.book_id = book_id;
 		this.book_content = book_content;
 	}
 
@@ -36,12 +36,12 @@ public class GuidebookMaking implements Serializable {
 		this.book_no = book_no;
 	}
 
-	public String getMaking_id() {
-		return making_id;
+	public String getbook_id() {
+		return book_id;
 	}
 
-	public void setMaking_id(String making_id) {
-		this.making_id = making_id;
+	public void setbook_id(String book_id) {
+		this.book_id = book_id;
 	}
 
 	public String getBook_content() {
@@ -54,7 +54,7 @@ public class GuidebookMaking implements Serializable {
 
 	@Override
 	public String toString() {
-		return "GuidebookMaking [book_page=" + book_page + ", book_no=" + book_no + ", making_id=" + making_id
+		return "GuidebookMaking [book_page=" + book_page + ", book_no=" + book_no + ", book_id=" + book_id
 				+ ", book_content=" + book_content + "]";
 	}
 

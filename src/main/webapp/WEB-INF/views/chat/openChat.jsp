@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
-<title>Insert title here</title>
+<title>채팅 | 여길잡아</title>
 <link rel="stylesheet" href="/trip/resources/css/jun.css">
 <style type="text/css">
 .jun-top {

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여길잡아</title>
+<title>공지사항 | 여길잡아</title>
 <!-- favicon -->
 <link rel="shortcut icon" href="/trip/resources/images/favicon.ico">
 <!-- jquery -->

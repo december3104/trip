@@ -23,56 +23,60 @@
     
 <script type="text/javascript">
 $(function(){
-   
-   $("#BookMenu #item").on("click", function(){
-      $("#BookMenu #item").removeClass('active');
-      $(this).addClass("active");
-     
-      var tab = $(this).attr("data-tab");
-     $(".tab").removeClass("active");
-     $(".tab[data-tab=\"" + tab + "\"]").addClass("active");
-   }); //tab 메뉴
-   
-  
-  $("#insert_date").click(function(){
-		$('#hyDateModal').modal('show');
-	}); //일정 불러오기
-   
-   
-   $("#btnDownload").on("click", function() {
-		  //editorSection을 canvas객체로 변환
-		  html2canvas($(".tbpe_skin")[0]).then(function(canvas) {
-			// 캔버스를 이미지로 변환
-			    var imgData = canvas.toDataURL('image/png');
-			     
-			    var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
-			    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
-			    var imgHeight = canvas.height * imgWidth / canvas.width;
-			    var heightLeft = imgHeight;
-			     
-			        var doc = new jsPDF('p', 'mm');
-			        var position = 0;
-			         
-			        // 첫 페이지 출력
-			        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-			        heightLeft -= pageHeight;
-			         
-			        // 한 페이지 이상일 경우 루프 돌면서 출력
-			        while (heightLeft >= 20) {
-			          position = heightLeft - imgHeight;
-			          doc.addPage();
-			          doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-			          heightLeft -= pageHeight;
-			        }
+	   
+	   $("#BookMenu #item").on("click", function(){
+	      $("#BookMenu #item").removeClass('active');
+	      $(this).addClass("active");
+	     
+	      var tab = $(this).attr("data-tab");
+	     $(".tab").removeClass("active");
+	     $(".tab[data-tab=\"" + tab + "\"]").addClass("active");
+	   }); //tab 메뉴
+	   
+	  
+	  $("#insert_date").click(function(){
+			$('#hyDateModal').modal('show');
+		}); //일정 불러오기
+		
+		$("#placeList").click(function(){
+			$('#hyPlaceModal').modal('show');
+		}); //장소 불러오기
+	   
+	   
+	   $("#btnDownload").on("click", function() {
+			  //editorSection을 canvas객체로 변환
+			  html2canvas($(".tbpe_skin")[0]).then(function(canvas) {
+				// 캔버스를 이미지로 변환
+				    var imgData = canvas.toDataURL('image/png');
+				     
+				    var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+				    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+				    var imgHeight = canvas.height * imgWidth / canvas.width;
+				    var heightLeft = imgHeight;
+				     
+				        var doc = new jsPDF('p', 'mm');
+				        var position = 0;
+				         
+				        // 첫 페이지 출력
+				        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+				        heightLeft -= pageHeight;
+				         
+				        // 한 페이지 이상일 경우 루프 돌면서 출력
+				        while (heightLeft >= 20) {
+				          position = heightLeft - imgHeight;
+				          doc.addPage();
+				          doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+				          heightLeft -= pageHeight;
+				        }
 
-		    
-		    var bookName = $('#book_title').text();
-		    doc.save(bookName||'.pdf'); 
-		  });
-		});//pdf 저장
-   
-   
-		$('#btnSaveDesign').on('click', function(){
+			    
+			    var bookName = $('#book_title').text();
+			    doc.save(bookName||'.pdf'); 
+			  });
+			});//pdf 저장
+	   
+	   
+	   $('#btnSaveDesign').on('click', function(){
 			var bookName = $('#book_title').text();
 			$('#bookName').attr('value', bookName);
 			console.log(bookName);
@@ -94,6 +98,26 @@ $(function(){
 				return false;
 			}
 			
+			var startDate = $('#startDate').val();
+			console.log(startDate);
+			$('#travelStartDate').attr('value', startDate);
+			
+			if (startDate.length < 1 || startDate == ""){
+				alert("여행시작일을 입력해주세요.");
+				$('#startDate').focus();
+				return false;
+			}
+			
+			var endDate = $('#endDate').val();
+			console.log(endDate);
+			$('#travelEndDate').attr('value', endDate);
+			
+			if (endDate.length < 1 || endDate == ""){
+				alert("여행종료일을 입력해주세요.");
+				$('#endDate').focus();
+				return false;
+			}
+			
 			var chkRadio = $('input[name=theme]:checked').val();
 			console.log(chkRadio);
 			$('#travelTheme').attr('value', chkRadio);
@@ -104,160 +128,278 @@ $(function(){
 				return false;
 			}
 			
-			var startDate = $('#startDate').val();
-			console.log(startDate);
-			$('#travelStartDate').attr('value', startDate);
 			
-			if (startDate.value == ""){
-				alert("여행시작일을 입력해주세요.");
-				$('#startDate').focus();
-				return false;
-			}
 			
-			var endDate = $('#endDate').val();
-			console.log(endDate);
-			$('#travelEndDate').attr('value', endDate);
 			
-			if (endDate.value == ""){
-				alert("여행종료일을 입력해주세요.");
-				$('#endDate').focus();
-				return false;
-			}
+			
+			$('#insertGuideForm').submit();
 			
 			return true;
-		$('#updateGuideForm').submit();
-	});	//수정하기 버튼 클릭
-   
-	
-	$('.color-item').on('click', function(){
-	       var bgColor = $(this).css('background-color');
-	       console.log(bgColor);
-	       $('.tbpe_skin').css('background-color', bgColor);
-	    });//배경화면 변경
-	    
-  
-	    $('.btn_add_page').on('click', function(){
-	 	   
-			count+=1;
+			
+		});	//저장하기 버튼 클릭
+	   
+		
+		$('.color-item').on('click', function(){
+		       var bgColor = $(this).css('background-color');
+		       console.log(bgColor);
+		       $('.tbpe_skin').css('background-color', bgColor);
+		    });//배경화면 변경
+		    
+		    $('#templateButton').on('click', function(){
+		    	if($("#templateSpain").css("display") == "none"){   
+			        $('#templateSpain').css("display", "block");   
+			    } else {  
+			        $('#templateSpain').css("display", "none");   
+			    }  
+		    	
+		    	if($("#tbpe_skin2").css("display") == "none"){   
+			        $('#tbpe_skin2').css("display", "block");   
+			    } else {  
+			        $('#tbpe_skin2').css("display", "none");   
+			    }  
+		    	
+		     });//템플릿 추가 삭제
+		     
+		     $('#templateButton2').on('click', function(){
+			    	if($("#templateJeju").css("display") == "none"){   
+				        $('#templateJeju').css("display", "block");   
+				    } else {  
+				        $('#templateJeju').css("display", "none");   
+				    }  
+			    	
+			     });//템플릿 추가 삭제
+		    
+
+		    var count = 0;
+	   $('.btn_add_page').on('click', function(){
+		   
+			count++;
 			console.log(count);
-	   var leftchange = -22 + count*37 + '%';
+	   var leftchange = -15 + count*44 + '%';
 	   console.log(leftchange);
 				$('#canvas').append("<br> <div class='tbpe_skin' style='background: #fff; width:1240px;height: 1754px;transform: scale(0.5); clear:both; position: absolute;top: -40%; left:" + leftchange + ";' ondrop='drop(event)' ondragover='allowDrop(event)'></div>");
 	   });	 //페이지추가하기
-   
-   $('#droppable').on('dragenter', function(e){
-   	$(this).addClass('drag-over');
-   }).on('dragleave', function(e){
-   	$(this).removeClass('drag-over');
-   }).on('dragover', function(e){
-   	e.stopPropagation();
-   	e.preventDefault();
-   }).on('drop', function(e){
-   	var files = e.originalEvent.dataTransfer.files;
-   	var x = e.offsetX - 10;
-   	var y = e.offsetY - 30;
-   	
-   	for(var i = 0; i < files.length; i++) {
-   	var file = files[i];
-   	preview(file, size - 1, x, y); 
-   	}
-   	e.preventDefault();
-   	console.log('check');
-   	setTimeout(function(){
-   		Thumbnail();
-   	}, 500);
-   	
-   });
-   
-   $('.color-item').on('click', function(){
-       var bgColor = $(this).css('background-color');
-       console.log(bgColor);
-       $('.tbpe_skin').css('background-color', bgColor);
-    });//배경화면 변경
-    
-   $('.template').on('click', function(){
-       var bgColor = $(this).css('background-color');
-       console.log(bgColor);
-       $('#makeCanvas').css('background-color', bgColor);
-    });
-   
-});    // document ready...
+	   
+	   $('#droppable').on('dragenter', function(e){
+	   	$(this).addClass('drag-over');
+	   }).on('dragleave', function(e){
+	   	$(this).removeClass('drag-over');
+	   }).on('dragover', function(e){
+	   	e.stopPropagation();
+	   	e.preventDefault();
+	   }).on('drop', function(e){
+	   	var files = e.originalEvent.dataTransfer.files;
+	   	var x = e.offsetX - 10;
+	   	var y = e.offsetY - 30;
+	   	
+	   	for(var i = 0; i < files.length; i++) {
+	   	var file = files[i];
+	   	preview(file, size - 1, x, y); 
+	   	}
+	   	e.preventDefault();
+	   	console.log('check');
+	   	setTimeout(function(){
+	   		Thumbnail();
+	   	}, 500);
+	   	
+	   });
+	   
+	 
+	   
+	});    // document ready...
 
 
-    
-/*    function fillBackgroundColor(canvas, context){//배경색 설정
-	    var selectObj=document.getElementById("backgroundColor");
-	    var index=selectObj.selectedIndex;
-	    var bgColor=selectObj.options[index].value;
 	    
-	    context.fillStyle=bgColor;
-	    context.fillRect(0,0,canvas.width,canvas.height);
+	/*    function fillBackgroundColor(canvas, context){//배경색 설정
+		    var selectObj=document.getElementById("backgroundColor");
+		    var index=selectObj.selectedIndex;
+		    var bgColor=selectObj.options[index].value;
+		    
+		    context.fillStyle=bgColor;
+		    context.fillRect(0,0,canvas.width,canvas.height);
+		} 
+	     */
+	   /* $( '.art-item img' ).draggable(); */
+
+	     /* 	function drag_handler(event) {
+			//  ondrag =  드래그할때 동작 
+			    console.log("Drag");
+			}
+			function dragover_handler(event) {
+			  //ondragover = draggable 엘리먼트가 drop영역위에 올라가면 
+			   console.log("dragOver");
+			   event.preventDefault();
+			}
+			        
+			function drop_handler(event) {
+			  //ondrop = draggable 엘리먼트를 drop영역위에 떨어트리면
+			   console.log("droooop!");
+			   document.getElementsByClassName("tbpe_skin")[0].style.top=event.layerY+"px";
+			   document.getElementsByClassName("tbpe_skin")[0].style.left=event.layerX+"px";
+			    event.preventDefault();
+			} */
+			let distX;
+		    let distY;
+		    let posX;
+		    let posY;
+
+
+		function allowDrop(e) {
+		    e.preventDefault();
+		  }
+		function dragstart(e){
+		   
+		
+		posX = e.pageX;
+	    posY = e.pageY;
+	     distX = e.srcElement.offsetLeft - posX;
+	    distY = e.srcElement.offsetTop - posY;  
+	    
+	     e.dataTransfer.setData("Text",e.target.id);
+		  }
+
+		function drop(e) {
+		    var id = e.target.getAttribute('id');
+		    var data=e.dataTransfer.getData("Text", id);
+
+		    e.target.appendChild(document.getElementById(data));
+		    e.preventDefault();
+		
+		posX = e.pageX;
+	    posY = e.pageY;
+	    console.log(posX, posY, distX, distY);
+	    $('#art4').css('margin-left', posX + distX + 'px')
+	        .css('margin-top', posY + distY + 'px');
+		}    
+		/*  let distX;
+	    let distY;
+	    let posX;
+	    let posY;
+
+	    function dragstart(event) {
+	        posX = event.pageX;
+	        posY = event.pageY;
+	        distX = event.srcElement.offsetLeft - posX;
+	        distY = event.srcElement.offsetTop - posY;
+	        
+	    }
+
+	    function dragover(event) {
+	        event.stopPropagation();
+	        event.preventDefault();
+	    }
+
+	    function drop(event) {
+	    	
+	    	   
+	    	
+	        event.stopPropagation();
+	        event.preventDefault();
+	        posX = event.pageX;
+	        posY = event.pageY;
+	        console.log(posX, posY, distX, distY);
+	        $('.art-item').css('margin-left', posX + distX + 'px')
+	            .css('margin-top', posY + distY + 'px');
+	    }  */
+		
+		
+		/* $(function(){
+			
+		
+		$(".art-item").draggable({
+			cursor:"move",
+			stack:".post",
+			opacity:0.8
+		});
+
+		$(".art-item").bind("dragstart",function(event, ui){
+			$(this).addClass("color");	//bgi 체인지
+		});
+		$(".art-item").bind("dragstop", function(event, ui){
+			$(this).removeClass("color")	//bgi 체인지
+		});
+		
+		
+		}); */
+		
+		
+			
+
+	/* window.onload=function(){
+	    var button = document.getElementById("color");
+	    button.onclick = previewHandler;//previewButton버튼이 눌러지면 previewHandler메소드가 실행.
+	}; */
+		
+		
+		 
+		function addDate(daylist_no){
+		console.log(daylist_no);
+		var daylist_start = '${daylist_start }';
+	    var daylist_end = '${daylist_end }';
+		$.ajax({
+			url:"plusGbdate.do",
+			data:{daylist_no:daylist_no},
+			dataType:"json",
+			type : "get",
+			success:function(data){
+				console.log(data);
+				
+				$('#startDate').val(data.daylist_start);
+				  console.log('#startDate');
+				   $('#endDate').val(data.daylist_end);
+				   console.log('#endDate');
+				   
+				   $("#hyDateModal").modal("hide");
+			},
+	         error: function(request, status, errorData){
+	             console.log("error code : "+request.status+"\nMessage : "+request.responseText+"\nError : "+errorData);
+	          }
+			
+			
+		});
+		
+		
 	} 
-     */
-   /* $( '.art-item img' ).draggable(); */
 
-     /* 	function drag_handler(event) {
-		//  ondrag =  드래그할때 동작 
-		    console.log("Drag");
-		}
-		function dragover_handler(event) {
-		  //ondragover = draggable 엘리먼트가 drop영역위에 올라가면 
-		   console.log("dragOver");
-		   event.preventDefault();
-		}
-		        
-		function drop_handler(event) {
-		  //ondrop = draggable 엘리먼트를 drop영역위에 떨어트리면
-		   console.log("droooop!");
-		   document.getElementsByClassName("tbpe_skin")[0].style.top=event.layerY+"px";
-		   document.getElementsByClassName("tbpe_skin")[0].style.left=event.layerX+"px";
-		    event.preventDefault();
-		} */
+	function addPlace(placelist_no){
+		console.log("placelist_no : " + placelist_no);
+		var place_name = '${place_name }';
+	    
+		$.ajax({
+			url:"Placelist.do",
+			data:{placelist_no : placelist_no},
+			dataType:"json",
+			type : "get",
+			success:function(data){
+				console.log(data);
+				  
+				//전송 온 object 를 string 으로 바꿈
+				var jsonStr = JSON.stringify(data);
+				//string 을 json 객체로 바꿈
+				var json = JSON.parse(jsonStr);
+				//json 안에 list 가 들어있음.
+				
+				var divContent = "";
+				for(var i in json.list){
+					
+					divContent += '<div class = "ui raised segment" draggable="true" ondragstart="dragstart(event)"><i class="large map marker alternate icon"></i>'
+						  + '<span class="up_ChIJV5aYKSYQljURyzPaSLnejW015" >' 
+						  + decodeURIComponent(json.list[i].place_name).replace(/\+/gi, " ") + '</span></div>'
+						  
+						  $('#nameOfplace').html(divContent);
+					  console.log('#nameOfplace : ' + divContent);
+				}
+				   
+				   $("#hyPlaceModal").modal("hide");
+			},
+	         error: function(request, status, errorData){
+	             console.log("error code : "+request.status+"\nMessage : "+request.responseText+"\nError : "+errorData);
+	          }
+			
+			
+		});
 		
-
-	 function allowDrop(e) {
-	    e.preventDefault();
-	  }
-	function dragstart(e){
-	    e.dataTransfer.setData("Text",e.target.id);
-	  }
-
-	function drop(e) {
-	    var id = e.target.getAttribute('id');
-	    var data=e.dataTransfer.getData("Text");
-
-	    e.target.appendChild(document.getElementById(data));
-	    e.preventDefault();
-	}  
-	
-	
-	
-	$(function(){
-		
-	
-	$(".art-item").draggable({
-		cursor:"move",
-		stack:".post",
-		opacity:0.8
-	});
-
-	$(".art-item").bind("dragstart",function(event, ui){
-		$(this).addClass("color");	//bgi 체인지
-	});
-	$(".art-item").bind("dragstop", function(event, ui){
-		$(this).removeClass("color")	//bgi 체인지
-	});
-	
-	
-	});
-	
-	
-		
-
-/* window.onload=function(){
-    var button = document.getElementById("color");
-    button.onclick = previewHandler;//previewButton버튼이 눌러지면 previewHandler메소드가 실행.
-}; */
+	}
 	
 </script>
 
@@ -489,16 +631,16 @@ $(function(){
 			</table>
 			
 			<script>
-				var addCount;
+				var addCount=0;
 				  function add_row() {
-					  addCount=1;
+					  addCount++;
 					 
 				  var addBudgetText =  '<tr name="trBudget"><td>' + 
 				  addCount + '일자 : </td>'+ 
 				  '<td><input type="number" name="day"'+addCount+' id="day"></td>' +
 				  '<td><button name="delBudget"><i class="minus icon"></i></button></td>' +
 				  '</tr>'
-				   addCount++;
+				  
 				 var trHtml = $( "tr[name=trBudget]:last" );
 				  trHtml.after(addBudgetText);
 			         
@@ -520,7 +662,11 @@ $(function(){
 
 		<div class="ui bottom attached tab" data-tab="second">
 			<div class="innerTab">
-				sdf
+				<div id="placeList" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px; height:20px;">
+					장소불러오기 + </div>
+					<div class="item title trashClass" id="nameOfplace" ondrop="drop(event)" ondragover="allowDrop(event)">
+					
+				</div>
 					</div>
 		</div>
 		
@@ -704,23 +850,109 @@ $(function(){
 	</section>
 
 		<section id="editorSection" data-preload="2">
-				<div id="canvas" style="height:100%; overflow:auto; background: #DCF2FB;">
+				<div id="canvas" style="height:100%; overflow:auto; background: #f0f0f0;">
 				<button class="btn_add_page"><i class="plus icon"></i></button>
 					<div class="tbpe_skin"	style="background: #fff;width:1240px;height: 1754px;transform: scale(0.5);
-					clear:both;position: absolute;top: -40%;left: -15%;"
+					clear:both;position: absolute;top: -40%;left: -15%;" id="canvas_content"
 					ondrop="drop(event)" ondragover="allowDrop(event)">
+					<input type="hidden" id="pageno">
+					
+					<div id="templateSpain" >
 						<div class="img" style=" position: relative; background-image: url(resources/images/guidebook_clipart/DSC09805.jpg);
 						 width: 100%; height: 200px; background-size: cover;">
 						<br>
 						<div style="position: absolute; top:50%; left:50%; transform: translate(-50%, -50%); 
 						font-size:5rem; color: white; z-index: 2; 	text-align: center;">
-						<h3 style="text-color:white;" contenteditable="true">﻿스페인 가볼만한 곳 TOP 3</h3></div>
+						<h1 style="text-color:white;" contenteditable="true">﻿스페인 가볼만한 곳 TOP 3</h1></div>
+						</div>
+						<div id="first_div" class="first_div">
+							<p id="text1" class="text1"	style="line-height: 1.8; font-size:20pt; 
+							padding-left: 95px; padding-right: -95px; margin-top: 20px;" contenteditable="true">
+								<span style="color: rgb(0, 0, 0);">
+								지난 12월, 10박11일동안 다녀올 스페인 여행 <br>
+								스페인 중에서도 이곳은 꼭 가봐야한다! 라는 곳 TOP 3를 선정해 꼭 방문하기 </span><br>
+							</p>
+							<p style="line-height: 1.8; text-align:center;" contenteditable="true">
+								<span style="color: rgb(0, 0, 0);"><b style="font-size:30pt;">﻿세비야의 스페인광장</b></span><br>
+								Plaza de Espana<br>
+							</p>
+							<p id="text2" class="text2"	style="line-height: 1.8; font-size:20pt; 
+							padding-left: 95px; padding-right: -95px; margin-top: 10px;" contenteditable="true">
+							<span style="color: rgb(0, 0, 0);">﻿
+							예전 CF에서 김태희가 플라멩고를 쳤던 곳으로 알려져 있는 이곳. <br>
+							포토스팟으로 유명하니 첫 여행지로 추천 <br>
+							그만큼 이곳은 스페인이라는 나라를 각인시키게하는, 강렬한 인상을 주는 곳.<br>
+							광장 한 가운데에는 시원한 물줄기를 뿜는 분수대가 있고, 그 뒤로 건물이 광장을 감싸고 있으니 전부 관광. <br>
+							건물 곳곳엔 화려한 무늬의 타일들이 장식이, 건물 다리 밑으로는 잔잔한 물이 흐르고, <br>
+							광장사이사이로 마차들이 지나가고 이국적인 느낌이 물씬 나게한다고 한다.<br></span>
+							</p>
+							<img src="resources/images/guidebook_clipart/sebiya.PNG" style="width: 700px;height: 400px;margin-left: 22%;">
+						<p id="text3" class="text3"	style="line-height: 1.8; font-size:20pt; text-align:center; margin-top: 10px;" 
+						contenteditable="true">
+							<span style="color: rgb(0, 0, 0); ">
+							광장 중앙, 시선을 사로잡는 분수대 앞에서 사진 찍는 사람들
+							</span>
+						
+						</p>
+						
+						<img src="resources/images/guidebook_clipart/sebiya2.PNG" style="width: 700px;height: 400px;margin-left: 22%;">
+						<p id="text4" class="text4"	style="line-height: 1.8; font-size:20pt; text-align:center;
+							margin-top: 10px;" contenteditable="true">
+							<span style="color: rgb(0, 0, 0); ">
+							마차를 타고 광장주변 관광이 가능하다.
+							</span>
+						
+						</p>
+						</div>
+
+﻿
 						</div>
 					</div>
-					<!-- <canvas id="makeCanvas" style="background: #fff; width: 100%; height: 141%; transform: scale(0.8); clear:both;"  
-					ondrop="drop(event)" ondragover="allowDrop(event)" id="canvasContent"> 
-        
-  					  </canvas>-->
+					
+					<div class="tbpe_skin" id="tbpe_skin2"
+					style="background: #fff; width: 1240px; height: 1754px; transform: scale(0.5); clear: both; 
+					position: absolute; top: -40%; left: 29%;"	ondrop="drop(event)" ondragover="allowDrop(event)">
+					
+					<div class="img" style="width: 100%; height: 100px;">
+						</div>
+					
+					<div id="templateSpain2">
+						<div id="second_div" class="second_div">
+						<p style="line-height: 1.8; text-align:center;" contenteditable="true">
+								<span style="color: rgb(0, 0, 0);"><b style="font-size:30pt;">﻿사그라다 파밀리아 성당</b></span><br>
+								﻿Sagrada Familia<br>
+							</p>
+							<p id="text2" class="text2"	style="line-height: 1.8; font-size:20pt; 
+							padding-left: 95px; padding-right: -95px; margin-top: 10px;" contenteditable="true">
+							<span style="color: rgb(0, 0, 0);">﻿
+							건축가 가우디가 설계한 성당으로 유명한 곳, 자전거나라에서 가우디투어를 신청해서 가능하다.<br>
+							웅장한 모습이 압도적. 크기도 크기이지만 그 정교한 조각상의 모습이 핵심.﻿ <br>
+							자연을 형상화한 가우디 건축은 확실히 다른 건축과는 다름. <br> 
+							자연속에 온 듯한 느낌과 성스러움을 받을 수 있다.<br>
+							</span>
+							</p>
+							<img src="resources/images/guidebook_clipart/gaudi.PNG" style="width: 700px;height: 400px;
+							margin-left: 22%;">
+							<p id="text3" class="text3" style="line-height: 1.8; font-size:20pt; text-align:center;
+							 margin-top: 10px;" contenteditable="true">
+							<span>사그라다파밀리아 내부</span></p>
+							
+							<img src="resources/images/guidebook_clipart/gaudi2.PNG" style="width: 700px;height: 400px;
+							margin-left: 22%;">
+							<p id="text3" class="text3" style="line-height: 1.8; font-size:20pt; text-align:center;
+							 margin-top: 10px;" contenteditable="true">
+							<span>나무를 형상화 한 기둥</span></p>
+							
+							<p id="text5" class="text5" style="line-height: 1.8; font-size:20pt; text-align:center;
+							 margin-top: 10px;" contenteditable="true">
+							<span>영업시간 : 오전 9:00~오후 6:00</span></p>
+							
+						
+						</div>
+
+﻿
+						</div>
+					</div>
 					
 				</div>
 				
@@ -729,26 +961,30 @@ $(function(){
 		
 	</section>
 
-	<div class="ui mini modal" id="hyDateModal" >
+	<div class="ui modal" id="hyDateModal" style="margin-top: 11%; margin-left: -30%
+	height: 150px;width: 340px;padding-left: inherit;text-align: center;/* font-size: 11pt; */line-height: 1.5;">
 	<div class="header">여행날짜</div>
-	<!-- <div class="">
-	<table id="dayList">
-	<tr>
-		<th class="choose">선택</th>
-		<th class="startD">시작일</th>
-		<th></th>
-		<th class="endD">종료일</th>
-	</tr>
-	</table>
-	</div>
-	<div>
-	<button type="button" id="DateSelectBtn" class="datePop_save">불러오기</button>
-	</div> -->
 	
-	<c:forEach var="list" items="${list}" varStatus="status">
+	<c:forEach var="gbdaylist" items="${gbdaylist}" varStatus="status">
 	<div>
-	${list.daylist_start } &nbsp; ~ &nbsp; ${list.daylist_end } 
-	<i class="plus icon" id="${list.daylist_no }"> </i>
+	${gbdaylist.daylist_name} &nbsp; : &nbsp; ${gbdaylist.daylist_start } &nbsp; ~ &nbsp; ${gbdaylist.daylist_end } 
+	<i class="plus icon plusdate" id="addDate" onclick="addDate(${gbdaylist.daylist_no })"> </i><br>
+	
+	
+	</div>
+	</c:forEach>
+</div>
+
+	<div class="ui modal" id="hyPlaceModal" style="margin-top: 5%;margin-left: -35%;
+	height: 350px;width: 300px;     font-size: 20pt; padding-left: inherit;text-align: center; line-height: 1.5;">
+	<div class="header" style="font-size:20pt;">여행목록</div>
+	
+	<c:forEach var="gbplacelist" items="${gbplacelist}" varStatus="status">
+	<div>
+	${gbplacelist.daylist_name}
+	<i class="plus icon plusPlace" id="addPlace" onclick="addPlace(${gbplacelist.daylist_no })"> </i><br>
+	
+	
 	</div>
 	</c:forEach>
 </div>

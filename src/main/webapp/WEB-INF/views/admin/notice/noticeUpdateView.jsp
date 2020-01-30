@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여길잡아</title>
+<title>공지사항 수정 | 여길잡아</title>
 <!-- 헤더 -->
 <%@ include file="/WEB-INF/views/header.jsp" %>
 <!-- 푸터 -->

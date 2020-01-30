@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="device=width-device, initial-scale=1">
-<title>Insert title here</title>
+<title>QnA 글 수정 | 여길잡아</title>
 <script type="text/javascript" src="/trip/resources/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="/trip/resources/se2/js/service/HuskyEZCreator.js"></script>
 <!-- 헤더푸터 css -->

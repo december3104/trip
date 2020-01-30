@@ -21,5 +21,5 @@ public interface PlaceService {
 	
 	ArrayList<PlaceDaylist> guideDaylist(String member_id);
 	PlaceDaylist guideDaylistOne(String daylist_no);
-	ArrayList<PlaceAll> guidePlacelist(PlaceAll placeall);
+	ArrayList<PlaceAll> guidePlacelist(String daylist_no);
 }

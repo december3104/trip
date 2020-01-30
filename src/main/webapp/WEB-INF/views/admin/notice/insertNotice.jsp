@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>여길잡아</title>
+<title>공지사항 글 쓰기 | 여길잡아</title>
 <script type="text/javascript" src="/trip/resources/se2/js/service/HuskyEZCreator.js"></script>
 <!-- favicon -->
 <link rel="shortcut icon" href="/trip/resources/images/favicon.ico">

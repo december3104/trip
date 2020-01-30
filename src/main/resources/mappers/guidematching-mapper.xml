@@ -123,4 +123,8 @@
 		select * from guidematching where gb_no = #{gb_no} and gm_id = #{gm_id}
 	</select>
 	
+	<select id="selectGetSeq" resultType="_int">
+		select guideboard_seq.currval from dual
+	</select>
+	
 </mapper>

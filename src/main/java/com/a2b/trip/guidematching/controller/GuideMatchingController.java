@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.a2b.trip.chat.model.service.ChatService;
+import com.a2b.trip.chat.model.vo.Chat;
 import com.a2b.trip.guide.model.service.GuideService;
 import com.a2b.trip.guide.model.vo.Guide;
 import com.a2b.trip.guidematching.model.service.GuideBoardService;
@@ -51,6 +56,8 @@ public class GuideMatchingController {
 	@Autowired
 	private LocationService locationService;
 	
+	@Autowired
+	private ChatService chatService;
 	
 	public GuideMatchingController() {}
 	
@@ -154,13 +161,15 @@ public class GuideMatchingController {
 	
 //	가이드 상세보기 신청 버튼
 	@RequestMapping(value="updateDetailAcceptGM.do", method=RequestMethod.POST)
-	public String updateDetailAcceptGM(@RequestParam("no") String gb_no,@RequestParam("chk_number") int chk_number ,GuideBoard gb,GuideMatching gm,HttpServletRequest request) {
+	public String updateDetailAcceptGM(@RequestParam("no") String gb_no,@RequestParam("chk_number") int chk_number ,GuideBoard gb,GuideMatching gm,HttpServletRequest request) throws ParseException {
 		HttpSession session = request.getSession(false);
 		Member member = (Member)session.getAttribute("loginMember");
 		
 		gb = guideBoardService.selectGB(gb_no);
 		int gb_number_update = gb.getGb_number()+chk_number;
 		gb.setGb_number(gb_number_update);
+		
+
 		
 		int result1 = 0;
 		int result2 = 0;
@@ -173,6 +182,7 @@ public class GuideMatchingController {
 			logger.info("gm : "+gm.toString());
 			result2 = guideMatchingService.insertGuideMatching(gm);
 		}else {
+//			신청 인원수 만큼 업데이트 처리
 			result1 = guideBoardService.updateDetailAcceptGM(gb);
 			gm.setGb_no(Integer.parseInt(gb_no));
 			gm.setGm_id(member.getMember_id());
@@ -180,6 +190,17 @@ public class GuideMatchingController {
 			logger.info(gm.toString());
 			result2 = guideMatchingService.insertGuideMatching(gm);
 		}
+		
+//		채팅방 인원 추가
+//		방 참여자 넣어주기
+		
+		String chatNo = "GM"+gb_no+gb.getGb_id();
+		Chat chat = new Chat();
+		chat.setCr_no(chatNo);
+		chat.setCm_id(member.getMember_id());
+		chatService.insertChatMember(chat);
+		
+		
 		String viewFileName = "";
 		if(result1 == 1) {
 			viewFileName = "guidematching/guideMatchingPage";
@@ -205,10 +226,11 @@ public class GuideMatchingController {
 	}
 	
 	@RequestMapping(value="insertWordGuideBoard.do", method=RequestMethod.POST)
-	public String insertWordGuideBoard(GuideBoardInsert gbi,GuideBoard gb,HttpServletRequest request) {
+	public String insertWordGuideBoard(GuideBoardInsert gbi,GuideBoard gb,HttpServletRequest request) throws ParseException {
 		HttpSession session = request.getSession(false);
 		Member member = (Member)session.getAttribute("loginMember");
 		Guide guide = guideService.selectOne(member.getMember_id());
+		
 		logger.info(guide.toString());
 		
 		gb.setLoc_code(guide.getLoc_code());
@@ -233,6 +255,38 @@ public class GuideMatchingController {
 		int result = guideBoardService.insertWordGuideBoard(gb);
 		
 		String viewFileName = "";
+//		현재 시퀀스 번호 조회
+		int seq = guideBoardService.selectGetSeq();
+		logger.info(seq+"시퀀스 번호!!!!");
+//		가이드 매칭 채팅방 생성
+			String chatNo = "GM"+seq+gb.getGb_id();
+			Chat chat = chatService.selectChatRoom(chatNo);
+			if(chat == null) {
+				//채팅방이 없으면 만들어주기
+				//먼저 db에서 fellowBoard 조회해서 정보 가지고 오기					
+				chat = new Chat();
+				
+				//조회해온값 chat 객체에 넣어주기
+				chat.setCr_no(chatNo);
+				chat.setCr_title(gb.getGb_title());
+				chat.setCr_contry("korea");
+				chat.setCr_city("seoul");
+				chat.setCr_number(2);
+				java.sql.Date d = java.sql.Date.valueOf(gb.getGb_end_date());
+				chat.setCr_date(d);
+				chat.setCr_type("가이드매칭");
+				chat.setCr_master(gb.getGb_id());
+				
+				int chat_result = chatService.insertChatRoom(chat);
+				
+				if(chat_result > 0 ) {
+					//방 만들기 성공
+					//방 참여자 넣어주기
+					chat.setCm_id(gb.getGb_id());
+					chatService.insertChatMember(chat);
+				}
+				
+		}
 		
 		if(result == 1 ) {
 			viewFileName = "redirect:/guideMatchingPage.do";

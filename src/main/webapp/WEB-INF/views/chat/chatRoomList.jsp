@@ -45,6 +45,7 @@
 <div id="chatFellowList" style="display:block;">
     <c:if test="${ !empty chatList }">
 		<c:forEach var="list" items="${ chatList }">
+		<c:if test="${ list.cr_type eq '동행찾기' }">
 			<div class="ui relaxed divided list jun"  id="c${ list.cr_no }" ondblclick="openChat('${ list.cr_no }');" style="padding:0 10px 0 10px;">
 				<div class="ui grid">
 					<div class="three wide column">
@@ -81,7 +82,9 @@
 					</div>
 				</div>
 			</div>
+		</c:if>
 		</c:forEach>
+		
 	</c:if>
 	<c:if test="${ empty chatList }">
 		<div id="noContent">
@@ -89,10 +92,11 @@
 		</div>
     </c:if>
 </div>
-<div class="ui segment" id="chatGList" style="display:none;">
-    <c:if test="${ !empty chatList }">
+<div id="chatGList" style="display:none;">
+   <c:if test="${ !empty chatList }">
 		<c:forEach var="list" items="${ chatList }">
-			<div class="ui relaxed divided list"  id="c${ list.cr_no }" ondblclick="openChat('${ list.cr_no }');">
+		<c:if test="${ list.cr_type eq '가이드매칭' }">
+			<div class="ui relaxed divided list jun"  id="c${ list.cr_no }" ondblclick="openChat('${ list.cr_no }');" style="padding:0 10px 0 10px;">
 				<div class="ui grid">
 					<div class="three wide column">
 						<table>
@@ -118,7 +122,7 @@
 										<c:if test="${ cList.cc_content ne null }">
 											<td>${ cList.cc_content }</td>
 											<c:if test="${ list.cm_new ne 0 }">
-												<td style="text-align:right" id="b${ list.cr_no }">${ list.cm_new }</td>
+												<td style="float:right;"><div style="text-align:center;width:20px;background:red; color:white;" id="b${ list.cr_no }">${ list.cm_new }</div></td>
 											</c:if>
 										</c:if>
 									</c:if>
@@ -128,10 +132,12 @@
 					</div>
 				</div>
 			</div>
+		</c:if>
 		</c:forEach>
+		
 	</c:if>
 	<c:if test="${ empty chatList }">
-		<div>
+		<div id="noContent">
 			참여중인 채팅방이 없습니다.
 		</div>
     </c:if>
@@ -160,8 +166,10 @@ openSocket();
 
 function openSocket(){
     //웹소켓 객체 만드는 코드
-    ws=new WebSocket("ws://127.0.0.1:8800/trip/echo.do");
+    console.log("작동");
+    ws = new WebSocket("ws://127.0.0.1:8800/trip/echo.do");
     	ws.onopen=function(){
+    		console.log("웹소켓 오픈");
     };
     
     ws.onmessage=function(event){
@@ -203,6 +211,9 @@ $(function(){
 
 function onMessage(event){
 	var full = event.data;
+	
+	//내일 값 확인
+	console.log(full);
 	var fullText = full.split(":");
 	var roomNo = fullText[0];
 	if(roomNo == "clear"){
@@ -210,6 +221,7 @@ function onMessage(event){
 		var roomNo1 = fullText[1];
 		$("#b"+roomNo1).text("");
 	}else{
+		var roomNo3 = roomNo.substring(0, 2);
 		var roomNo_1 = '"'+fullText[0]+'"';
 		var title = fullText[1];
 		var contry = fullText[2];
@@ -228,7 +240,11 @@ function onMessage(event){
 			$("#noContent").remove();
 		}
 		
-		$("#chatFellowList").prepend("<div class='ui relaxed divided list' id='c"+roomNo+"' ondblclick='openChat("+roomNo_1+");' style='padding:0 10px 0 10px;'><div class='ui grid'><div class='three wide column'><table><tr><td>국가 : "+contry+"</td></tr><tr><td>도시 : "+city+"</td></tr></table></div><div class='thirteen wide column'><table style='width:100%'><tr><th style='width:80%; text-align:left;'>"+title+"</th><td style='text-align:right; width:20%'><small>날짜</small></td></tr><tr><td>"+text+"</td><td style='float:right;'><div style='text-align:center;width:20px;background:red; color:white;' id='b"+roomNo+"'>"+cm_new+"</td></tr></table></div></div></div>");
+		if(roomNo3 == "GM"){
+			$("#chatGList").prepend("<div class='ui relaxed divided list' id='c"+roomNo+"' ondblclick='openChat("+roomNo_1+");' style='padding:0 10px 0 10px;'><div class='ui grid'><div class='three wide column'><table><tr><td>국가 : "+contry+"</td></tr><tr><td>도시 : "+city+"</td></tr></table></div><div class='thirteen wide column'><table style='width:100%'><tr><th style='width:80%; text-align:left;'>"+title+"</th><td style='text-align:right; width:20%'><small>날짜</small></td></tr><tr><td>"+text+"</td><td style='float:right;'><div style='text-align:center;width:20px;background:red; color:white;' id='b"+roomNo+"'>"+cm_new+"</td></tr></table></div></div></div>");
+		}else{
+			$("#chatFellowList").prepend("<div class='ui relaxed divided list' id='c"+roomNo+"' ondblclick='openChat("+roomNo_1+");' style='padding:0 10px 0 10px;'><div class='ui grid'><div class='three wide column'><table><tr><td>국가 : "+contry+"</td></tr><tr><td>도시 : "+city+"</td></tr></table></div><div class='thirteen wide column'><table style='width:100%'><tr><th style='width:80%; text-align:left;'>"+title+"</th><td style='text-align:right; width:20%'><small>날짜</small></td></tr><tr><td>"+text+"</td><td style='float:right;'><div style='text-align:center;width:20px;background:red; color:white;' id='b"+roomNo+"'>"+cm_new+"</td></tr></table></div></div></div>");
+		}	
 	}
 }
 

@@ -26,4 +26,6 @@ public interface GuideBoardService {
 
 	ArrayList<GuideBoard> selectGuideBoardList();
 
+	int selectGetSeq();
+
 }

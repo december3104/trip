@@ -69,6 +69,11 @@ public class GuideBoardServiceImpl implements GuideBoardService {
 	public MyGuideMatching selectMyGuideBoardOne(String gm_id) {
 		return guideBoardDao.selectMyGuideBoardOne(gm_id);
 	}
+
+	@Override
+	public int selectGetSeq() {
+		return guideBoardDao.selectGetSeq();
+	}
 	
 
 }

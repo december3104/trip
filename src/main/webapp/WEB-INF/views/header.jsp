@@ -108,6 +108,7 @@
 .ui.checkbox input[type=checkbox]:checked ~ label:after{
 	color: #95d6f3 !important;
 }
+
 .wrap-loading{ /*화면 전체를 어둡게 합니다.*/
     position: fixed;
     left:0;
@@ -127,6 +128,20 @@
 .display-none{ /*감추기*/
     display:none;
 }
+
+div.item right menu{
+	position: relative;
+}
+.ui.popup, .ui.bottom.popup, .ui.bottom.center.popup, ui.visible.popup{
+	/* left:90%!important; */
+	position: absolute;
+	/* transform:translate(230%,0%); */
+}
+.ui.bottom.left.popup{
+	margin-left: 270px;
+}
+
+
 
 </style>
 <script type="text/javascript">
@@ -379,11 +394,19 @@ $(function(){
 	$(".dropdown").dropdown({
 		transition: 'drop'
 	});
-	
+
 	// 알람 갯수
 	if (${!empty loginMember}){
 		var loginMemberId = '${loginMember.member_id}';
 		var loginMemberLevel = '${loginMember.member_level}';
+
+	
+});
+
+function updateFbAlarm(fb_no, fm_id){
+	console.log(fb_no + ", " + fm_id);
+	$(function(){
+
 		$.ajax({
 			url: "selectAllAlarmCount.do",
 			type: "get",
@@ -430,7 +453,7 @@ $(function(){
 	</a> 
 	<a class="item" href="moveLoginPage.do" style="margin-right: 20px">현지 가이드 매칭</a> 
 	<a class="item" href="moveLoginPage.do" style="margin-right: 20px">동행 찾기</a> 
-	<a class="item" style="margin-right: 20px">이용방법</a> 
+	<a class="item" href="goInfo.do" style="margin-right: 20px">이용방법</a> 
 	<a class="ui simple dropdown item" style="margin-right: 20px">고객센터
 		<div class="menu">
 			<div class="item" onclick="location.href='selectListAllNotice.do'">공지사항</div>
@@ -440,7 +463,7 @@ $(function(){
 	</a>
 	
 	<!-- 우측 상단 아이콘들 -->
-	<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-position="bottom center"data-html = "true">
+	<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-html = "true">
 		<select class="ui dropdown" style="font-size: 10pt;" id="city_name" onchange="select_city()">
 			<option value="Seoul" selected="selected">대한민국-서울</option>
 			<option value="Paris">프랑스-파리</option>
@@ -479,7 +502,7 @@ $(function(){
 		</a> 
 		<a class="item" onclick="location.href='guideMatchingPage.do'">현지 가이드 매칭</a> 
 		<a class="item" href="selectAllFellowBoard.do?currentPage=1&contentNum=10">동행 찾기</a> 
-		<a class="item">이용방법</a> 
+		<a class="item" href="goInfo.do">이용방법</a> 
 		<a class="ui simple dropdown item">고객센터
 			<div class="menu">
 				<div class="item" onclick="location.href='selectListAllNotice.do'">공지사항</div>
@@ -489,7 +512,7 @@ $(function(){
 		</a>
 		
 		<!-- 우측 상단 사용자정보&아이콘들 -->
-		<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-position="bottom center"data-html = "true">
+	<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-html = "true">
 		<select class="ui dropdown" style="font-size: 10pt;" id="city_name" onchange="select_city()">
 			<option value="Seoul" selected="selected">대한민국-서울</option>
 			<option value="Paris">프랑스-파리</option>
@@ -578,7 +601,7 @@ $(function(){
 			<a class="item" onclick="location.href='qna.do?currentPage=1&contentNum=10'">QnA 관리</a>
 	
 			<!-- 우측 상단 사용자정보&아이콘들 -->
-			<div class="item right menu" align="right" style="margin-right: 0;" data-content="Add users to your feed" id="weater_but" data-position="bottom center" data-html = "true">
+	<div class="item right menu" align="right" style="margin-right: 0;"data-content="Add users to your feed" id="weater_but" data-html = "true">
 			<select class="ui dropdown" style="font-size: 10pt;" id="city_name" onchange="select_city()">
 				<option value="Seoul" selected="selected">대한민국-서울</option>
 				<option value="Paris">프랑스-파리</option>
@@ -598,11 +621,6 @@ $(function(){
 				<option value="Canberra">호주-캔버라</option>
 			</select>
 			<img alt="" src="" id="weatherimg">
-				<i class="alarm icons" style="margin-right: 10px;"> 
-					<i class="bell large icon"></i> 
-					<!-- 알람 있을 경우 갯수만큼 -->
-					<div class="ui circular yellow mini floating label">2</div>
-				</i>
 			</div>	
 
 	    	<!-- 관리자 로그인 정보 -->

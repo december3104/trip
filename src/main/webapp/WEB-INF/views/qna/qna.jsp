@@ -40,10 +40,10 @@
 			</div>
 			<div class="six wide column right aligned">
 				<c:if test="${!empty loginMember.member_id }">
-					<button class="ui button" style="font-family : GodoM;margin-top: 5%; height:45px; width:100px;" onclick="location.href='goPageInsertQna.do'">글 쓰기</button>
+					<button class="ui button" style="background:#c0e7f8;font-family : GodoM;margin-top: 5%; height:45px; width:100px;" onclick="location.href='goPageInsertQna.do'">글 쓰기</button>
 				</c:if>	
 				<c:if test="${ sessionScope.loginMember ne null }">
-					<button class="ui button" style="font-family : GodoM;margin-top: 5%; height:45px; width:150px;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
+					<button class="ui button" style="background:#c0e7f8;font-family : GodoM;margin-top: 5%; height:45px; width:150px;" onclick="location.href='selectListMyQna.do?qna_id=${ loginMember.member_id }'">내가 쓴글 보기</button>
 				</c:if>
 			</div>
 		</div>

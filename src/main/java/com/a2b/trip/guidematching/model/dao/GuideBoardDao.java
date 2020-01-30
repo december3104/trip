@@ -65,4 +65,8 @@ public class GuideBoardDao {
 		List<GuideBoard> list = sqlSession.selectList("guideMatchingMapper.selectGuideBoardList");
 		return (ArrayList<GuideBoard>)list;
 	}
+
+	public int selectGetSeq() {
+		return sqlSession.selectOne("guideMatchingMapper.selectGetSeq");
+	}
 }

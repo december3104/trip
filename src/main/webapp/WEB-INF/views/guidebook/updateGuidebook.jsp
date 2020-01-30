@@ -415,7 +415,7 @@ $(function(){
 		<div class="header_wrap">
 			<div class="header_left">
 				<div class="logo">
-					<a class="default_logo" onclick="location.href='${pageContext.request.contextPath}/'"><img src="resources/images/logo.png" width="50px;" height="50px;"></a>
+					<a class="default_logo" onclick="location.href='${pageContext.request.contextPath}/'" style="cursor: pointer"><img src="resources/images/logo.png" width="50px;" height="50px;"></a>
 				</div>
 				
 				<button type="button" id="btnUndo" class="">
@@ -672,7 +672,7 @@ $(function(){
 		
 		<div class="ui bottom attached tab" data-tab="third">
 			<div class="innerTab">			
-				<div class="list_wrap" style="height:300px; overflow:auto;" >
+				<div class="list_wrap" style=" overflow:auto;" >
 					<div id="background_color" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
 					컬러칩</div>
 					<div class="color_skin" ondrop="drop(event)" ondragover="allowDrop(event)" >
@@ -762,10 +762,11 @@ $(function(){
 			<div class="innerTab">
 				
 			
-				<div class="list_wrap" style="height:300px; overflow:auto;">
-					<div id="background_color" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
+				<div class="list_wrap" style="height:500px; overflow:auto;">
+					<div id="background-item" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
 					클립아트</div>
 					<ul class="clip_art" ondrop="drop(event)" ondragover="allowDrop(event)">
+					<!-- <ul class="clip_art" ondrop="drop(event)" ondragover="dragover(event)"> -->
 						<li class="art-item"  draggable="true" ondragstart="dragstart(event)">
 						<img src="resources/images/guidebook_clipart/001-advertising.png" id="art1"></li>
 						<li class="art-item" draggable="true" ondragstart="dragstart(event)">
@@ -840,6 +841,26 @@ $(function(){
 						<img src="resources/images/guidebook_clipart/036-world.png" id="art36"></li>			
 					</ul>
 						</div>
+						<br>
+					<div class="list_wrap2" style="overflow:auto;">
+					<div id="background-item" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
+					템플릿</div>
+					<div id="templateButton">
+					<img src="resources/images/guidebook_clipart/sebiya.PNG" style="width: 50px;height: 100%;vertical-align: middle;">
+					<span>스페인 여행하기</span><i class="plus icon"></i></div>
+					<div id="templateButton2">
+					<img src="resources/images/guidebook_clipart/gallery.PNG" style="width: 50px;height: 100%;vertical-align: middle;">
+					<span>제주도 여행하기</span><i class="plus icon"></i></div>
+					</div>
+					<br>
+					
+					<div class="list_wrap3" style="overflow:auto;">
+					<div id="background-item" style="border: solid 1px rgba(157, 158, 163, 0.6); border-radius: 10px;">
+					텍스트 상자</div>
+					<div id="templateButton3" ><div style="padding-top: 5%;">텍스트 추가하기<i class="plus icon"></i></div>
+    </div>
+					
+					</div>
 					
 		</div>
 		
@@ -852,7 +873,7 @@ $(function(){
 		<section id="editorSection" data-preload="2">
 				<div id="canvas" style="height:100%; overflow:auto; background: #f0f0f0;">
 				<button class="btn_add_page"><i class="plus icon"></i></button>
-					<div class="tbpe_skin"	style="background: #fff;width:1240px;height: 1754px;transform: scale(0.5);
+					<div class="tbpe_skin"	style="background: rgb(254, 204, 190);;width:1240px;height: 1754px;transform: scale(0.5);
 					clear:both;position: absolute;top: -40%;left: -15%;" id="canvas_content"
 					ondrop="drop(event)" ondragover="allowDrop(event)">
 					<input type="hidden" id="pageno">
@@ -910,7 +931,7 @@ $(function(){
 					</div>
 					
 					<div class="tbpe_skin" id="tbpe_skin2"
-					style="background: #fff; width: 1240px; height: 1754px; transform: scale(0.5); clear: both; 
+					style="background: rgb(254, 204, 190); width: 1240px; height: 1754px; transform: scale(0.5); clear: both; 
 					position: absolute; top: -40%; left: 29%;"	ondrop="drop(event)" ondragover="allowDrop(event)">
 					
 					<div class="img" style="width: 100%; height: 100px;">
@@ -935,7 +956,7 @@ $(function(){
 							margin-left: 22%;">
 							<p id="text3" class="text3" style="line-height: 1.8; font-size:20pt; text-align:center;
 							 margin-top: 10px;" contenteditable="true">
-							<span>사그라다파밀리아</span></p>
+							<span>사그라다파밀리아</span><img src="resources/images/guidebook_clipart/002-airplane.png" id="art2" style="width: 50px; height: 50px"></p>
 							
 							<img src="resources/images/guidebook_clipart/gaudi2.PNG" style="width: 700px;height: 400px;
 							margin-left: 22%;">

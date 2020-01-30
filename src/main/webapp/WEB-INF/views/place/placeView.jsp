@@ -42,6 +42,12 @@ $(function(){
 			url:"deletePlace.do",
 			data:{place_code: $(this).attr("id")},
 			type:"post",
+			beforeSend:function(){
+		        $('.wrap-loading').removeClass('display-none');
+		    },
+		    complete:function(){
+		        $('.wrap-loading').addClass('display-none');
+		    },
 			success:function(result){
 			   $("#"+result).css("display","none");
 			}
@@ -83,6 +89,12 @@ $(function(){
 			url:"deleteDaylist.do",
 			data:{daylist_no: $(this).attr("id")},
 			type:"post",
+			beforeSend:function(){
+		        $('.wrap-loading').removeClass('display-none');
+		    },
+		    complete:function(){
+		        $('.wrap-loading').addClass('display-none');
+		    },
 			success:function(result){
 				$("#"+result).css("display","none");
 			}
@@ -366,6 +378,25 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 	font-size: 25px;
 	font-weight: 500;
 	padding: 6px 12px;
+}
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background: rgba(0,0,0,0.2); /*not in ie */
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+}
+.wrap-loading div{ /*로딩 이미지*/
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}
+.display-none{ /*감추기*/
+    display:none;
 }
 </style>
 </head>
@@ -668,6 +699,10 @@ h1,h2,h3,h4,h5,h6 {display:inline;}
 	<!-- 오른쪽 리스트 영역 끝 -->
 	</div>
 </div>
+<!-- ajax 로딩 이미지 -->
+<div class="wrap-loading display-none">
+    <div><img src="resources/images/loading.gif" /></div>
+</div>   
 <!-- 날짜 입력화면 모달 -->
 <div class="ui mini modal" id="hyDateModal">
 	<div class="header">일정의 이름과 날짜를 입력하세요</div>

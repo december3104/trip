@@ -57,46 +57,8 @@ public class MemberController {
 		String viewFileName = "main";
 		Member loginMember = memberService.loginChkMember(member);
 		if (loginMember != null) {
-			String memberId = loginMember.getMember_id();
 			if (bcryptPasswordEncoder.matches(member.getMember_pwd(), loginMember.getMember_pwd())) {
 				session.setAttribute("loginMember", loginMember);
-				
-				ArrayList<MyGuideMatching> selectGbAlarmCount = null;
-				int totalAlarmCount = 0;
-				
-				if (loginMember.getMember_level() == 2) {
-					selectGbAlarmCount = memberService.selectGbAlarmCount(memberId);
-					if (selectGbAlarmCount.size() > 0) {
-						model.addAttribute("selectGbAlarmCount", selectGbAlarmCount);
-						totalAlarmCount += selectGbAlarmCount.size();
-					}
-				}
-				
-				ArrayList<Fellow> selectFbAlarmCount = memberService.selectFbAlarmCount(memberId);
-				if (selectFbAlarmCount.size() > 0) {
-					model.addAttribute("selectFbAlarmCount", selectFbAlarmCount);
-					totalAlarmCount += selectFbAlarmCount.size();
-				}
-				
-				ArrayList<Fellow> selectFmAlarmCount = memberService.selectFmAlarmCount(memberId);
-				if (selectFmAlarmCount.size() > 0) {
-					model.addAttribute("selectFmAlarmCount", selectFmAlarmCount);
-					totalAlarmCount += selectFmAlarmCount.size();
-				}
-				
-				ArrayList<Qna> selectQnaAlarmCount = memberService.selectQnaAlarmCount(memberId);
-				if (selectQnaAlarmCount.size() > 0) {
-					model.addAttribute("selectQnaAlarmCount", selectQnaAlarmCount);
-					totalAlarmCount += selectQnaAlarmCount.size();
-				}
-				
-				int selectGuideApplyAlarmCount = memberService.selectGuideApplyAlarmCount(memberId);
-				if (selectGuideApplyAlarmCount > 0) {
-					model.addAttribute("selectGuideApplyAlarmCount", selectGuideApplyAlarmCount);
-					totalAlarmCount += selectGuideApplyAlarmCount;
-				}
-				model.addAttribute("totalAlarmCount", totalAlarmCount);
-				
 			} else {
 				viewFileName = "redirect:/moveLoginPwdErrorPage.do";
 			}
@@ -117,6 +79,202 @@ public class MemberController {
 			session.invalidate();
 		}
 		return "main";
+	}
+	
+	// 알람 갯수 카운트
+	@RequestMapping("selectAllAlarmCount.do")
+	public void selectAllAlarmCount(Member member, @RequestParam("memberLevel") String memberLevel, HttpServletResponse response) throws IOException {
+		
+		int totalAlarmCount = 0;
+		int member_level = Integer.valueOf(memberLevel);
+		String memberId = member.getMember_id();
+		
+		ArrayList<MyGuideMatching> selectGbAlarmCount = null;
+		
+		if (member_level == 2) {
+			selectGbAlarmCount = memberService.selectGbAlarmCount(memberId);
+			if (selectGbAlarmCount.size() > 0) {
+				totalAlarmCount += selectGbAlarmCount.size();
+			}
+		}
+		
+		ArrayList<Fellow> selectFbAlarmCount = memberService.selectFbAlarmCount(memberId);
+		if (selectFbAlarmCount.size() > 0) {
+			totalAlarmCount += selectFbAlarmCount.size();
+		}
+		
+		ArrayList<Fellow> selectFmAlarmCount = memberService.selectFmAlarmCount(memberId);
+		if (selectFmAlarmCount.size() > 0) {
+			totalAlarmCount += selectFmAlarmCount.size();
+		}
+		
+		ArrayList<Qna> selectQnaAlarmCount = memberService.selectQnaAlarmCount(memberId);
+		if (selectQnaAlarmCount.size() > 0) {
+			totalAlarmCount += selectQnaAlarmCount.size();
+		}
+		
+		int selectGuideApplyAlarmCount = memberService.selectGuideApplyAlarmCount(memberId);
+		if (selectGuideApplyAlarmCount > 0) {
+			totalAlarmCount += selectGuideApplyAlarmCount;
+		}
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (totalAlarmCount > 0) {
+			out.append(Integer.toString(totalAlarmCount));
+			out.flush();
+		} else {
+			out.append("0");
+			out.flush();
+		}
+		
+		out.close();
+	}
+	
+	// guideBoard 알람 내용 불러오기
+	@RequestMapping(value="selectGbAlarmCount.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Object selectGbAlarmCount(@RequestParam ("member_id") String member_id) {
+		ArrayList<MyGuideMatching> selectGbAlarmCount = memberService.selectGbAlarmCount(member_id);
+		return selectGbAlarmCount;
+	}
+	
+	// guideBoard 알람 읽음
+	@RequestMapping(value="updateGbAlarm.do", method=RequestMethod.POST)
+	public void updateGbAlarm(MyGuideMatching myGuideMatching, HttpServletResponse response) throws IOException {
+		int updateGbAlarm = memberService.updateGbAlarm(myGuideMatching);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (updateGbAlarm > 0) {
+			out.append("OK");
+			out.flush();
+		} else {
+			out.append("NO");
+			out.flush();
+		}
+		
+		out.close();
+	}
+	
+	// fellowBoard 알람 내용 불러오기
+	@RequestMapping(value="selectFbAlarmCount.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Object selectFbAlarmCount(@RequestParam ("member_id") String member_id) {
+		ArrayList<Fellow> selectFbAlarmCount = memberService.selectFbAlarmCount(member_id);
+		return selectFbAlarmCount;
+	}
+	
+	// fellowBoard 알람 읽음
+	@RequestMapping(value="updateFbAlarm.do", method=RequestMethod.POST)
+	public void updateFbAlarm(Fellow fellow, HttpServletResponse response) throws IOException {
+		int updateFbAlarm = memberService.updateFbAlarm(fellow);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (updateFbAlarm > 0) {
+			out.append("OK");
+			out.flush();
+		} else {
+			out.append("NO");
+			out.flush();
+		}
+		
+		out.close();
+	}
+	
+	// fellowMatching 알람 내용 불러오기
+	@RequestMapping(value="selectFmAlarmCount.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Object selectFmAlarmCount(@RequestParam ("member_id") String member_id) {
+		ArrayList<Fellow> selectFmAlarmCount = memberService.selectFmAlarmCount(member_id);
+		return selectFmAlarmCount;
+	}
+	
+	// fellowMatching 알람 읽음
+	@RequestMapping(value="updateFmAlarm.do", method=RequestMethod.POST)
+	public void updateFmAlarm(Fellow fellow, HttpServletResponse response) throws IOException {
+		int updateFmAlarm = memberService.updateFmAlarm(fellow);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (updateFmAlarm > 0) {
+			out.append("OK");
+			out.flush();
+		} else {
+			out.append("NO");
+			out.flush();
+		}
+		
+		out.close();
+	}
+	
+	// guideApply 알람 내용 불러오기
+	@RequestMapping(value="selectGuideApplyAlarmCount.do", method=RequestMethod.POST)
+	public void selectGuideApplyAlarmCount(@RequestParam ("member_id") String member_id, HttpServletResponse response) throws IOException {
+		int selectGuideApplyAlarmCount = memberService.selectGuideApplyAlarmCount(member_id);
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (selectGuideApplyAlarmCount > 0) {
+			out.append("OK");
+			out.flush();
+		} else {
+			out.append("NO");
+			out.flush();
+		}
+		
+		out.close();
+	}
+	
+	// guideApply 알람 읽음
+	@RequestMapping(value="updateGuideApplyAlarm.do", method=RequestMethod.POST)
+	public void updateGuideApplyAlarm(@RequestParam("member_id") String member_id, HttpServletResponse response) throws IOException {
+		int updateGuideApplyAlarm = memberService.updateGuideApplyAlarm(member_id);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (updateGuideApplyAlarm > 0) {
+			out.append("OK");
+			out.flush();
+		} else {
+			out.append("NO");
+			out.flush();
+		}
+		
+		out.close();
+	}
+	
+	// qna 알람 내용 불러오기
+	@RequestMapping(value="selectQnaAlarmCount.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Object selectQnaAlarmCount(@RequestParam ("member_id") String member_id) {
+		ArrayList<Qna> selectQnaAlarmCount = memberService.selectQnaAlarmCount(member_id);
+		return selectQnaAlarmCount;
+	}
+
+	// qna 알람 읽음
+	@RequestMapping(value="updateQnaAlarm.do", method=RequestMethod.POST)
+	public void updateQnaAlarm(Qna qna, HttpServletResponse response) throws IOException {
+		int updateQnaAlarm = memberService.updateQnaAlarm(qna);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (updateQnaAlarm > 0) {
+			out.append("OK");
+			out.flush();
+		} else {
+			out.append("NO");
+			out.flush();
+		}
+		
+		out.close();
 	}
 	
 	// 회원 없을시
@@ -459,35 +617,7 @@ public class MemberController {
 		return mailService.send(subject, sb.toString(), "elcl248@gmail.com", member.getMember_email(), null);
 	}
 	
-/*	// fellowBoard 알람 읽음
-	@RequestMapping(value="updateFbAlarm.do", method= {RequestMethod.POST, RequestMethod.GET})
-	public void updateFbAlarm(Fellow fellow, HttpServletResponse response) throws IOException {
-		int result = memberService.updateFbAlarm(fellow);
-		
-		response.setContentType("text/html; charset=utf-8");
-		PrintWriter out = response.getWriter();
-		
-		if (result > 0) {
-			out.append("OK");
-			out.flush();
-		} else {
-			out.append("NO");
-			out.flush();
-		}
-		
-		out.close();
-	}*/
-	
-	// fellowBoard 알람 읽음
-	@RequestMapping(value="updateFbAlarm.do", method= RequestMethod.POST)
-	public String updateFbAlarm(Fellow fellow) {
-		int result = memberService.updateFbAlarm(fellow);
-		
-		if (result <= 0) {
-			return "common/error";
-		}
-		return "redirect:/loginMember.do";
-	}
+
 	
 	
 	//작성자 : ssm

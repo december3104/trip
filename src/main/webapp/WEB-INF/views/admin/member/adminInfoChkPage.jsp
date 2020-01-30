@@ -28,6 +28,12 @@ function memberPwdChk(){
 		url: "selectMemberPwdChk.do",
 		data: {member_pwd: memberPwd},
 		type: "post",
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
 		success: function(result){
 			if (result == "OK"){
 				location.href="adminUpdatePage.ad";
@@ -70,6 +76,25 @@ $(function(){
 h2, .ui.button {
 	font-family: GodoM;
 }
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background: rgba(0,0,0,0.2); /*not in ie */
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+}
+.wrap-loading div{ /*로딩 이미지*/
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}
+.display-none{ /*감추기*/
+    display:none;
+}
 </style>
 </head>
 <body>
@@ -86,6 +111,12 @@ h2, .ui.button {
 					<td style="padding-bottom: 0; border: 0"><input class="ui button" value="확인" onclick="memberPwdChk();" style="width: 95px; background: #c0e7f8; font-family: GodoM" readonly /></td></tr>
 		</table>
 	</div>
+	
+	<!-- ajax 로딩 이미지 -->
+	<div class="wrap-loading display-none">
+	    <div><img src="resources/images/loading.gif" /></div>
+	</div>  
+	
 	<!-- 안내창 모달 -->
 	<div class="ui mini modal" id="passwordChkModal">
 		

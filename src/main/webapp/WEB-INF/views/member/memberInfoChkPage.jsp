@@ -26,6 +26,12 @@ function memberPwdChk(){
 		url: "selectMemberPwdChk.do",
 		data: {member_pwd: memberPwd},
 		type: "post",
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
 		success: function(result){
 			if (result == "OK"){
 				location.href="moveMemberUpdatePage.do";
@@ -66,7 +72,25 @@ $(function(){
 	box-shadow: 0 0 0 .2rem rgba(192, 231, 248, .5);
 	border: 1px solid #95d6f3;
 }
-
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background: rgba(0,0,0,0.2); /*not in ie */
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+}
+.wrap-loading div{ /*로딩 이미지*/
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}
+.display-none{ /*감추기*/
+    display:none;
+}
 </style>
 </head>
 <body>
@@ -77,7 +101,7 @@ $(function(){
 	<div class="bodyContentCss" style="float: left; width: 20%">
 		<div>
 			<table class="ui  celled table" style="text-align:center; font-size: 15pt; background: #D3F0FE">
-				<tr><td class="sidebarTd">내 가이드북 보기</td></tr>
+				<tr><td class="sidebarTd" onclick="location.href='selectGuidebookMyList.do'">내 가이드북 보기</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='selectMyGuideMatching.do'">가이드 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</td></tr>
@@ -94,6 +118,11 @@ $(function(){
 					<td style="padding-bottom: 0; border: 0"><input class="ui button" value="확인" onclick="memberPwdChk();" style="width: 95px; background: #c0e7f8" readonly /></td></tr>
 		</table>
 	</div>
+	
+	<!-- ajax 로딩 이미지 -->
+	<div class="wrap-loading display-none">
+	    <div><img src="resources/images/loading.gif" /></div>
+	</div>   
 	<!-- 안내창 모달 -->
 	<div class="ui mini modal" id="passwordChkModal">
 		

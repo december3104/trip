@@ -27,7 +27,25 @@
 	width: 70px;
 	height: 20px;
 }
-
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background: rgba(0,0,0,0.2); /*not in ie */
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+}
+.wrap-loading div{ /*로딩 이미지*/
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}
+.display-none{ /*감추기*/
+    display:none;
+}
 
 </style>
 <script type="text/javascript">
@@ -47,6 +65,12 @@ $(function(){
 		data:JSON.stringify(form),
 		contentType:"application/json; charset=utf-8;",
 		dataType:"json",
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
 		success:function(data){
 			if(data.length == 0){
 				console.log("null");	
@@ -238,6 +262,12 @@ function ch_function(){
 		data:JSON.stringify(form),
 		contentType:"application/json; charset=utf-8;",
 		dataType:"json",
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
 		success:function(data){
 			if(data.length == 0){
 				$("#gb_list").hide();
@@ -303,6 +333,12 @@ function gb_detail(gb_no){
 		data : {gb_no : gb_no},
 		type : "POST",
 		dataType : "json",
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
 		success : function(data){
 			var p_type = 'style="float: left; width:15%; text-align:center;margin-bottom: 0px;"';
 			var p_type_text = 'style="float: left; width:15%; text-align:center;margin-bottom: 0px;height: 20%;"';
@@ -374,6 +410,12 @@ function Accept(gb_no, max_number,gb_number) {
 		url:"chk_GM.do",
 		type:"post",
 		data:{gb_no:gb_no,gm_id:gm_id},
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
 		success : function(data){
 			if(data == "OK"){
 				var gm_number_check =$("#gm_number_check").val();
@@ -410,6 +452,12 @@ function close_gb(gb_no){
 		url:"close_gb.do",
 		type:"post",
 		data:{gb_no:gb_no},
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
 		success:function(data){
 			alert(data+"번 글 마감되었습니다.");
 		}
@@ -565,7 +613,10 @@ function close_gb(gb_no){
 	</div>
 
 	<!-- modal -->
-	
+	<!-- ajax 로딩 이미지 -->
+	<div class="wrap-loading display-none">
+	    <div><img src="resources/images/loading.gif" /></div>
+	</div>   
 
 	<!-- 푸터 -->
 <footer>

@@ -52,7 +52,7 @@ $(function(){
 	border: 1px solid #cecece; 
 	margin-top: 5%; 
 	width: 392px; 
-	height: 500px; 
+	height: 450px; 
 	display: inline-block;
 	border-radius: 5px;
 }
@@ -89,13 +89,11 @@ $(function(){
 				 <div class="ui horizontal divider">
 				    Or
 				</div>
-				<div class="content" style="margin-top: 5%">
-					<a id="custom-login-btn" href="javascript:loginWithKakao()">
-						<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="100%" />  <!-- height="50px;" --> 
-					</a>
+				<div class="content">
+					<button class="ui button" type="button" style="width: 100%; background: #95d6f3; margin: 0;font-family: LotteMartDream" onclick="location.href='moveMemberEnrollPage.do'">회원가입</button>
 				</div>
 				<div style="margin-top: 7%">
-					<p style="text-align: center; font-size: 15px">아직 회원이 아니시라면 <a href="moveMemberEnrollPage.do">회원가입</a></p>
+					
 					<p style="text-align: center; font-size: 15px"><a href="moveMemberMissingPage.do">아이디 | 비밀번호 찾기</a></p>
 				</div>
 			</div>

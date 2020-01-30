@@ -176,4 +176,9 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateQnaAlarm", qna);
 	}
 
+	// 총 알람 갯수 카운트
+	public int selectAllAlarmCount(Member member) {
+		return sqlSession.selectOne("memberMapper.selectAllAlarmCount", member);
+	}
+
 }

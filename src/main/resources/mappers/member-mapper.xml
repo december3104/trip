@@ -190,4 +190,5 @@
 	<update id="updateGbAlarm" parameterType="MyGuideMatching">
 		update guidematching set gb_alarm = 'N' where gb_no = #{gb_no} and gm_id = #{gm_id}
 	</update>
+	
 </mapper>

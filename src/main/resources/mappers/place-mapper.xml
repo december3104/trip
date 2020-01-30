@@ -26,7 +26,9 @@
 	
 	<!-- 회원의 장소리스트 모두 조회 -->
 	<select id="selectPlaceList" parameterType="string" resultType="Place">
-		select * from place where place_user = #{value}
+		<![CDATA[
+		select * from place where place_user = #{value} and place_date > sysdate order by place_date 
+			]]>
 	</select>
 	
 	<!-- 해당 날짜의 장소리스트 조회 -->

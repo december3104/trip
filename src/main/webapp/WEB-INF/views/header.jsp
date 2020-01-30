@@ -160,7 +160,7 @@ function updateFbAlarm(fb_no, fm_id){
 	</a> 
 	<a class="item" href="moveLoginPage.do" style="margin-right: 20px">현지 가이드 매칭</a> 
 	<a class="item" href="moveLoginPage.do" style="margin-right: 20px">동행 찾기</a> 
-	<a class="item" style="margin-right: 20px">이용방법</a> 
+	<a class="item" href="goInfo.do" style="margin-right: 20px">이용방법</a> 
 	<a class="ui simple dropdown item" style="margin-right: 20px">고객센터
 		<div class="menu">
 			<div class="item" onclick="location.href='selectListAllNotice.do'">공지사항</div>
@@ -209,7 +209,7 @@ function updateFbAlarm(fb_no, fm_id){
 		</a> 
 		<a class="item" onclick="location.href='guideMatchingPage.do'">현지 가이드 매칭</a> 
 		<a class="item" href="selectAllFellowBoard.do?currentPage=1&contentNum=10">동행 찾기</a> 
-		<a class="item">이용방법</a> 
+		<a class="item" href="goInfo.do">이용방법</a> 
 		<a class="ui simple dropdown item">고객센터
 			<div class="menu">
 				<div class="item" onclick="location.href='selectListAllNotice.do'">공지사항</div>

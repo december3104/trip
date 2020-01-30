@@ -268,7 +268,7 @@ function checkForm(){
 		return false;
 	}
 	
-	if (fmContent.length == 100){
+	if (fmContent.length > 100){
 		$('#enrollChkContent').html('100자 이내로 입력하세요.');
 		$('#enrollChkModal').modal('show');
 		$('#fm_content').focus();

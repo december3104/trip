@@ -34,17 +34,25 @@ public class PlaceController {
 	
 	public PlaceController() {}
 	
-	@RequestMapping("searchMap.do")
-	public String searchMap() {
-		return "place/searchMap";		
-	}
-	
 	//계획하기 페이지 메소드
 	@RequestMapping("goplace.do")
 	public String placeViewPage(Model model, Date place_date, HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		Member member = (Member)session.getAttribute("loginMember");
 		String member_id = member.getMember_id();
+		
+		ArrayList<Place> sessionDate = (ArrayList<Place>)session.getAttribute("dateYes");
+		String sessionName = (String)session.getAttribute("dailyName");
+		Date sessionDailyDate = (Date)session.getAttribute("dailyDate");
+		
+		if(sessionDate != null) {
+			model.addAttribute("dailyPlaces", sessionDate);
+			model.addAttribute("daily_name", sessionName);
+			model.addAttribute("daily_date", sessionDailyDate);
+			session.removeAttribute("dateYes");
+			session.removeAttribute("dailyName");
+			session.removeAttribute("dailyDate");
+		}
 		
 		Map<String,?> flashMap = RequestContextUtils.getInputFlashMap(request);
 		
@@ -54,6 +62,7 @@ public class PlaceController {
 			//일정 생성 후 redirect로 받은 값 꺼내기
 			if(sendDir.equals("insertDaylist")) {
 				member_id = (String)flashMap.get("member_id");
+				model.addAttribute("dailyPlaces", sessionDate);
 			}
 			
 			//날짜 클릭으로 넘어올시 해당 날짜의 장소리스트 받기
@@ -129,9 +138,13 @@ public class PlaceController {
 	
 	//일정 클릭시 해당 날짜의 장소리스트 불러오기 메소드
 	@RequestMapping(value="dailyPlaces.do", method={RequestMethod.POST, RequestMethod.GET})
-	public String selectDailyPlaceList(Place place, String daylist_name, int daylist_no, HttpServletRequest request) {
+	public String selectDailyPlaceList(Place place, String daylist_name, int daylist_no, HttpServletRequest request, HttpSession session) {
 		//장소 목록 조회
 		ArrayList<Place> dailyPlaces = placeService.selectDailyPlaceList(place);
+		
+		if(dailyPlaces != null) {	//날짜의 장소 리스트를 세션에 담아주기
+			session.setAttribute("dateYes", dailyPlaces);
+		}
 		
 		FlashMap flashMap = RequestContextUtils.getOutputFlashMap(request);
 		flashMap.put("dailyPlaces", dailyPlaces);
@@ -182,11 +195,10 @@ public class PlaceController {
 	
 	//장소 검색 후 장소 담기 처리 메소드
 	@RequestMapping(value="insertPlace.do", method=RequestMethod.POST)
-	public String insertPlace(Place place, Model model, HttpServletRequest request) throws ParseException {
-		HttpSession session = request.getSession(false);
+	public String insertPlace(Place place, String daily_name, Date daily_date, Model model, HttpServletRequest request, HttpSession session) throws ParseException {
 		Member member = (Member)session.getAttribute("loginMember");
 		String member_id = member.getMember_id();
-		
+	
 		place.setPlace_user(member_id);
 		
 		SimpleDateFormat format = new SimpleDateFormat( "yyyy-MM-dd" );
@@ -199,6 +211,13 @@ public class PlaceController {
 		String fileName = "redirect:goplace.do";
 		
 		int result  = placeService.insertPlace(place);
+		
+		if(place.getPlace_date() != null) {	
+			ArrayList<Place> dailyPlaces = placeService.selectDailyPlaceList(place);
+			session.setAttribute("dateYes", dailyPlaces);
+			session.setAttribute("dailyName", daily_name);
+			session.setAttribute("dailyDate", daily_date);
+		}
 		
 		if(result <= 0) {
 			model.addAttribute("message", "장소 담기 실패!");

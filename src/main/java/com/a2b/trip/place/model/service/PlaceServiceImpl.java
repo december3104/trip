@@ -93,8 +93,8 @@ public class PlaceServiceImpl implements PlaceService {
 
 	//장소불러오기_sh
 	@Override
-		public ArrayList<PlaceAll> guidePlacelist(PlaceAll placeall) {
-			return placeDao.guidePlacelist(placeall);
+		public ArrayList<PlaceAll> guidePlacelist(String daylist_no) {
+			return placeDao.guidePlacelist(daylist_no);
 	}
 
 }

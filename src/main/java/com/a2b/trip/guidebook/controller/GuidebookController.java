@@ -24,9 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.a2b.trip.guidebook.model.service.GuidebookMakingService;
 import com.a2b.trip.guidebook.model.service.GuidebookService;
 import com.a2b.trip.guidebook.model.vo.Guidebook;
+import com.a2b.trip.guidebook.model.vo.GuidebookMaking;
 import com.a2b.trip.member.model.vo.Member;
 import com.a2b.trip.place.model.service.PlaceService;
 import com.a2b.trip.place.model.vo.Place;
@@ -41,6 +42,9 @@ public class GuidebookController {
 
 	@Autowired
 	private GuidebookService guidebookService;
+	
+	@Autowired
+	private GuidebookMakingService guidebookmakingService;
 	
 	@Autowired
 	private PlaceService placeService;
@@ -84,30 +88,30 @@ public class GuidebookController {
 
 	
 	//가이드북 생성하기
-	@RequestMapping(value="insertGuidebook.do", method = {RequestMethod.POST})
+		@RequestMapping(value="insertGuidebook.do", method = {RequestMethod.POST})
 
-	   public String guidebookInsertMethod(Guidebook guidebook, Model model, HttpServletRequest request) {
-		   //성공하면 guidebook, 에러났을때 model
-		
-		HttpSession session = request.getSession(false);
-		Member sessionMember = (Member)session.getAttribute("loginMember");
-		String memberId = sessionMember.getMember_id();
-		
-		guidebook.setBook_id(memberId);
-		
-		System.out.println(guidebook.getBook_name() + ", " + guidebook.getTravel_detail() + ". " + guidebook.getTravel_theme() + ", " + guidebook.getTravel_start_date() + ", " + guidebook.getTravel_end_date() + ", " + guidebook.getBook_id());
-		
-		 int result = guidebookService.insertGuidebook(guidebook);
-		   
+		   public String guidebookInsertMethod(Guidebook guidebook, Model model, HttpServletRequest request) {
+			   //성공하면 guidebook, 에러났을때 model
+			
+			HttpSession session = request.getSession(false);
+			Member sessionMember = (Member)session.getAttribute("loginMember");
+			String memberId = sessionMember.getMember_id();
+			
+			guidebook.setBook_id(memberId);
+			
+			System.out.println(guidebook.getBook_name() + ", " + guidebook.getTravel_detail() + ". " + guidebook.getTravel_theme() + ", " + guidebook.getTravel_start_date() + ", " + guidebook.getTravel_end_date() + ", " + guidebook.getBook_id());
+			
+			 int result = guidebookService.insertGuidebook(guidebook);
+			   
 
-		   String viewFileName = "guidebook/updateGuidebook";
-		   
-		 if(result <= 0) { //제작 실패시
-			model.addAttribute("message", "가이드북 제작실패!");
-			viewFileName = "common/error";		   
+			   String viewFileName = "guidebook/updateGuidebook";
+			   
+			 if(result <= 0) { //제작 실패시
+				model.addAttribute("message", "가이드북 제작실패!");
+				viewFileName = "common/error";		   
+			   }
+			   return viewFileName;
 		   }
-		   return viewFileName;
-	   }
 	
 	
 	
@@ -131,7 +135,7 @@ public class GuidebookController {
 	
 	//일정 불러와서 추가하기
 	@RequestMapping(value="plusGbdate.do", method=RequestMethod.GET)
-	public String guideDaylistOne(@RequestParam("placelist_no") String daylist_no, HttpServletResponse response) throws IOException {
+	public String guideDaylistOne(@RequestParam("daylist_no") String daylist_no, HttpServletResponse response) throws IOException {
 		logger.info(daylist_no);
 		
 		PlaceDaylist gbday = placeService.guideDaylistOne(daylist_no);	
@@ -177,10 +181,10 @@ public class GuidebookController {
 	}*/
 	
 	@RequestMapping(value="Placelist.do", method=RequestMethod.GET)
-	public String selectPlacelist(@RequestParam("placelist_no") int daylist_no, PlaceAll placeall, HttpServletResponse response) throws IOException {
+	public void selectPlacelist(@RequestParam("placelist_no") String daylist_no, PlaceAll placeall, HttpServletResponse response) throws IOException {
 		logger.info("daylist_no : " + daylist_no);
 		
-		List<PlaceAll> gbplace = placeService.guidePlacelist(placeall);
+		ArrayList<PlaceAll> gbplace = placeService.guidePlacelist(daylist_no);
 		logger.info("gbplace : " + gbplace);
 		System.out.println("gbplace:" + gbplace);
 		
@@ -194,24 +198,23 @@ public class GuidebookController {
 					
 					JSONObject job = new JSONObject();
 					job.put("place_name", URLEncoder.encode(pl.getPlace_name(), "UTF-8"));
-					
+					String el = pl.getPlace_name();
+					System.out.println("getPlace_name:"+el);
+							
 					jarr.add(job);
 					
 					System.out.println(job);
-				}
+				}		
+		
+				sendJson.put("list", jarr);
+		
+				response.setContentType("application/json");
+				PrintWriter out = response.getWriter();
+				out.print(sendJson.toJSONString());
+				out.flush();
+				out.close();
 				
-
-		
-		
-		sendJson.put("list", jarr);
-		
-		response.setContentType("application/json");
-		PrintWriter out = response.getWriter();
-		out.print(sendJson.toJSONString());
-		out.flush();
-		out.close();
-		
-		return jarr.toJSONString();
+				
 		
 	}
 	

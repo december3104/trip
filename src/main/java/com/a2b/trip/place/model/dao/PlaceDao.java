@@ -86,8 +86,8 @@ public class PlaceDao {
 	}
 	
 	//장소리스트 불러오기_sh
-		public ArrayList<PlaceAll> guidePlacelist(PlaceAll placeall) {
-			List<PlaceAll> list = sqlSession.selectList("placeMapper.selectPlacelist", placeall);
+		public ArrayList<PlaceAll> guidePlacelist(String daylist_no) {
+			List<PlaceAll> list = sqlSession.selectList("placeMapper.selectPlacelist", daylist_no);
 			return (ArrayList<PlaceAll>)list;
 		}
 

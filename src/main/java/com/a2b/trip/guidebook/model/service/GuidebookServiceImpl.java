@@ -24,6 +24,7 @@ public class GuidebookServiceImpl implements GuidebookService {
 			public int updateGuidebook(Guidebook guidebook) {
 				return guidebookDao.updateGuidebook(guidebook);
 			}
+
 			
 
 			

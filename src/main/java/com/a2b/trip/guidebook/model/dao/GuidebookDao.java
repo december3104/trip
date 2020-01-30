@@ -21,4 +21,6 @@ public class GuidebookDao {
 	public int updateGuidebook(Guidebook guidebook) {
 		return sqlSession.update("guidebookMapper.updateGuidebook", guidebook);
 	}
+
+	
 }

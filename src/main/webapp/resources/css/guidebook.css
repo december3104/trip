@@ -32,6 +32,11 @@ button {
     
 }
 
+.tbpe_skin img{
+	width: 50px;
+	height : 50px;
+}
+
 .header_wrap {
 	display: -ms-flexbox;
 	display: flex;
@@ -213,12 +218,12 @@ button {
     position: static;
     transform: none; 
 
-   max-width: 100%;
+   /* max-width: 100%;
     max-height: 100%;
     width: 100%;
     height: 100%;
     vertical-align: top;
-    object-fit: contain;
+    object-fit: contain; */
 }
 
 /* #canvas .btn_add_page {
@@ -317,6 +322,17 @@ button {
 }
 
 #templateButton2 {
+    display: inline-block;
+    width: 90%;
+    height: 50px;
+    border-radius: 4px;
+    border: solid 1px rgba(157, 158, 163, 0.6);
+    background-color: #fff;
+    padding-left: 0;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+#templateButton3 {
     display: inline-block;
     width: 90%;
     height: 50px;

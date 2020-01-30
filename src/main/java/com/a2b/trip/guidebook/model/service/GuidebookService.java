@@ -8,4 +8,5 @@ public interface GuidebookService {
 
 	int updateGuidebook(Guidebook guidebook);
 
+
 }

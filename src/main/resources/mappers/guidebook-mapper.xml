@@ -5,7 +5,7 @@
 <mapper namespace="guidebookMapper">
 
 	<insert id="insertGuidebook" parameterType="Guidebook">
-		insert into guidebook values ('gb0' || guidebook_seq.nextval, #{book_id}, sysdate, 
+		insert into guidebook values ('gb' || guidebook_seq.nextval, #{book_id}, sysdate, 
 		<if test="travel_detail != null">
 			#{travel_detail},
 		</if>
@@ -23,33 +23,15 @@
 	</update>
 	
 	
-	
-	
-	
-	
-	
-	<!-- <select id="loginCheck" parameterType="Member" resultType="Member">
-		select * from member where userid = #{userid} and userpwd = #{userpwd}
-	</select>
-	
-	<select id="selectOne" parameterType="string" resultType="Member">
-		select * from member where userid = #{value}
-	</select> -->
-	
-	
-	
-	
-	
-	<delete id="deleteMember" parameterType="string">
-		delete from member where userid = #{value}
-	</delete>
-	
-	<select id="selectList" resultType="Member">
-		select * from member
-	</select>
-	
-	<select id="checkDupId" parameterType="string" resultType="_int">
-		select count(userid) from member where userid = #{value}
+	<select id="selectGuidebookMyList" parameterType="string" resultType="Guidebook">
+		select * from guidebook where book_id = #{value}
 	</select>
 
+	<delete id="deleteGuidebook" parameterType="string">
+		delete guidebook where book_no = #{value}
+	</delete>
+	
+	<select id="selectMyGuidebookOne" parameterType="string" resultType="Guidebook">
+		select * from guidebook where book_no = #{value}
+	</select>
 </mapper>

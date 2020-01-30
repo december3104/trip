@@ -43,6 +43,25 @@
 .ui.action.input input[type="file"] {
   display: none;
 } 
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background: rgba(0,0,0,0.2); /*not in ie */
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+}
+.wrap-loading div{ /*로딩 이미지*/
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}
+.display-none{ /*감추기*/
+    display:none;
+}
 </style>
 <script type="text/javascript">
 
@@ -106,6 +125,12 @@ $(function(){
 				url: "selectSearchMemberPhone.do",
 				data: {member_phone: memberPhoneValue},
 				type: "post",
+				beforeSend:function(){
+			        $('.wrap-loading').removeClass('display-none');
+			    },
+			    complete:function(){
+			        $('.wrap-loading').addClass('display-none');
+			    },
 				success: function(result){
 					
 					if (result == "DUP"){
@@ -174,6 +199,12 @@ function memberSecessionModal(){
 			url: "selectMemberPwdChk.do",
 			data: {member_pwd: memberPwd},
 			type: "post",
+			beforeSend:function(){
+		        $('.wrap-loading').removeClass('display-none');
+		    },
+		    complete:function(){
+		        $('.wrap-loading').addClass('display-none');
+		    },
 			success: function(result){
 				if (result == "OK"){
 					memberPwdChk = 0;
@@ -222,7 +253,7 @@ $(function(){
 	<div class="bodyContentCss" style="float: left; width: 20%">
 		<div>
 			<table class="ui celled table" style="text-align:center; font-size: 15pt; background: #D3F0FE">
-				<tr><td class="sidebarTd">내 가이드북 보기</td></tr>
+				<tr><td class="sidebarTd" onclick="location.href='selectGuidebookMyList.do'">내 가이드북 보기</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='selectMyGuideMatching.do'">가이드 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</td></tr>
@@ -352,6 +383,10 @@ $(function(){
 		</div>
 	</div>
 </div>
+	<!-- ajax 로딩 이미지 -->
+	<div class="wrap-loading display-none">
+	    <div><img src="resources/images/loading.gif" /></div>
+	</div>   
 
 <!-- 푸터 -->
 <footer><jsp:include page="/WEB-INF/views/footer.jsp" /></footer>

@@ -37,6 +37,25 @@
 .sidebarTd:hover{
 	cursor: pointer;
 }
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background: rgba(0,0,0,0.2); /*not in ie */
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+}
+.wrap-loading div{ /*로딩 이미지*/
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}
+.display-none{ /*감추기*/
+    display:none;
+}
 </style>
 <script type="text/javascript">
 // 가이드 정보 보기 모달 오픈
@@ -47,6 +66,12 @@ function guideModalOpen(gb_id){
 			data: {gb_id: gb_id},
 			type: "post",
 			dataType: "json",
+			beforeSend:function(){
+		        $('.wrap-loading').removeClass('display-none');
+		    },
+		    complete:function(){
+		        $('.wrap-loading').addClass('display-none');
+		    },
 			success: function(data){
 				var guideName = decodeURIComponent(data.guideName.replace(/\+/gi, " "));
 				var guideGender = data.guideGender;
@@ -92,6 +117,12 @@ function guideModalOpen2(gm_id){
 			data: {gm_id: gm_id},
 			type: "post",
 			dataType: "json",
+			beforeSend:function(){
+		        $('.wrap-loading').removeClass('display-none');
+		    },
+		    complete:function(){
+		        $('.wrap-loading').addClass('display-none');
+		    },
 			success: function(data){
 				var guideMatchingName = decodeURIComponent(data.guideMatchingName.replace(/\+/gi, " "));
 				var guideMatchingGender = data.guideMatchingGender;
@@ -194,8 +225,8 @@ $(function(){
 	<div class="bodyContentCss" style="float: left; width: 20%">
 		<div>
 			<table class="ui celled table" style="text-align:center; font-size: 15pt; background: #D3F0FE">
-				<tr><td class="sidebarTd">내 가이드북 보기</td></tr>
-				<tr><td class="sidebarTd" onclick="location.href='/login/selectMyGuideMatching.do'">가이드 매칭 기록</td></tr>
+				<tr><td class="sidebarTd" onclick="location.href='selectGuidebookMyList.do'">내 가이드북 보기</td></tr>
+				<tr><td class="sidebarTd" onclick="location.href='selectMyGuideMatching.do'">가이드 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</td></tr>
 				<tr><td class="sidebarTd" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</td></tr>
 			</table>
@@ -289,47 +320,51 @@ $(function(){
 			
 	</div>
 	
+	<!-- ajax 로딩 이미지 -->
+	<div class="wrap-loading display-none">
+	    <div><img src="resources/images/loading.gif" /></div>
+	</div>   
 	
-		<!-- 가이드 정보 모달 -->
-		<div class="ui small modal" id="guideModal">
-		  <div class="header" id="guideModalTitle">
-		    
-		  </div>
-		  <div class="image content">
-			<div class="ui small image" id="guideModalImage">
-			
-			</div>
-		    <div class="description" style="width: 80%; margin-left: 5%">
-				<table class="ui table" id="guideModalTable" style="border: none">
-				
-				</table>
-			</div>
-		  </div>
-		  <div class="actions">
-		    <div class="fluid ui ok button" style="margin: 0; background: #c0e8f7">확인</div>
-		  </div>
-		</div>
+	<!-- 가이드 정보 모달 -->
+	<div class="ui small modal" id="guideModal">
+	  <div class="header" id="guideModalTitle">
+	    
+	  </div>
+	  <div class="image content">
+		<div class="ui small image" id="guideModalImage">
 		
-		<!-- 평점 남기기 모달 -->
-		<div class="ui mini modal" id="guideGradeModal">
-			<div class="description" style="padding: 5%">
-				<table class="ui table" id="guideGradeModalTable">
-					<tr><td style="font-size: 13pt; font-weight: 700; text-align: center" id="guideGradeModalHeader">가이드와 함께한 여행은 즐거우셨나요?<br>함께한 가이드를 평가해주세요.</td></tr>
-					<tr><td style="text-align: center"><div class="ui massive star rating" data-max-rating="5"></div></td></tr>
-					<form class="ui form" action="updateGuideGrade.do" method="post" id="guideGradeModalSubmit">
-						<div class="field">
-							<input type="hidden" name="gb_id" id="myPageGradeGuideId" />
-							<input type="hidden" name="guide_grade" id="myPageGradeGuidePoint" />
-							<input type="hidden" name="gb_no" id="myPageGuideMatchingNo" />
-						</div>
-					</form>
-				</table>
-			</div>
-			<div class="actions" style="margin: 0; text-align: center;">
-				<div class="ui ok button" style="width: 120px; background: #c0e8f7" onclick="guideGradeModalSubmit();">평점 남기기</div>
-				<div class="ui cancel button" style="width: 120px;">다음에 하기</div>
-			</div>
 		</div>
+	    <div class="description" style="width: 80%; margin-left: 5%">
+			<table class="ui table" id="guideModalTable" style="border: none">
+			
+			</table>
+		</div>
+	  </div>
+	  <div class="actions">
+	    <div class="fluid ui ok button" style="margin: 0; background: #c0e8f7">확인</div>
+	  </div>
+	</div>
+		
+	<!-- 평점 남기기 모달 -->
+	<div class="ui mini modal" id="guideGradeModal">
+		<div class="description" style="padding: 5%">
+			<table class="ui table" id="guideGradeModalTable">
+				<tr><td style="font-size: 13pt; font-weight: 700; text-align: center" id="guideGradeModalHeader">가이드와 함께한 여행은 즐거우셨나요?<br>함께한 가이드를 평가해주세요.</td></tr>
+				<tr><td style="text-align: center"><div class="ui massive star rating" data-max-rating="5"></div></td></tr>
+				<form class="ui form" action="updateGuideGrade.do" method="post" id="guideGradeModalSubmit">
+					<div class="field">
+						<input type="hidden" name="gb_id" id="myPageGradeGuideId" />
+						<input type="hidden" name="guide_grade" id="myPageGradeGuidePoint" />
+						<input type="hidden" name="gb_no" id="myPageGuideMatchingNo" />
+					</div>
+				</form>
+			</table>
+		</div>
+		<div class="actions" style="margin: 0; text-align: center;">
+			<div class="ui ok button" style="width: 120px; background: #c0e8f7" onclick="guideGradeModalSubmit();">평점 남기기</div>
+			<div class="ui cancel button" style="width: 120px;">다음에 하기</div>
+		</div>
+	</div>
 	
 	<!-- 신고 정보 모달 -->
 	<div class="ui tiny modal" id="guideReportModal">

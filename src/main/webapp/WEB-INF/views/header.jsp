@@ -108,35 +108,305 @@
 .ui.checkbox input[type=checkbox]:checked ~ label:after{
 	color: #95d6f3 !important;
 }
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background: rgba(0,0,0,0.2); /*not in ie */
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+}
+.wrap-loading div{ /*로딩 이미지*/
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}
+.display-none{ /*감추기*/
+    display:none;
+}
 
 </style>
 <script type="text/javascript">
+//알람 내용
+function searchAlarm(){
+	var loginMemberId = '${loginMember.member_id}';
+	var divClass = '<div class="ui accordion item">';
+	// gb
+	$.ajax({
+		url: "selectGbAlarmCount.do",
+		type: "post",
+		data: {member_id: loginMemberId},
+		dataType: "json",
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
+		success: function(data){
+			if (data.length > 0){
+				for(var i in data){
+					var gbNo = data[i].gb_no;
+					var gmId = data[i].gm_id;
+					var gbContent = '<div class="ui accordion item" onclick="updateGbAlarm(' + data[i].gb_no + ')">[ ' + data[i].gb_title + ' ] 에 대한 가이드 매칭 신청자가 있습니다.</div>';
+					$('#alarmMenu').html($('#alarmMenu').html() + gbContent);
+				} 
+			} 
+		},
+		error : function(request, status, errorData){
+			console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+		} 
+	});
+	
+	// fb
+	$.ajax({
+		url: "selectFbAlarmCount.do",
+		type: "post",
+		data: {member_id: loginMemberId},
+		dataType: "json",
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
+		success: function(data2){
+			if (data2.length > 0){
+				for(var i in data2){
+					var fm_id = data2[i].fm_id;
+					var fbContent = '<div class="ui accordion item" onclick="updateFbAlarm(' + data2[i].fb_no + ', '+"'"+fm_id+"'"+')">[ ' + data2[i].fb_title + ' ] 에 대한 동행 매칭 신청자가 있습니다.</div>';
+					$('#alarmMenu').html($('#alarmMenu').html() + fbContent);
+				}
+			}
+		},
+		error : function(request, status, errorData){
+			console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+		} 
+	});
+	
+	// fm
+	$.ajax({
+		url: "selectFmAlarmCount.do",
+		type: "post",
+		data: {member_id: loginMemberId},
+		dataType: "json",
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
+		success: function(data3){
+			if (data3.length > 0){
+				for(var i in data3){
+					var fmContent = '<div class="ui accordion item" onclick="updateFmAlarm(' + data3[i].fb_no + ')">[ ' + data3[i].fb_title + ' ] 에 대한 동행 신청이 수락되었습니다.</div>';
+					$('#alarmMenu').html($('#alarmMenu').html() + fmContent);
+				}
+			} 
+		},
+		error : function(request, status, errorData){
+			console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+		} 
+	});
+	
+	// guideApply
+	$.ajax({
+		url: "selectGuideApplyAlarmCount.do",
+		type: "post",
+		data: {member_id: loginMemberId},
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
+		success: function(data4){
+			if (data4 == "OK"){
+				var guideApplyContent =  '<div class="ui accordion item" onclick="updateGuideApplyAlarm()">가이드 자격요건이 만족되어 가이드로 활동하실 수 있습니다.</div>';
+				$('#alarmMenu').html($('#alarmMenu').html() + guideApplyContent);
+			} 
+		},
+		error : function(request, status, errorData){
+			console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+		} 
+	});
+	
+	// qna
+	$.ajax({
+		url: "selectQnaAlarmCount.do",
+		type: "post",
+		data: {member_id: loginMemberId},
+		dataType: "json",
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
+		success: function(data5){
+			if (data5.length > 0){
+				for(var i in data5){
+					var qnaContent = '<div class="ui accordion item" onclick="updateQnaAlarm(' + data5[i].qna_no + ')">[ ' + data5[i].qna_title + ' ] 에 대한 답변이 등록되었습니다.</div>';
+					$('#alarmMenu').html($('#alarmMenu').html() + qnaContent);
+				}
+			}
+		},
+		error : function(request, status, errorData){
+			console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+		} 
+	});
+}
+var loginMemberId = '${loginMember.member_id}';
+// gb 알람 읽음
+function updateGbAlarm(gb_no){
+	$.ajax({
+		url: "updateGbAlarm.do",
+		type: "post",
+		data: {gb_no: gb_no, gm_id: loginMemberId},
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
+		success: function(data){
+			if (data == "OK"){
+				location.reload();
+			}
+		},
+		error : function(request, status, errorData){
+			console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+		} 
+	});
+}
+
+// fb 알람 읽음
+function updateFbAlarm(fb_no,fm_id){
+	$.ajax({
+		url: "updateFbAlarm.do",
+		type: "post",
+		data: {fb_no: fb_no, fm_id:fm_id },
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
+		success: function(data){
+			if (data == "OK"){
+				location.reload();
+			}
+		},
+		error : function(request, status, errorData){
+			console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+		} 
+	});
+}
+
+// fm 알람 읽음
+function updateFmAlarm(fb_no){
+	$.ajax({
+		url: "updateFmAlarm.do",
+		type: "post",
+		data: {fb_no: fb_no, fm_id: loginMemberId},
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
+		success: function(data){
+			if (data == "OK"){
+				location.reload();
+			}
+		},
+		error : function(request, status, errorData){
+			console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+		} 
+	});
+}
+
+// guideApply 알람 읽음
+function updateGuideApplyAlarm(){
+	$.ajax({
+		url: "updateGuideApplyAlarm.do",
+		type: "post",
+		data: {member_id: loginMemberId},
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
+		success: function(data){
+			if (data == "OK"){
+				location.reload();
+			}
+		},
+		error : function(request, status, errorData){
+			console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+		} 
+	});	
+}
+
+// qna 알람 읽음
+function updateQnaAlarm(qna_no){
+	$.ajax({
+		url: "updateQnaAlarm.do",
+		type: "post",
+		data: {qna_no: qna_no, qna_id: loginMemberId},
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
+		success: function(data){
+			if (data == "OK"){
+				location.reload();
+			}
+		},
+		error : function(request, status, errorData){
+			console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
+		} 
+	});
+}
+
 $(function(){
 	$(".dropdown").dropdown({
-		transition:'drop'
+		transition: 'drop'
 	});
-});
-
-function updateFbAlarm(fb_no, fm_id){
-	console.log(fb_no + ", " + fm_id);
-	$(function(){
+	
+	// 알람 갯수
+	if (${!empty loginMember}){
+		var loginMemberId = '${loginMember.member_id}';
+		var loginMemberLevel = '${loginMember.member_level}';
 		$.ajax({
-			url: "updateFbAlarm.do",
-			type: "post",
-			data: {fb_no: fb_no, fm_id: fm_id},
+			url: "selectAllAlarmCount.do",
+			type: "get",
+			data: {member_id: loginMemberId, memberLevel: loginMemberLevel},
+			beforeSend:function(){
+		        $('.wrap-loading').removeClass('display-none');
+		    },
+		    complete:function(){
+		        $('.wrap-loading').addClass('display-none');
+		    },
 			success: function(data){
-				if (data == "OK"){
-					location.hret="loginMember.do";
-					console.log('성공');
-				}
-				
+				$('#totalAlarmCount').html(data);
 			},
 			error : function(request, status, errorData){
 				console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
 			} 
-		});
-	});
-}
+		}); 
+	}
+	searchAlarm();
+});
+
+
+
 </script>
 </head>
 <body>
@@ -239,40 +509,16 @@ function updateFbAlarm(fb_no, fm_id){
 			<option value="Canberra">호주-캔버라</option>
 		</select>
 		<img alt="" src="" id="weatherimg">	
+			
+			<!-- 알람 -->
 			<div class="ui top right pointing compact scrolling dropdown">
 				<i class="alarm icons" style="margin-right: 10px;"> 
 					<i class="bell large icon"></i> 
 					<!-- 알람 있을 경우 갯수만큼 -->
-					<c:if test="${!empty totalAlarmCount }">
-						<div class="ui circular yellow mini floating label">${totalAlarmCount }</div>
-					</c:if>
+						<div class="ui circular yellow mini floating label" id="totalAlarmCount"></div>
 				</i> 
-				<div class="menu scrollColor" style="padding:10px;">
-					<c:if test="${!empty selectFbAlarmCount }">
-						<c:forEach var="fbAlarmContent" items="${selectFbAlarmCount }">
-							<div class="ui accordion item" onclick="location.href='updateFbAlarm.do?fb_no=${fbAlarmContent.fb_no}&fm_id=${fbAlarmContent.fm_id }'">[${fbAlarmContent.fb_title }]에 대한 동행 매칭 신청자가 있습니다.</div>
-						</c:forEach>
-					</c:if>
-					<c:if test="${!empty selectFmAlarmCount }">
-						<c:forEach var="fmAlarmContent" items="${selectFmAlarmCount }">
-							<div class="ui accordion item">[${fmAlarmContent.fb_title }]에 대한 동행 신청이 수락되었습니다.</div>
-						</c:forEach>
-					</c:if>
-					<c:if test="${!empty selectQnaAlarmCount }">
-						<c:forEach var="qnaAlarmContent" items="${selectQnaAlarmCount }">
-							<div class="ui accordion item">[${qnaAlarmContent.qna_title }]에 대한 답변이 등록되었습니다.</div>
-						</c:forEach>
-					</c:if>
-					<c:if test="${!empty selectGuideApplyCount }">
-						<div class="ui accordion item">가이드 자격 신청이 수락되었습니다.</div>
-					</c:if>
-					<c:if test="${loginMember.member_level == 2 }">
-						<c:if test="${!empty selectGbAlarmCount }">
-							<c:forEach var="gbAlarmContent" items="${selectGbAlarmCount }">
-								<div class="ui accordion item">[${ gbAlarmContent.gb_title}]에 대한 가이드 매칭 신청자가 있습니다.</div>
-							</c:forEach>
-						</c:if>
-					</c:if>
+				<div class="menu scrollColor" style="padding:10px;" id="alarmMenu">
+					
 				</div>
 			</div>
 
@@ -300,7 +546,7 @@ function updateFbAlarm(fb_no, fm_id){
 				<div class="ui sub header">&emsp; <font size="3pt">${loginMember.member_name }</font></div>
 			</div>
 			<div class="menu" style="text-align: center; margin-left: -40px">
-				<div class="item">내 가이드북</div>
+				<div class="item" onclick="location.href='selectGuidebookMyList.do'">내 가이드북</div>
 				<div class="item" onclick="location.href='selectMyGuideMatching.do'">가이드 매칭 기록</div>
 				<div class="item" onclick="location.href='selectMyFellowMatching.do'">동행 매칭 기록</div>
 				<div class="item" onclick="location.href='moveMemberInfoPage.do'">내 정보 수정</div>
@@ -382,6 +628,10 @@ function updateFbAlarm(fb_no, fm_id){
 	
 	</div>
 </div>
+<!-- ajax 로딩 이미지 -->
+<div class="wrap-loading display-none">
+    <div><img src="resources/images/loading.gif" /></div>
+</div>   
 
 <!-- 비 로그인 상태일 때 로그인 필수 메뉴 클릭시 안내창 모달 -->
 <div class="ui mini modal" id="loginChkModal">
@@ -409,6 +659,12 @@ function select_city(){
 	    dataType: "json",
 	    type: "GET",
 	    async: "false",
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
 	    success: function(resp) {
 	    	var values = "현재온도 : "+ (resp.main.temp- 273.15).toFixed(0)+"℃"+"<br>"+"현재습도 : "+ resp.main.humidity+"%"+"<br>"+"바람   : "+ resp.wind.speed+" m/s"+"<br>"+"구름  : "+ (resp.clouds.all) +"%";
 	    	console.log(values);
@@ -441,6 +697,12 @@ $(function(){
 	    dataType: "json",
 	    type: "GET",
 	    async: "false",
+		beforeSend:function(){
+	        $('.wrap-loading').removeClass('display-none');
+	    },
+	    complete:function(){
+	        $('.wrap-loading').addClass('display-none');
+	    },
 	    success: function(resp) {
 	    	var values = "현재온도 : "+ (resp.main.temp- 273.15).toFixed(0)+"℃"+"<br>"+"현재습도 : "+ resp.main.humidity+"%"+"<br>"+"바람   : "+ resp.wind.speed+" m/s"+"<br>"+"구름  : "+ (resp.clouds.all) +"%";
 	    	var imgURL = "http://openweathermap.org/img/w/" + resp.weather[0].icon + ".png";

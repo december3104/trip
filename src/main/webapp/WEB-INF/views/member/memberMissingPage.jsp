@@ -34,6 +34,25 @@
 	box-shadow: 0 0 0 .2rem rgba(192, 231, 248, .5);
 	border: 1px solid #95d6f3;
 }
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background: rgba(0,0,0,0.2); /*not in ie */
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+}
+.wrap-loading div{ /*로딩 이미지*/
+    position: fixed;
+    top:50%;
+    left:50%;
+    margin-left: -21px;
+    margin-top: -21px;
+}
+.display-none{ /*감추기*/
+    display:none;
+}
 </style>
 <script type="text/javascript">
 var memberIdNameChk = 0;
@@ -97,6 +116,12 @@ $(function(){
 				url: "selectMissingMemberId.do",
 				type: "post",
 				data: {member_name: missingIdName, member_email: missingIdEmail},
+				beforeSend:function(){
+			        $('.wrap-loading').removeClass('display-none');
+			    },
+			    complete:function(){
+			        $('.wrap-loading').addClass('display-none');
+			    },
 				success: function(data){
 					if (data != "NO"){
 						$('#missingContent').html('입력하신 정보와 일치하는 아이디는<br>' + data + ' 입니다.');
@@ -171,6 +196,12 @@ $(function(){
 				url: "updateMissingMemberPwd.do",
 				type: "post",
 				data: {member_id: missingPwdId, member_email: missingPwdEmail, random: randomPwd},
+				beforeSend:function(){
+			        $('.wrap-loading').removeClass('display-none');
+			    },
+			    complete:function(){
+			        $('.wrap-loading').addClass('display-none');
+			    },
 				success: function(){
 					$('#missingContent').html("임시 비밀번호가 입력하신 메일로 발송되었습니다.");
 					$('#missingModal').modal('show');
@@ -243,6 +274,10 @@ $(function(){
 	</div>
 </div>
 
+<!-- ajax 로딩 이미지 -->
+<div class="wrap-loading display-none">
+    <div><img src="resources/images/loading.gif" /></div>
+</div>   
 <!-- 정보 입력 모달 -->
 <div class="ui mini modal" id="missingModal">
 	<div class="description" id="missingContent" style="padding: 5%; font-size: 12pt; text-align: center">

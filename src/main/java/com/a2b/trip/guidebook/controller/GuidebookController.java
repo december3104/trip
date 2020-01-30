@@ -112,7 +112,7 @@ public class GuidebookController {
 	
 	
 	//가이드북 수정
-	@RequestMapping(value="updateGuidebook.do", method=RequestMethod.POST)
+	@RequestMapping("updateGuidebook.do")
 	public String guidebookUpdateMethod(Guidebook guidebook, Model model, HttpServletRequest request) {
 		
 		 int result = guidebookService.updateGuidebook(guidebook);
@@ -213,6 +213,52 @@ public class GuidebookController {
 		
 		return jarr.toJSONString();
 		
+	}
+	
+	// 내 가이드북 보기 페이지로 이동
+	@RequestMapping("moveGuidebookMyListPage.do")
+	public String moveGuidebookMyListPage() {
+		return "guidebook/guidebookMyListPage";
+	}
+	
+	// 내 가이드북 보기 정보 가져오기
+	@RequestMapping("selectGuidebookMyList.do")
+	public String selectGuidebookMyList(Guidebook guidebook, HttpServletRequest request, Model model) {
+		// 세션에서 정보 꺼내기
+		HttpSession session = request.getSession(false);
+		Member member = (Member)session.getAttribute("loginMember");
+		String memberId = member.getMember_id();
+		ArrayList<Guidebook> list = guidebookService.selectGuidebookMyList(memberId);
+		model.addAttribute("myGuidebookList", list);
+		return "guidebook/guidebookMyListPage";
+	}
+	
+	// 내 가이드북 삭제 처리
+	@RequestMapping(value="deleteGuidebook.do", method=RequestMethod.POST)
+	public void deleteGuidebook(@RequestParam("book_no") String book_no, HttpServletResponse response) throws IOException {
+		int result = guidebookService.deleteGuidebook(book_no);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		if (result > 0) {
+			out.append("OK");
+			out.flush();
+		} else {
+			out.append("NO");
+			out.flush();
+		}
+		out.close();
+	}
+	
+	// 내 가이드북 상세 보기
+	@RequestMapping("selectMyGuidebookOne.do")
+	public String selectMyGuidebookOne(@RequestParam("book_no") String book_no, Model model) {
+		Guidebook guidebook = guidebookService.selectMyGuidebookOne(book_no);
+		if (guidebook != null) {
+			model.addAttribute("myGuidebookOne", guidebook);
+		} 
+		return "guidebook/guidebookMyPage";
 	}
 	
 }

@@ -400,13 +400,6 @@ $(function(){
 		var loginMemberId = '${loginMember.member_id}';
 		var loginMemberLevel = '${loginMember.member_level}';
 
-	
-});
-
-function updateFbAlarm(fb_no, fm_id){
-	console.log(fb_no + ", " + fm_id);
-	$(function(){
-
 		$.ajax({
 			url: "selectAllAlarmCount.do",
 			type: "get",
@@ -424,8 +417,8 @@ function updateFbAlarm(fb_no, fm_id){
 				console.log("error code : " + request.status + "\nMessage : " + request.responseText + "\nError : " + errorData);
 			} 
 		}); 
-	}
 	searchAlarm();
+	}
 });
 
 
